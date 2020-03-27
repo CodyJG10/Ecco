@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="Ecco.Mobile.Views.Login"
+            xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels">
+
+    <TabbedPage.BindingContext>
+        <viewmodels:LoginViewModel/>
+    </TabbedPage.BindingContext>
+
+    <ContentPage Title="Login">
+        
+        <ContentPage.Content>
+
+            <StackLayout VerticalOptions="Center" 
+                         HorizontalOptions="FillAndExpand"
+                         Margin="15">
+                
+                <Entry Placeholder="Username / Email"
+                       HorizontalOptions="FillAndExpand"
+                       Text="{Binding EmailText}"/>
+                
+                <Entry Placeholder="Password"
+                       HorizontalOptions="FillAndExpand"
+                       Text="{Binding PasswordText}"/>
+
+                <Button Text="Login" 
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        Command="{Binding LoginCommand}"/>
+
+            </StackLayout>
+        
+        </ContentPage.Content>
+    </ContentPage>
+
+    <ContentPage Title="Register">
+        <ContentPage.Content>
+
+            <StackLayout VerticalOptions="Center" 
+                         HorizontalOptions="FillAndExpand"
+                         Margin="15">
+                <Entry Placeholder="Username / Email"
+                       HorizontalOptions="FillAndExpand"
+                       Text="{Binding EmailText}"/>
+                
+                <Entry Placeholder="Password"
+                       HorizontalOptions="FillAndExpand"
+                       Text="{Binding PasswordText}"/>
+
+                <Entry Placeholder="Confirm Password"
+                       HorizontalOptions="FillAndExpand"
+                       Text="{Binding ConfirmPasswordText}"/>
+
+                <Button Text="Register" 
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        Command="{Binding RegisterCommand}"/>
+
+            </StackLayout>
+
+        </ContentPage.Content>
+    </ContentPage>
+</TabbedPage>
