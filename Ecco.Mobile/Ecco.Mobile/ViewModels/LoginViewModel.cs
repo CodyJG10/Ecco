@@ -1,5 +1,7 @@
 ﻿using Ecco.Api;
 using Nancy.TinyIoc;
+using Newtonsoft.Json;
+using Plugin.Settings;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -33,6 +35,10 @@ namespace Ecco.Mobile.ViewModels
             if (loginSuccesful)
             {
                 Console.WriteLine("Succesfully logged in!");
+                var userInfo = await _database.GetUserData();
+                string userDataJson = JsonConvert.SerializeObject(userInfo);
+                CrossSettings.Current.AddOrUpdateValue("UserData", userDataJson);
+                Application.Current.MainPage = new Views.Home();
             }
             else
             {

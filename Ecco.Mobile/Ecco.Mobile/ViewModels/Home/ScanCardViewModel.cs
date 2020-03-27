@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Ecco.Mobile.ViewModels
+namespace Ecco.Mobile.ViewModels.Home
 {
     public class ScanCardViewModel : ViewModelBase
     {

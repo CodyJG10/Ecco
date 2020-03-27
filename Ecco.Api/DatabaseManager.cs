@@ -48,6 +48,14 @@ namespace Ecco.Api
             }
         }
 
+
+        public struct UserData
+        {
+            [JsonProperty("id")]
+            public Guid Id { get; set; }
+            public string UserName { get; set; }
+        }
+
         #endregion
 
         #region Auth
@@ -96,9 +104,16 @@ namespace Ecco.Api
             return registerResult;
         }
 
+        public async Task<UserData> GetUserData()
+        {
+            var response = await client.GetAsync("auth/userinfo");
+            var result = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<UserData>(result);
+        }
+
         #endregion
 
-        #region API Access
+        #region Cards
 
         public async Task<IEnumerable<Card>> GetCards()
         {
@@ -107,6 +122,22 @@ namespace Ecco.Api
             return JsonConvert.DeserializeObject<IEnumerable<Card>>(result);
         }
 
+        public async Task<bool> CreateCard(Card card)
+        {
+            string cardJson = JsonConvert.SerializeObject(card);
+            var formContent = new FormUrlEncodedContent(new[]
+            {
+                new KeyValuePair<string, string>("card", cardJson),
+            });
+
+            var response = await client.PostAsync("api/CreateCard", formContent);
+            return response.IsSuccessStatusCode;
+        }
+
+        #endregion
+
+        #region Connections
+        
         public async Task<IEnumerable<Connection>> GetConnections(Guid id)
         {
             var response = await client.GetAsync("api/cards?id=" + id);
@@ -114,17 +145,40 @@ namespace Ecco.Api
             return JsonConvert.DeserializeObject<IEnumerable<Connection>>(result);
         }
 
-        public async Task<UserData> GetUserData()
+        public async Task<bool> CreateConnection(Guid id, Guid toId)
         {
-            var response = await client.GetAsync("api/userinfo");
-            var result = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<UserData>(result);
+            var formContent = new FormUrlEncodedContent(new[]
+            {
+                new KeyValuePair<string, string>("id", id.ToString()),
+                new KeyValuePair<string, string>("toId", toId.ToString())
+            });
+
+            var response = await client.PostAsync("api/CreateConnection", formContent);
+            return response.IsSuccessStatusCode;
         }
 
-        public struct UserData
-        { 
-            public Guid Id { get; set; }
-            public string UserName { get; set; }
+        public async Task<bool> AcceptConnection(Connection connection)
+        {
+            string connectionJson = JsonConvert.SerializeObject(connection);
+            var formContent = new FormUrlEncodedContent(new[]
+            {
+                new KeyValuePair<string, string>("connection", connectionJson),
+            });
+
+            var response = await client.PutAsync("api/AcceptConnection", formContent);
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> DeleteConnection(Connection connection)
+        {
+            string connectionJson = JsonConvert.SerializeObject(connection);
+            var formContent = new FormUrlEncodedContent(new[]
+            {
+                new KeyValuePair<string, string>("connection", connectionJson),
+            });
+
+            var response = await client.PutAsync("api/DeleteConnection", formContent);
+            return response.IsSuccessStatusCode;
         }
         #endregion
     }

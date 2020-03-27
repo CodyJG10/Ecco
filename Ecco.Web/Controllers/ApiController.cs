@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Ecco.Entities;
+using Ecco.Entities.Constants;
 using Ecco.Web.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -19,7 +20,7 @@ namespace Ecco.Web.Controllers
     public class ApiController : ControllerBase
     {
         private ApplicationDbContext _context;
-        private UserManager<IdentityUser> _userManager;
+        private readonly UserManager<IdentityUser> _userManager;
 
         public ApiController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
@@ -27,24 +28,90 @@ namespace Ecco.Web.Controllers
             _userManager = userManager;
         }
 
+        #region Cards
+
         [HttpGet("Cards")]
         public List<Card> Cards()
         {
             return _context.Cards.ToList();
         }
 
-        [HttpGet("Connections")]
-        public List<Connection> Connections(Guid id)
+        [HttpPost("CreateCard")]
+        public async Task<IActionResult> CreateCard(Card card)
         {
-            return _context.Connections.Where(x => x.FromId == id || x.ToId == id).ToList();
+            if (card == null)
+            {
+                return BadRequest();
+            }
+            _context.Cards.Add(card);
+            await _context.SaveChangesAsync();
+            return Ok();
         }
 
-        [HttpGet("UserInfo")]
-        public async Task<IdentityUser> GetUserInfo()
+        #endregion
+
+        #region Connections
+
+        [HttpGet("Connections")]
+        public List<Connection> Connections([FromForm]string id)
         {
-            var allClaims = User.Claims.ToList();
-            var name = allClaims.First(c => c.Type.Contains("nameidentifier")).Value;
-            return await _userManager.FindByNameAsync(name);
+            
+            return _context.Connections.Where(x => x.FromId == new Guid(id) || x.ToId == new Guid(id)).ToList();
         }
+
+        [HttpGet("Connections")]
+        public List<Connection> Connections()
+        {
+            return _context.Connections.ToList();
+        }
+
+        [HttpPost("CreateConnection")]
+        public async Task<IActionResult> CreateConnection([FromForm]string id, [FromForm]string toId)
+        {
+            if (new Guid(id) == Guid.Empty || new Guid(toId) == Guid.Empty)
+            {
+                return BadRequest();
+            }
+
+            Connection connection = new Connection()
+            {
+                FromId = new Guid(id),
+                ToId = new Guid(toId),
+                Status = ConnectionConstants.PENDING
+            };
+
+            _context.Connections.Add(connection);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpPut("AcceptConnection")]
+        public async Task<IActionResult> AcceptConnection([FromForm]Connection connection)
+        {
+            if (connection == null)
+            {
+                return BadRequest();
+            }
+            connection.Status = ConnectionConstants.COMPLETE;
+            _context.Update(connection);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpPut("DeleteConnection")]
+        public async Task<IActionResult> DeleteConnection([FromForm]Connection connection)
+        {
+            if (connection == null)
+            {
+                return BadRequest();
+            }
+
+            _context.Connections.Remove(connection);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        #endregion
     }
 }

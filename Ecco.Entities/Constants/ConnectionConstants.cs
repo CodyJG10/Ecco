@@ -7,6 +7,6 @@ namespace Ecco.Entities.Constants
     public class ConnectionConstants
     {
         public const int PENDING = 0;
-        public const int CMPLETE = 1;
+        public const int COMPLETE = 1;
     }
 }

@@ -4,7 +4,13 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="Ecco.Mobile.Views.Pages.MyCardView">
+             x:Class="Ecco.Mobile.Views.Pages.MyCardView"
+             xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.Home">
+
+    <ContentView.BindingContext>
+        <viewmodels:MyCardViewModel/>
+    </ContentView.BindingContext>
+    
   <ContentView.Content>
       <StackLayout>
           <Label Text="Hello Xamarin.Forms!" />

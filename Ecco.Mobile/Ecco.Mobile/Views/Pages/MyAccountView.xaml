@@ -4,7 +4,13 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="Ecco.Mobile.Views.Pages.MyAccountView">
+             x:Class="Ecco.Mobile.Views.Pages.MyAccountView"
+             xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.Home">
+
+    <ContentView.BindingContext>
+        <viewmodels:MyAccountViewModel/>
+    </ContentView.BindingContext>
+    
   <ContentView.Content>
       <StackLayout BackgroundColor="Red">
         

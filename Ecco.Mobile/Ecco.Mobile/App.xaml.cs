@@ -18,11 +18,9 @@ namespace Ecco.Mobile
 
         private void InitDatabase()
         {
-            string ip = "172.26.164.74";
-            string baseUrl = "https://" + ip + ":44355";
             var container = TinyIoCContainer.Current;
             container.Register<IDatabaseManager, DatabaseManager>();
-            container.Resolve<IDatabaseManager>().SetUrl(baseUrl);
+            container.Resolve<IDatabaseManager>().SetUrl("https://ecco-space.azurewebsites.net/");
         }
 
         protected override void OnStart()

@@ -5,8 +5,23 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="Ecco.Mobile.Views.Home"
-            xmlns:views="clr-namespace:Ecco.Mobile.Views.Pages">
+             xmlns:views="clr-namespace:Ecco.Mobile.Views.Pages"
+            xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels">
 
+    <TabbedPage.BindingContext>
+        <viewmodels:HomeViewModel/>
+    </TabbedPage.BindingContext>
+
+    <ContentPage Title="Home">
+        <ContentPage.Content>
+            <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Red">
+                <Label Text="{Binding UsernameText}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                <Label Text="{Binding IdText}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+            </StackLayout>
+        </ContentPage.Content>
+        
+    </ContentPage>
+    
     <ContentPage Title="Scan Card">
         <views:ScanCardView/>
     </ContentPage>

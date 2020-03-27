@@ -116,6 +116,14 @@ namespace Ecco.Web.Controllers
             return null;
         }
 
+        [HttpGet("UserInfo")]
+        public async Task<IdentityUser> GetUserInfo()
+        {
+            var allClaims = User.Claims.ToList();
+            var name = allClaims.First(c => c.Type.Contains("nameidentifier")).Value;
+            return await _userManager.FindByNameAsync(name);
+        }
+
 
         [HttpGet("testtoken")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
