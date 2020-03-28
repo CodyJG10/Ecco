@@ -13,9 +13,28 @@
 
     <ContentView.Content>
         <StackLayout>
+            
             <Button Text="Create Card" HorizontalOptions="Center" Command="{Binding CreateCardCommand}"/>
 
             <Label Text="My Cards" />
+
+            <Label Text="{Binding Loading}"/>
+
+            <ListView ItemsSource="{Binding Cards}"
+                      IsPullToRefreshEnabled="True"
+                      RefreshCommand="{Binding RefreshCommand}"
+                      IsRefreshing="{Binding Loading}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Horizontal" BackgroundColor="Red">
+                                <Label Text="{Binding CardTitle}" HorizontalOptions="Start"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            
         </StackLayout>
   </ContentView.Content>
 </ContentView>

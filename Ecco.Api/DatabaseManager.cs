@@ -125,12 +125,9 @@ namespace Ecco.Api
         public async Task<bool> CreateCard(Card card)
         {
             string cardJson = JsonConvert.SerializeObject(card);
-            var formContent = new FormUrlEncodedContent(new[]
-            {
-                new KeyValuePair<string, string>("card", cardJson),
-            });
+            var content = new StringContent(cardJson, Encoding.UTF8, "application/json");
 
-            var response = await client.PostAsync("api/CreateCard", formContent);
+            var response = await client.PostAsync("api/CreateCard", content);
             return response.IsSuccessStatusCode;
         }
 
@@ -167,24 +164,19 @@ namespace Ecco.Api
         public async Task<bool> AcceptConnection(Connection connection)
         {
             string connectionJson = JsonConvert.SerializeObject(connection);
-            var formContent = new FormUrlEncodedContent(new[]
-            {
-                new KeyValuePair<string, string>("connection", connectionJson),
-            });
 
-            var response = await client.PutAsync("api/AcceptConnection", formContent);
+            var content = new StringContent(connectionJson, Encoding.UTF8, "application/json");
+
+            var response = await client.PutAsync("api/AcceptConnection", content);
             return response.IsSuccessStatusCode;
         }
 
         public async Task<bool> DeleteConnection(Connection connection)
         {
             string connectionJson = JsonConvert.SerializeObject(connection);
-            var formContent = new FormUrlEncodedContent(new[]
-            {
-                new KeyValuePair<string, string>("connection", connectionJson),
-            });
+            var content = new StringContent(connectionJson, Encoding.UTF8, "application/json");
 
-            var response = await client.PutAsync("api/DeleteConnection", formContent);
+            var response = await client.PutAsync("api/DeleteConnection", content);
             return response.IsSuccessStatusCode;
         }
         #endregion

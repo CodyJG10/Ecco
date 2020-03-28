@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Ecco.Entities;
 using Ecco.Entities.Constants;
@@ -11,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Ecco.Web.Controllers
 {
@@ -51,6 +53,7 @@ namespace Ecco.Web.Controllers
             {
                 return BadRequest();
             }
+
             _context.Cards.Add(card);
             await _context.SaveChangesAsync();
             return Ok();
@@ -93,12 +96,13 @@ namespace Ecco.Web.Controllers
         }
 
         [HttpPut("AcceptConnection")]
-        public async Task<IActionResult> AcceptConnection([FromForm]Connection connection)
+        public async Task<IActionResult> AcceptConnection(Connection connection)
         {
             if (connection == null)
             {
                 return BadRequest();
             }
+
             connection.Status = ConnectionConstants.COMPLETE;
             _context.Update(connection);
             await _context.SaveChangesAsync();
@@ -106,7 +110,7 @@ namespace Ecco.Web.Controllers
         }
 
         [HttpPut("DeleteConnection")]
-        public async Task<IActionResult> DeleteConnection([FromForm]Connection connection)
+        public async Task<IActionResult> DeleteConnection(Connection connection)
         {
             if (connection == null)
             {

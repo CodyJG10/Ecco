@@ -58,22 +58,8 @@ namespace Ecco.Mobile.ViewModels.Home
         { 
             _db = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
             
-            //TODO CreateCardCommand
-
             Loading = true;
-            LoadCards();
-        }
-
-        private async void LoadCards()
-        {
-            var user = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
-            
-            var allCards = await _db.GetCards();
-            //var allConnections = await _db.GetConnections(user.Id);
-
-            var userCards = allCards.Where(x => x.UserId == user.Id);
-
-            Loading = false;
+           // LoadCards();
         }
     }
 }

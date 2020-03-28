@@ -13,7 +13,9 @@
     
   <ContentView.Content>
       <StackLayout BackgroundColor="Red">
-        
-      </StackLayout>
+
+            <Button Text="Logout" Command="{Binding LogoutCommand}" HorizontalOptions="Center"/>
+
+        </StackLayout>
   </ContentView.Content>
 </ContentView>

@@ -20,7 +20,7 @@ namespace Ecco.Mobile.ViewModels.Home
 
         #region Content
 
-        private List<Card> _cards;
+        private List<Card> _cards = new List<Card>();
         public List<Card> Cards
         {
             get
@@ -53,6 +53,7 @@ namespace Ecco.Mobile.ViewModels.Home
         #region Commands
 
         public ICommand CreateCardCommand { get; set; }
+        public ICommand RefreshCommand { get; set; }
 
         #endregion
 
@@ -61,6 +62,7 @@ namespace Ecco.Mobile.ViewModels.Home
             _db = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
 
             CreateCardCommand = new Command(() => Application.Current.MainPage.Navigation.PushAsync(new CreateCardPage()));
+            RefreshCommand = new Command(Refresh);
 
             Loading = true;
             LoadCards();
@@ -71,9 +73,26 @@ namespace Ecco.Mobile.ViewModels.Home
             var user = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
 
             var allCards = await _db.GetCards();
-            //var allConnections = await _db.GetConnections(user.Id);
 
-            var userCards = allCards.Where(x => x.UserId == user.Id);
+            Cards = allCards.Where(x => x.UserId == user.Id).ToList();
+
+            Loading = false;
+        }
+
+        private async void Refresh()
+        {
+            Loading = true;
+
+            var user = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
+
+            var allCards = await _db.GetCards();
+
+            var cards = allCards.Where(x => x.UserId == user.Id).ToList();
+
+            if (Cards.Count != cards.Count)
+            {
+                Cards = cards;
+            }
 
             Loading = false;
         }
