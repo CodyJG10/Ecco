@@ -31,7 +31,7 @@
     <EmbeddedResource Update="Views\Login.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\Pages\CreateCardView.xaml">
+    <EmbeddedResource Update="Views\Pages\CreateCardPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\Pages\MyAccountView.xaml">
@@ -47,5 +47,11 @@
 
   <ItemGroup>
     <Folder Include="Models\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\Pages\CreateCardPage.xaml.cs">
+      <DependentUpon>CreateCardPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

@@ -28,6 +28,14 @@ namespace Ecco.Web.Controllers
             _userManager = userManager;
         }
 
+        [HttpGet("UserInfo")]
+        public async Task<IdentityUser> GetUserInfo()
+        {
+            var allClaims = User.Claims.ToList();
+            var name = allClaims.First(c => c.Type.Contains("nameidentifier")).Value;
+            return await _userManager.FindByNameAsync(name);
+        }
+
         #region Cards
 
         [HttpGet("Cards")]
@@ -52,17 +60,16 @@ namespace Ecco.Web.Controllers
 
         #region Connections
 
-        [HttpGet("Connections")]
-        public List<Connection> Connections([FromForm]string id)
-        {
-            
-            return _context.Connections.Where(x => x.FromId == new Guid(id) || x.ToId == new Guid(id)).ToList();
+        [HttpGet("MyConnections")]
+        public List<Connection> Connections(string id)
+        {   
+            return _context.Connections.Where(x => x.FromId == new Guid(id) || x.ToId == new Guid(id) && x.Status == ConnectionConstants.COMPLETE).ToList();
         }
 
-        [HttpGet("Connections")]
-        public List<Connection> Connections()
+        [HttpGet("MyPendingConnections")]
+        public List<Connection> GetPendingConnections(string id)
         {
-            return _context.Connections.ToList();
+            return _context.Connections.Where(x => x.ToId == new Guid(id) && x.Status == ConnectionConstants.PENDING).ToList();
         }
 
         [HttpPost("CreateConnection")]

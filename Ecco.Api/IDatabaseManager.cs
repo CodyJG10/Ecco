@@ -17,7 +17,8 @@ namespace Ecco.Api
         Task<bool> CreateCard(Card card);
         Task<IEnumerable<Card>> GetCards();
 
-        Task<IEnumerable<Connection>> GetConnections(Guid id);
+        Task<IEnumerable<Connection>> GetMyConnections(Guid id);
+        Task<IEnumerable<Connection>> GetMyPendingConnections(Guid id);
         Task<bool> CreateConnection(Guid id, Guid toId);
         Task<bool> AcceptConnection(Connection connection);
         Task<bool> DeleteConnection(Connection connection);

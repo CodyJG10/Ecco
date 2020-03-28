@@ -10,10 +10,12 @@
     <ContentView.BindingContext>
         <viewmodels:MyCardViewModel/>
     </ContentView.BindingContext>
-    
-  <ContentView.Content>
-      <StackLayout>
-          <Label Text="Hello Xamarin.Forms!" />
-      </StackLayout>
+
+    <ContentView.Content>
+        <StackLayout>
+            <Button Text="Create Card" HorizontalOptions="Center" Command="{Binding CreateCardCommand}"/>
+
+            <Label Text="My Cards" />
+        </StackLayout>
   </ContentView.Content>
 </ContentView>

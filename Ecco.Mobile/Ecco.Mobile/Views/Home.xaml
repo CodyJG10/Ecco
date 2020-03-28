@@ -1,37 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
-             x:Class="Ecco.Mobile.Views.Home"
-             xmlns:views="clr-namespace:Ecco.Mobile.Views.Pages"
-            xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels">
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            mc:Ignorable="d"
+            x:Class="Ecco.Mobile.Views.Home"
+            xmlns:views="clr-namespace:Ecco.Mobile.Views.Pages"
+            xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels"
+            Title="Ecco Space">
 
     <TabbedPage.BindingContext>
         <viewmodels:HomeViewModel/>
     </TabbedPage.BindingContext>
 
-    <ContentPage Title="Home">
-        <ContentPage.Content>
-            <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Red">
-                <Label Text="{Binding UsernameText}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-                <Label Text="{Binding IdText}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-            </StackLayout>
-        </ContentPage.Content>
-        
-    </ContentPage>
-    
     <ContentPage Title="Scan Card">
         <views:ScanCardView/>
     </ContentPage>
-    <ContentPage Title="Cards">
+
+    <ContentPage Title="Cards" IconImageSource="cards_multiple.png">
         <views:CardListView/>
     </ContentPage>
-    <ContentPage Title="My Card">
+
+    <ContentPage Title="My Card" IconImageSource="card.png">
         <views:MyCardView/>
     </ContentPage>
-    <ContentPage Title="Account">
+
+    <ContentPage Title="Account" IconImageSource="profile.png">
         <views:MyAccountView/>
     </ContentPage>
 

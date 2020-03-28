@@ -1,5 +1,6 @@
 ﻿using Ecco.Api;
 using Ecco.Entities;
+using Ecco.Mobile.Views.Pages;
 using Nancy.TinyIoc;
 using Newtonsoft.Json;
 using Plugin.Settings;
@@ -8,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Input;
+using Xamarin.Forms;
 using static Ecco.Api.DatabaseManager;
 
 namespace Ecco.Mobile.ViewModels.Home
@@ -58,7 +60,7 @@ namespace Ecco.Mobile.ViewModels.Home
         {
             _db = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
 
-            //TODO CreateCardCommand
+            CreateCardCommand = new Command(() => Application.Current.MainPage.Navigation.PushAsync(new CreateCardPage()));
 
             Loading = true;
             LoadCards();

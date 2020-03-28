@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace Ecco.Mobile.Views.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CreateCardView : ContentView
+    public partial class CreateCardPage : ContentPage
     {
-        public CreateCardView()
+        public CreateCardPage()
         {
             InitializeComponent();
         }

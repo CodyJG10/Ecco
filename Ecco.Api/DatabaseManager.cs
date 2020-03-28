@@ -106,7 +106,7 @@ namespace Ecco.Api
 
         public async Task<UserData> GetUserData()
         {
-            var response = await client.GetAsync("auth/userinfo");
+            var response = await client.GetAsync("api/UserInfo");
             var result = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<UserData>(result);
         }
@@ -138,9 +138,16 @@ namespace Ecco.Api
 
         #region Connections
         
-        public async Task<IEnumerable<Connection>> GetConnections(Guid id)
+        public async Task<IEnumerable<Connection>> GetMyConnections(Guid id)
         {
-            var response = await client.GetAsync("api/cards?id=" + id);
+            var response = await client.GetAsync("api/MyConnections?id=" + id.ToString());
+            var result = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<IEnumerable<Connection>>(result);
+        }
+
+        public async Task<IEnumerable<Connection>> GetMyPendingConnections(Guid id)
+        {
+            var response = await client.GetAsync("api/MyPendingConnections?id=" + id.ToString());
             var result = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<IEnumerable<Connection>>(result);
         }

@@ -38,7 +38,7 @@ namespace Ecco.Mobile.ViewModels
                 var userInfo = await _database.GetUserData();
                 string userDataJson = JsonConvert.SerializeObject(userInfo);
                 CrossSettings.Current.AddOrUpdateValue("UserData", userDataJson);
-                Application.Current.MainPage = new Views.Home();
+                Application.Current.MainPage = new NavigationPage(new Views.Home());
             }
             else
             {
