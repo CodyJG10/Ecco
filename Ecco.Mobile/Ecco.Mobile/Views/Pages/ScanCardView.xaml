@@ -13,7 +13,10 @@
     
   <ContentView.Content>
       <StackLayout>
-          <Label Text="Hello Xamarin.Forms!" />
-      </StackLayout>
+
+            <Button Text="Send A Connection"
+                    Command="{Binding SendConnectionCommand}"/>
+
+        </StackLayout>
   </ContentView.Content>
 </ContentView>

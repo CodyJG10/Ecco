@@ -25,7 +25,8 @@
                 
                 <Entry Placeholder="Password"
                        HorizontalOptions="FillAndExpand"
-                       Text="{Binding PasswordText}"/>
+                       Text="{Binding PasswordText}"
+                       IsPassword="True"/>
 
                 <Button Text="Login" 
                         HorizontalOptions="Center"
@@ -49,10 +50,12 @@
                 
                 <Entry Placeholder="Password"
                        HorizontalOptions="FillAndExpand"
+                       IsPassword="True"
                        Text="{Binding PasswordText}"/>
 
                 <Entry Placeholder="Confirm Password"
                        HorizontalOptions="FillAndExpand"
+                       IsPassword="True"
                        Text="{Binding ConfirmPasswordText}"/>
 
                 <Button Text="Register" 

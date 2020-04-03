@@ -10,5 +10,6 @@ namespace Ecco.Entities
         public Guid FromId { get; set; }
         public Guid ToId { get; set; }
         public int Status { get; set; }
+        public int CardId { get; set; }
     }
 }

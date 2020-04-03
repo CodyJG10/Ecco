@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Ecco.Entities;
 using Ecco.Entities.Constants;
+using Ecco.Web.Areas.Identity;
 using Ecco.Web.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -22,9 +23,9 @@ namespace Ecco.Web.Controllers
     public class ApiController : ControllerBase
     {
         private ApplicationDbContext _context;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<EccoUser> _userManager;
 
-        public ApiController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
+        public ApiController(ApplicationDbContext context, UserManager<EccoUser> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -46,6 +47,12 @@ namespace Ecco.Web.Controllers
             return _context.Cards.ToList();
         }
 
+        [HttpGet("Card")]
+        public Card Card(int id)
+        {
+            return _context.Cards.Single(x => x.Id == id);
+        }
+
         [HttpPost("CreateCard")]
         public async Task<IActionResult> CreateCard(Card card)
         {
@@ -63,10 +70,16 @@ namespace Ecco.Web.Controllers
 
         #region Connections
 
+        [HttpGet("Connection")]
+        public Connection GetConnection(int id)
+        {
+            return _context.Connections.Single(x => x.Id == id);
+        }
+
         [HttpGet("MyConnections")]
         public List<Connection> Connections(string id)
         {   
-            return _context.Connections.Where(x => x.FromId == new Guid(id) || x.ToId == new Guid(id) && x.Status == ConnectionConstants.COMPLETE).ToList();
+            return _context.Connections.Where(x => x.ToId == new Guid(id) && x.Status == ConnectionConstants.COMPLETE).ToList();
         }
 
         [HttpGet("MyPendingConnections")]
@@ -76,9 +89,9 @@ namespace Ecco.Web.Controllers
         }
 
         [HttpPost("CreateConnection")]
-        public async Task<IActionResult> CreateConnection([FromForm]string id, [FromForm]string toId)
+        public async Task<IActionResult> CreateConnection([FromForm]string id, [FromForm]string toId, [FromForm]string cardId)
         {
-            if (new Guid(id) == Guid.Empty || new Guid(toId) == Guid.Empty)
+            if (new Guid(id) == Guid.Empty || new Guid(toId) == Guid.Empty || cardId == null)
             {
                 return BadRequest();
             }
@@ -87,7 +100,8 @@ namespace Ecco.Web.Controllers
             {
                 FromId = new Guid(id),
                 ToId = new Guid(toId),
-                Status = ConnectionConstants.PENDING
+                Status = ConnectionConstants.PENDING,
+                CardId = int.Parse(cardId)
             };
 
             _context.Connections.Add(connection);

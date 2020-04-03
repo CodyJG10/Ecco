@@ -1,6 +1,7 @@
 ﻿using Ecco.Api;
 using Ecco.Mobile.Views;
 using Nancy.TinyIoc;
+using Plugin.Settings;
 using System;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -14,6 +15,26 @@ namespace Ecco.Mobile
             InitializeComponent();
             InitDatabase();
             MainPage = new Login();
+            if (!CrossSettings.Current.GetValueOrDefault("Username", "_").Equals("_"))
+            { 
+                AutoLogin();
+            }
+        }
+
+        private async void AutoLogin()
+        {
+            string username = CrossSettings.Current.GetValueOrDefault("Username", "");
+            string password = CrossSettings.Current.GetValueOrDefault("Password", "");
+            var db = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
+            var loginSuccesful = await db.Login(username, password);
+            if (loginSuccesful)
+            {
+                MainPage = new NavigationPage(new Home());
+            }
+            else
+            {
+                await MainPage.DisplayAlert("Authentication Error", "You have been logged out", "Ok");
+            }
         }
 
         private void InitDatabase()

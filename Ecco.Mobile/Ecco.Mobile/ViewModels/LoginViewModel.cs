@@ -38,11 +38,13 @@ namespace Ecco.Mobile.ViewModels
                 var userInfo = await _database.GetUserData();
                 string userDataJson = JsonConvert.SerializeObject(userInfo);
                 CrossSettings.Current.AddOrUpdateValue("UserData", userDataJson);
+                SavePreferences(EmailText, PasswordText);
                 Application.Current.MainPage = new NavigationPage(new Views.Home());
             }
             else
             {
                 Console.WriteLine("Login was unsuccesful");
+                await Application.Current.MainPage.DisplayAlert("Authentication Error", "The provided credentials were incorrect", "Return");
             }
             return Task.CompletedTask;
         }
@@ -53,12 +55,21 @@ namespace Ecco.Mobile.ViewModels
             if (registerResult.StatusCode == 200)
             {
                 Console.WriteLine("Registration Succesful!");
+                await Application.Current.MainPage.DisplayAlert("Registration Complete", "You have succesfully registered your account!", "Return");
+                Login();
             }
             else 
             {
                 Console.WriteLine("Registration Unsuccesful!");
+                await Application.Current.MainPage.DisplayAlert("Registration Error", "Could not register with the given credentials", "Return");
             }
             return Task.CompletedTask;
+        }
+
+        private void SavePreferences(string username, string password)
+        {
+            CrossSettings.Current.AddOrUpdateValue("Username", username);
+            CrossSettings.Current.AddOrUpdateValue("Password", password);
         }
     }
 }

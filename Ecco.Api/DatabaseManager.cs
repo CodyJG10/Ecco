@@ -35,25 +35,17 @@ namespace Ecco.Api
         }
 
         public struct RegisterResult
-        { 
+        {
             [JsonProperty("status")]
             public int StatusCode { get; set; }
             [JsonProperty("errors")]
             public Error Errors { get; set; }
 
-            public struct Error 
+            public struct Error
             {
                 public List<string> ConfirmPassword { get; set; }
                 public List<string> Password { get; set; }
             }
-        }
-
-
-        public struct UserData
-        {
-            [JsonProperty("id")]
-            public Guid Id { get; set; }
-            public string UserName { get; set; }
         }
 
         #endregion
@@ -111,6 +103,27 @@ namespace Ecco.Api
             return JsonConvert.DeserializeObject<UserData>(result);
         }
 
+        public async Task<UserData> GetUserData(Guid id)
+        {
+            var response = await client.GetAsync("auth/UserData?id=" + id.ToString()); 
+            var result = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<UserData>(result);
+        }
+
+        public async Task<UserData> GetUserData(string profileName)
+        {
+            var response = await client.GetAsync("auth/UserData?profileName=" + profileName);
+            var result = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<UserData>(result);
+        }
+
+        public async Task<bool> UserExists(string profileName)
+        {
+            var response = await client.GetAsync("auth/UserExists?profileName=" + profileName);
+            var result = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<bool>(result);
+        }
+
         #endregion
 
         #region Cards
@@ -131,6 +144,14 @@ namespace Ecco.Api
             return response.IsSuccessStatusCode;
         }
 
+        public async Task<Card> GetCard(int cardId)
+        {
+            var response = await client.GetAsync("api/card?id=" + cardId);
+            var result = await response.Content.ReadAsStringAsync();
+            var card = JsonConvert.DeserializeObject<Card>(result);
+            return card;
+        }
+
         #endregion
 
         #region Connections
@@ -149,12 +170,13 @@ namespace Ecco.Api
             return JsonConvert.DeserializeObject<IEnumerable<Connection>>(result);
         }
 
-        public async Task<bool> CreateConnection(Guid id, Guid toId)
+        public async Task<bool> CreateConnection(Guid id, Guid toId, int cardId)
         {
             var formContent = new FormUrlEncodedContent(new[]
             {
                 new KeyValuePair<string, string>("id", id.ToString()),
-                new KeyValuePair<string, string>("toId", toId.ToString())
+                new KeyValuePair<string, string>("toId", toId.ToString()),
+                new KeyValuePair<string, string>("cardId", cardId.ToString())
             });
 
             var response = await client.PostAsync("api/CreateConnection", formContent);
@@ -178,6 +200,13 @@ namespace Ecco.Api
 
             var response = await client.PutAsync("api/DeleteConnection", content);
             return response.IsSuccessStatusCode;
+        }
+
+        public async Task<Connection> GetConnection(int id)
+        {
+            var response = await client.GetAsync("api/connection?id=" + id);
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<Connection>(content);
         }
         #endregion
     }

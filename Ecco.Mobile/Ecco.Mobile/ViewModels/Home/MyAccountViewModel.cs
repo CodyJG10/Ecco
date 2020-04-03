@@ -1,4 +1,5 @@
 ﻿using Ecco.Api;
+using Ecco.Entities;
 using Ecco.Mobile.Views;
 using Nancy.TinyIoc;
 using Newtonsoft.Json;
@@ -29,6 +30,7 @@ namespace Ecco.Mobile.ViewModels.Home
 
         private void Logout()
         {
+            CrossSettings.Current.Clear();
             Application.Current.MainPage = new Login();
         }
     }

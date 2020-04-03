@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Ecco.Web.Areas.Identity;
 
 namespace Ecco.Web
 {
@@ -36,10 +37,10 @@ namespace Ecco.Web
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<IdentityUser>()
+            services.AddDefaultIdentity<EccoUser>()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddUserManager<UserManager<IdentityUser>>()
+                .AddUserManager<UserManager<EccoUser>>()
                 .AddRoleManager<RoleManager<IdentityRole>>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
@@ -52,13 +53,6 @@ namespace Ecco.Web
                 options.Password.RequireDigit = false;
                 options.SignIn.RequireConfirmedEmail = false;
             });
-
-            //services.ConfigureApplicationCookie(options =>
-            //{
-            //    options.LoginPath = $"/Identity/Account/Login";
-            //    options.LogoutPath = $"/Identity/Account/Logout";
-            //    options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
-            //});
 
             SigningKey = Configuration["SigningKey"];
 

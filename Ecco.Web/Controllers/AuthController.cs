@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Ecco.Web.Areas.Identity;
 using Ecco.Web.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -13,6 +14,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using static Ecco.Web.Models.AuthModel;
 
 namespace Ecco.Web.Controllers
@@ -21,14 +23,15 @@ namespace Ecco.Web.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private UserManager<IdentityUser> _userManager;
+        private UserManager<EccoUser> _userManager;
 
-        public AuthController(UserManager<IdentityUser> userManager)
+        public AuthController(UserManager<EccoUser> userManager)
         {
             _userManager = userManager;
         }
 
         [HttpPost("token")]
+        [AllowAnonymous]
         public async Task<IActionResult> GenerateToken([FromForm]LoginModel model)
         {
             var user = await _userManager.FindByNameAsync(model.Username);
@@ -72,9 +75,10 @@ namespace Ecco.Web.Controllers
                 return BadRequest(ModelState);
             }
 
-            IdentityUser user = new IdentityUser
+            EccoUser user = new EccoUser
             {
-                UserName = model.UserName
+                UserName = model.UserName,
+                ProfileName = model.UserName
             };
 
             IdentityResult result = await _userManager.CreateAsync(user, model.Password);
@@ -114,6 +118,29 @@ namespace Ecco.Web.Controllers
             }
 
             return null;
+        }
+
+        [HttpGet("UserData")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public async Task<string> GetUserData(string id = null, string profileName = null) 
+        {
+            if (id != null)
+            {
+                var user = await _userManager.FindByIdAsync(id);
+                return JsonConvert.SerializeObject(user);
+            }
+            else
+            {
+                var user = _userManager.Users.Single(x => x.ProfileName.Equals(profileName));
+                return JsonConvert.SerializeObject(user);
+            }
+        }
+
+        [HttpGet("UserExists")]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        public bool UserExists(string profileName)
+        {
+            return _userManager.Users.Any(x => x.ProfileName.Equals(profileName));
         }
 
         [HttpGet("testtoken")]

@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="Ecco.Mobile.Views.Pages.SendCard"
+             xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.Home"
+             Title="Send A Card">
+
+    <ContentPage.BindingContext>
+        <viewmodels:SendCardViewModel/>
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Content>
+        <StackLayout HorizontalOptions="FillAndExpand">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+            </Grid>
+
+            <StackLayout Grid.Row="0">
+
+                <Entry Placeholder="Username"
+                       x:Name="entryUserQuery"
+                       Text="{Binding UserQuery}"
+                       ReturnCommand="{Binding UserSearchTypedCommand}"
+                       HorizontalOptions="FillAndExpand"
+                       VerticalOptions="FillAndExpand"
+                       HorizontalTextAlignment="Center"
+                       Margin="50, 0, 50, 0"
+                       TextChanged="entryUserQuery_TextChanged"/>
+
+                <ListView ItemsSource="{Binding UserResults}"
+                          x:Name="listUserResults"
+                          HorizontalOptions="FillAndExpand"
+                          ItemSelected="listUserResults_ItemSelected"
+                          BackgroundColor="LightGray">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <StackLayout>
+                                    <Label HorizontalTextAlignment="Center"
+                                       Text="{Binding UserName}"/>
+                                </StackLayout>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                
+                </ListView>
+            </StackLayout>
+
+            <StackLayout Grid.Row="1">
+
+                <Label Text="Select Your Card"
+                       HorizontalOptions="CenterAndExpand"
+                       HorizontalTextAlignment="Center"
+                       FontSize="Large"/>
+
+                <ListView ItemsSource="{Binding MyCards}"
+                          x:Name="listMyCards"
+                          ItemSelected="listMyCards_ItemSelected"
+                          BackgroundColor="LightGray">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Label HorizontalTextAlignment="Center"
+                                       VerticalTextAlignment="Center"
+                                       Text="{Binding CardTitle}"/>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+
+            </StackLayout>
+
+            <Button Text="Send" 
+                    Command="{Binding SendCommand}"
+                    HorizontalOptions="Center"
+                    BackgroundColor="Blue"
+                    TextColor="White"
+                    Margin="0, 5, 0, 15"
+                    CornerRadius="8"
+                    WidthRequest="150"/>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

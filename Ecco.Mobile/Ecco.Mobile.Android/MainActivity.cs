@@ -7,6 +7,8 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using System.Net;
+using Plugin.NFC;
+using Android.Content;
 
 namespace Ecco.Mobile.Droid
 {
@@ -20,10 +22,20 @@ namespace Ecco.Mobile.Droid
 
             base.OnCreate(savedInstanceState);
 
+            CrossNFC.Init(this);
+            
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
         }
+
+        protected override void OnNewIntent(Intent intent)
+        {
+            base.OnNewIntent(intent);
+
+            CrossNFC.OnNewIntent(intent);
+        }
+
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
