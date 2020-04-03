@@ -16,14 +16,27 @@ namespace Ecco.Mobile.ViewModels.Home
     public class MyAccountViewModel : ViewModelBase
     {
         private IDatabaseManager _db;
+        
         private UserData _userData;
+        public UserData UserData
+        {
+            get
+            {
+                return _userData;
+            }
+            set
+            {
+                _userData = value;
+                OnPropertyChanged(nameof(UserData));
+            }
+        }
 
         public ICommand LogoutCommand { get; set; }
 
         public MyAccountViewModel()
         {
             _db = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
-            _userData = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
+            UserData = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
 
             LogoutCommand = new Command(Logout);
         }

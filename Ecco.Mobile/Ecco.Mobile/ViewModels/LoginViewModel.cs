@@ -18,9 +18,9 @@ namespace Ecco.Mobile.ViewModels
         public ICommand LoginCommand { get; set; }
         public ICommand RegisterCommand { get; set; }
 
-        public string EmailText { get; set; } = "codyjg10@gmail.com";
-        public string PasswordText { get; set; } = "Airplane10";
-        public string ConfirmPasswordText { get; set; } = "";
+        public string EmailText { get; set; }
+        public string PasswordText { get; set; }
+        public string ConfirmPasswordText { get; set; }
 
         public LoginViewModel()
         {
@@ -56,7 +56,7 @@ namespace Ecco.Mobile.ViewModels
             {
                 Console.WriteLine("Registration Succesful!");
                 await Application.Current.MainPage.DisplayAlert("Registration Complete", "You have succesfully registered your account!", "Return");
-                Login();
+                await Login();
             }
             else 
             {

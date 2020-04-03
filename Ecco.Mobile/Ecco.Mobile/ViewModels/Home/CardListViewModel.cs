@@ -1,6 +1,7 @@
 ﻿using Ecco.Api;
 using Ecco.Entities;
 using Ecco.Mobile.Models;
+using Ecco.Mobile.Views.Pages.Connections;
 using Nancy.TinyIoc;
 using Newtonsoft.Json;
 using Plugin.Settings;
@@ -36,19 +37,6 @@ namespace Ecco.Mobile.ViewModels.Home
             }
         }
 
-        private List<ConnectionModel> _pendingConnections;
-        public List<ConnectionModel> PendingConnections
-        {
-            get
-            {
-                return _pendingConnections;
-            }
-            set
-            {
-                _pendingConnections = value;
-                OnPropertyChanged(nameof(PendingConnections));
-            }
-        }
 
         private bool _loading;
         public bool Loading
@@ -64,22 +52,48 @@ namespace Ecco.Mobile.ViewModels.Home
             }
         }
 
+        private bool _hasPendingConnections;
+        public bool HasPendingConnections
+        {
+            get
+            {
+                return _hasPendingConnections;
+            }
+            set
+            {
+                _hasPendingConnections = value;
+                OnPropertyChanged(nameof(HasPendingConnections));
+            }
+        }
+
+        private bool _hasConnections;
+        public bool HasConnections
+        {
+            get 
+            {
+                return _hasConnections;
+            }
+            set
+            {
+                _hasConnections = value;
+                OnPropertyChanged(nameof(HasConnections));
+            }
+        }
+
         #endregion
 
-        #region Commands
-        
-        public ICommand AcceptPendingConnectionCommand { get; set; }
-        
-        #endregion
+        public ICommand ViewPendingConnectionsCommand { get; set; }
+        public ICommand RefreshCommand { get; set; }
 
         public CardListViewModel()
         {
             _db = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
             _user = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
-            
-            Load();
 
-            AcceptPendingConnectionCommand = new Command<Connection>(AcceptPendingConnection);
+            ViewPendingConnectionsCommand = new Command(x => Application.Current.MainPage.Navigation.PushAsync(new PendingConnectionsPage()));
+            RefreshCommand = new Command(Refresh);
+
+            Load();
         }
 
         private async void Load()
@@ -108,44 +122,25 @@ namespace Ecco.Mobile.ViewModels.Home
                 };
                 connectionModels.Add(model);
             }
+
+            HasConnections = connectionModels.Count > 0;
+
             Cards = connectionModels;
             return Task.CompletedTask;
         }
 
         private async Task<Task> LoadPendingConnections()
         {
-            var pendingConnections = (await _db.GetMyPendingConnections(_user.Id)).ToList();
-            List<ConnectionModel> pendingConnectionModels = new List<ConnectionModel>(); 
-            foreach (var pendingConnection in pendingConnections)
-            {
-                Card card = await _db.GetCard(pendingConnection.CardId);
-                string userName = (await _db.GetUserData(pendingConnection.FromId)).UserName;
-                ConnectionModel model = new ConnectionModel()
-                {
-                    Card = card,
-                    Connection = pendingConnection,
-                    Name = userName
-                };
-                pendingConnectionModels.Add(model);
-            }
-            PendingConnections = pendingConnectionModels;
+            var pendingConnections = (await _db.GetMyPendingConnections(_user.Id));
+            HasPendingConnections = pendingConnections.Count() > 0;
             return Task.CompletedTask;
         }
 
         #endregion
 
-        private async void AcceptPendingConnection(Connection connection)
+        public void Refresh()
         {
-            var succesful = await _db.AcceptConnection(connection);
-            if (succesful)
-            {
-                Console.WriteLine("Succesfully accepted connection request");
-                Load();
-            }
-            else
-            {
-                await Application.Current.MainPage.DisplayAlert("Uh Oh!", "An error occured when attempting to accept this connection", "Ok");
-            }
+            Load();
         }
     }
 }

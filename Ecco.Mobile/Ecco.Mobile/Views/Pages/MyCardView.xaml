@@ -5,7 +5,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="Ecco.Mobile.Views.Pages.MyCardView"
-             xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.Home">
+             xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.Home"
+             xmlns:cardViews="clr-namespace:Ecco.Mobile.Views.Card">
 
     <ContentView.BindingContext>
         <viewmodels:MyCardViewModel/>
@@ -16,19 +17,23 @@
             
             <Button Text="Create Card" HorizontalOptions="Center" Command="{Binding CreateCardCommand}"/>
 
-            <Label Text="My Cards" />
-
-            <Label Text="{Binding Loading}"/>
+            <Label Text="My Cards" 
+                   HorizontalOptions="Center"
+                   FontSize="Large"/>
 
             <ListView ItemsSource="{Binding Cards}"
                       IsPullToRefreshEnabled="True"
                       RefreshCommand="{Binding RefreshCommand}"
-                      IsRefreshing="{Binding Loading}">
+                      IsRefreshing="{Binding Loading}"
+                      HasUnevenRows="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout Orientation="Horizontal" BackgroundColor="Red">
-                                <Label Text="{Binding CardTitle}" HorizontalOptions="Start"/>
+                            <StackLayout Orientation="Horizontal" 
+                                         Margin="20">
+                                <cardViews:Card HorizontalOptions="CenterAndExpand"
+                                                VerticalOptions="CenterAndExpand"
+                                                BindingContext="{Binding .}"/>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>

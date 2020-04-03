@@ -14,10 +14,14 @@ namespace Ecco.Mobile
         {
             InitializeComponent();
             InitDatabase();
-            MainPage = new Login();
+            MainPage = new LoadingPage();
             if (!CrossSettings.Current.GetValueOrDefault("Username", "_").Equals("_"))
-            { 
+            {
                 AutoLogin();
+            }
+            else
+            {
+                MainPage = new Login();
             }
         }
 
@@ -33,6 +37,7 @@ namespace Ecco.Mobile
             }
             else
             {
+                MainPage = new Login();
                 await MainPage.DisplayAlert("Authentication Error", "You have been logged out", "Ok");
             }
         }

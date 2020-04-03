@@ -32,7 +32,7 @@ namespace Ecco.Web.Controllers
         }
 
         [HttpGet("UserInfo")]
-        public async Task<IdentityUser> GetUserInfo()
+        public async Task<EccoUser> GetUserInfo()
         {
             var allClaims = User.Claims.ToList();
             var name = allClaims.First(c => c.Type.Contains("nameidentifier")).Value;
@@ -45,6 +45,12 @@ namespace Ecco.Web.Controllers
         public List<Card> Cards()
         {
             return _context.Cards.ToList();
+        }
+
+        [HttpGet("MyCards")]
+        public List<Card> GetCards(string id)
+        {
+            return _context.Cards.Where(x => x.UserId == new Guid(id)).ToList();
         }
 
         [HttpGet("Card")]

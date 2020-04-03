@@ -11,10 +11,16 @@
         <viewmodels:MyAccountViewModel/>
     </ContentView.BindingContext>
     
-  <ContentView.Content>
-      <StackLayout BackgroundColor="Red">
+    <ContentView.Content>
+        <StackLayout>
 
-            <Button Text="Logout" Command="{Binding LogoutCommand}" HorizontalOptions="Center"/>
+            <Label Text="{Binding UserData.ProfileName}"
+                   HorizontalOptions="CenterAndExpand"
+                   Margin="50"/>
+
+            <Button Text="Logout" Command="{Binding LogoutCommand}"
+                    HorizontalOptions="Center"
+                    VerticalOptions="EndAndExpand"/>
 
         </StackLayout>
   </ContentView.Content>

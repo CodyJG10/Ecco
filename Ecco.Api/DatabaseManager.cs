@@ -152,6 +152,13 @@ namespace Ecco.Api
             return card;
         }
 
+        public async Task<IEnumerable<Card>> GetMyCards(string id)
+        {
+            var response = await client.GetAsync("api/mycards?id=" + id);
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<IEnumerable<Card>>(content);
+        }
+
         #endregion
 
         #region Connections

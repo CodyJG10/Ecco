@@ -17,6 +17,8 @@ namespace Ecco.Mobile.ViewModels.Home
     public class SendCardViewModel : ViewModelBase
     {
         private IDatabaseManager _db;
+        private UserData _user;
+        
         private string toId;
         private int cardToSendId;
 
@@ -62,7 +64,10 @@ namespace Ecco.Mobile.ViewModels.Home
         public SendCardViewModel()
         {
             MyCards = new List<Card>();
+            
             _db = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
+            _user = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
+
             SendCommand = new Command(Send);
             UserSearchTypedCommand = new Command(UpdateUserSearchResults);
             UserSelectedCommand = new Command<UserData>(UserSelected);
@@ -73,14 +78,13 @@ namespace Ecco.Mobile.ViewModels.Home
 
         private async void LoadCards()
         {
-            var cards = await _db.GetCards();
+            var cards = await _db.GetMyCards(_user.Id.ToString());
             MyCards = cards.ToList();
         }
 
         private async void Send()
         {
-            var currentUser = await _db.GetUserData();
-            bool succesful = await _db.CreateConnection(currentUser.Id, new Guid(toId), cardToSendId);
+            bool succesful = await _db.CreateConnection(_user.Id, new Guid(toId), cardToSendId);
             if (succesful)
             {
                 Console.WriteLine("Succesfully sent connection request");

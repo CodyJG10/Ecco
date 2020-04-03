@@ -85,14 +85,8 @@ namespace Ecco.Mobile.ViewModels.Home
 
             var user = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
 
-            var allCards = await _db.GetCards();
-
-            var cards = allCards.Where(x => x.UserId == user.Id).ToList();
-
-            if (Cards.Count != cards.Count)
-            {
-                Cards = cards;
-            }
+            var cards = await _db.GetMyCards(user.Id.ToString());
+            Cards = cards.ToList();
 
             Loading = false;
         }

@@ -6,51 +6,57 @@
              mc:Ignorable="d"
              x:Class="Ecco.Mobile.Views.Pages.CardListView"
              xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.Home"
-             x:Name="cardListViewPage">
+             x:Name="cardListViewPage"
+             xmlns:local="clr-namespace:Ecco.Mobile.Models" xmlns:cardViews="clr-namespace:Ecco.Mobile.Views.Card">
 
+    <ContentView.Resources>
+        <local:NegateBooleanValue x:Key="inverter"/>
+    </ContentView.Resources>
+    
     <ContentView.BindingContext>
         <viewmodels:CardListViewModel/>
     </ContentView.BindingContext>    
     
     <ContentView.Content>
-      <StackLayout>
+        <StackLayout>
 
-            <Label Text="Pending Connections" HorizontalTextAlignment="Center" HorizontalOptions="Center"/>
-            <ListView ItemsSource="{Binding PendingConnections}"
-                      IsPullToRefreshEnabled="True"
-                      RefreshCommand="{Binding RefreshCommand}"
-                      IsRefreshing="{Binding Loading}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout Orientation="Horizontal" BackgroundColor="Red">
-                                <Label Text="{Binding Name}" HorizontalOptions="Start"/>
-                                <Button Text="Accept" 
-                                        HorizontalOptions="End"
-                                        Command="{Binding Source={x:Reference cardListViewPage}, Path=BindingContext.AcceptPendingConnectionCommand}"
-                                        CommandParameter="{Binding Connection}"/>
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+            <StackLayout IsVisible="{Binding HasPendingConnections}">
+                <Label Text="You have cards to accept!"
+                       HorizontalOptions="Center"/>
+                <Button Text="View"
+                        HorizontalOptions="Center"
+                        Command="{Binding ViewPendingConnectionsCommand}"/>
+            </StackLayout>
+
+            <StackLayout IsVisible="{Binding HasPendingConnections, Converter={StaticResource inverter}}">
+                <Label Text="You have no pending cards to accept!"
+                       HorizontalOptions="Center"/>
+            </StackLayout>
 
             <Label Text="Connections" HorizontalTextAlignment="Center" HorizontalOptions="Center"/>
             <ListView ItemsSource="{Binding Cards}"
                       IsPullToRefreshEnabled="True"
                       RefreshCommand="{Binding RefreshCommand}"
-                      IsRefreshing="{Binding Loading}">
+                      IsRefreshing="{Binding Loading}"
+                      HasUnevenRows="True" 
+                      IsVisible="{Binding HasConnections}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout Orientation="Horizontal" BackgroundColor="Red">
-                                <Label Text="{Binding Name}" HorizontalOptions="Start"/>
+                                <cardViews:Card HorizontalOptions="CenterAndExpand"
+                                                VerticalOptions="CenterAndExpand"
+                                                BindingContext="{Binding Card}"/>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
 
+            <Label Text="You have not recieved any cards!"
+                   HorizontalOptions="Center"
+                   FontSize="Large"
+                   IsVisible="{Binding HasConnections, Converter={StaticResource inverter}}"/>
 
         </StackLayout>
   </ContentView.Content>
