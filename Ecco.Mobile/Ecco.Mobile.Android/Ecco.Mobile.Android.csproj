@@ -90,7 +90,9 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\icon.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\biz_card_background.jpg" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ecco.Mobile\Ecco.Mobile.csproj">
       <Project>{525D9203-D7B2-4D3B-ABCD-2A23487D3CF8}</Project>

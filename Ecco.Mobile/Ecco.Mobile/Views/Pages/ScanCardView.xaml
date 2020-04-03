@@ -5,7 +5,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="Ecco.Mobile.Views.Pages.ScanCardView"
-             xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.Home">
+             xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.Home"
+             BackgroundColor="{StaticResource colorBackgroundLight}">
 
     <ContentView.BindingContext>
         <viewmodels:ScanCardViewModel/>

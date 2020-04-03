@@ -7,7 +7,8 @@
              x:Class="Ecco.Mobile.Views.Pages.MyCardView"
              xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.Home"
              xmlns:cardViews="clr-namespace:Ecco.Mobile.Views.Card"
-             x:Name="myCardsView">
+             x:Name="myCardsView"
+             BackgroundColor="{StaticResource colorBackgroundLight}">
 
     <ContentView.BindingContext>
         <viewmodels:MyCardViewModel/>
@@ -20,7 +21,7 @@
 
             <Label Text="My Cards" 
                    HorizontalOptions="Center"
-                   FontSize="Large"/>
+                   Style="{StaticResource labelTitle}"/>
 
             <ListView ItemsSource="{Binding Cards}"
                       IsPullToRefreshEnabled="True"

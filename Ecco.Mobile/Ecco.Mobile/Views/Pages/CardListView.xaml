@@ -8,7 +8,8 @@
              xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.Home"
              x:Name="cardListViewPage"
              xmlns:local="clr-namespace:Ecco.Mobile.Models" 
-             xmlns:cardViews="clr-namespace:Ecco.Mobile.Views.Card">
+             xmlns:cardViews="clr-namespace:Ecco.Mobile.Views.Card"
+             BackgroundColor="{StaticResource colorBackgroundLight}">
 
     <ContentView.Resources>
         <local:NegateBooleanValue x:Key="inverter"/>
@@ -23,7 +24,8 @@
 
             <StackLayout IsVisible="{Binding HasPendingConnections}">
                 <Label Text="You have cards to accept!"
-                       HorizontalOptions="Center"/>
+                       HorizontalOptions="Center"
+                       Style="{StaticResource  labelText}"/>
                 <Button Text="View"
                         HorizontalOptions="Center"
                         Command="{Binding ViewPendingConnectionsCommand}"/>
@@ -31,10 +33,14 @@
 
             <StackLayout IsVisible="{Binding HasPendingConnections, Converter={StaticResource inverter}}">
                 <Label Text="You have no pending cards to accept!"
-                       HorizontalOptions="Center"/>
+                       HorizontalOptions="Center"
+                       Style="{StaticResource labelText}"/>
             </StackLayout>
 
-            <Label Text="Connections" HorizontalTextAlignment="Center" HorizontalOptions="Center"/>
+            <Label Text="Connections" 
+                   HorizontalTextAlignment="Center" 
+                   HorizontalOptions="Center"
+                   Style="{StaticResource labelTitle}"/>
             <ListView ItemsSource="{Binding Cards}"
                       IsPullToRefreshEnabled="True"
                       RefreshCommand="{Binding RefreshCommand}"
@@ -49,7 +55,7 @@
                                           Command="{Binding Source={x:Reference cardListViewPage}, Path=BindingContext.DeleteConnectionCommand}"
                                           CommandParameter="{Binding .}"/>
                             </ViewCell.ContextActions>
-                            <StackLayout Orientation="Horizontal" BackgroundColor="Red">
+                            <StackLayout>
                                 <cardViews:Card HorizontalOptions="CenterAndExpand"
                                                 VerticalOptions="CenterAndExpand"
                                                 BindingContext="{Binding Card}"/>

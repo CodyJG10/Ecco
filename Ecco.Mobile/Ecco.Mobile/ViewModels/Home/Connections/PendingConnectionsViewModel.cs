@@ -48,6 +48,7 @@ namespace Ecco.Mobile.ViewModels.Home.Connections
         }
 
         public ICommand AcceptPendingConnectionCommand { get; set; }
+        public ICommand RefreshCommand { get; set; }
 
         public PendingConnectionsViewModel()
         {
@@ -55,6 +56,7 @@ namespace Ecco.Mobile.ViewModels.Home.Connections
             _user = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
 
             AcceptPendingConnectionCommand = new Command<Connection>(AcceptPendingConnection);
+            RefreshCommand = new Command(LoadPendingConnections);
 
             LoadPendingConnections();
         }

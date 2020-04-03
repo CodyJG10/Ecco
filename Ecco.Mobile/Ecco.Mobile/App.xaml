@@ -6,6 +6,23 @@
              mc:Ignorable="d"
              x:Class="Ecco.Mobile.App">
     <Application.Resources>
+        
+        <!--Colors-->
+        <Color x:Key="colorBackgroundLight">#f3f6fb</Color>
+        <Color x:Key="colorBackgroundDark">#dbdfea</Color>
+        <Color x:Key="colorTextPrimary">#54b0f3</Color>
+        <Color x:Key="colorTextSecondary">#b1c5c4</Color>
 
+        <!--Styles-->
+        <Style x:Key="labelTitle" TargetType="Label">
+            <Setter Property="FontSize" Value="Large"/>
+            <Setter Property="TextColor" Value="{StaticResource colorTextPrimary}"/>
+        </Style>
+
+        <Style x:Key="labelText" TargetType="Label">
+            <Setter Property="FontSize" Value="Body"/>
+            <Setter Property="TextColor" Value="{StaticResource colorTextSecondary}"/>
+        </Style>
+        
     </Application.Resources>
 </Application>

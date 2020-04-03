@@ -5,40 +5,55 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="Ecco.Mobile.Views.Card.Card"
-             xmlns:viewmodels="clr-namespace:Ecco.Entities;assembly=Ecco.Entities">
+             xmlns:viewmodels="clr-namespace:Ecco.Entities;assembly=Ecco.Entities"
+             WidthRequest="300">
 
     <ContentView.BindingContext>
         <viewmodels:Card/>
     </ContentView.BindingContext>
+
+    <ContentView.Resources>
+        <Style x:Key="styleLabelPrimary" TargetType="Label">
+            <Setter Property="FontSize" Value="Large"/>
+            <Setter Property="HorizontalTextAlignment" Value="Center"/>
+            <Setter Property="HorizontalOptions" Value="Center"/>
+        </Style>
+
+        <Style x:Key="styleLabelSecondary" TargetType="Label">
+            <Setter Property="FontSize" Value="Caption"/>
+            <Setter Property="HorizontalOptions" Value="Start"/>
+        </Style>
+    </ContentView.Resources>
     
     <ContentView.Content>
-        <StackLayout BackgroundColor="Red"
-                     VerticalOptions="CenterAndExpand">
 
-            <Label Text="{Binding CardTitle}"
-                   HorizontalOptions="Center"
-                   BackgroundColor="Blue"
-                   Margin="0,15,0,0"
-                   FontSize="Large"/>
+        <Grid>
 
-            <Label Text="{Binding JobTitle}"
-                   HorizontalOptions="Center"
-                   BackgroundColor="Blue"
-                   Margin="0,15,0,0"
-                   FontSize="Large"/>
+            <Image Source="biz_card_background.jpg"
+                   Aspect="AspectFit"/>
+            
+            <StackLayout>
 
-            <Label Text="{Binding Email}"
-                   HorizontalOptions="Start"
-                   VerticalOptions="EndAndExpand"
-                   BackgroundColor="Blue"
-                   Margin="15,0,0,0"/>
+                <Label Text="{Binding CardTitle}"
+                       Style="{StaticResource styleLabelPrimary}"
+                       Margin="0,15,0,0"/>
 
-            <Label Text="{Binding Phone}"
-                   HorizontalOptions="Start"
-                   VerticalOptions="End"
-                   BackgroundColor="Blue"
-                   Margin="15,0,0,50"/>
+                <Label Text="{Binding JobTitle}"
+                       Style="{StaticResource styleLabelPrimary}"
+                       Margin="0,0,0,20"/>
 
-        </StackLayout>
+                <Label Text="{Binding Email}"
+                       Style="{StaticResource styleLabelSecondary}"
+                       Margin="15,0,0,0"/>
+
+                <Label Text="{Binding Phone}"
+                       Style="{StaticResource styleLabelSecondary}"
+                       Margin="15,0,0,5"/>
+
+            </StackLayout>
+
+        </Grid>
+        
+        
   </ContentView.Content>
 </ContentView>

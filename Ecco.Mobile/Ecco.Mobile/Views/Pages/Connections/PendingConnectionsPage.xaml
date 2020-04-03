@@ -5,8 +5,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="Ecco.Mobile.Views.Pages.Connections.PendingConnectionsPage"
-             xmlns:viewModels="clr-namespace:Ecco.Mobile.ViewModels.Home.Connections"
-             x:Name="pendingConnectionsPage">
+             xmlns:viewModels="clr-namespace:Ecco.Mobile.ViewModels.Home.Connections" xmlns:local="clr-namespace:Ecco.Mobile.Views.Card"
+             x:Name="pendingConnectionsPage"
+             Title="Pending Card Connections">
 
     <ContentPage.BindingContext>
         <viewModels:PendingConnectionsViewModel/>
@@ -15,20 +16,29 @@
     <ContentPage.Content>
         <StackLayout>
 
-            <Label Text="Pending Connections" HorizontalTextAlignment="Center" HorizontalOptions="Center"/>
+            <Label Text="Pending Connections" 
+                   HorizontalOptions="Center"/>
             <ListView ItemsSource="{Binding PendingConnections}"
                       IsPullToRefreshEnabled="True"
                       RefreshCommand="{Binding RefreshCommand}"
-                      IsRefreshing="{Binding Loading}">
+                      IsRefreshing="{Binding Loading}"
+                      HasUnevenRows="True">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout Orientation="Horizontal" BackgroundColor="Red">
-                                <Label Text="{Binding Name}" HorizontalOptions="Start"/>
-                                <Button Text="Accept" 
-                                        HorizontalOptions="End"
+                            <StackLayout BackgroundColor="{StaticResource colorBackgroundDark}">
+                                <StackLayout Orientation="Horizontal">
+                                    <Label Text="{Binding Name}"
+                                       HorizontalOptions="CenterAndExpand"
+                                       Style="{StaticResource labelText}"
+                                       TextColor="Black"
+                                       VerticalOptions="Center"/>
+                                    <Button Text="Accept" 
+                                        HorizontalOptions="EndAndExpand"
                                         Command="{Binding Source={x:Reference pendingConnectionsPage}, Path=BindingContext.AcceptPendingConnectionCommand}"
                                         CommandParameter="{Binding Connection}"/>
+                                </StackLayout>
+                                <local:Card BindingContext="{Binding Card}" />
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
