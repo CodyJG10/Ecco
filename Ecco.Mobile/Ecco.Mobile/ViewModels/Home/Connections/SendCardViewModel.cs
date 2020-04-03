@@ -39,8 +39,8 @@ namespace Ecco.Mobile.ViewModels.Home
             }
         }
 
-        private List<Card> _myCards;
-        public List<Card> MyCards
+        private List<Entities.Card> _myCards;
+        public List<Entities.Card> MyCards
         {
             get 
             {
@@ -63,7 +63,7 @@ namespace Ecco.Mobile.ViewModels.Home
 
         public SendCardViewModel()
         {
-            MyCards = new List<Card>();
+            MyCards = new List<Entities.Card>();
             
             _db = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
             _user = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
@@ -71,7 +71,7 @@ namespace Ecco.Mobile.ViewModels.Home
             SendCommand = new Command(Send);
             UserSearchTypedCommand = new Command(UpdateUserSearchResults);
             UserSelectedCommand = new Command<UserData>(UserSelected);
-            CardSelectedCommand = new Command<Card>(CardSelected);
+            CardSelectedCommand = new Command<Entities.Card>(CardSelected);
 
             LoadCards();
         }
@@ -114,7 +114,7 @@ namespace Ecco.Mobile.ViewModels.Home
             toId = userData.Id.ToString();
         }
 
-        private void CardSelected(Card card)
+        private void CardSelected(Entities.Card card)
         {
             cardToSendId = card.Id;
         }

@@ -33,7 +33,7 @@ namespace Ecco.Mobile.ViewModels.Home
         public async void CreateCard()
         {
             UserData user = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
-            Card card = new Card()
+            Entities.Card card = new Entities.Card()
             {
                 CardTitle = CardTitle,
                 Description = Description,
@@ -45,11 +45,11 @@ namespace Ecco.Mobile.ViewModels.Home
             var succeeded = await _db.CreateCard(card);
             if (succeeded)
             {
-                Console.WriteLine("Card creation succeeded!");
+                await Application.Current.MainPage.Navigation.PopAsync();
             }
             else 
             {
-                Console.WriteLine("Card creation was unsuccesful!");
+                await Application.Current.MainPage.DisplayAlert("Error", "An error was encountered when attempting to create the card. Please ensure all information is filled in", "Ok");
             }
         }
     }

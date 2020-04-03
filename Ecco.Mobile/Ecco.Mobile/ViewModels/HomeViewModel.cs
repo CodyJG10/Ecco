@@ -9,6 +9,5 @@ namespace Ecco.Mobile.ViewModels
 {
     public class HomeViewModel : ViewModelBase
     {
-
     }
 }

@@ -6,7 +6,8 @@
              mc:Ignorable="d"
              x:Class="Ecco.Mobile.Views.Pages.MyCardView"
              xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.Home"
-             xmlns:cardViews="clr-namespace:Ecco.Mobile.Views.Card">
+             xmlns:cardViews="clr-namespace:Ecco.Mobile.Views.Card"
+             x:Name="myCardsView">
 
     <ContentView.BindingContext>
         <viewmodels:MyCardViewModel/>
@@ -29,6 +30,14 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
+                            <ViewCell.ContextActions>
+                                <MenuItem Text="Edit" 
+                                          Command="{Binding Source={x:Reference myCardsView}, Path=BindingContext.EditCardCommand}"
+                                          CommandParameter="{Binding .}"/>
+                                <MenuItem Text="Delete" 
+                                          Command="{Binding Source={x:Reference myCardsView}, Path=BindingContext.DeleteCardCommand}"
+                                          CommandParameter="{Binding .}"/>
+                            </ViewCell.ContextActions>
                             <StackLayout Orientation="Horizontal" 
                                          Margin="20">
                                 <cardViews:Card HorizontalOptions="CenterAndExpand"

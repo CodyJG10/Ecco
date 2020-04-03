@@ -159,6 +159,22 @@ namespace Ecco.Api
             return JsonConvert.DeserializeObject<IEnumerable<Card>>(content);
         }
 
+        public async Task<bool> EditCard(Card card)
+        {
+            string cardJson = JsonConvert.SerializeObject(card);
+            var content = new StringContent(cardJson, Encoding.UTF8, "application/json");
+
+            var response = await client.PostAsync("api/EditCard", content);
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> DeleteCard(Card card)
+        {
+            int id = card.Id;
+            var response = await client.DeleteAsync("api/DeleteCard?id=" + id);
+            return response.IsSuccessStatusCode;
+        }
+
         #endregion
 
         #region Connections

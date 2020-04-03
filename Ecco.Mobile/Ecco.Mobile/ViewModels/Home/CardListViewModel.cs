@@ -84,6 +84,7 @@ namespace Ecco.Mobile.ViewModels.Home
 
         public ICommand ViewPendingConnectionsCommand { get; set; }
         public ICommand RefreshCommand { get; set; }
+        public ICommand DeleteConnectionCommand { get; set; }
 
         public CardListViewModel()
         {
@@ -92,6 +93,7 @@ namespace Ecco.Mobile.ViewModels.Home
 
             ViewPendingConnectionsCommand = new Command(x => Application.Current.MainPage.Navigation.PushAsync(new PendingConnectionsPage()));
             RefreshCommand = new Command(Refresh);
+            DeleteConnectionCommand = new Command<ConnectionModel>(DeleteConnection);
 
             Load();
         }
@@ -112,13 +114,13 @@ namespace Ecco.Mobile.ViewModels.Home
             List<ConnectionModel> connectionModels = new List<ConnectionModel>();
             foreach (var connection in connections)
             {
-                Card card = await _db.GetCard(connection.CardId);
-                string userName = (await _db.GetUserData(connection.FromId)).UserName;
+                Entities.Card card = await _db.GetCard(connection.CardId);
+                var userData = await _db.GetUserData(connection.FromId);
                 ConnectionModel model = new ConnectionModel()
                 {
                     Card = card,
                     Connection = connection,
-                    Name = userName
+                    Name = userData.ProfileName
                 };
                 connectionModels.Add(model);
             }
@@ -141,6 +143,20 @@ namespace Ecco.Mobile.ViewModels.Home
         public void Refresh()
         {
             Load();
+        }
+
+        private async void DeleteConnection(ConnectionModel model)
+        {
+            var succesful = await _db.DeleteConnection(model.Connection);
+            if (succesful)
+            {
+                Refresh();
+            }
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", "There was an error attempting to delete this connection!", "Ok");
+                Refresh();
+            }
         }
     }
 }

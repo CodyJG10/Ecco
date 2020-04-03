@@ -72,6 +72,38 @@ namespace Ecco.Web.Controllers
             return Ok();
         }
 
+        [HttpPost("EditCard")]
+        public async Task<IActionResult> EditCard(Card card)
+        {
+            if (card == null)
+            {
+                return BadRequest();
+            }
+
+            _context.Update(card);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
+        [HttpDelete("DeleteCard")]
+        public async Task<IActionResult> DeleteCard(int id)
+        {
+            var card = _context.Cards.Single(x => x.Id == id);
+
+            if (card == null)
+            {
+                return BadRequest();
+            }
+
+            //Delete all connections containing this card
+            _context.Connections.Where(x => x.CardId == id).ToList().ForEach(x => _context.Remove(x));
+
+            _context.Remove(card);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
         #endregion
 
         #region Connections
@@ -98,6 +130,13 @@ namespace Ecco.Web.Controllers
         public async Task<IActionResult> CreateConnection([FromForm]string id, [FromForm]string toId, [FromForm]string cardId)
         {
             if (new Guid(id) == Guid.Empty || new Guid(toId) == Guid.Empty || cardId == null)
+            {
+                return BadRequest();
+            }
+
+            if (_context.Connections.Any(x => x.FromId == new Guid(id))
+                && _context.Connections.Any(x => x.ToId == new Guid(toId))
+                && _context.Connections.Any(x => x.CardId == int.Parse(cardId)))
             {
                 return BadRequest();
             }

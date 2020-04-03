@@ -66,13 +66,13 @@ namespace Ecco.Mobile.ViewModels.Home.Connections
             List<ConnectionModel> pendingConnectionModels = new List<ConnectionModel>();
             foreach (var pendingConnection in pendingConnections)
             {
-                Card card = await _db.GetCard(pendingConnection.CardId);
-                string userName = (await _db.GetUserData(pendingConnection.FromId)).UserName;
+                Entities.Card card = await _db.GetCard(pendingConnection.CardId);
+                var userData = await _db.GetUserData(pendingConnection.FromId);
                 ConnectionModel model = new ConnectionModel()
                 {
                     Card = card,
                     Connection = pendingConnection,
-                    Name = userName
+                    Name = userData.ProfileName
                 };
                 pendingConnectionModels.Add(model);
             }

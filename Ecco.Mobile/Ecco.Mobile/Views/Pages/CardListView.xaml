@@ -7,7 +7,8 @@
              x:Class="Ecco.Mobile.Views.Pages.CardListView"
              xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.Home"
              x:Name="cardListViewPage"
-             xmlns:local="clr-namespace:Ecco.Mobile.Models" xmlns:cardViews="clr-namespace:Ecco.Mobile.Views.Card">
+             xmlns:local="clr-namespace:Ecco.Mobile.Models" 
+             xmlns:cardViews="clr-namespace:Ecco.Mobile.Views.Card">
 
     <ContentView.Resources>
         <local:NegateBooleanValue x:Key="inverter"/>
@@ -43,6 +44,11 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
+                            <ViewCell.ContextActions>
+                                <MenuItem Text="Delete" 
+                                          Command="{Binding Source={x:Reference cardListViewPage}, Path=BindingContext.DeleteConnectionCommand}"
+                                          CommandParameter="{Binding .}"/>
+                            </ViewCell.ContextActions>
                             <StackLayout Orientation="Horizontal" BackgroundColor="Red">
                                 <cardViews:Card HorizontalOptions="CenterAndExpand"
                                                 VerticalOptions="CenterAndExpand"
@@ -57,6 +63,9 @@
                    HorizontalOptions="Center"
                    FontSize="Large"
                    IsVisible="{Binding HasConnections, Converter={StaticResource inverter}}"/>
+            <Button Text="Refresh"
+                    HorizontalOptions="Center"
+                    Command="{Binding RefreshCommand}"/>
 
         </StackLayout>
   </ContentView.Content>

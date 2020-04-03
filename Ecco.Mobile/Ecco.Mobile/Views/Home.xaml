@@ -13,15 +13,15 @@
         <viewmodels:HomeViewModel/>
     </TabbedPage.BindingContext>
 
-    <ContentPage Title="Scan Card">
+    <ContentPage Title="Connect" IconImageSource="connect.png">
         <views:ScanCardView/>
     </ContentPage>
 
-    <ContentPage Title="Cards" IconImageSource="cards_multiple.png">
+    <ContentPage Title="Network" IconImageSource="contacts.png">
         <views:CardListView/>
     </ContentPage>
 
-    <ContentPage Title="My Card" IconImageSource="card.png">
+    <ContentPage Title="My Cards" IconImageSource="business_card.png">
         <views:MyCardView/>
     </ContentPage>
 

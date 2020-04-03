@@ -1,6 +1,7 @@
 ﻿using Ecco.Api;
 using Ecco.Entities;
 using Ecco.Mobile.Views.Pages;
+using Ecco.Mobile.Views.Pages.Cards;
 using Nancy.TinyIoc;
 using Newtonsoft.Json;
 using Plugin.Settings;
@@ -20,8 +21,8 @@ namespace Ecco.Mobile.ViewModels.Home
 
         #region Content
 
-        private List<Card> _cards = new List<Card>();
-        public List<Card> Cards
+        private List<Entities.Card> _cards = new List<Entities.Card>();
+        public List<Entities.Card> Cards
         {
             get
             {
@@ -54,6 +55,8 @@ namespace Ecco.Mobile.ViewModels.Home
 
         public ICommand CreateCardCommand { get; set; }
         public ICommand RefreshCommand { get; set; }
+        public ICommand EditCardCommand { get; set; }
+        public ICommand DeleteCardCommand { get; set; }
 
         #endregion
 
@@ -63,6 +66,8 @@ namespace Ecco.Mobile.ViewModels.Home
 
             CreateCardCommand = new Command(() => Application.Current.MainPage.Navigation.PushAsync(new CreateCardPage()));
             RefreshCommand = new Command(Refresh);
+            EditCardCommand = new Command<Entities.Card>(EditCard);
+            DeleteCardCommand = new Command<Entities.Card>(DeleteCard);
 
             Loading = true;
             LoadCards();
@@ -72,9 +77,8 @@ namespace Ecco.Mobile.ViewModels.Home
         {
             var user = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
 
-            var allCards = await _db.GetCards();
-
-            Cards = allCards.Where(x => x.UserId == user.Id).ToList();
+            var cards = await _db.GetMyCards(user.Id.ToString());
+            Cards = cards.ToList();
 
             Loading = false;
         }
@@ -89,6 +93,25 @@ namespace Ecco.Mobile.ViewModels.Home
             Cards = cards.ToList();
 
             Loading = false;
+        }
+
+        private async void EditCard(Entities.Card card)
+        {
+            await Application.Current.MainPage.Navigation.PushAsync(new EditCardPage(card));
+        }
+
+        private async void DeleteCard(Entities.Card card)
+        {
+            var succesful = await _db.DeleteCard(card);
+            if (succesful)
+            {
+                Refresh();
+            }
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert("Error!", "An error was encountered when attempting to delete your card", "Ok");
+                Refresh();
+            }
         }
     }
 }

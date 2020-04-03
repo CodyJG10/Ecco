@@ -44,7 +44,7 @@
                             <ViewCell>
                                 <StackLayout>
                                     <Label HorizontalTextAlignment="Center"
-                                       Text="{Binding UserName}"/>
+                                       Text="{Binding ProfileName}"/>
                                 </StackLayout>
                             </ViewCell>
                         </DataTemplate>
