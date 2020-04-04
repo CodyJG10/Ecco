@@ -57,6 +57,7 @@ namespace Ecco.Mobile.ViewModels.Home
         public ICommand RefreshCommand { get; set; }
         public ICommand EditCardCommand { get; set; }
         public ICommand DeleteCardCommand { get; set; }
+        public ICommand SelectCardCommand { get; set; }
 
         #endregion
 
@@ -68,13 +69,15 @@ namespace Ecco.Mobile.ViewModels.Home
             RefreshCommand = new Command(Refresh);
             EditCardCommand = new Command<Entities.Card>(EditCard);
             DeleteCardCommand = new Command<Entities.Card>(DeleteCard);
+            SelectCardCommand = new Command<Entities.Card>(x => Application.Current.MainPage.Navigation.PushModalAsync(new ViewCardPage(x)));
 
-            Loading = true;
             LoadCards();
         }
 
         private async void LoadCards()
         {
+            Loading = true;
+
             var user = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
 
             var cards = await _db.GetMyCards(user.Id.ToString());

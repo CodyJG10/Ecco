@@ -1,6 +1,7 @@
 ﻿using Ecco.Api;
 using Ecco.Entities;
 using Ecco.Mobile.Models;
+using Ecco.Mobile.Views.Pages.Cards;
 using Ecco.Mobile.Views.Pages.Connections;
 using Nancy.TinyIoc;
 using Newtonsoft.Json;
@@ -85,6 +86,7 @@ namespace Ecco.Mobile.ViewModels.Home
         public ICommand ViewPendingConnectionsCommand { get; set; }
         public ICommand RefreshCommand { get; set; }
         public ICommand DeleteConnectionCommand { get; set; }
+        public ICommand SelectCardCommand { get; set; }
 
         public CardListViewModel()
         {
@@ -94,6 +96,7 @@ namespace Ecco.Mobile.ViewModels.Home
             ViewPendingConnectionsCommand = new Command(x => Application.Current.MainPage.Navigation.PushAsync(new PendingConnectionsPage()));
             RefreshCommand = new Command(Refresh);
             DeleteConnectionCommand = new Command<ConnectionModel>(DeleteConnection);
+            SelectCardCommand = new Command<Entities.Card>(x => Application.Current.MainPage.Navigation.PushModalAsync(new ViewCardPage(x)));
 
             Load();
         }

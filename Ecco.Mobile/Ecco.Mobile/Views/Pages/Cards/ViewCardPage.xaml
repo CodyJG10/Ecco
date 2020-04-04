@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:models="clr-namespace:Ecco.Entities;assembly=Ecco.Entities"
+             xmlns:views="clr-namespace:Ecco.Mobile.Views.Card"
+             mc:Ignorable="d"
+             x:Class="Ecco.Mobile.Views.Pages.Cards.ViewCardPage"
+             BackgroundColor="{StaticResource colorBackgroundDark}">
+
+    <ContentPage.BindingContext>
+        <models:Card/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <Style x:Key="buttonContact" TargetType="Button">
+            <Setter Property="CornerRadius" Value="15"/>
+            <Setter Property="BackgroundColor" Value="{StaticResource colorBackgroundLight}"/>
+            <Setter Property="TextColor" Value="{StaticResource colorTextPrimary}"/>
+        </Style>
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="Center">
+            <views:Card BindingContext="{Binding Card}"/>
+
+            <StackLayout Orientation="Horizontal"
+                         HorizontalOptions="Center"
+                         Margin="0,45"
+                         Spacing="45">
+
+                <Button Text="Call"
+                        Style="{StaticResource buttonContact}"
+                        WidthRequest="150"
+                        Command="{Binding CallCommand}"/>
+
+                <Button Text="Email"
+                        Style="{StaticResource buttonContact}"
+                        WidthRequest="150"
+                        Command="{Binding EmailCommand}"/>
+
+            </StackLayout>
+            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

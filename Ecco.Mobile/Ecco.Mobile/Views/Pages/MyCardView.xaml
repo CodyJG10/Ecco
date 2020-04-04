@@ -39,11 +39,15 @@
                                           Command="{Binding Source={x:Reference myCardsView}, Path=BindingContext.DeleteCardCommand}"
                                           CommandParameter="{Binding .}"/>
                             </ViewCell.ContextActions>
-                            <StackLayout Orientation="Horizontal" 
-                                         Margin="20">
+                            <StackLayout Margin="0,0,0,15">
                                 <cardViews:Card HorizontalOptions="CenterAndExpand"
                                                 VerticalOptions="CenterAndExpand"
-                                                BindingContext="{Binding .}"/>
+                                                BindingContext="{Binding .}">
+                                    <cardViews:Card.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={x:Reference myCardsView}, Path=BindingContext.SelectCardCommand}"
+                                                              CommandParameter="{Binding .}"/>
+                                    </cardViews:Card.GestureRecognizers>
+                                </cardViews:Card>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>

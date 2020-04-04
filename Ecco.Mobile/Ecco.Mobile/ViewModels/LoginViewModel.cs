@@ -22,6 +22,20 @@ namespace Ecco.Mobile.ViewModels
         public string PasswordText { get; set; }
         public string ConfirmPasswordText { get; set; }
 
+        private bool _loading;
+        public bool Loading
+        {
+            get
+            {
+                return _loading;
+            }
+            set
+            {
+                _loading = value;
+                OnPropertyChanged(nameof(Loading));
+            }
+        }
+
         public LoginViewModel()
         {
             _database = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
@@ -31,6 +45,7 @@ namespace Ecco.Mobile.ViewModels
 
         public async Task<Task> Login()
         {
+            Loading = true;
             var loginSuccesful = await _database.Login(EmailText, PasswordText);
             if (loginSuccesful)
             {
@@ -46,6 +61,7 @@ namespace Ecco.Mobile.ViewModels
                 Console.WriteLine("Login was unsuccesful");
                 await Application.Current.MainPage.DisplayAlert("Authentication Error", "The provided credentials were incorrect", "Return");
             }
+            Loading = false;
             return Task.CompletedTask;
         }
 

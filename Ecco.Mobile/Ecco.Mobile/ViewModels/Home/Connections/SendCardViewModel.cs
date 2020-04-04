@@ -101,7 +101,7 @@ namespace Ecco.Mobile.ViewModels.Home
         {
             List<UserData> newResults = new List<UserData>();
             bool userExists = await _db.UserExists(UserQuery);
-            if (userExists)
+            if (userExists && !UserQuery.ToLower().Equals(_user.ProfileName.ToLower()))
             {
                 var userData = await _db.GetUserData(UserQuery);
                 newResults.Add(userData);

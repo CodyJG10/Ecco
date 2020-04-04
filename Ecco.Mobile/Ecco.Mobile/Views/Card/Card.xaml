@@ -6,7 +6,8 @@
              mc:Ignorable="d"
              x:Class="Ecco.Mobile.Views.Card.Card"
              xmlns:viewmodels="clr-namespace:Ecco.Entities;assembly=Ecco.Entities"
-             WidthRequest="300">
+             HeightRequest="200"
+             WidthRequest="350">
 
     <ContentView.BindingContext>
         <viewmodels:Card/>
@@ -14,43 +15,58 @@
 
     <ContentView.Resources>
         <Style x:Key="styleLabelPrimary" TargetType="Label">
-            <Setter Property="FontSize" Value="Large"/>
+            <Setter Property="FontSize" Value="Medium"/>
             <Setter Property="HorizontalTextAlignment" Value="Center"/>
             <Setter Property="HorizontalOptions" Value="Center"/>
+            <Setter Property="TextColor" Value="Red"/>
         </Style>
 
         <Style x:Key="styleLabelSecondary" TargetType="Label">
-            <Setter Property="FontSize" Value="Caption"/>
+            <Setter Property="FontSize" Value="Small"/>
             <Setter Property="HorizontalOptions" Value="Start"/>
+            <Setter Property="TextColor" Value="Blue"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
         </Style>
     </ContentView.Resources>
-    
+
     <ContentView.Content>
 
-        <Grid>
+        <Grid BackgroundColor="Red"
+              RowSpacing="25"
+              VerticalOptions="FillAndExpand"
+              HorizontalOptions="FillAndExpand">
 
-            <Image Source="biz_card_background.jpg"
-                   Aspect="AspectFit"/>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="2*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
             
-            <StackLayout>
+            <Image Source="biz_card_background.jpg"
+                   Aspect="Fill"
+                   Grid.Row="0"
+                   Grid.RowSpan="4"/>
 
-                <Label Text="{Binding CardTitle}"
-                       Style="{StaticResource styleLabelPrimary}"
-                       Margin="0,15,0,0"/>
+            <Label Text="{Binding CardTitle}"
+                   Style="{StaticResource styleLabelPrimary}"
+                   Margin="0,15,0,0"
+                   Grid.Row="0"/>
 
-                <Label Text="{Binding JobTitle}"
-                       Style="{StaticResource styleLabelPrimary}"
-                       Margin="0,0,0,20"/>
+            <Label Text="{Binding JobTitle}"
+                   Style="{StaticResource styleLabelPrimary}"
+                   Margin="0,0,0,20"
+                   Grid.Row="1"/>
 
-                <Label Text="{Binding Email}"
-                       Style="{StaticResource styleLabelSecondary}"
-                       Margin="15,0,0,0"/>
+            <Label Text="{Binding Email}"
+                   Style="{StaticResource styleLabelSecondary}"
+                   Margin="15,0,0,0"
+                   Grid.Row="2"/>
 
-                <Label Text="{Binding Phone}"
-                       Style="{StaticResource styleLabelSecondary}"
-                       Margin="15,0,0,5"/>
-
-            </StackLayout>
+            <Label Text="{Binding Phone}"
+                   Style="{StaticResource styleLabelSecondary}"
+                   Margin="15,0,0,5"
+                   Grid.Row="3"/>
 
         </Grid>
         

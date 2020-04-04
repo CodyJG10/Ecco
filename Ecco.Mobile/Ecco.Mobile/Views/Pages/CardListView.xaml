@@ -55,10 +55,15 @@
                                           Command="{Binding Source={x:Reference cardListViewPage}, Path=BindingContext.DeleteConnectionCommand}"
                                           CommandParameter="{Binding .}"/>
                             </ViewCell.ContextActions>
-                            <StackLayout>
-                                <cardViews:Card HorizontalOptions="CenterAndExpand"
-                                                VerticalOptions="CenterAndExpand"
-                                                BindingContext="{Binding Card}"/>
+                            <StackLayout Margin="0,0,0,15">
+                                <cardViews:Card HorizontalOptions="Center"
+                                                VerticalOptions="Center"
+                                                BindingContext="{Binding Card}">
+                                    <cardViews:Card.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={x:Reference cardListViewPage}, Path=BindingContext.SelectCardCommand}"
+                                                              CommandParameter="{Binding .}"/>
+                                    </cardViews:Card.GestureRecognizers>
+                                </cardViews:Card>
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
