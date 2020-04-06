@@ -21,7 +21,7 @@
     </ContentPage.Resources>
     
     <ContentPage.Content>
-        <StackLayout BackgroundColor="Red">
+        <StackLayout>
 
             <Entry Placeholder="Card Title" Style="{StaticResource styleEntry}" Text="{Binding CardTitle}"/>
 

@@ -73,7 +73,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ImageAsset Include="Assets.xcassets\Images.imageset\cards_multiple.png">
+    <ImageAsset Include="Assets.xcassets\Images.imageset\biz_card_background.jpg">
       <Visible>false</Visible>
     </ImageAsset>
     <ImageAsset Include="Assets.xcassets\Images.imageset\Contents.json">
@@ -159,5 +159,8 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\profile.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\biz_card_background.jpg" />
   </ItemGroup>
 </Project>

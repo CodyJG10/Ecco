@@ -96,7 +96,7 @@ namespace Ecco.Mobile.ViewModels.Home
             ViewPendingConnectionsCommand = new Command(x => Application.Current.MainPage.Navigation.PushAsync(new PendingConnectionsPage()));
             RefreshCommand = new Command(Refresh);
             DeleteConnectionCommand = new Command<ConnectionModel>(DeleteConnection);
-            SelectCardCommand = new Command<Entities.Card>(x => Application.Current.MainPage.Navigation.PushModalAsync(new ViewCardPage(x)));
+            SelectCardCommand = new Command<Entities.Card>(x => Application.Current.MainPage.Navigation.PushAsync(new ViewCardPage(x)));
 
             Load();
         }

@@ -69,7 +69,7 @@ namespace Ecco.Mobile.ViewModels.Home
             RefreshCommand = new Command(Refresh);
             EditCardCommand = new Command<Entities.Card>(EditCard);
             DeleteCardCommand = new Command<Entities.Card>(DeleteCard);
-            SelectCardCommand = new Command<Entities.Card>(x => Application.Current.MainPage.Navigation.PushModalAsync(new ViewCardPage(x)));
+            SelectCardCommand = new Command<Entities.Card>(x => Application.Current.MainPage.Navigation.PushAsync(new ViewCardPage(x)));
 
             LoadCards();
         }
