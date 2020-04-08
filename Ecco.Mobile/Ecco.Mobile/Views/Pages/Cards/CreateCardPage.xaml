@@ -6,34 +6,88 @@
              mc:Ignorable="d"
              x:Class="Ecco.Mobile.Views.Pages.CreateCardPage"
              Title="Create Card"
-             xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.Home">
+             xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.Home"
+             xmlns:syncfusion="clr-namespace:Syncfusion.XForms.Expander;assembly=Syncfusion.Expander.XForms"
+             xmlns:xforms="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms" 
+             xmlns:local="clr-namespace:Ecco.Mobile.Views.Authentication" xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             BackgroundColor="{StaticResource Gray-200}">
 
     <ContentPage.BindingContext>
         <viewmodels:CreateCardViewModel/>
     </ContentPage.BindingContext>
-    
+
     <ContentPage.Resources>
-        <Style x:Key="styleEntry" TargetType="Entry">
-            <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
-            <Setter Property="HorizontalTextAlignment" Value="Center"/>
-            <Setter Property="Margin" Value="5"/>
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <local:Styles/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </ContentPage.Resources>
-    
+
     <ContentPage.Content>
         <StackLayout>
 
-            <Entry Placeholder="Card Title" Style="{StaticResource styleEntry}" Text="{Binding CardTitle}"/>
+            <Entry Placeholder="Card Title" Style="{StaticResource EntryStyle}" Text="{Binding CardTitle}"/>
 
-            <Entry Placeholder="Job Title" Style="{StaticResource styleEntry}" Text="{Binding JobTitle}"/>
+            <Entry Placeholder="Job Title" Style="{StaticResource EntryStyle}" Text="{Binding JobTitle}"/>
 
-            <Entry Placeholder="Description" Style="{StaticResource styleEntry}" Text="{Binding Description}"/>
+            <Entry Placeholder="Description" Style="{StaticResource EntryStyle}" Text="{Binding Description}"/>
 
-            <Entry Placeholder="Email" Style="{StaticResource styleEntry}" Text="{Binding Email}"/>
+            <Entry Placeholder="Email" Style="{StaticResource EntryStyle}" Text="{Binding Email}"/>
 
-            <Entry Placeholder="Phone Number" Style="{StaticResource styleEntry}" Text="{Binding Phone}"/>
+            <Entry Placeholder="Phone Number" Style="{StaticResource EntryStyle}" Text="{Binding Phone}"/>
 
-            <Button Text="Create" HorizontalOptions="Center" Command="{Binding CreateCommand}"/>
+            <ScrollView BackgroundColor="#EDF2F5" Grid.Row="1">
+                <StackLayout>
+                    
+                    <syncfusion:SfExpander>
+                        <syncfusion:SfExpander.Header>
+                        
+                            <Grid>
+                                <Label TextColor="#495F6E" Text="Choose A Template" VerticalTextAlignment="Center" />
+                            </Grid>
+                    
+                        </syncfusion:SfExpander.Header>
+                        
+                        <syncfusion:SfExpander.Content>
+                            
+                            <StackLayout Padding="10,10,10,10" BackgroundColor="#FFFFFF">
+
+                                <xforms:SfListView ItemsSource="{Binding Templates}"
+                                                   ItemSize="200">
+
+                                    <xforms:SfListView.ItemTemplate>
+                                        <DataTemplate>
+
+                                            <StackLayout>
+
+                                                <Image Source="{Binding .}"
+                                                       Aspect="AspectFit">
+                                                    <Image.GestureRecognizers>
+                                                        <TapGestureRecognizer>
+
+                                                        </TapGestureRecognizer>
+                                                    </Image.GestureRecognizers>
+                                                </Image>
+
+                                            </StackLayout>
+                                            
+                                        </DataTemplate>
+                                    </xforms:SfListView.ItemTemplate>
+                                    
+                                </xforms:SfListView>
+                            
+                            </StackLayout>
+                            
+                        </syncfusion:SfExpander.Content>
+                    </syncfusion:SfExpander>
+                </StackLayout>
+            </ScrollView>
+
+            <buttons:SfButton Text="Create" 
+                    HorizontalOptions="Center"
+                    Command="{Binding CreateCommand}"
+                    Style="{StaticResource SfButtonStyle}"/>
 
         </StackLayout>
   </ContentPage.Content>

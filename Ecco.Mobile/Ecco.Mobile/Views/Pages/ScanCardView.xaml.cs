@@ -10,7 +10,7 @@ using Xamarin.Forms.Xaml;
 namespace Ecco.Mobile.Views.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ScanCardView : ContentView
+    public partial class ScanCardView : ContentPage
     {
         public ScanCardView()
         {

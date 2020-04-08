@@ -11,7 +11,7 @@ using Xamarin.Forms.Xaml;
 namespace Ecco.Mobile.Views.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CardListView : ContentView
+    public partial class CardListView : ContentPage
     {
         public CardListView()
         {

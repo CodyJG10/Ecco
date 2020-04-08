@@ -1,32 +1,65 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-            xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-            mc:Ignorable="d"
             x:Class="Ecco.Mobile.Views.Home"
             xmlns:views="clr-namespace:Ecco.Mobile.Views.Pages"
             xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels"
-            Title="Ecco Space">
+            xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+            xmlns:style="clr-namespace:Ecco.Mobile.Views"
+            android:TabbedPage.ToolbarPlacement="Bottom"
+            android:TabbedPage.BarSelectedItemColor="{DynamicResource PrimaryColor}"
+            android:TabbedPage.BarItemColor="{DynamicResource Gray-600}"
+            BarBackgroundColor="White"
+            NavigationPage.HasNavigationBar="False"
+            BackgroundColor="{DynamicResource Gray-Black}">
 
     <TabbedPage.BindingContext>
         <viewmodels:HomeViewModel/>
     </TabbedPage.BindingContext>
 
-    <ContentPage Title="Connect" IconImageSource="connect.png">
-        <views:ScanCardView/>
-    </ContentPage>
+    <TabbedPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!--<ResourceDictionary Source="Styles.xaml"/>-->
+                <style:Styles/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </TabbedPage.Resources>
 
-    <ContentPage Title="Network" IconImageSource="contacts.png">
-        <views:CardListView/>
-    </ContentPage>
+    <!--<TabbedPage.Resources>
+        <ResourceDictionary Source="Styles.xaml"/>
+    </TabbedPage.Resources>-->
 
-    <ContentPage Title="My Cards" IconImageSource="business_card.png">
-        <views:MyCardView/>
-    </ContentPage>
+    <views:ScanCardView Title="Network">
+        <views:ScanCardView.IconImageSource>
+            <FontImageSource FontFamily="{StaticResource EccoFont}"
+                             Glyph="{StaticResource NetworkIcon}"
+                             Size="16"/>
+        </views:ScanCardView.IconImageSource>
+    </views:ScanCardView>
 
-    <ContentPage Title="Account" IconImageSource="profile.png">
-        <views:MyAccountView/>
-    </ContentPage>
+    <views:CardListView Title="Connections">
+        <views:CardListView.IconImageSource>
+            <FontImageSource FontFamily="{StaticResource EccoFont}"
+                             Glyph="{StaticResource ConnectionsIcon}"
+                             Size="16"/>
+        </views:CardListView.IconImageSource>
+    </views:CardListView>
+
+    <views:MyCardView Title="My Cards">
+        <views:MyCardView.IconImageSource>
+            <FontImageSource FontFamily="{StaticResource EccoFont}"
+                             Glyph="{StaticResource CardIcon}"
+                             Size="16"/>
+        </views:MyCardView.IconImageSource>
+    </views:MyCardView>
+
+    <views:MyAccountView Title="Profile">
+        <views:MyAccountView.IconImageSource>
+            <FontImageSource FontFamily="{StaticResource EccoFont}"
+                             Glyph="{StaticResource ProfileIcon}"
+                             Size="16"/>
+            </views:MyAccountView.IconImageSource>
+    </views:MyAccountView>
 
 </TabbedPage>

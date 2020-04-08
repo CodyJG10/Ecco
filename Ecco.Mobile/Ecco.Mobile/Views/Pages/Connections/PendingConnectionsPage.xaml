@@ -26,11 +26,10 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout BackgroundColor="{StaticResource colorBackgroundDark}">
+                            <StackLayout>
                                 <StackLayout Orientation="Horizontal">
                                     <Label Text="{Binding Name}"
                                        HorizontalOptions="CenterAndExpand"
-                                       Style="{StaticResource labelText}"
                                        TextColor="Black"
                                        VerticalOptions="Center"/>
                                     <Button Text="Accept" 

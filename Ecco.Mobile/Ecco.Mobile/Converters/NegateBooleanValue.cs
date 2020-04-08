@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xamarin.Forms;
 
-namespace Ecco.Mobile.Models
+namespace Ecco.Mobile.Converters
 {
     public class NegateBooleanValue : IValueConverter
     {

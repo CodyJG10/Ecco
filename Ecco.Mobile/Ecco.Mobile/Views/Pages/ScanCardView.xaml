@@ -1,23 +1,38 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="Ecco.Mobile.Views.Pages.ScanCardView"
-             xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.Home"
-             BackgroundColor="{StaticResource colorBackgroundLight}">
+             xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.Home" xmlns:themes="clr-namespace:Ecco.Mobile.Themes" xmlns:style="clr-namespace:Ecco.Mobile.Views"
+             BackgroundColor="{DynamicResource Gray-White}"
+             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms">
 
-    <ContentView.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <style:Styles />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.BindingContext>
         <viewmodels:ScanCardViewModel/>
-    </ContentView.BindingContext>
+    </ContentPage.BindingContext>
     
-  <ContentView.Content>
+  <ContentPage.Content>
       <StackLayout>
 
-            <Button Text="Send A Connection"
-                    Command="{Binding SendConnectionCommand}"/>
+            <!--<Button Text="Send A Connection"
+                    Command="{Binding SendConnectionCommand}"/>-->
+
+            <buttons:SfButton HorizontalOptions="Center"
+                              Margin="15"
+                              Command="{Binding SendConnectionCommand}"
+                              Text="Send Connection"
+                              Visual="Material"/>
 
         </StackLayout>
-  </ContentView.Content>
-</ContentView>
+  </ContentPage.Content>
+</ContentPage>

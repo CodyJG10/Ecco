@@ -4,25 +4,13 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="Ecco.Mobile.App">
+             x:Class="Ecco.Mobile.App"
+             xmlns:theme="clr-namespace:Ecco.Mobile.Themes">
     <Application.Resources>
-        
-        <!--Colors-->
-        <Color x:Key="colorBackgroundLight">#f3f6fb</Color>
-        <Color x:Key="colorBackgroundDark">#dbdfea</Color>
-        <Color x:Key="colorTextPrimary">#54b0f3</Color>
-        <Color x:Key="colorTextSecondary">#b1c5c4</Color>
-
-        <!--Styles-->
-        <Style x:Key="labelTitle" TargetType="Label">
-            <Setter Property="FontSize" Value="Large"/>
-            <Setter Property="TextColor" Value="{StaticResource colorTextPrimary}"/>
-        </Style>
-
-        <Style x:Key="labelText" TargetType="Label">
-            <Setter Property="FontSize" Value="Body"/>
-            <Setter Property="TextColor" Value="{StaticResource colorTextSecondary}"/>
-        </Style>
-        
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <theme:LightTheme />
+            </ResourceDictionary.MergedDictionaries >
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

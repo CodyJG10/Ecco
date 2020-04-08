@@ -7,7 +7,6 @@
              xmlns:views="clr-namespace:Ecco.Mobile.Views.Card"
              mc:Ignorable="d"
              x:Class="Ecco.Mobile.Views.Pages.Cards.ViewCardPage"
-             BackgroundColor="{StaticResource colorBackgroundDark}"
              Title="Business Card">
 
     <ContentPage.BindingContext>
@@ -17,8 +16,6 @@
     <ContentPage.Resources>
         <Style x:Key="buttonContact" TargetType="Button">
             <Setter Property="CornerRadius" Value="15"/>
-            <Setter Property="BackgroundColor" Value="{StaticResource colorBackgroundLight}"/>
-            <Setter Property="TextColor" Value="{StaticResource colorTextPrimary}"/>
         </Style>
     </ContentPage.Resources>
     

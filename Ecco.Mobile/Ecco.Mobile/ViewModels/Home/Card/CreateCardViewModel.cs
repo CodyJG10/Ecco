@@ -20,6 +20,8 @@ namespace Ecco.Mobile.ViewModels.Home
         public string Email { get; set; }
         public string Phone { get; set; }
 
+        public List<ImageSource> Templates { get; set; } = new List<ImageSource>() { ImageSource.FromFile("biz_card_background.jpg") };
+
         public ICommand CreateCommand { get; set; }
 
         private IDatabaseManager _db;

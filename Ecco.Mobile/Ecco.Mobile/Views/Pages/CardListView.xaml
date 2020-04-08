@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -7,25 +7,32 @@
              x:Class="Ecco.Mobile.Views.Pages.CardListView"
              xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.Home"
              x:Name="cardListViewPage"
-             xmlns:local="clr-namespace:Ecco.Mobile.Models" 
-             xmlns:cardViews="clr-namespace:Ecco.Mobile.Views.Card"
-             BackgroundColor="{StaticResource colorBackgroundLight}">
+             xmlns:cardViews="clr-namespace:Ecco.Mobile.Views.Card" xmlns:themes="clr-namespace:Ecco.Mobile.Themes" 
+             xmlns:style="clr-namespace:Ecco.Mobile.Views" xmlns:local="clr-namespace:Ecco.Mobile.Converters"
+             BackgroundColor="{DynamicResource Gray-White}">
 
-    <ContentView.Resources>
+    <ContentPage.Resources>
         <local:NegateBooleanValue x:Key="inverter"/>
-    </ContentView.Resources>
-    
-    <ContentView.BindingContext>
+        
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <style:Styles/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+
+    </ContentPage.Resources>
+
+    <ContentPage.BindingContext>
         <viewmodels:CardListViewModel/>
-    </ContentView.BindingContext>    
-    
-    <ContentView.Content>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
         <StackLayout>
 
             <StackLayout IsVisible="{Binding HasPendingConnections}">
                 <Label Text="You have cards to accept!"
                        HorizontalOptions="Center"
-                       Style="{StaticResource  labelText}"/>
+                       Style="{StaticResource HeaderLabelStyle}"/>
                 <Button Text="View"
                         HorizontalOptions="Center"
                         Command="{Binding ViewPendingConnectionsCommand}"/>
@@ -33,14 +40,12 @@
 
             <StackLayout IsVisible="{Binding HasPendingConnections, Converter={StaticResource inverter}}">
                 <Label Text="You have no pending cards to accept!"
-                       HorizontalOptions="Center"
-                       Style="{StaticResource labelText}"/>
+                       HorizontalOptions="Center"/>
             </StackLayout>
 
             <Label Text="Connections" 
                    HorizontalTextAlignment="Center" 
-                   HorizontalOptions="Center"
-                   Style="{StaticResource labelTitle}"/>
+                   HorizontalOptions="Center"/>
             <ListView ItemsSource="{Binding Cards}"
                       IsPullToRefreshEnabled="True"
                       RefreshCommand="{Binding RefreshCommand}"
@@ -79,5 +84,5 @@
                     Command="{Binding RefreshCommand}"/>
 
         </StackLayout>
-  </ContentView.Content>
-</ContentView>
+  </ContentPage.Content>
+</ContentPage>

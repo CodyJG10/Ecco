@@ -1,5 +1,6 @@
 ﻿using Ecco.Api;
 using Ecco.Mobile.Views;
+using Ecco.Mobile.Views.Authentication;
 using Nancy.TinyIoc;
 using Plugin.Settings;
 using System;
@@ -13,6 +14,9 @@ namespace Ecco.Mobile
         public App()
         {
             InitializeComponent();
+            
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MjM1NDA2QDMxMzgyZTMxMmUzMGZGWjB2Z0prb1hpcCtLTDZPVUo3bXhnUGFnV0VRcTZCUEk3UXZZdFB5M1U9");
+
             InitDatabase();
             MainPage = new LoadingPage();
             if (!CrossSettings.Current.GetValueOrDefault("Username", "_").Equals("_"))
@@ -21,7 +25,7 @@ namespace Ecco.Mobile
             }
             else
             {
-                MainPage = new Login();
+                MainPage = new LoginPage();
             }
         }
 
@@ -37,7 +41,7 @@ namespace Ecco.Mobile
             }
             else
             {
-                MainPage = new Login();
+                MainPage = new LoginPage();
                 await MainPage.DisplayAlert("Authentication Error", "You have been logged out", "Ok");
             }
         }

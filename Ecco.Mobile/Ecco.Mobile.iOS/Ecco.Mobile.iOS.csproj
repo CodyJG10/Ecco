@@ -135,6 +135,30 @@
     <PackageReference Include="Plugin.NFC">
       <Version>0.1.15</Version>
     </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.Buttons">
+      <Version>18.1.0.43</Version>
+    </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.Core">
+      <Version>18.1.0.43</Version>
+    </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.DataSource">
+      <Version>18.1.0.43</Version>
+    </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.GridCommon">
+      <Version>18.1.0.43</Version>
+    </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfAutoComplete">
+      <Version>18.1.0.43</Version>
+    </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator">
+      <Version>18.1.0.43</Version>
+    </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfListView">
+      <Version>18.1.0.43</Version>
+    </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfPicker">
+      <Version>18.1.0.43</Version>
+    </PackageReference>
     <PackageReference Include="Xam.Plugins.Settings">
       <Version>3.1.1</Version>
     </PackageReference>
@@ -147,18 +171,6 @@
       <Project>{525D9203-D7B2-4D3B-ABCD-2A23487D3CF8}</Project>
       <Name>Ecco.Mobile</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\business_card.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\connect.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\contacts.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\profile.png" />
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\biz_card_background.jpg" />

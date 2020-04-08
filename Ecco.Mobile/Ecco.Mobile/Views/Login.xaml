@@ -6,7 +6,7 @@
             mc:Ignorable="d"
             x:Class="Ecco.Mobile.Views.Login"
             xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels"
-            xmlns:local="clr-namespace:Ecco.Mobile.Models">
+            xmlns:local="clr-namespace:Ecco.Mobile.Converters">
 
     <TabbedPage.BindingContext>
         <viewmodels:LoginViewModel/>

@@ -1,27 +1,36 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="Ecco.Mobile.Views.Pages.MyCardView"
              xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.Home"
-             xmlns:cardViews="clr-namespace:Ecco.Mobile.Views.Card"
+             xmlns:cardViews="clr-namespace:Ecco.Mobile.Views.Card" xmlns:themes="clr-namespace:Ecco.Mobile.Themes"
+             xmlns:style="clr-namespace:Ecco.Mobile.Views"
              x:Name="myCardsView"
-             BackgroundColor="{StaticResource colorBackgroundLight}">
+             BackgroundColor="{DynamicResource Gray-White}">
 
-    <ContentView.BindingContext>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <style:Styles />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.BindingContext>
         <viewmodels:MyCardViewModel/>
-    </ContentView.BindingContext>
+    </ContentPage.BindingContext>
 
-    <ContentView.Content>
+    <ContentPage.Content>
         <StackLayout>
             
             <Button Text="Create Card" HorizontalOptions="Center" Command="{Binding CreateCardCommand}"/>
 
             <Label Text="My Cards" 
                    HorizontalOptions="Center"
-                   Style="{StaticResource labelTitle}"/>
+                   Style="{StaticResource HeaderLabelStyle}"/>
 
             <ListView ItemsSource="{Binding Cards}"
                       IsPullToRefreshEnabled="True"
@@ -55,5 +64,5 @@
             </ListView>
             
         </StackLayout>
-  </ContentView.Content>
-</ContentView>
+  </ContentPage.Content>
+</ContentPage>
