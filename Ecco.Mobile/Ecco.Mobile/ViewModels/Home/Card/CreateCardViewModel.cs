@@ -1,8 +1,11 @@
 ﻿using Ecco.Api;
 using Ecco.Entities;
+using Ecco.Mobile.Models;
+using Ecco.Mobile.Util;
 using Nancy.TinyIoc;
 using Newtonsoft.Json;
 using Plugin.Settings;
+using Syncfusion.ListView.XForms;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,16 +23,60 @@ namespace Ecco.Mobile.ViewModels.Home
         public string Email { get; set; }
         public string Phone { get; set; }
 
-        public List<ImageSource> Templates { get; set; } = new List<ImageSource>() { ImageSource.FromFile("biz_card_background.jpg") };
+        private Template template;
+
+        private List<TemplateModel> _templates;
+        public List<TemplateModel> Templates
+        {
+            get
+            {
+                return _templates;
+            }
+            set
+            {
+                _templates = value;
+                OnPropertyChanged(nameof(Templates));
+            }
+        }
 
         public ICommand CreateCommand { get; set; }
+        public ICommand TemplateSelectedCommand { get; set; }
 
-        private IDatabaseManager _db;
+        private readonly IDatabaseManager _db;
+        private readonly IStorageManager _storage;
 
         public CreateCardViewModel()
         {
             _db = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
+            _storage = TinyIoCContainer.Current.Resolve<IStorageManager>();
+            
             CreateCommand = new Command(CreateCard);
+            TemplateSelectedCommand = new Command<TemplateModel>(TemplateSelected);
+           // TemplateSelectedCommand = new Command(TemplateSelected);
+
+            LoadTemplates();
+        }
+
+        private void TemplateSelected(TemplateModel templateModel)
+        {
+            template = templateModel.Template;
+        }
+
+        private async void LoadTemplates()
+        {
+            var allTemplates = await _db.GetTemplates();
+            List<TemplateModel> templates = new List<TemplateModel>();
+            foreach (var template in allTemplates)
+            {
+                var templateImage = await TemplateUtil.LoadImageSource(new Entities.Card() { TemplateId = template.Id }, _db, _storage);
+                TemplateModel templateModel = new TemplateModel()
+                {
+                    Template = template,
+                    TemplateImage = templateImage
+                };
+                templates.Add(templateModel);
+            }
+            Templates = templates;
         }
 
         public async void CreateCard()
@@ -42,7 +89,8 @@ namespace Ecco.Mobile.ViewModels.Home
                 Email = Email,
                 JobTitle = JobTitle,
                 Phone = Phone,
-                UserId = user.Id
+                UserId = user.Id,
+                TemplateId = template.Id
             };
             var succeeded = await _db.CreateCard(card);
             if (succeeded)

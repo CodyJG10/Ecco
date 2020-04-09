@@ -51,6 +51,8 @@ namespace Ecco.Mobile
             var container = TinyIoCContainer.Current;
             container.Register<IDatabaseManager, DatabaseManager>();
             container.Resolve<IDatabaseManager>().SetUrl("https://ecco-space.azurewebsites.net/");
+
+            container.Register<IStorageManager>(new StorageManager("DefaultEndpointsProtocol=https;AccountName=eccodevstorage;AccountKey=8N0q/fS/d3cuNl48eleenu2EdU0VN3crTFUIegdVkBCP5wY1URNmC+XPBon8bOCShk8Ku8HV7CsmXm2cS7BUOg==;EndpointSuffix=core.windows.net"));
         }
 
         protected override void OnStart()

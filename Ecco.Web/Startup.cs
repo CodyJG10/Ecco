@@ -16,6 +16,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Ecco.Web.Areas.Identity;
+using Microsoft.Azure.Storage;
+using Microsoft.Azure.Storage.Blob;
+using Ecco.Web.Services;
 
 namespace Ecco.Web
 {
@@ -70,6 +73,9 @@ namespace Ecco.Web
                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SigningKey))
                    };
                });
+
+            string storageConnectionString = Configuration.GetConnectionString("StorageConnection");
+            services.AddSingleton(typeof(StorageService), new StorageService(storageConnectionString));
 
             services.AddControllersWithViews();
             services.AddRazorPages();

@@ -1,6 +1,7 @@
 ﻿using Ecco.Api;
 using Ecco.Entities;
 using Ecco.Mobile.Models;
+using Ecco.Mobile.Util;
 using Ecco.Mobile.Views.Pages.Cards;
 using Ecco.Mobile.Views.Pages.Connections;
 using Nancy.TinyIoc;
@@ -20,6 +21,7 @@ namespace Ecco.Mobile.ViewModels.Home
     public class CardListViewModel : ViewModelBase
     {
         private IDatabaseManager _db;
+        private IStorageManager _storage;
         private UserData _user;
 
         #region Content
@@ -37,7 +39,6 @@ namespace Ecco.Mobile.ViewModels.Home
                 OnPropertyChanged(nameof(Cards));
             }
         }
-
 
         private bool _loading;
         public bool Loading
@@ -92,11 +93,12 @@ namespace Ecco.Mobile.ViewModels.Home
         {
             _db = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
             _user = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
+            _storage = TinyIoCContainer.Current.Resolve<IStorageManager>();
 
             ViewPendingConnectionsCommand = new Command(x => Application.Current.MainPage.Navigation.PushAsync(new PendingConnectionsPage()));
             RefreshCommand = new Command(Refresh);
             DeleteConnectionCommand = new Command<ConnectionModel>(DeleteConnection);
-            SelectCardCommand = new Command<Entities.Card>(x => Application.Current.MainPage.Navigation.PushAsync(new ViewCardPage(x)));
+            SelectCardCommand = new Command<CardModel>(x => Application.Current.MainPage.Navigation.PushAsync(new ViewCardPage(x)));
 
             Load();
         }
@@ -119,9 +121,14 @@ namespace Ecco.Mobile.ViewModels.Home
             {
                 Entities.Card card = await _db.GetCard(connection.CardId);
                 var userData = await _db.GetUserData(connection.FromId);
-                ConnectionModel model = new ConnectionModel()
+                CardModel cardModel = new CardModel()
                 {
                     Card = card,
+                    TemplateImage = await TemplateUtil.LoadImageSource(card, _db, _storage)
+                };
+                ConnectionModel model = new ConnectionModel()
+                {
+                    Card = cardModel,
                     Connection = connection,
                     Name = userData.ProfileName
                 };

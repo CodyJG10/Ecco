@@ -1,6 +1,7 @@
 ﻿using Ecco.Api;
 using Ecco.Entities;
 using Ecco.Mobile.Models;
+using Ecco.Mobile.Util;
 using Nancy.TinyIoc;
 using Newtonsoft.Json;
 using Plugin.Settings;
@@ -17,6 +18,7 @@ namespace Ecco.Mobile.ViewModels.Home.Connections
     public class PendingConnectionsViewModel : ViewModelBase
     {
         private IDatabaseManager _db;
+        private IStorageManager _storage;
         private UserData _user;
 
         private List<ConnectionModel> _pendingConnections;
@@ -53,6 +55,7 @@ namespace Ecco.Mobile.ViewModels.Home.Connections
         public PendingConnectionsViewModel()
         {
             _db = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
+            _storage = TinyIoCContainer.Current.Resolve<IStorageManager>();
             _user = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
 
             AcceptPendingConnectionCommand = new Command<Connection>(AcceptPendingConnection);
@@ -70,12 +73,20 @@ namespace Ecco.Mobile.ViewModels.Home.Connections
             {
                 Entities.Card card = await _db.GetCard(pendingConnection.CardId);
                 var userData = await _db.GetUserData(pendingConnection.FromId);
-                ConnectionModel model = new ConnectionModel()
+                
+                CardModel cardModel = new CardModel()
                 {
                     Card = card,
+                    TemplateImage = await TemplateUtil.LoadImageSource(card, _db, _storage)
+                };
+               
+                ConnectionModel model = new ConnectionModel()
+                {
+                    Card = cardModel,
                     Connection = pendingConnection,
                     Name = userData.ProfileName
                 };
+
                 pendingConnectionModels.Add(model);
             }
             PendingConnections = pendingConnectionModels;

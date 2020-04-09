@@ -1,4 +1,5 @@
-﻿using Ecco.Mobile.ViewModels.Home.Card;
+﻿using Ecco.Mobile.Models;
+using Ecco.Mobile.ViewModels.Home.Card;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace Ecco.Mobile.Views.Pages.Cards
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ViewCardPage : ContentPage
     {
-        public ViewCardPage(Entities.Card card)
+        public ViewCardPage(CardModel card)
         {
             InitializeComponent();
             BindingContext = new SelectCardViewModel(card);

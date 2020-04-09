@@ -1,5 +1,7 @@
 ﻿using Ecco.Api;
 using Ecco.Entities;
+using Ecco.Mobile.Models;
+using Ecco.Mobile.Util;
 using Ecco.Mobile.Views.Pages;
 using Ecco.Mobile.Views.Pages.Cards;
 using Nancy.TinyIoc;
@@ -18,11 +20,12 @@ namespace Ecco.Mobile.ViewModels.Home
     public class MyCardViewModel : ViewModelBase
     {
         private IDatabaseManager _db;
+        private IStorageManager _storage;
 
         #region Content
 
-        private List<Entities.Card> _cards = new List<Entities.Card>();
-        public List<Entities.Card> Cards
+        private List<CardModel> _cards = new List<CardModel>();
+        public List<CardModel> Cards
         {
             get
             {
@@ -64,12 +67,13 @@ namespace Ecco.Mobile.ViewModels.Home
         public MyCardViewModel()
         {
             _db = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
+            _storage = TinyIoCContainer.Current.Resolve<IStorageManager>();
 
             CreateCardCommand = new Command(() => Application.Current.MainPage.Navigation.PushAsync(new CreateCardPage()));
-            RefreshCommand = new Command(Refresh);
-            EditCardCommand = new Command<Entities.Card>(EditCard);
-            DeleteCardCommand = new Command<Entities.Card>(DeleteCard);
-            SelectCardCommand = new Command<Entities.Card>(x => Application.Current.MainPage.Navigation.PushAsync(new ViewCardPage(x)));
+            RefreshCommand = new Command(LoadCards);
+            EditCardCommand = new Command<CardModel>(EditCard);
+            DeleteCardCommand = new Command<CardModel>(DeleteCard);
+            SelectCardCommand = new Command<CardModel>(x => Application.Current.MainPage.Navigation.PushAsync(new ViewCardPage(x)));
 
             LoadCards();
         }
@@ -80,40 +84,42 @@ namespace Ecco.Mobile.ViewModels.Home
 
             var user = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
 
-            var cards = await _db.GetMyCards(user.Id.ToString());
-            Cards = cards.ToList();
+            var cards = (await _db.GetMyCards(user.Id.ToString())).ToList();
+
+            List<CardModel> cardModels = new List<CardModel>();
+
+            foreach (var card in cards)
+            {
+                var templateImage = await TemplateUtil.LoadImageSource(card, _db, _storage);
+                CardModel model = new CardModel()
+                {
+                    Card = card,
+                    TemplateImage = templateImage
+                };
+                cardModels.Add(model);
+            }
+
+            Cards = cardModels;
 
             Loading = false;
         }
 
-        private async void Refresh()
-        {
-            Loading = true;
-
-            var user = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
-
-            var cards = await _db.GetMyCards(user.Id.ToString());
-            Cards = cards.ToList();
-
-            Loading = false;
-        }
-
-        private async void EditCard(Entities.Card card)
+        private async void EditCard(CardModel card)
         {
             await Application.Current.MainPage.Navigation.PushAsync(new EditCardPage(card));
         }
 
-        private async void DeleteCard(Entities.Card card)
+        private async void DeleteCard(CardModel card)
         {
-            var succesful = await _db.DeleteCard(card);
+            var succesful = await _db.DeleteCard(card.Card);
             if (succesful)
             {
-                Refresh();
+                LoadCards();
             }
             else
             {
                 await Application.Current.MainPage.DisplayAlert("Error!", "An error was encountered when attempting to delete your card", "Ok");
-                Refresh();
+                LoadCards();
             }
         }
     }

@@ -183,5 +183,21 @@ namespace Ecco.Web.Controllers
         }
 
         #endregion
+
+        #region Templates
+
+        [HttpGet("Templates")]
+        public IEnumerable<Template> GetTemplates()
+        {
+            return _context.Templates.ToList();
+        }
+
+        [HttpGet("Template")]
+        public Template GetTemplate(int id)
+        {
+            return _context.Templates.Single(x => x.Id == id);
+        }
+
+        #endregion
     }
 }

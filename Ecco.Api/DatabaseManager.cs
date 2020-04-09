@@ -232,5 +232,23 @@ namespace Ecco.Api
             return JsonConvert.DeserializeObject<Connection>(content);
         }
         #endregion
+
+        #region Templates
+
+        public async Task<List<Template>> GetTemplates()
+        {
+            var response = await client.GetAsync("api/Templates");
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<List<Template>>(content);
+        }
+
+        public async Task<Template> GetTemplate(int id)
+        {
+            var response = await client.GetAsync("api/Template?id=" + id);
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<Template>(content);
+        }
+
+        #endregion
     }
 }

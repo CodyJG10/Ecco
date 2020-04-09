@@ -9,6 +9,6 @@ namespace Ecco.Mobile.Models
     {
         public Connection Connection { get; set; }
         public string Name { get; set; }
-        public Card Card { get; set; }
+        public CardModel Card { get; set; }
     }
 }

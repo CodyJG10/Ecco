@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ecco.Mobile.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
@@ -9,12 +10,12 @@ namespace Ecco.Mobile.ViewModels.Home.Card
 {
     public class SelectCardViewModel
     {
-        public Entities.Card Card { get; set; }
+        public CardModel Card { get; set; }
 
         public ICommand CallCommand { get; set; }
         public ICommand EmailCommand { get; set; }
 
-        public SelectCardViewModel(Entities.Card card)
+        public SelectCardViewModel(CardModel card)
         {
             Card = card;
 
@@ -24,12 +25,12 @@ namespace Ecco.Mobile.ViewModels.Home.Card
 
         private void Call()
         {
-            Launcher.OpenAsync(new Uri("tel:" + Card.Phone));
+            Launcher.OpenAsync(new Uri("tel:" + Card.Card.Phone));
         }
 
         private void Email()
         { 
-            Launcher.OpenAsync(new Uri("mailto:" + Card.Email));
+            Launcher.OpenAsync(new Uri("mailto:" + Card.Card.Email));
         }
     }
 }

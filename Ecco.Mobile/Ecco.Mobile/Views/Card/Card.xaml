@@ -2,16 +2,11 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:viewmodels="clr-namespace:Ecco.Mobile.Models"
              mc:Ignorable="d"
              x:Class="Ecco.Mobile.Views.Card.Card"
-             xmlns:viewmodels="clr-namespace:Ecco.Entities;assembly=Ecco.Entities"
              HeightRequest="200"
              WidthRequest="350">
-
-    <ContentView.BindingContext>
-        <viewmodels:Card/>
-    </ContentView.BindingContext>
 
     <ContentView.Resources>
         <Style x:Key="styleLabelPrimary" TargetType="Label">
@@ -43,27 +38,27 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             
-            <Image Source="biz_card_background.jpg"
+            <Image Source="{Binding TemplateImage}"
                    Aspect="Fill"
                    Grid.Row="0"
                    Grid.RowSpan="4"/>
 
-            <Label Text="{Binding CardTitle}"
+            <Label Text="{Binding Card.CardTitle}"
                    Style="{StaticResource styleLabelPrimary}"
                    Margin="0,15,0,0"
                    Grid.Row="0"/>
 
-            <Label Text="{Binding JobTitle}"
+            <Label Text="{Binding Card.JobTitle}"
                    Style="{StaticResource styleLabelPrimary}"
                    Margin="0,0,0,20"
                    Grid.Row="1"/>
 
-            <Label Text="{Binding Email}"
+            <Label Text="{Binding Card.Email}"
                    Style="{StaticResource styleLabelSecondary}"
                    Margin="15,0,0,0"
                    Grid.Row="2"/>
 
-            <Label Text="{Binding Phone}"
+            <Label Text="{Binding Card.Phone}"
                    Style="{StaticResource styleLabelSecondary}"
                    Margin="15,0,0,5"
                    Grid.Row="3"/>

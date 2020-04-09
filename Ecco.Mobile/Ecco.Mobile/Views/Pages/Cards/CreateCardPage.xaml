@@ -9,8 +9,8 @@
              xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.Home"
              xmlns:syncfusion="clr-namespace:Syncfusion.XForms.Expander;assembly=Syncfusion.Expander.XForms"
              xmlns:xforms="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms" 
-             xmlns:local="clr-namespace:Ecco.Mobile.Views.Authentication" xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
-             BackgroundColor="{StaticResource Gray-200}">
+             xmlns:local="clr-namespace:Ecco.Mobile.Views.Authentication" xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms" xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms" xmlns:control="clr-namespace:Ecco.Mobile.Controls" xmlns:converter="clr-namespace:Ecco.Mobile.Converters"
+             BackgroundColor="Blue">
 
     <ContentPage.BindingContext>
         <viewmodels:CreateCardViewModel/>
@@ -18,6 +18,7 @@
 
     <ContentPage.Resources>
         <ResourceDictionary>
+            <converter:BooleanToColorConverter x:Key="ColorConverter" />
             <ResourceDictionary.MergedDictionaries>
                 <local:Styles/>
             </ResourceDictionary.MergedDictionaries>
@@ -37,6 +38,16 @@
 
             <Entry Placeholder="Phone Number" Style="{StaticResource EntryStyle}" Text="{Binding Phone}"/>
 
+            <!--  Entry to get password from user  -->
+            <border:SfBorder
+                            BorderColor="{Binding Source={x:Reference entryText}, Path=IsFocused, Converter={StaticResource ColorConverter}, ConverterParameter=0}"
+                            Style="{StaticResource SfBorderStyle}">
+                <control:BorderlessEntry
+                                x:Name="entryText"
+                                Placeholder="Text"
+                                Style="{StaticResource EntryStyle}" />
+            </border:SfBorder>
+
             <ScrollView BackgroundColor="#EDF2F5" Grid.Row="1">
                 <StackLayout>
                     
@@ -54,24 +65,26 @@
                             <StackLayout Padding="10,10,10,10" BackgroundColor="#FFFFFF">
 
                                 <xforms:SfListView ItemsSource="{Binding Templates}"
-                                                   ItemSize="200">
+                                                   ItemSize="200"
+                                                   x:Name="ListTemplates"
+                                                   ItemTapped="SfListView_ItemTapped">
 
                                     <xforms:SfListView.ItemTemplate>
                                         <DataTemplate>
-
                                             <StackLayout>
-
-                                                <Image Source="{Binding .}"
+                                                <Label Text="{Binding Template.Title}"
+                                                       HorizontalOptions="Center"/>
+                                                <Image Source="{Binding TemplateImage}"
                                                        Aspect="AspectFit">
-                                                    <Image.GestureRecognizers>
-                                                        <TapGestureRecognizer>
 
-                                                        </TapGestureRecognizer>
+                                                    <Image.GestureRecognizers>
+                                                        <TapGestureRecognizer Command="{Binding TemplateSelectedCommand}"
+                                                                              CommandParameter="{Binding .}"/>
                                                     </Image.GestureRecognizers>
+                                                    
                                                 </Image>
 
                                             </StackLayout>
-                                            
                                         </DataTemplate>
                                     </xforms:SfListView.ItemTemplate>
                                     
@@ -87,7 +100,7 @@
             <buttons:SfButton Text="Create" 
                     HorizontalOptions="Center"
                     Command="{Binding CreateCommand}"
-                    Style="{StaticResource SfButtonStyle}"/>
+                    Style="{StaticResource SfFlatButtonStyle}"/>
 
         </StackLayout>
   </ContentPage.Content>

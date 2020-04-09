@@ -17,5 +17,6 @@ namespace Ecco.Web.Data
 
         public DbSet<Connection> Connections { get; set; }
         public DbSet<Card> Cards { get; set; }
+        public DbSet<Template> Templates { get; set; }
     }
 }

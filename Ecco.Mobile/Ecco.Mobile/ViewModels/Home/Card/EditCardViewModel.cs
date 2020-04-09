@@ -4,6 +4,7 @@ using System.Text;
 using System.Windows.Input;
 using Ecco.Api;
 using Ecco.Entities;
+using Ecco.Mobile.Models;
 using Nancy.TinyIoc;
 using Xamarin.Forms;
 
@@ -13,11 +14,11 @@ namespace Ecco.Mobile.ViewModels.Home.Card
     {
         private IDatabaseManager _db;
 
-        public Entities.Card Card { get; set; }
+        public CardModel Card { get; set; }
         
         public ICommand SaveCommand { get; set; }
 
-        public EditCardViewModel(Entities.Card card)
+        public EditCardViewModel(CardModel card)
         {
             Card = card;
 
@@ -28,7 +29,7 @@ namespace Ecco.Mobile.ViewModels.Home.Card
 
         private async void Save()
         {
-            var succesful = await _db.EditCard(Card);
+            var succesful = await _db.EditCard(Card.Card);
             if (succesful)
             {
                 await Application.Current.MainPage.Navigation.PopAsync();
