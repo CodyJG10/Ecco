@@ -85,8 +85,7 @@ xmlns:dataform="clr-namespace:Syncfusion.XForms.DataForm;assembly=Syncfusion.SfD
 
             <buttons:SfButton Text="Create" 
                     HorizontalOptions="Center"
-                    Command="{Binding CreateCommand}"
-                    Style="{StaticResource SfFlatButtonStyle}"/>
+                    Command="{Binding CreateCommand}"/>
 
         </StackLayout>
         
