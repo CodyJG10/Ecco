@@ -153,6 +153,9 @@
     <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator">
       <Version>18.1.0.43</Version>
     </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfDataForm">
+      <Version>18.1.0.43</Version>
+    </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfListView">
       <Version>18.1.0.43</Version>
     </PackageReference>

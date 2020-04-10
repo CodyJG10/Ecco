@@ -24,7 +24,11 @@
     <PackageReference Include="Syncfusion.Xamarin.SfBadgeView" Version="18.1.0.43" />
     <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator" Version="18.1.0.43" />
     <PackageReference Include="Syncfusion.Xamarin.SfComboBox" Version="18.1.0.43" />
+    <PackageReference Include="Syncfusion.Xamarin.SfDataForm" Version="18.1.0.43" />
     <PackageReference Include="Syncfusion.Xamarin.SfListView" Version="18.1.0.43" />
+    <PackageReference Include="Syncfusion.Xamarin.SfPicker" Version="18.1.0.43" />
+    <PackageReference Include="Syncfusion.Xamarin.SfPopupLayout" Version="18.1.0.43" />
+    <PackageReference Include="Syncfusion.Xamarin.SfPullToRefresh" Version="18.1.0.43" />
     <PackageReference Include="Syncfusion.Xamarin.SfRotator" Version="18.1.0.43" />
     <PackageReference Include="Xam.Plugins.Settings" Version="3.1.1" />
     <PackageReference Include="Xamarin.Forms" Version="4.3.0.908675" />

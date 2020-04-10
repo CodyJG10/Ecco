@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+xmlns:pulltorefresh="clr-namespace:Syncfusion.SfPullToRefresh.XForms;assembly=Syncfusion.SfPullToRefresh.XForms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -8,12 +9,12 @@
              xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.Home"
              x:Name="cardListViewPage"
              xmlns:cardViews="clr-namespace:Ecco.Mobile.Views.Card" xmlns:themes="clr-namespace:Ecco.Mobile.Themes" 
-             xmlns:style="clr-namespace:Ecco.Mobile.Views" xmlns:local="clr-namespace:Ecco.Mobile.Converters"
+             xmlns:style="clr-namespace:Ecco.Mobile.Views" xmlns:local="clr-namespace:Ecco.Mobile.Converters" xmlns:syncfusion="clr-namespace:Syncfusion.XForms.Expander;assembly=Syncfusion.Expander.XForms" xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
              BackgroundColor="{DynamicResource Gray-White}">
 
     <ContentPage.Resources>
         <local:NegateBooleanValue x:Key="inverter"/>
-        
+
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <style:Styles/>
@@ -28,61 +29,89 @@
 
     <ContentPage.Content>
         <StackLayout>
+            
+            <pulltorefresh:SfPullToRefresh IsRefreshing="{Binding Loading}"
+                                           RefreshCommand="{Binding RefreshCommand}"
+                                           VerticalOptions="FillAndExpand"
+                                           HorizontalOptions="FillAndExpand">
+                
+                <pulltorefresh:SfPullToRefresh.PullableContent>
+                <StackLayout>
 
-            <StackLayout IsVisible="{Binding HasPendingConnections}">
-                <Label Text="You have cards to accept!"
-                       HorizontalOptions="Center"
-                       Style="{StaticResource HeaderLabelStyle}"/>
-                <Button Text="View"
-                        HorizontalOptions="Center"
-                        Command="{Binding ViewPendingConnectionsCommand}"/>
-            </StackLayout>
+                        <!-- Pending Connections Content -->
+                        <StackLayout IsVisible="{Binding HasPendingConnections}">
+                        <Label Text="You have cards to accept!"
+                               HorizontalOptions="Center"
+                               Style="{StaticResource HeaderLabelStyle}"/>
+                        <Button Text="View"
+                                HorizontalOptions="Center"
+                                Command="{Binding ViewPendingConnectionsCommand}"/>
+                    </StackLayout>
 
-            <StackLayout IsVisible="{Binding HasPendingConnections, Converter={StaticResource inverter}}">
-                <Label Text="You have no pending cards to accept!"
-                       HorizontalOptions="Center"/>
-            </StackLayout>
+                        <!-- No Pending Connections Label -->
+                        <StackLayout IsVisible="{Binding HasPendingConnections, Converter={StaticResource inverter}}">
+                        <Label Text="You have no pending cards to accept!"
+                               HorizontalOptions="Center"/>
+                    </StackLayout>
 
-            <Label Text="Connections" 
-                   HorizontalTextAlignment="Center" 
-                   HorizontalOptions="Center"/>
-            <ListView ItemsSource="{Binding Cards}"
-                      IsPullToRefreshEnabled="True"
-                      RefreshCommand="{Binding RefreshCommand}"
-                      IsRefreshing="{Binding Loading}"
-                      HasUnevenRows="True" 
-                      IsVisible="{Binding HasConnections}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <ViewCell.ContextActions>
-                                <MenuItem Text="Delete" 
-                                          Command="{Binding Source={x:Reference cardListViewPage}, Path=BindingContext.DeleteConnectionCommand}"
-                                          CommandParameter="{Binding .}"/>
-                            </ViewCell.ContextActions>
-                            <StackLayout Margin="0,0,0,15">
-                                <cardViews:Card HorizontalOptions="Center"
+                        <!-- Connections Label -->
+                        <Label Text="Connections" 
+                           HorizontalTextAlignment="Center" 
+                           HorizontalOptions="Center"/>
+
+                    <!-- Filtering -->
+                    <StackLayout>
+                        <!-- Header -->
+                        <syncfusion:SfExpander>
+                            <syncfusion:SfExpander.Header>
+                                <Grid>
+                                    <Label Text="Filter"
+                                           FontSize="Large"
+                                           HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center" />
+                                </Grid>
+                            </syncfusion:SfExpander.Header>
+                            <!-- Content -->
+                            <syncfusion:SfExpander.Content>
+                                <Grid Padding="10,10,10,10" BackgroundColor="#FFFFFF">
+                                    <SearchBar Placeholder="Cardholder Name" x:Name="CardholderNameSearchbar" TextChanged="CardholderNameSearchbar_TextChanged"/>
+                                </Grid>
+                            </syncfusion:SfExpander.Content>
+                        </syncfusion:SfExpander>
+                    </StackLayout>
+
+                    <!-- Card List -->
+
+                    <listview:SfListView ItemsSource="{Binding Cards}"
+                                         IsVisible="{Binding HasConnections}"
+                                         x:Name="ConnectionsList"
+                                         ItemSize="350">
+
+                        <listview:SfListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout Margin="0,0,0,15">
+                                    <cardViews:Card HorizontalOptions="Center"
                                                 VerticalOptions="Center"
-                                                BindingContext="{Binding Card}">
-                                    <cardViews:Card.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Source={x:Reference cardListViewPage}, Path=BindingContext.SelectCardCommand}"
-                                                              CommandParameter="{Binding .}"/>
-                                    </cardViews:Card.GestureRecognizers>
-                                </cardViews:Card>
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                                                 BindingContext="{Binding Card}">
+                                        <cardViews:Card.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Source={x:Reference cardListViewPage}, Path=BindingContext.SelectCardCommand}"
+                                                                CommandParameter="{Binding .}"/>
+                                        </cardViews:Card.GestureRecognizers>
+                                    </cardViews:Card>
+                                </StackLayout>
+                            </DataTemplate>
+                        </listview:SfListView.ItemTemplate>
+                    </listview:SfListView>
+                </StackLayout>
+            </pulltorefresh:SfPullToRefresh.PullableContent>
+            </pulltorefresh:SfPullToRefresh>
 
+            <!-- No Cards Label -->
             <Label Text="You have not recieved any cards!"
                    HorizontalOptions="Center"
                    FontSize="Large"
                    IsVisible="{Binding HasConnections, Converter={StaticResource inverter}}"/>
-            <Button Text="Refresh"
-                    HorizontalOptions="Center"
-                    Command="{Binding RefreshCommand}"/>
-
+            
         </StackLayout>
-  </ContentPage.Content>
+    </ContentPage.Content>
 </ContentPage>

@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:views="clr-namespace:Ecco.Mobile.Views.Card"
+             xmlns:views="clr-namespace:Ecco.Mobile.Views.Card" 
+             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
              mc:Ignorable="d"
              x:Class="Ecco.Mobile.Views.Pages.Cards.ViewCardPage"
              Title="Business Card">
@@ -32,6 +33,9 @@
                         Style="{StaticResource buttonContact}"
                         WidthRequest="150"
                         Command="{Binding EmailCommand}"/>
+
+                <buttons:SfButton Text="Add To Contacts"
+                                  Command="{Binding AddToContactsCommand}"/>
 
             </StackLayout>
             

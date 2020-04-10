@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+xmlns:dataform="clr-namespace:Syncfusion.XForms.DataForm;assembly=Syncfusion.SfDataForm.XForms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -9,8 +10,13 @@
              xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.Home"
              xmlns:syncfusion="clr-namespace:Syncfusion.XForms.Expander;assembly=Syncfusion.Expander.XForms"
              xmlns:xforms="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms" 
-             xmlns:local="clr-namespace:Ecco.Mobile.Views.Authentication" xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms" xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms" xmlns:control="clr-namespace:Ecco.Mobile.Controls" xmlns:converter="clr-namespace:Ecco.Mobile.Converters"
-             BackgroundColor="Blue">
+             xmlns:local="clr-namespace:Ecco.Mobile.Views.Authentication" 
+             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms" 
+             xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms" 
+             xmlns:control="clr-namespace:Ecco.Mobile.Controls" 
+             xmlns:converter="clr-namespace:Ecco.Mobile.Converters"
+             xmlns:popup="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusion.SfPopupLayout.XForms"
+             xmlns:Picker="clr-namespace:Syncfusion.SfPicker.XForms;assembly=Syncfusion.SfPicker.XForms">
 
     <ContentPage.BindingContext>
         <viewmodels:CreateCardViewModel/>
@@ -26,75 +32,58 @@
     </ContentPage.Resources>
 
     <ContentPage.Content>
+
         <StackLayout>
 
-            <Entry Placeholder="Card Title" Style="{StaticResource EntryStyle}" Text="{Binding CardTitle}"/>
+            <dataform:SfDataForm x:Name="DataForm" 
+                                 AutoGeneratingDataFormItem="DataForm_AutoGeneratingDataFormItem"
+                                 DataObject="{Binding CardModel}"
+                                 VerticalOptions="FillAndExpand"
+                                 ValidationMode="PropertyChanged"/>
 
-            <Entry Placeholder="Job Title" Style="{StaticResource EntryStyle}" Text="{Binding JobTitle}"/>
+            <ScrollView>
 
-            <Entry Placeholder="Description" Style="{StaticResource EntryStyle}" Text="{Binding Description}"/>
+                <syncfusion:SfExpander 
+                                       x:Name="TemplateExpander">
 
-            <Entry Placeholder="Email" Style="{StaticResource EntryStyle}" Text="{Binding Email}"/>
+                    <syncfusion:SfExpander.Header>
 
-            <Entry Placeholder="Phone Number" Style="{StaticResource EntryStyle}" Text="{Binding Phone}"/>
+                        <Grid>
+                            <Label TextColor="#495F6E" 
+                                   Text="Choose A Template" 
+                                   VerticalTextAlignment="Center"
+                                   FontSize="Large"/>
+                        </Grid>
 
-            <!--  Entry to get password from user  -->
-            <border:SfBorder
-                            BorderColor="{Binding Source={x:Reference entryText}, Path=IsFocused, Converter={StaticResource ColorConverter}, ConverterParameter=0}"
-                            Style="{StaticResource SfBorderStyle}">
-                <control:BorderlessEntry
-                                x:Name="entryText"
-                                Placeholder="Text"
-                                Style="{StaticResource EntryStyle}" />
-            </border:SfBorder>
+                    </syncfusion:SfExpander.Header>
 
-            <ScrollView BackgroundColor="#EDF2F5" Grid.Row="1">
-                <StackLayout>
-                    
-                    <syncfusion:SfExpander>
-                        <syncfusion:SfExpander.Header>
-                        
-                            <Grid>
-                                <Label TextColor="#495F6E" Text="Choose A Template" VerticalTextAlignment="Center" />
-                            </Grid>
-                    
-                        </syncfusion:SfExpander.Header>
-                        
-                        <syncfusion:SfExpander.Content>
-                            
-                            <StackLayout Padding="10,10,10,10" BackgroundColor="#FFFFFF">
+                    <syncfusion:SfExpander.Content>
 
-                                <xforms:SfListView ItemsSource="{Binding Templates}"
-                                                   ItemSize="200"
-                                                   x:Name="ListTemplates"
-                                                   ItemTapped="SfListView_ItemTapped">
+                        <StackLayout Padding="10,10,10,10" BackgroundColor="#FFFFFF">
 
-                                    <xforms:SfListView.ItemTemplate>
-                                        <DataTemplate>
-                                            <StackLayout>
-                                                <Label Text="{Binding Template.Title}"
-                                                       HorizontalOptions="Center"/>
-                                                <Image Source="{Binding TemplateImage}"
-                                                       Aspect="AspectFit">
+                            <xforms:SfListView ItemsSource="{Binding Templates}"
+                                               ItemSize="200"
+                                               x:Name="TemplateListView"
+                                               ItemTapped="TemplateListView_ItemTapped">
 
-                                                    <Image.GestureRecognizers>
-                                                        <TapGestureRecognizer Command="{Binding TemplateSelectedCommand}"
-                                                                              CommandParameter="{Binding .}"/>
-                                                    </Image.GestureRecognizers>
-                                                    
-                                                </Image>
+                                <xforms:SfListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackLayout>
+                                            <Label Text="{Binding Template.Title}"
+                                                           HorizontalOptions="Center"/>
+                                            <Image Source="{Binding TemplateImage}"
+                                                           Aspect="AspectFit"/>
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </xforms:SfListView.ItemTemplate>
 
-                                            </StackLayout>
-                                        </DataTemplate>
-                                    </xforms:SfListView.ItemTemplate>
-                                    
-                                </xforms:SfListView>
-                            
-                            </StackLayout>
-                            
-                        </syncfusion:SfExpander.Content>
-                    </syncfusion:SfExpander>
-                </StackLayout>
+                            </xforms:SfListView>
+                        </StackLayout>
+
+                    </syncfusion:SfExpander.Content>
+
+                </syncfusion:SfExpander>
+
             </ScrollView>
 
             <buttons:SfButton Text="Create" 
@@ -103,5 +92,6 @@
                     Style="{StaticResource SfFlatButtonStyle}"/>
 
         </StackLayout>
-  </ContentPage.Content>
+        
+    </ContentPage.Content>
 </ContentPage>

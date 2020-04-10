@@ -1,4 +1,6 @@
-﻿using System;
+using Syncfusion.SfPullToRefresh.XForms.iOS;
+using Syncfusion.XForms.iOS.DataForm;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -22,7 +24,9 @@ namespace Ecco.Mobile.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
-            global::Xamarin.Forms.Forms.Init();
+global::Xamarin.Forms.Forms.Init();
+SfPullToRefreshRenderer.Init();
+SfDataFormRenderer.Init();
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);

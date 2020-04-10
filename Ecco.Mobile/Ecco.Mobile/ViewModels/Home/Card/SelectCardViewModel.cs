@@ -14,6 +14,7 @@ namespace Ecco.Mobile.ViewModels.Home.Card
 
         public ICommand CallCommand { get; set; }
         public ICommand EmailCommand { get; set; }
+        public ICommand AddToContactsCommand { get; set; }
 
         public SelectCardViewModel(CardModel card)
         {
@@ -21,6 +22,7 @@ namespace Ecco.Mobile.ViewModels.Home.Card
 
             CallCommand = new Command(Call);
             EmailCommand = new Command(Email);
+            AddToContactsCommand = new Command(AddToContacts);
         }
 
         private void Call()
@@ -31,6 +33,11 @@ namespace Ecco.Mobile.ViewModels.Home.Card
         private void Email()
         { 
             Launcher.OpenAsync(new Uri("mailto:" + Card.Card.Email));
+        }
+
+        private void AddToContacts()
+        { 
+            
         }
     }
 }

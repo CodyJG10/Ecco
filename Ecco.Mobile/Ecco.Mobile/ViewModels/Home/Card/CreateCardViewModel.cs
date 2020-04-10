@@ -1,5 +1,6 @@
 ﻿using Ecco.Api;
 using Ecco.Entities;
+using Ecco.Entities.Attributes;
 using Ecco.Mobile.Models;
 using Ecco.Mobile.Util;
 using Nancy.TinyIoc;
@@ -8,6 +9,7 @@ using Plugin.Settings;
 using Syncfusion.ListView.XForms;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -17,55 +19,75 @@ namespace Ecco.Mobile.ViewModels.Home
 {
     public class CreateCardViewModel : ViewModelBase
     {
-        public string CardTitle { get; set; }
-        public string JobTitle { get; set; }
-        public string Description { get; set; }
-        public string Email { get; set; }
-        public string Phone { get; set; }
+        #region Properties
 
-        private Template template;
-
-        private List<TemplateModel> _templates;
-        public List<TemplateModel> Templates
+        private CreateCardModel _createCardModel = new CreateCardModel();
+        public CreateCardModel CardModel
         {
             get
             {
-                return _templates;
+                return _createCardModel;
             }
             set
             {
-                _templates = value;
-                OnPropertyChanged(nameof(Templates));
+                _createCardModel = value;
+                OnPropertyChanged(nameof(CardModel));
+            }
+        }
+        private TemplateModel _selectedTemplate;
+        public TemplateModel SelectedTemplate
+        {
+            get
+            {
+                return _selectedTemplate;
+            }
+            set
+            {
+                _selectedTemplate = value;
+                OnPropertyChanged(nameof(SelectedTemplate));
             }
         }
 
+        public bool IsValid { get; set; }
+
+        public ObservableCollection<TemplateModel> Templates { get; set; } = new ObservableCollection<TemplateModel>();
+
+        #endregion
+
+        #region Commands
+
         public ICommand CreateCommand { get; set; }
         public ICommand TemplateSelectedCommand { get; set; }
+        public ICommand ShowServicePickerCommand { get; set; }
+
+        #endregion
+
+        #region Database
 
         private readonly IDatabaseManager _db;
         private readonly IStorageManager _storage;
+
+        #endregion
 
         public CreateCardViewModel()
         {
             _db = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
             _storage = TinyIoCContainer.Current.Resolve<IStorageManager>();
-            
+
             CreateCommand = new Command(CreateCard);
             TemplateSelectedCommand = new Command<TemplateModel>(TemplateSelected);
-           // TemplateSelectedCommand = new Command(TemplateSelected);
 
             LoadTemplates();
         }
 
         private void TemplateSelected(TemplateModel templateModel)
         {
-            template = templateModel.Template;
+            SelectedTemplate = templateModel;
         }
 
         private async void LoadTemplates()
         {
             var allTemplates = await _db.GetTemplates();
-            List<TemplateModel> templates = new List<TemplateModel>();
             foreach (var template in allTemplates)
             {
                 var templateImage = await TemplateUtil.LoadImageSource(new Entities.Card() { TemplateId = template.Id }, _db, _storage);
@@ -74,32 +96,60 @@ namespace Ecco.Mobile.ViewModels.Home
                     Template = template,
                     TemplateImage = templateImage
                 };
-                templates.Add(templateModel);
+                Templates.Add(templateModel);
             }
-            Templates = templates;
         }
 
         public async void CreateCard()
         {
             UserData user = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
+
+            string selectedServiceType = CardModel.ServiceCategory;
+
+            var fields = typeof(ServiceTypes).GetFields();
+            int serviceTypeId = 1;
+            foreach (var field in fields)
+            {
+                var serviceInfo = field.GetCustomAttributes(true)[0] as ServiceInfo;
+                string title = serviceInfo.Title;
+                if (title.Equals(selectedServiceType))
+                {
+                    int id = (int)field.GetValue(null);
+                    serviceTypeId = id;
+                    break;
+                }
+            }
+
+            if (SelectedTemplate == null)
+                SelectedTemplate = new TemplateModel()
+                {
+                    Template = new Template()
+                    {
+                        Id = 1
+                    }
+                };
+
             Entities.Card card = new Entities.Card()
             {
-                CardTitle = CardTitle,
-                Description = Description,
-                Email = Email,
-                JobTitle = JobTitle,
-                Phone = Phone,
+                CardTitle = CardModel.CardTitle,
+                Description = CardModel.Description,
+                Email = CardModel.Email,
+                FullName = CardModel.FullName,
+                JobTitle = CardModel.JobTitle,
+                Phone = CardModel.PhoneNumber,
                 UserId = user.Id,
-                TemplateId = template.Id
+                TemplateId = SelectedTemplate.Template.Id,
+                ServiceType = serviceTypeId
             };
+
             var succeeded = await _db.CreateCard(card);
             if (succeeded)
             {
                 await Application.Current.MainPage.Navigation.PopAsync();
             }
-            else 
+            else
             {
-                await Application.Current.MainPage.DisplayAlert("Error", "An error was encountered when attempting to create the card. Please ensure all information is filled in", "Ok");
+                await Application.Current.MainPage.DisplayAlert("Error", "An error was encountered when attempting to create the card.", "Ok");
             }
         }
     }

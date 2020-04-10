@@ -7,7 +7,7 @@
              x:Class="Ecco.Mobile.Views.Pages.MyCardView"
              xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.Home"
              xmlns:cardViews="clr-namespace:Ecco.Mobile.Views.Card" xmlns:themes="clr-namespace:Ecco.Mobile.Themes"
-             xmlns:style="clr-namespace:Ecco.Mobile.Views"
+             xmlns:style="clr-namespace:Ecco.Mobile.Views" xmlns:pulltorefresh="clr-namespace:Syncfusion.SfPullToRefresh.XForms;assembly=Syncfusion.SfPullToRefresh.XForms" xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
              x:Name="myCardsView"
              BackgroundColor="{DynamicResource Gray-White}">
 
@@ -32,37 +32,45 @@
                    HorizontalOptions="Center"
                    Style="{StaticResource HeaderLabelStyle}"/>
 
-            <ListView ItemsSource="{Binding Cards}"
-                      IsPullToRefreshEnabled="True"
-                      RefreshCommand="{Binding RefreshCommand}"
-                      IsRefreshing="{Binding Loading}"
-                      HasUnevenRows="True">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <ViewCell.ContextActions>
-                                <MenuItem Text="Edit" 
-                                          Command="{Binding Source={x:Reference myCardsView}, Path=BindingContext.EditCardCommand}"
-                                          CommandParameter="{Binding .}"/>
-                                <MenuItem Text="Delete" 
-                                          Command="{Binding Source={x:Reference myCardsView}, Path=BindingContext.DeleteCardCommand}"
-                                          CommandParameter="{Binding .}"/>
-                            </ViewCell.ContextActions>
-                            <StackLayout Margin="0,0,0,15">
-                                <cardViews:Card HorizontalOptions="CenterAndExpand"
-                                                VerticalOptions="CenterAndExpand"
-                                                BindingContext="{Binding .}">
-                                    <cardViews:Card.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Source={x:Reference myCardsView}, Path=BindingContext.SelectCardCommand}"
-                                                              CommandParameter="{Binding .}"/>
-                                    </cardViews:Card.GestureRecognizers>
-                                </cardViews:Card>
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            
+
+            <pulltorefresh:SfPullToRefresh IsRefreshing="{Binding Loading}"
+                                           RefreshCommand="{Binding RefreshCommand}"
+                                           VerticalOptions="FillAndExpand"
+                                           HorizontalOptions="FillAndExpand">
+
+                <pulltorefresh:SfPullToRefresh.PullableContent>
+
+                    <listview:SfListView ItemsSource="{Binding Cards}"
+                                         ItemSize="250">
+                        <listview:SfListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout>
+                                    <!--<ViewCell.ContextActions>
+                                        <MenuItem Text="Edit" 
+                                              Command="{Binding Source={x:Reference myCardsView}, Path=BindingContext.EditCardCommand}"
+                                              CommandParameter="{Binding .}"/>
+                                        <MenuItem Text="Delete" 
+                                              Command="{Binding Source={x:Reference myCardsView}, Path=BindingContext.DeleteCardCommand}"
+                                              CommandParameter="{Binding .}"/>
+                                    </ViewCell.ContextActions>-->
+                                    <StackLayout Margin="0,0,0,15">
+                                        <cardViews:Card HorizontalOptions="CenterAndExpand"
+                                                    VerticalOptions="CenterAndExpand"
+                                                    BindingContext="{Binding .}">
+                                            <cardViews:Card.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding Source={x:Reference myCardsView}, Path=BindingContext.SelectCardCommand}"
+                                                                  CommandParameter="{Binding .}"/>
+                                            </cardViews:Card.GestureRecognizers>
+                                        </cardViews:Card>
+                                    </StackLayout>
+                                </StackLayout>
+                            </DataTemplate>
+                        </listview:SfListView.ItemTemplate>
+                    </listview:SfListView>
+
+                </pulltorefresh:SfPullToRefresh.PullableContent>
+            </pulltorefresh:SfPullToRefresh>
+
         </StackLayout>
-  </ContentPage.Content>
+    </ContentPage.Content>
 </ContentPage>
