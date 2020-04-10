@@ -1,3 +1,4 @@
+using Syncfusion.XForms.iOS.PopupLayout;
 using Syncfusion.SfPullToRefresh.XForms.iOS;
 using Syncfusion.XForms.iOS.DataForm;
 using System;
@@ -25,6 +26,7 @@ namespace Ecco.Mobile.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
 global::Xamarin.Forms.Forms.Init();
+SfPopupLayoutRenderer.Init();
 SfPullToRefreshRenderer.Init();
 SfDataFormRenderer.Init();
             LoadApplication(new App());

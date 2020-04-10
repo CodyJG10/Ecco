@@ -1,5 +1,6 @@
 ﻿using Ecco.Api;
 using Ecco.Entities;
+using Ecco.Entities.Attributes;
 using Ecco.Mobile.Models;
 using Ecco.Mobile.Util;
 using Ecco.Mobile.Views.Pages;
@@ -82,6 +83,8 @@ namespace Ecco.Mobile.ViewModels.Home
         {
             Loading = true;
 
+            if (Cards != null) Cards.Clear();
+
             var user = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
 
             var cards = (await _db.GetMyCards(user.Id.ToString())).ToList();
@@ -106,7 +109,23 @@ namespace Ecco.Mobile.ViewModels.Home
 
         private async void EditCard(CardModel card)
         {
-            await Application.Current.MainPage.Navigation.PushAsync(new EditCardPage(card));
+
+            string serviceTitle = "";
+            typeof(ServiceTypes).GetFields().ToList().ForEach(field => { if ((int)field.GetValue(null) == card.Card.ServiceType) serviceTitle = (field.GetCustomAttributes(true)[0] as ServiceInfo).Title; });
+
+
+            CreateCardModel model = new CreateCardModel()
+            {
+                CardTitle = card.Card.CardTitle,
+                Description = card.Card.Description,
+                Email = card.Card.Email,
+                FullName = card.Card.FullName,
+                JobTitle = card.Card.JobTitle,
+                PhoneNumber = card.Card.Phone,
+                ServiceCategory = serviceTitle
+            };
+
+            await Application.Current.MainPage.Navigation.PushAsync(new EditCardPage(model, card.Card.TemplateId, card.Card.Id));
         }
 
         private async void DeleteCard(CardModel card)

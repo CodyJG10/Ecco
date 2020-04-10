@@ -7,7 +7,12 @@
     xmlns:sfavatar="clr-namespace:Syncfusion.XForms.AvatarView;assembly=Syncfusion.Core.XForms"
     xmlns:control="clr-namespace:Ecco.Mobile.Controls" 
     xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
-    xmlns:graphics="clr-namespace:Syncfusion.XForms.Graphics;assembly=Syncfusion.Core.XForms">
+    xmlns:graphics="clr-namespace:Syncfusion.XForms.Graphics;assembly=Syncfusion.Core.XForms" 
+    xmlns:theme="clr-namespace:Ecco.Mobile.Themes">
+
+    <ResourceDictionary.MergedDictionaries>
+        <theme:LightTheme />
+    </ResourceDictionary.MergedDictionaries >
 
     <Color x:Key="TappedBackgroundColor">#eaeaea</Color>
     <Color x:Key="Transparent">Transparent</Color>
@@ -18,7 +23,6 @@
     <x:String x:Key="Back">&#xe709;</x:String>
     <x:String x:Key="ArrowRight">&#xe728;</x:String>
     <x:String x:Key="Add">&#xe730;</x:String>
-    <x:String x:Key="Search">&#xe705;</x:String>
     <x:String x:Key="PhotosIcon">&#xe731;</x:String>
     <x:String x:Key="AlbumsIcon">&#xe726;</x:String>
     <x:String x:Key="SettingsIcon">&#xe72b;</x:String>
@@ -29,9 +33,10 @@
     <x:String x:Key="WhatsApp">&#xe748;</x:String>
     <x:String x:Key="Photos">&#xe731;</x:String>
     <x:String x:Key="FaceBook">&#xe70f;</x:String>
+    <x:String x:Key="Search">&#xe705;</x:String>
     <x:String x:Key="Settings">&#xe72b;</x:String>
     <x:String x:Key="Messages">&#xe73b;</x:String>
-    <x:String x:Key="Phone">&#xe71c;</x:String>
+    <!--<x:String x:Key="Phone">&#xe71c;</x:String>-->
     <x:String x:Key="Calendar">&#xe742;</x:String>
     <x:String x:Key="Account">&#xe70e;</x:String>
     <x:String x:Key="MoreIcon">&#xe715;</x:String>
@@ -42,6 +47,15 @@
     <x:String x:Key="CardIcon">&#xe701;</x:String>
     <x:String x:Key="NetworkIcon">&#xe702;</x:String>
     <x:String x:Key="ConnectionsIcon">&#xe703;</x:String>
+    <x:String x:Key="Phone">&#xe706;</x:String>
+    <x:String x:Key="Mail">&#xe707;</x:String>
+    <x:String x:Key="SaveContact">&#xe708;</x:String>
+    <x:String x:Key="Edit">&#xe705;</x:String>
+    <x:String x:Key="Trash">&#xe704;</x:String>
+
+    <x:String x:Key="CallButtonText">&#xe706; Call</x:String>
+    <x:String x:Key="MailButtonText">&#xe707; E-Mail</x:String>
+    <x:String x:Key="AddToContactsButtonText">&#xe708; Add To Contacts</x:String>
 
     <!-- Common style for rating labels -->
     <Style x:Key="RatingLabelStyle" TargetType="Label">
@@ -49,24 +63,6 @@
         <Setter Property="FontSize" Value="16" />
         <Setter Property="VerticalOptions" Value="Center" />
         <Setter Property="Text" Value="{StaticResource Rating}" />
-        <Setter Property="FontFamily" Value="{StaticResource FontIcons}" />
-    </Style>
-
-    <!-- Common style for profile border -->
-    <Style x:Key="ProfileBorderStyle" TargetType="border:SfBorder">
-        <Setter Property="HorizontalOptions" Value="Center" />
-        <Setter Property="VerticalOptions" Value="Center" />
-        <Setter Property="BorderWidth" Value="1" />
-        <Setter Property="BorderColor" Value="{DynamicResource Gray-White}" />
-        <Setter Property="CornerRadius" Value="4" />
-    </Style>
-
-    <!-- Common style for right arrow labels -->
-    <Style x:Key="RightArrowLabelStyle" TargetType="Label">
-        <Setter Property="TextColor" Value="{StaticResource Gray-600}" />
-        <Setter Property="FontSize" Value="14" />
-        <Setter Property="VerticalOptions" Value="Center" />
-        <Setter Property="Text" Value="{StaticResource ArrowRight}" />
         <Setter Property="FontFamily" Value="{StaticResource FontIcons}" />
     </Style>
 
@@ -82,29 +78,11 @@
         <Setter Property="VerticalTextAlignment" Value="Center"/>
     </Style>
 
-    <!-- Common style for setting icons -->
-    <Style x:Key="SettingsIconStyle" TargetType="Label">
-        <Setter Property="TextColor" Value="{StaticResource Gray-600}" />
-        <Setter Property="FontSize" Value="16" />
-        <Setter Property="VerticalOptions" Value="Center" />
-        <Setter Property="Text" Value="{StaticResource Next}" />
-        <Setter Property="FontFamily" Value="{StaticResource FontIcons}" />
-        <Setter Property="Margin" Value="0,0,12,0"/>
-        <Setter Property="HorizontalOptions" Value="End"/>
-    </Style>
-
-    <!--  Common style for BoxView  -->
-    <Style x:Key="BoxViewStyle" TargetType="BoxView">
-        <Setter Property="HeightRequest" Value="1" />
-        <Setter Property="Color" Value="{DynamicResource Gray-200}" />
-        <Setter Property="VerticalOptions" Value="Center" />
-    </Style>
-
     <!--  Common style for icon buttons  -->
     <Style x:Key="IconButtonStyle" TargetType="buttons:SfButton">
         <Setter Property="TextColor" Value="{DynamicResource Gray-600}" />
         <Setter Property="BackgroundColor" Value="{StaticResource Transparent}" />
-        <Setter Property="FontFamily" Value="{StaticResource FontIcons}" />
+        <Setter Property="FontFamily" Value="{StaticResource EccoFont}" />
         <Setter Property="FontSize" Value="18" />
         <Setter Property="HorizontalTextAlignment" Value="Center" />
         <Setter Property="VerticalTextAlignment" Value="Center" />
@@ -139,30 +117,6 @@
         <Setter Property="ReturnType" Value="Done" />
     </Style>
 
-    <!--  Common style for  FAQLabelStyle  -->
-    <Style x:Key="FAQLabelStyle" TargetType="Label">
-        <Setter Property="FontFamily" Value="{StaticResource Montserrat-Medium}" />
-        <Setter Property="FontSize" Value="14" />
-        <Setter Property="TextColor" Value="{DynamicResource Gray-800}" />
-        <Setter Property="VerticalOptions" Value="Center" />
-        <Setter Property="HorizontalOptions" Value="Start" />
-        <Setter Property="BackgroundColor" Value="{StaticResource Gray-White}" />
-        <Setter Property="LineHeight" Value="{OnPlatform Default=-1, Android=1.5}" />
-    </Style>
-
-    <!--  Common style for Header Label  -->
-    <Style x:Key="FAQHeaderLabelStyle" TargetType="Label">
-        <Setter Property="FontFamily" Value="{StaticResource Montserrat-Medium}" />
-        <Setter Property="FontSize" Value="15" />
-        <Setter Property="TextColor" Value="{DynamicResource Gray-900}" />
-        <Setter Property="VerticalOptions" Value="Center" />
-        <Setter Property="HorizontalOptions" Value="Start" />
-        <Setter Property="HorizontalTextAlignment" Value="Start"/>
-        <Setter Property="BackgroundColor" Value="{StaticResource Gray-White}" />
-        <Setter Property="LineHeight" Value="{OnPlatform Default=-1, Android=1.5}" />
-        <Setter Property="MaxLines" Value="2" />
-    </Style>
-
     <!-- Common style for borders -->
     <Style x:Key="SfBorderStyle" TargetType="border:SfBorder">
         <Setter Property="BackgroundColor" Value="{DynamicResource Gray-White}" />
@@ -177,34 +131,13 @@
         <Setter Property="BackgroundColor" Value="{DynamicResource Gray-200}" />
     </Style>
 
-    <!-- Common style for contact labels -->
-    <Style x:Key="ContactsLabelStyle" TargetType="Label">
-        <Setter Property="Margin" Value="16,0" />
-        <Setter Property="TextColor" Value="{DynamicResource Gray-900}" />
-        <Setter Property="FontFamily" Value="{StaticResource Montserrat-Medium}" />
-        <Setter Property="FontSize" Value="16" />
-        <Setter Property="VerticalOptions" Value="CenterAndExpand" />
-    </Style>
-
-    <!-- Common style for Avatar views -->
-    <Style x:Key="SfAvatarStyle" TargetType="sfavatar:SfAvatarView">
-        <Setter Property="ContentType" Value="Initials" />
-        <Setter Property="InitialsType" Value="DoubleCharacter" />
-        <Setter Property="FontFamily" Value="{DynamicResource Montserrat-Medium}" />
-        <Setter Property="InitialsColor" Value="#ffffff" />
-        <Setter Property="AvatarShape" Value="Circle" />
-        <Setter Property="AvatarSize" Value="Medium" />
-        <Setter Property="VerticalOptions" Value="CenterAndExpand" />
-        <Setter Property="BorderWidth" Value="0" />
-    </Style>
-
     <!-- Common style for header labels -->
     <Style x:Key="HeaderLabelStyle" TargetType="Label">
         <Setter Property="Margin" Value="16,0" />
         <Setter Property="FontFamily" Value="{DynamicResource Montserrat-Medium}" />
         <Setter Property="FontSize" Value="16" />
         <Setter Property="HeightRequest" Value="40" />
-        <Setter Property="BackgroundColor" Value="{DynamicResource Gray-100}" />
+        <!--<Setter Property="BackgroundColor" Value="{DynamicResource Gray-100}" />-->
         <Setter Property="HorizontalOptions" Value="FillAndExpand" />
         <Setter Property="LineHeight" Value="{OnPlatform Default=-1,Android=1.25}" />
         <Setter Property="TextColor" Value="{DynamicResource Gray-900}" />

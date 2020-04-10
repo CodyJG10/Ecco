@@ -9,14 +9,6 @@
              xmlns:themes="clr-namespace:Ecco.Mobile.Themes" xmlns:style="clr-namespace:Ecco.Mobile.Views"
              BackgroundColor="{DynamicResource Gray-White}">
 
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <style:Styles />
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </ContentPage.Resources>
-
     <ContentPage.BindingContext>
         <viewmodels:MyAccountViewModel/>
     </ContentPage.BindingContext>

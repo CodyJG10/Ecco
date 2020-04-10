@@ -5,30 +5,18 @@
             xmlns:views="clr-namespace:Ecco.Mobile.Views.Pages"
             xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels"
             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
-            xmlns:style="clr-namespace:Ecco.Mobile.Views"
             android:TabbedPage.ToolbarPlacement="Bottom"
             android:TabbedPage.BarSelectedItemColor="{DynamicResource PrimaryColor}"
             android:TabbedPage.BarItemColor="{DynamicResource Gray-600}"
+            android:TabbedPage.IsSwipePagingEnabled="False"
             BarBackgroundColor="White"
             NavigationPage.HasNavigationBar="False"
-            BackgroundColor="{DynamicResource Gray-Black}">
+            BackgroundColor="{DynamicResource Gray-Black}"
+            xmlns:style="clr-namespace:Ecco.Mobile.Views" xmlns:themes="clr-namespace:Ecco.Mobile.Themes">
 
     <TabbedPage.BindingContext>
         <viewmodels:HomeViewModel/>
     </TabbedPage.BindingContext>
-
-    <TabbedPage.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <!--<ResourceDictionary Source="Styles.xaml"/>-->
-                <style:Styles/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </TabbedPage.Resources>
-
-    <!--<TabbedPage.Resources>
-        <ResourceDictionary Source="Styles.xaml"/>
-    </TabbedPage.Resources>-->
 
     <views:ScanCardView Title="Network">
         <views:ScanCardView.IconImageSource>

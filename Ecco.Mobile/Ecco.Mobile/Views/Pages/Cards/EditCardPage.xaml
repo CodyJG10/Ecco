@@ -6,31 +6,72 @@
              mc:Ignorable="d"
              x:Class="Ecco.Mobile.Views.Pages.Cards.EditCardPage"
              Title="Edit Card"
-             xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.Home.Card">
-    
-    <ContentPage.Resources>
-        <Style x:Key="styleEntry" TargetType="Entry">
-            <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
-            <Setter Property="HorizontalTextAlignment" Value="Center"/>
-            <Setter Property="Margin" Value="5"/>
-        </Style>
-    </ContentPage.Resources>
+             xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.Home.Card" 
+             xmlns:syncfusion="clr-namespace:Syncfusion.XForms.Expander;assembly=Syncfusion.Expander.XForms"
+             xmlns:xforms="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms" 
+             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms" 
+             xmlns:dataform="clr-namespace:Syncfusion.XForms.DataForm;assembly=Syncfusion.SfDataForm.XForms">
 
     <ContentPage.Content>
-        <StackLayout BackgroundColor="Red">
 
-            <Entry Placeholder="Card Title" Style="{StaticResource styleEntry}" Text="{Binding Card.CardTitle}"/>
+        <StackLayout>
 
-            <Entry Placeholder="Job Title" Style="{StaticResource styleEntry}" Text="{Binding Card.JobTitle}"/>
+            <dataform:SfDataForm x:Name="DataForm" 
+                                 AutoGeneratingDataFormItem="DataForm_AutoGeneratingDataFormItem"
+                                 DataObject="{Binding CardModel}"
+                                 VerticalOptions="FillAndExpand"
+                                 ValidationMode="PropertyChanged"/>
 
-            <Entry Placeholder="Description" Style="{StaticResource styleEntry}" Text="{Binding Card.Description}"/>
+            <ScrollView>
 
-            <Entry Placeholder="Email" Style="{StaticResource styleEntry}" Text="{Binding Card.Email}"/>
+                <syncfusion:SfExpander 
+                                       x:Name="TemplateExpander">
 
-            <Entry Placeholder="Phone Number" Style="{StaticResource styleEntry}" Text="{Binding Card.Phone}"/>
+                    <syncfusion:SfExpander.Header>
 
-            <Button Text="Create" HorizontalOptions="Center" Command="{Binding SaveCommand}"/>
+                        <Grid>
+                            <Label TextColor="#495F6E" 
+                                   Text="Choose A Template" 
+                                   VerticalTextAlignment="Center"
+                                   FontSize="Large"/>
+                        </Grid>
+
+                    </syncfusion:SfExpander.Header>
+
+                    <syncfusion:SfExpander.Content>
+
+                        <StackLayout Padding="10,10,10,10" BackgroundColor="#FFFFFF">
+
+                            <xforms:SfListView ItemsSource="{Binding Templates}"
+                                               ItemSize="200"
+                                               x:Name="TemplateListView"
+                                               SelectionChanged="TemplateListView_SelectionChanged">
+
+                                <xforms:SfListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackLayout>
+                                            <Label Text="{Binding Template.Title}"
+                                                           HorizontalOptions="Center"/>
+                                            <Image Source="{Binding TemplateImage}"
+                                                           Aspect="AspectFit"/>
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </xforms:SfListView.ItemTemplate>
+
+                            </xforms:SfListView>
+                        </StackLayout>
+
+                    </syncfusion:SfExpander.Content>
+
+                </syncfusion:SfExpander>
+
+            </ScrollView>
+
+            <buttons:SfButton Text="Update" 
+                              HorizontalOptions="Center"
+                              Command="{Binding SaveCommand}"/>
 
         </StackLayout>
+
     </ContentPage.Content>
 </ContentPage>

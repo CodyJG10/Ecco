@@ -5,11 +5,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="Ecco.Mobile.App"
-             xmlns:theme="clr-namespace:Ecco.Mobile.Themes">
+             xmlns:theme="clr-namespace:Ecco.Mobile.Themes"
+             xmlns:styles="clr-namespace:Ecco.Mobile.Views">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <theme:LightTheme />
+                <styles:Styles/>
             </ResourceDictionary.MergedDictionaries >
         </ResourceDictionary>
     </Application.Resources>
