@@ -16,13 +16,14 @@ namespace Ecco.Mobile.ViewModels.Auth
     {
         private IDatabaseManager _database;
 
+        public string Username { get; set; }
         public string ConfirmPasswordText { get; set; }
 
         public RegisterPageViewModel()
         {
             _database = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
             LoginCommand = new Command(Login);
-            RegisterCommand = new Command(async () => await Register());
+            RegisterCommand = new Command(async () => await Register());        
         }
 
         public void Login()
@@ -32,8 +33,8 @@ namespace Ecco.Mobile.ViewModels.Auth
 
         public async Task<Task> Register()
         {
-            var registerResult = await _database.Register(Email, Password, ConfirmPasswordText);
-            if (registerResult.StatusCode == 200)
+            var registerSuccesful = await _database.Register(Username, Email, Password, ConfirmPasswordText);
+            if (registerSuccesful)
             {
                 //Registration Complete
                 var loginSuccesful = await _database.Login(Email, Password);

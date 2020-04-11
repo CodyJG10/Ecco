@@ -61,7 +61,7 @@ xmlns:dataform="clr-namespace:Syncfusion.XForms.DataForm;assembly=Syncfusion.SfD
                             <xforms:SfListView ItemsSource="{Binding Templates}"
                                                ItemSize="200"
                                                x:Name="TemplateListView"
-                                               ItemTapped="TemplateListView_ItemTapped">
+                                               SelectionChanged="TemplateListView_SelectionChanged">
 
                                 <xforms:SfListView.ItemTemplate>
                                     <DataTemplate>

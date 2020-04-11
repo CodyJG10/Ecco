@@ -42,7 +42,7 @@ namespace Ecco.Mobile.Views.Pages
                 (e.DataFormItem as DataFormTextItem).KeyBoard = Keyboard.Email;
         }
 
-        private void TemplateListView_ItemTapped(object sender, Syncfusion.ListView.XForms.ItemTappedEventArgs e)
+        private void TemplateListView_SelectionChanged(object sender, Syncfusion.ListView.XForms.ItemSelectionChangedEventArgs e)
         {
             TemplateExpander.IsExpanded = false;
             TemplateModel model = TemplateListView.SelectedItem as TemplateModel;

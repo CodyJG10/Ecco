@@ -41,7 +41,7 @@
                             <Label Text="You have cards to accept!"
                                    HorizontalOptions="Center"
                                    Style="{StaticResource HeaderLabelStyle}"
-                                   FontSize="Header"/>
+                                   FontSize="Large"/>
                             <Button Text="View"
                                 HorizontalOptions="Center"
                                 Command="{Binding ViewPendingConnectionsCommand}"/>

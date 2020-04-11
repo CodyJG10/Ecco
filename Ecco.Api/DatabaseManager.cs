@@ -34,20 +34,6 @@ namespace Ecco.Api
             public string token { get; set; }
         }
 
-        public struct RegisterResult
-        {
-            [JsonProperty("status")]
-            public int StatusCode { get; set; }
-            [JsonProperty("errors")]
-            public Error Errors { get; set; }
-
-            public struct Error
-            {
-                public List<string> ConfirmPassword { get; set; }
-                public List<string> Password { get; set; }
-            }
-        }
-
         #endregion
 
         #region Auth
@@ -80,20 +66,18 @@ namespace Ecco.Api
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
 
-        public async Task<RegisterResult> Register(string username, string password, string confirmPassword)
+        public async Task<bool> Register(string username, string email, string password, string confirmPassword)
         {
             var formContent = new FormUrlEncodedContent(new[]
             {
                 new KeyValuePair<string, string>("UserName", username),
+                new KeyValuePair<string, string>("Email", email),
                 new KeyValuePair<string, string>("Password", password),
                 new KeyValuePair<string, string>("ConfirmPassword", confirmPassword)
             });
             var response = await client.PostAsync("auth/register", formContent);
-            var result = await response.Content.ReadAsStringAsync();
 
-            var registerResult = JsonConvert.DeserializeObject<RegisterResult>(result);
-
-            return registerResult;
+            return response.IsSuccessStatusCode;
         }
 
         public async Task<UserData> GetUserData()

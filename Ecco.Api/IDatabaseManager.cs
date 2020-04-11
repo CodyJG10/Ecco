@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using static Ecco.Api.DatabaseManager;
 
 namespace Ecco.Api
 {
@@ -14,7 +13,7 @@ namespace Ecco.Api
 
         void SetUrl(string url);
         Task<bool> Login(string username, string password);
-        Task<RegisterResult> Register(string username, string password, string confirmPassword);
+        Task<bool> Register(string username, string email, string password, string confirmPassword);
         Task<UserData> GetUserData();
         Task<UserData> GetUserData(Guid id);
         Task<UserData> GetUserData(string profileName);
