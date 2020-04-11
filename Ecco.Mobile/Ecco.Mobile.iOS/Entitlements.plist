@@ -7,5 +7,7 @@
 		<string>NDEF</string>
 		<string>TAG</string>
 	</array>
+	<key>com.apple.developer.networking.wifi-info</key>
+	<true/>
 </dict>
 </plist>

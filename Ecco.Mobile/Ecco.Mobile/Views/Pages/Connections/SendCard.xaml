@@ -6,7 +6,9 @@
              mc:Ignorable="d"
              x:Class="Ecco.Mobile.Views.Pages.SendCard"
              xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.Home"
-             Title="Send A Card">
+             Title="Send A Card"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             ios:Page.UseSafeArea="true">
 
     <ContentPage.BindingContext>
         <viewmodels:SendCardViewModel/>

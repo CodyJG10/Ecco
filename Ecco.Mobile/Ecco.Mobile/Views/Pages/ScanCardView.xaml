@@ -7,7 +7,9 @@
              x:Class="Ecco.Mobile.Views.Pages.ScanCardView"
              xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.Home" xmlns:themes="clr-namespace:Ecco.Mobile.Themes" xmlns:style="clr-namespace:Ecco.Mobile.Views"
              BackgroundColor="{DynamicResource Gray-White}"
-             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms">
+             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             ios:Page.UseSafeArea="true">
     
     <ContentPage.BindingContext>
         <viewmodels:ScanCardViewModel/>

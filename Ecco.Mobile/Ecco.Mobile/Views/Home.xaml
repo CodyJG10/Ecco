@@ -18,6 +18,10 @@
         <viewmodels:HomeViewModel/>
     </TabbedPage.BindingContext>
 
+    <TabbedPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness" iOS="0, 20, 0, 0" WinPhone="20,20,20,20" />
+    </TabbedPage.Padding>
+
     <views:ScanCardView Title="Network">
         <views:ScanCardView.IconImageSource>
             <FontImageSource FontFamily="{StaticResource EccoFont}"

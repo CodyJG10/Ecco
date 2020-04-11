@@ -7,6 +7,14 @@ using System.Linq;
 
 using Foundation;
 using UIKit;
+using Syncfusion.XForms.iOS.Buttons;
+using Syncfusion.XForms.Expander;
+using Syncfusion.XForms.iOS.Expander;
+using Syncfusion.SfBusyIndicator.XForms.iOS;
+using Syncfusion.XForms.iOS.Backdrop;
+using Syncfusion.XForms.iOS.ComboBox;
+using Syncfusion.ListView.XForms.iOS;
+using Syncfusion.SfPicker.XForms.iOS;
 
 namespace Ecco.Mobile.iOS
 {
@@ -25,10 +33,21 @@ namespace Ecco.Mobile.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
-global::Xamarin.Forms.Forms.Init();
-SfPopupLayoutRenderer.Init();
-SfPullToRefreshRenderer.Init();
-SfDataFormRenderer.Init();
+            new Syncfusion.SfAutoComplete.XForms.iOS.SfAutoCompleteRenderer();
+
+            global::Xamarin.Forms.Forms.Init();
+
+            SfButtonRenderer.Init();
+            SfExpanderRenderer.Init();
+            SfBusyIndicatorRenderer.Init();
+            SfBackdropPageRenderer.Init();
+            SfComboBoxRenderer.Init();
+            SfListViewRenderer.Init();
+            SfPickerRenderer.Init();
+            SfPopupLayoutRenderer.Init();
+            SfPullToRefreshRenderer.Init();
+            SfDataFormRenderer.Init();
+            
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);

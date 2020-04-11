@@ -7,7 +7,9 @@
              x:Class="Ecco.Mobile.Views.Pages.Connections.PendingConnectionsPage"
              xmlns:viewModels="clr-namespace:Ecco.Mobile.ViewModels.Home.Connections" xmlns:local="clr-namespace:Ecco.Mobile.Views.Card"
              x:Name="pendingConnectionsPage"
-             Title="Pending Card Connections">
+             Title="Pending Card Connections"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             ios:Page.UseSafeArea="true">
 
     <ContentPage.BindingContext>
         <viewModels:PendingConnectionsViewModel/>

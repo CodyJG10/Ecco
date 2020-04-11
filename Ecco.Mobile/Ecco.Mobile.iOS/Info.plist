@@ -2,6 +2,15 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+  <key>UIAppFonts</key>
+	<array>
+    <string>Ecco.ttf</string>
+    <string>Montserrat-Bold.ttf</string>
+    <string>Montserrat-Medium.ttf</string>
+    <string>Montserrat-Regular.ttf</string>
+    <string>Montserrat-SemiBold.ttf</string>
+    <string>UIFontIcons.ttf</string>
+	</array>
 	<key>UIDeviceFamily</key>
 	<array>
 		<integer>1</integer>
@@ -34,5 +43,7 @@
 	<string>Assets.xcassets/AppIcon.appiconset</string>
 	<key>NFCReaderUsageDescription</key>
 	<string>NFC tag to read NDEF messages into the application</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1</string>
 </dict>
 </plist>

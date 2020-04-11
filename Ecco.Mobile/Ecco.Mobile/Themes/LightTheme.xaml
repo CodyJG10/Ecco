@@ -41,6 +41,7 @@
     <OnPlatform x:Key="EccoFont" x:TypeArguments="x:String">
         <OnPlatform.Platforms>
             <On Platform="Android" Value="Ecco.ttf#Ecco"/>
+            <On Platform="iOS" Value="Ecco" />
         </OnPlatform.Platforms>
     </OnPlatform>
 
