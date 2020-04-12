@@ -12,13 +12,11 @@
     xmlns:viewModel="clr-namespace:Ecco.Mobile.ViewModels.Auth" 
     xmlns:converter="clr-namespace:Ecco.Mobile.Converters" 
     xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
-    BackgroundImageSource="{core:OnPlatformOrientationStringValue Default=LoginBackground.png,
-                                                                  iOSPhoneLandscape=LoginBackground-Landscape.png,
-                                                                  iOSTabletLandscape=LoginBackground-Landscape.png}"
     NavigationPage.HasNavigationBar="False"
-    Style="{StaticResource ContentPageStyle}"
-    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
-             ios:Page.UseSafeArea="true">
+
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core">
+    <!--BackgroundImageSource="{core:OnPlatformOrientationStringValue Default=LoginBackground.png}"
+        Style="{StaticResource ContentPageStyle}"-->
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -36,7 +34,9 @@
 
     <ContentPage.Content>
         <Grid>
-            <gradient:SfGradientView Style="{StaticResource SfGradientViewStyle}" />
+            <Image Source="LoginBackground.png" Aspect="Fill"/>
+
+            <gradient:SfGradientView Style="{StaticResource SfGradientViewStyle}"/>
 
             <ScrollView HorizontalOptions="Center">
                 <ScrollView.VerticalOptions>

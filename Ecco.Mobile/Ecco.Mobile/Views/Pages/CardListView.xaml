@@ -79,7 +79,10 @@
                                 <!-- Content -->
                                 <syncfusion:SfExpander.Content>
                                     <Grid Padding="10,10,10,10" BackgroundColor="#FFFFFF">
-                                        <SearchBar Placeholder="Cardholder Name" x:Name="CardholderNameSearchbar" TextChanged="CardholderNameSearchbar_TextChanged"/>
+                                        <SearchBar Placeholder="Cardholder Name" 
+                                                   x:Name="CardholderNameSearchbar"
+                                                   TextChanged="CardholderNameSearchbar_TextChanged"
+                                                   BackgroundColor="Transparent"/>
                                     </Grid>
                                 </syncfusion:SfExpander.Content>
                             </syncfusion:SfExpander>

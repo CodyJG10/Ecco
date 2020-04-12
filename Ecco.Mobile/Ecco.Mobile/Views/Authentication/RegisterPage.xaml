@@ -10,15 +10,10 @@
     xmlns:core="clr-namespace:Syncfusion.XForms.Core;assembly=Syncfusion.Core.XForms"
     xmlns:gradient="clr-namespace:Syncfusion.XForms.Graphics;assembly=Syncfusion.Core.XForms"
     xmlns:viewModel="clr-namespace:Ecco.Mobile.ViewModels.Auth"
-    xmlns:local="clr-namespace:Ecco.Mobile.Views.Authentication" xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
+    xmlns:local="clr-namespace:Ecco.Mobile.Views.Authentication" 
+    xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
     Title="Sign Up"
-    BackgroundImageSource="{core:OnPlatformOrientationStringValue Default=LoginBackground.png,
-                                                                  iOSPhoneLandscape=LoginBackground-Landscape.png,
-                                                                  iOSTabletLandscape=LoginBackground-Landscape.png}"
-    NavigationPage.HasNavigationBar="False"
-    Style="{StaticResource ContentPageStyle}"
-    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
-    ios:Page.UseSafeArea="true">
+    NavigationPage.HasNavigationBar="False">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -36,6 +31,8 @@
 
     <ContentPage.Content>
         <Grid>
+            <Image Source="LoginBackground.png" Aspect="Fill"/>
+
             <gradient:SfGradientView Style="{StaticResource SfGradientViewStyle}" />
 
             <ScrollView HorizontalOptions="Center">
