@@ -3,6 +3,8 @@ using Ecco.Entities.Attributes;
 using Ecco.Mobile.Models;
 using Ecco.Mobile.ViewModels.Home;
 using Syncfusion.XForms.DataForm;
+using Syncfusion.XForms.DataForm.Editors;
+using Syncfusion.XForms.MaskedEdit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,11 +23,22 @@ namespace Ecco.Mobile.Views.Pages
         public CreateCardPage()
         {
             InitializeComponent();
+            if (Device.RuntimePlatform == Device.iOS)
+            { 
+                DataForm.LayoutManager = new DataFormLayoutManagerExt(DataForm);
+            }
         }
 
         private void DataForm_AutoGeneratingDataFormItem(object sender, AutoGeneratingDataFormItemEventArgs e)
         {
             DataForm.RegisterEditor("ServiceCategory", "DropDown");
+
+            if (Device.RuntimePlatform == Device.iOS)
+            {
+                DataForm.RegisterEditor("MultilineText", new CustomMultilineTextEditor(DataForm));
+                DataForm.RegisterEditor("Text", new CustomTextEditor(DataForm));
+                DataForm.RegisterEditor("MaskedEditText", new CustomMaskedEditor(DataForm));
+            }
 
             if (e.DataFormItem != null && e.DataFormItem.Name == "ServiceCategory")
             {
@@ -49,4 +62,64 @@ namespace Ecco.Mobile.Views.Pages
             (BindingContext as CreateCardViewModel).TemplateSelectedCommand.Execute(model);
         }
     }
+
+    #region Custom Layout
+
+    public class DataFormLayoutManagerExt : DataFormLayoutManager
+    {
+        public DataFormLayoutManagerExt(SfDataForm dataForm) : base(dataForm) { }
+
+        protected override View GenerateViewForLabel(DataFormItem dataFormItem)
+        {
+            var view = base.GenerateViewForLabel(dataFormItem);
+            var textView = (view as Label);
+            textView.TextColor = Color.Black;
+            return view;
+        }
+    }
+
+    #endregion
+
+    #region Custom Editors
+
+    public class CustomMultilineTextEditor : DataFormMultiLineTextEditor
+    {
+        public CustomMultilineTextEditor(SfDataForm dataForm) : base(dataForm) { }
+        protected override void OnInitializeView(DataFormItem dataFormItem, Editor view)
+        {
+            base.OnInitializeView(dataFormItem, view);
+            view.TextColor = Color.Black;
+            view.BackgroundColor = Color.White;
+            view.PlaceholderColor = Color.Black;
+        }
+    }
+
+    public class CustomTextEditor : DataFormTextEditor
+    {
+        public CustomTextEditor(SfDataForm dataForm) : base(dataForm) { }
+
+        protected override void OnInitializeView(DataFormItem dataFormItem, Entry view)
+        {
+            base.OnInitializeView(dataFormItem, view);
+            view.TextColor = Color.Black;
+            view.PlaceholderColor = Color.Black;
+        }
+    }
+
+    public class CustomMaskedEditor : DataFormMaskedEditTextEditor
+    {
+        public CustomMaskedEditor(SfDataForm dataForm) : base(dataForm) { }
+
+        protected override void OnInitializeView(DataFormItem dataFormItem, SfMaskedEdit view)
+        {
+            base.OnInitializeView(dataFormItem, view);
+            view.Keyboard = Keyboard.Numeric;
+            view.TextColor = Color.Black;
+            view.BorderColor = Color.Black;
+            view.ErrorBorderColor = Color.Red;
+            view.BackgroundColor = Color.LightBlue;
+        }
+    }
+
+    #endregion
 }

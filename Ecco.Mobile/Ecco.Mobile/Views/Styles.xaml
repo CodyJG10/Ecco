@@ -216,6 +216,16 @@
         <Setter Property="HorizontalOptions" Value="Start" />
     </Style>
 
+    <Style x:Key="LabelStyleText" TargetType="Label">
+        <Setter Property="LineHeight" Value="{OnPlatform Android=1.25, Default=-1}" />
+        <Setter Property="TextColor" Value="{DynamicResource PrimaryColor}" />
+        <Setter Property="FontSize" Value="18" />
+        <Setter Property="HorizontalTextAlignment" Value="Start" />
+        <Setter Property="VerticalTextAlignment" Value="Center" />
+        <Setter Property="VerticalOptions" Value="Center" />
+        <Setter Property="HorizontalOptions" Value="Start" />
+    </Style>
+
     <!--  Common style for buttons  -->
     <Style x:Key="SfButtonStyle" TargetType="buttons:SfButton">
         <Setter Property="BackgroundGradient">

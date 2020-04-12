@@ -88,65 +88,77 @@
                             </syncfusion:SfExpander>
                         </StackLayout>
 
-                        <!-- Card List -->
-                        <border:SfBorder BorderColor="{StaticResource Gray-300}"
+                        <Frame BorderColor="{StaticResource Gray-300}"
+                               BackgroundColor="{StaticResource Gray-200}"
+                               CornerRadius="15"
+                               HasShadow="False"
+                               VerticalOptions="FillAndExpand"
+                               HorizontalOptions="FillAndExpand"
+                               Margin="15">
+
+                            <!-- Card List -->
+                            <border:SfBorder BorderColor="{StaticResource Gray-300}"
                                          BackgroundColor="{StaticResource Gray-200}" 
                                          HorizontalOptions="Center" 
                                          VerticalOptions="Center"
                                          BorderWidth="3"
                                          Margin="15">
 
-                            <listview:SfListView ItemsSource="{Binding Cards}"
-                                             IsVisible="{Binding HasConnections}"
-                                             x:Name="ConnectionsList"
-                                             ItemSize="350"
-                                             AllowSwiping="True">
+                                <listview:SfListView ItemsSource="{Binding Cards}"
+                                                 IsVisible="{Binding HasConnections}"
+                                                 x:Name="ConnectionsList"
+                                                 ItemSize="350"
+                                                 AllowSwiping="True"
+                                                 SwipeStarted="ConnectionsList_SwipeStarted">
 
-                                <!-- Left Swipe Template -->
-                                <listview:SfListView.LeftSwipeTemplate>
-                                    <DataTemplate>
-                                        <Grid HorizontalOptions="Fill"
-                                      VerticalOptions="Fill">
+                                    <!-- Left Swipe Template -->
+                                    <listview:SfListView.LeftSwipeTemplate>
+                                        <DataTemplate>
+                                            <Grid HorizontalOptions="Fill"
+                                              VerticalOptions="Fill">
 
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*"/>
-                                                <ColumnDefinition Width="*"/>
-                                            </Grid.ColumnDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
 
-                                            <buttons:SfButton Text="{StaticResource Trash}"
-                                                      Style="{StaticResource IconButtonStyle}"
-                                                      BackgroundColor="Red"
-                                                      HorizontalOptions="Fill"
-                                                      HeightRequest="150"
-                                                      Grid.Column="0"
-                                                      FontSize="Large"
-                                                      TextColor="White"/>
+                                                <buttons:SfButton Text="{StaticResource Trash}"
+                                                              Style="{StaticResource IconButtonStyle}"
+                                                              BackgroundColor="Red"
+                                                              HorizontalOptions="Fill"
+                                                              HeightRequest="150"
+                                                              Grid.Column="0"
+                                                              FontSize="Large"
+                                                              TextColor="White"
+                                                              x:Name="Button"
+                                                              Clicked="Button_Clicked"/>
 
-                                        </Grid>
-                                    </DataTemplate>
-                                </listview:SfListView.LeftSwipeTemplate>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </listview:SfListView.LeftSwipeTemplate>
 
-                                <listview:SfListView.ItemTemplate>
-                                    <DataTemplate>
-                                        <Grid>
-
-                                            <cardViews:Card HorizontalOptions="Center"
-                                                            VerticalOptions="Center"
-                                                            BindingContext="{Binding Card}"
-                                                            Grid.Column="0">
-                                                <cardViews:Card.GestureRecognizers>
-                                                    <TapGestureRecognizer Command="{Binding Source={x:Reference cardListViewPage}, Path=BindingContext.SelectCardCommand}"
+                                    <listview:SfListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackLayout>
+                                                <Frame Margin="0,0,0,15"
+                                                       BackgroundColor="Transparent">
+                                                    <cardViews:Card HorizontalOptions="Center"
+                                                                    VerticalOptions="Center"
+                                                                    BindingContext="{Binding Card}">
+                                                        <cardViews:Card.GestureRecognizers>
+                                                            <TapGestureRecognizer Command="{Binding Source={x:Reference cardListViewPage}, Path=BindingContext.SelectCardCommand}"
                                                                   CommandParameter="{Binding .}"/>
-                                                </cardViews:Card.GestureRecognizers>
-                                            </cardViews:Card>
+                                                        </cardViews:Card.GestureRecognizers>
+                                                    </cardViews:Card>
+                                                </Frame>
+                                            </StackLayout>
+                                        </DataTemplate>
+                                    </listview:SfListView.ItemTemplate>
+                                </listview:SfListView>
 
-                                        </Grid>
-                                    </DataTemplate>
-                                </listview:SfListView.ItemTemplate>
-                            </listview:SfListView>
+                            </border:SfBorder>
 
-                        </border:SfBorder>
-
+                        </Frame>
                     </StackLayout>
                 </pulltorefresh:SfPullToRefresh.PullableContent>
             </pulltorefresh:SfPullToRefresh>

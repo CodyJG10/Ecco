@@ -1,11 +1,14 @@
 ﻿using Ecco.Api;
 using Ecco.Entities;
 using Ecco.Entities.Constants;
+using Ecco.Mobile.Models;
+using Ecco.Mobile.Util;
 using Nancy.TinyIoc;
 using Newtonsoft.Json;
 using Plugin.Settings;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Windows.Input;
@@ -17,6 +20,7 @@ namespace Ecco.Mobile.ViewModels.Home
     public class SendCardViewModel : ViewModelBase
     {
         private IDatabaseManager _db;
+        private IStorageManager _storage;
         private UserData _user;
         
         private string toId;
@@ -24,32 +28,20 @@ namespace Ecco.Mobile.ViewModels.Home
 
         #region Properties
         public string UserQuery { get; set; }
+        public ObservableCollection<UserData> UserResults { get; set; } = new ObservableCollection<UserData>();
+        public ObservableCollection<CardModel> MyCards { get; set; } = new ObservableCollection<CardModel>();
 
-        private List<UserData> _userResults;
-        public List<UserData> UserResults
+        private bool _loading = true;
+        public bool Loading
         {
             get
             {
-                return _userResults;
+                return _loading;
             }
             set
             {
-                _userResults = value;
-                OnPropertyChanged(nameof(UserResults));
-            }
-        }
-
-        private List<Entities.Card> _myCards;
-        public List<Entities.Card> MyCards
-        {
-            get 
-            {
-                return _myCards;
-            }
-            set
-            {
-                _myCards = value;
-                OnPropertyChanged(nameof(MyCards));
+                _loading = value;
+                OnPropertyChanged(nameof(Loading));
             }
         }
         #endregion
@@ -63,23 +55,34 @@ namespace Ecco.Mobile.ViewModels.Home
 
         public SendCardViewModel()
         {
-            MyCards = new List<Entities.Card>();
-            
             _db = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
+            _storage = TinyIoCContainer.Current.Resolve<IStorageManager>();
             _user = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
 
             SendCommand = new Command(Send);
             UserSearchTypedCommand = new Command(UpdateUserSearchResults);
             UserSelectedCommand = new Command<UserData>(UserSelected);
-            CardSelectedCommand = new Command<Entities.Card>(CardSelected);
+            CardSelectedCommand = new Command<CardModel>(CardSelected);
 
             LoadCards();
         }
 
         private async void LoadCards()
         {
-            var cards = await _db.GetMyCards(_user.Id.ToString());
-            MyCards = cards.ToList();
+            var cards = (await _db.GetMyCards(_user.Id.ToString())).ToList();
+
+            foreach (var card in cards)
+            {
+                var templateImage = await TemplateUtil.LoadImageSource(card, _db, _storage);
+                CardModel model = new CardModel()
+                {
+                    Card = card,
+                    TemplateImage = templateImage
+                };
+                MyCards.Add(model);
+            }
+
+            Loading = false;
         }
 
         private async void Send()
@@ -99,14 +102,13 @@ namespace Ecco.Mobile.ViewModels.Home
 
         private async void UpdateUserSearchResults()
         {
-            List<UserData> newResults = new List<UserData>();
+            UserResults.Clear();
             bool userExists = await _db.UserExists(UserQuery);
             if (userExists && !UserQuery.ToLower().Equals(_user.ProfileName.ToLower()))
             {
                 var userData = await _db.GetUserData(UserQuery);
-                newResults.Add(userData);
+                UserResults.Add(userData);
             }
-            UserResults = newResults;
         }
 
         private void UserSelected(UserData userData)
@@ -114,9 +116,9 @@ namespace Ecco.Mobile.ViewModels.Home
             toId = userData.Id.ToString();
         }
 
-        private void CardSelected(Entities.Card card)
+        private void CardSelected(CardModel card)
         {
-            cardToSendId = card.Id;
+            cardToSendId = card.Card.Id;
         }
     }
 }

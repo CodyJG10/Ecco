@@ -27,12 +27,11 @@ namespace Ecco.Mobile.Views.Pages
         {
             var popupLayout = new SfPopupLayout();
 
-
             var templateView = new DataTemplate(() =>
             {
                 var popupContent = new Label();
                 popupContent.Text = "Are you sure you want to delete this card?";
-                popupContent.BackgroundColor = Color.LightSkyBlue;
+                popupContent.BackgroundColor = Color.White;
                 popupContent.HorizontalTextAlignment = TextAlignment.Center;
                 return popupContent;
             });
@@ -42,7 +41,7 @@ namespace Ecco.Mobile.Views.Pages
                 var stackLayout = new StackLayout()
                 {
                     Orientation = StackOrientation.Horizontal,
-                    HorizontalOptions = LayoutOptions.Center
+                    HorizontalOptions = LayoutOptions.CenterAndExpand,
                 };
 
                 var yesButton = new Button()

@@ -8,8 +8,9 @@
              xmlns:viewModels="clr-namespace:Ecco.Mobile.ViewModels.Home.Connections" xmlns:local="clr-namespace:Ecco.Mobile.Views.Card"
              x:Name="pendingConnectionsPage"
              Title="Pending Card Connections"
-             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
-             ios:Page.UseSafeArea="true">
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" xmlns:listviews="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms" xmlns:refresh="clr-namespace:Syncfusion.SfPullToRefresh.XForms;assembly=Syncfusion.SfPullToRefresh.XForms"
+             ios:Page.UseSafeArea="true"
+             BackgroundColor="White">
 
     <ContentPage.BindingContext>
         <viewModels:PendingConnectionsViewModel/>
@@ -18,33 +19,52 @@
     <ContentPage.Content>
         <StackLayout>
 
+            <!-- Pending Connections Label -->
             <Label Text="Pending Connections" 
                    HorizontalOptions="Center"/>
-            <ListView ItemsSource="{Binding PendingConnections}"
-                      IsPullToRefreshEnabled="True"
-                      RefreshCommand="{Binding RefreshCommand}"
-                      IsRefreshing="{Binding Loading}"
-                      HasUnevenRows="True">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout>
-                                <StackLayout Orientation="Horizontal">
-                                    <Label Text="{Binding Name}"
-                                       HorizontalOptions="CenterAndExpand"
-                                       TextColor="Black"
-                                       VerticalOptions="Center"/>
-                                    <Button Text="Accept" 
-                                        HorizontalOptions="EndAndExpand"
-                                        Command="{Binding Source={x:Reference pendingConnectionsPage}, Path=BindingContext.AcceptPendingConnectionCommand}"
-                                        CommandParameter="{Binding Connection}"/>
-                                </StackLayout>
-                                <local:Card BindingContext="{Binding Card}" />
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+
+            <!-- List Pull To Refresh -->
+            <refresh:SfPullToRefresh RefreshCommand="{Binding RefreshCommand}"
+                                     IsRefreshing="{Binding Loading}"
+                                     VerticalOptions="FillAndExpand">
+                <refresh:SfPullToRefresh.PullableContent>
+
+                    <!-- Pending Card List -->
+                    <listviews:SfListView ItemsSource="{Binding PendingConnections}"
+                                          ItemSize="300">
+
+                        <listviews:SfListView.ItemTemplate>
+                            <DataTemplate>
+
+                                <Frame BackgroundColor="Transparent">
+                                    <StackLayout BackgroundColor="{StaticResource Gray-200}">
+
+                                        <Label Text="{Binding Name}"
+                                               HorizontalOptions="CenterAndExpand"
+                                               TextColor="Black"
+                                               VerticalOptions="Center"/>
+
+                                        <local:Card BindingContext="{Binding Card}" 
+                                                    WidthRequest="350"
+                                                    HeightRequest="200"
+                                                    VerticalOptions="Center"
+                                                    HorizontalOptions="Center"/>
+
+                                        <Button Text="Accept" 
+                                                HorizontalOptions="Center"
+                                                Command="{Binding Source={x:Reference pendingConnectionsPage}, Path=BindingContext.AcceptPendingConnectionCommand}"
+                                                CommandParameter="{Binding Connection}"/>
+                                    
+                                    </StackLayout>
+                                </Frame>
+                            </DataTemplate>
+                        </listviews:SfListView.ItemTemplate>
+                        
+                    </listviews:SfListView>
+
+
+                </refresh:SfPullToRefresh.PullableContent>
+            </refresh:SfPullToRefresh>
 
         </StackLayout>
     </ContentPage.Content>

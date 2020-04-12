@@ -32,57 +32,58 @@ xmlns:dataform="clr-namespace:Syncfusion.XForms.DataForm;assembly=Syncfusion.SfD
 
         <StackLayout>
 
-            <dataform:SfDataForm x:Name="DataForm" 
-                                 AutoGeneratingDataFormItem="DataForm_AutoGeneratingDataFormItem"
-                                 DataObject="{Binding CardModel}"
-                                 VerticalOptions="FillAndExpand"
-                                 ValidationMode="PropertyChanged"/>
-
-            <ScrollView>
-
-                <syncfusion:SfExpander 
-                                       x:Name="TemplateExpander">
-
-                    <syncfusion:SfExpander.Header>
-
-                        <Grid>
-                            <Label TextColor="#495F6E" 
-                                   Text="Choose A Template" 
-                                   VerticalTextAlignment="Center"
-                                   FontSize="Large"/>
-                        </Grid>
-
-                    </syncfusion:SfExpander.Header>
-
-                    <syncfusion:SfExpander.Content>
-
-                        <StackLayout Padding="10,10,10,10" BackgroundColor="#FFFFFF">
-
-                            <xforms:SfListView ItemsSource="{Binding Templates}"
-                                               ItemSize="200"
-                                               x:Name="TemplateListView"
-                                               SelectionChanged="TemplateListView_SelectionChanged">
-
-                                <xforms:SfListView.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackLayout>
-                                            <Label Text="{Binding Template.Title}"
-                                                           HorizontalOptions="Center"/>
-                                            <Image Source="{Binding TemplateImage}"
-                                                           Aspect="AspectFit"/>
-                                        </StackLayout>
-                                    </DataTemplate>
-                                </xforms:SfListView.ItemTemplate>
-
-                            </xforms:SfListView>
-                        </StackLayout>
-
-                    </syncfusion:SfExpander.Content>
-
-                </syncfusion:SfExpander>
+            <ScrollView VerticalOptions="FillAndExpand">
+                
+                <!-- Data Form -->
+                <dataform:SfDataForm x:Name="DataForm" 
+                                     AutoGeneratingDataFormItem="DataForm_AutoGeneratingDataFormItem"
+                                     DataObject="{Binding CardModel}"
+                                     HorizontalOptions="FillAndExpand"
+                                     ValidationMode="PropertyChanged"
+                                     ContainerType="Outlined"
+                                     LabelPosition="Top"/>
 
             </ScrollView>
 
+            <!-- Expander -->
+            <syncfusion:SfExpander x:Name="TemplateExpander">
+                <!-- Expander Header -->
+                <syncfusion:SfExpander.Header>
+                    <Grid>
+                        <Label TextColor="#495F6E" 
+                                       Text="Choose A Template" 
+                                       VerticalTextAlignment="Center"
+                                       FontSize="Large"/>
+                    </Grid>
+                </syncfusion:SfExpander.Header>
+                <syncfusion:SfExpander.Content>
+                    <StackLayout Padding="10,10,10,10" BackgroundColor="#FFFFFF">
+                        <!-- Card Template List -->
+                        <xforms:SfListView ItemsSource="{Binding Templates}"
+                                                   ItemSize="250"
+                                                   x:Name="TemplateListView"
+                                                   SelectionChanged="TemplateListView_SelectionChanged">
+
+                            <xforms:SfListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackLayout>
+
+                                        <Label Text="{Binding Template.Title}"
+                                                               HorizontalOptions="Center"/>
+                                        <Image Source="{Binding TemplateImage}"
+                                                       Aspect="AspectFit"
+                                                       WidthRequest="350"
+                                                       HeightRequest="200"/>
+                                    </StackLayout>
+                                </DataTemplate>
+                            </xforms:SfListView.ItemTemplate>
+
+                        </xforms:SfListView>
+                    </StackLayout>
+                </syncfusion:SfExpander.Content>
+            </syncfusion:SfExpander>
+
+            <!-- Create Button -->
             <buttons:SfButton Text="Create" 
                     HorizontalOptions="Center"
                     Command="{Binding CreateCommand}"/>

@@ -26,19 +26,19 @@ namespace Ecco.Mobile.Views.Pages
             InitializeComponent();
         }
 
-        private void listUserResults_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            ViewModel.UserSelectedCommand.Execute(e.SelectedItem);
-        }
-
-        private void listMyCards_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            ViewModel.CardSelectedCommand.Execute(e.SelectedItem);
-        }
-
         private void entryUserQuery_TextChanged(object sender, TextChangedEventArgs e)
         {
             ViewModel.UserSearchTypedCommand.Execute(null);
+        }
+
+        private void listMyCards_SelectionChanged(object sender, Syncfusion.ListView.XForms.ItemSelectionChangedEventArgs e)
+        {
+            ViewModel.CardSelectedCommand.Execute(listMyCards.SelectedItem);
+        }
+
+        private void ListUserResults_SelectionChanged(object sender, Syncfusion.ListView.XForms.ItemSelectionChangedEventArgs e)
+        {
+            ViewModel.UserSelectedCommand.Execute(ListUserResults.SelectedItem);
         }
     }
 }

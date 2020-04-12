@@ -15,6 +15,7 @@ using Syncfusion.XForms.iOS.Backdrop;
 using Syncfusion.XForms.iOS.ComboBox;
 using Syncfusion.ListView.XForms.iOS;
 using Syncfusion.SfPicker.XForms.iOS;
+using Syncfusion.XForms.iOS.Shimmer;
 
 namespace Ecco.Mobile.iOS
 {
@@ -47,7 +48,8 @@ namespace Ecco.Mobile.iOS
             SfPopupLayoutRenderer.Init();
             SfPullToRefreshRenderer.Init();
             SfDataFormRenderer.Init();
-            
+            SfShimmerRenderer.Init();
+
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);
