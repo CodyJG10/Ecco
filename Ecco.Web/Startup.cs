@@ -19,6 +19,7 @@ using Ecco.Web.Areas.Identity;
 using Microsoft.Azure.Storage;
 using Microsoft.Azure.Storage.Blob;
 using Ecco.Web.Services;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace Ecco.Web
 {
@@ -76,6 +77,9 @@ namespace Ecco.Web
 
             string storageConnectionString = Configuration.GetConnectionString("StorageConnection");
             services.AddSingleton(typeof(StorageService), new StorageService(storageConnectionString));
+
+            string sendGridApiKey = Configuration["SendGridKey"];
+            services.AddSingleton(typeof(IEmailSender), new EccoEmailSender(sendGridApiKey));
 
             services.AddControllersWithViews();
             services.AddRazorPages();

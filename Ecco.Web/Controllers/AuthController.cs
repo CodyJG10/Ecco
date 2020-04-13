@@ -4,6 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Ecco.Web.Areas.Identity;
 using Ecco.Web.Models;
@@ -11,7 +12,9 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
@@ -24,10 +27,12 @@ namespace Ecco.Web.Controllers
     public class AuthController : ControllerBase
     {
         private UserManager<EccoUser> _userManager;
+        private IEmailSender _emailSender;
 
-        public AuthController(UserManager<EccoUser> userManager)
+        public AuthController(UserManager<EccoUser> userManager, IEmailSender emailSender)
         {
             _userManager = userManager;
+            _emailSender = emailSender;
         }
 
         [HttpPost("token")]
@@ -88,6 +93,17 @@ namespace Ecco.Web.Controllers
             {
                 return errorResult;
             }
+
+            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+            var callbackUrl = Url.Page(
+                "/Account/ConfirmEmail",
+                pageHandler: null,
+                values: new { area = "Identity", userId = user.Id, code = code },
+                protocol: Request.Scheme);
+             
+            await _emailSender.SendEmailAsync(user.UserName, "Welcome To Ecco Space!",
+                $"Thank you for signing up to Ecco Space! Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
             return Ok();
         }
