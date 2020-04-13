@@ -1,9 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@inject UserManager<EccoUser> _userManager 
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Ecco.Web</title>
+    <title>@ViewData["Title"] - Ecco Space</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -11,7 +13,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Ecco.Web</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Ecco Space</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -22,9 +24,43 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+
+                       @if (User.Identity.IsAuthenticated)
+                       {
+                            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+                            if (await _userManager.IsInRoleAsync(user, "Moderator"))
+                            {
+                                <li>
+                                    <ul class="nav nav-tabs">
+                                        <li class="nav-item dropdown">
+                                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Moderator Portal</a>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item text-dark" asp-area="" asp-controller="Users" asp-action="Index">Users</a>
+                                                <a class="dropdown-item text-dark" asp-area="" asp-controller="Cards" asp-action="Index">Cards</a>
+                                                <div class="dropdown-divider"></div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                            }
+
+                            if (await _userManager.IsInRoleAsync(user, "Admin"))
+                            {
+                                <li>
+                                    <ul class="nav nav-tabs">
+                                        <li class="nav-item dropdown">
+                                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Admin Portal</a>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item text-dark" asp-area="" asp-controller="Users" asp-action="Index">Users</a>
+                                                <a class="dropdown-item text-dark" asp-area="" asp-controller="Cards" asp-action="Index">Cards</a>
+                                                <a class="dropdown-item text-dark" asp-area="" asp-controller="Template" asp-action="Index">Templates</a>
+                                                <div class="dropdown-divider"></div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                            }
+                        }
                     </ul>
                 </div>
             </div>
@@ -38,7 +74,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2020 - Ecco.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2020 - Ecco Space, LLC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

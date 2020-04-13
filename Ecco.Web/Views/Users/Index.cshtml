@@ -1,0 +1,41 @@
+﻿@inject UserManager<EccoUser> _userManager
+@inject ApplicationDbContext _context  
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>User Management</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <label>Profile Name</label>
+            </th>
+            <th>
+                <label>Email</label>
+            </th>
+            <th>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in _context.Users.ToList())
+        {
+            <tr>
+                <td>
+                    @Html.Label(user.ProfileName) 
+                </td>
+                <td>
+                    <label>@user.Email</label>
+                </td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@user.Id">Details</a> |
+                    <a asp-action="Edit" asp-route-id="@user.Id">Edit</a> |
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

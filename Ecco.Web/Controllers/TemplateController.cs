@@ -11,10 +11,12 @@ using Ecco.Web.Services;
 using System.IO;
 using Microsoft.Azure.Storage.Blob;
 using Ecco.Web.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Ecco.Web.Controllers
 {
     [Route("Templates")]
+    [Authorize(Roles = "Admin")]
     public class TemplateController : Controller
     {
         private readonly ApplicationDbContext _context;

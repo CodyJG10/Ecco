@@ -1,0 +1,67 @@
+﻿@model EccoUser  
+@inject RoleManager<IdentityRole> _roleManager
+@inject UserManager<EccoUser> _userManager 
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="ProfileName" class="control-label"></label>
+                <input asp-for="ProfileName" class="form-control" />
+                <span asp-validation-for="ProfileName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+
+        <div class="col-lg-6">
+
+            @if ((await _userManager.GetRolesAsync(Model)).Count > 0)
+            {
+                <label class="control-label">Current User Roles:</label>
+                foreach (var role in (await _userManager.GetRolesAsync(Model)))
+                {
+                    <label class="control-label">@role</label> 
+                    <label>|</label>
+                    <a class="btn-danger" asp-action="RemoveFromRole" asp-route-id="@Model.Id" asp-route-role="@role">Remove</a>
+                    <br/>
+                }
+            }
+            else
+            {
+                <label class="control-label">This user does not belong to any roles</label>
+            }
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Add User To Role
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    @{
+                        var roles = _roleManager.Roles.ToList();
+                    }
+                    @foreach (var role in roles)
+                    {
+                        <a class="dropdown-item" asp-action="AddUserToRole" asp-route-id="@Model.Id" asp-route-role="@role.Name">@role.Name</a>
+                    }
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
