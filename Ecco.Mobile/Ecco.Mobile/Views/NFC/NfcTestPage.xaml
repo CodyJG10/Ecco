@@ -5,14 +5,85 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="Ecco.Mobile.Views.NFC.NfcTestPage">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Button">
+                <Setter Property="BorderColor" Value="Gray" />
+                <Setter Property="BorderWidth" Value="1" />
+                <Setter Property="BackgroundColor" Value="WhiteSmoke" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <!--<Label Text="Welcome to Xamarin.Forms!"/>
 
             <Button x:Name="ButtonStartListening"
-                    Clicked="ButtonStartListening_Clicked"/>
-        </StackLayout>
+                    Clicked="ButtonStartListening_Clicked"
+                    Text="Scan"
+                    BackgroundColor="Red"
+                    VerticalOptions="Center"
+                    HorizontalOptions="Center"/>-->
+            
+            <ScrollView>
+                <StackLayout HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand">
+                    <Label FontSize="Large"
+                   HorizontalOptions="CenterAndExpand"
+                   Text="Plugin NFC Sample" />
+
+                    <Button Clicked="Button_Clicked_StartListening"
+                    IsEnabled="{Binding NfcIsEnabled}"
+                    Text="Read Tag" />
+
+                    <Frame BorderColor="Gray" HasShadow="False">
+                        <StackLayout>
+
+                            <StackLayout Padding="0"
+                                 HorizontalOptions="CenterAndExpand"
+                                 Orientation="Horizontal"
+                                 Spacing="0">
+
+                                <CheckBox x:Name="ChkReadOnly"
+                                  IsChecked="False"
+                                  IsEnabled="{Binding NfcIsEnabled}"
+                                  VerticalOptions="Center"
+                                  Color="Red" />
+
+                                <Label FontAttributes="Bold"
+                               Text="Make Tag Read-Only"
+                               TextColor="Red"
+                               VerticalOptions="Center" />
+                            </StackLayout>
+
+                            <Button Clicked="Button_Clicked_StartWriting"
+                            IsEnabled="{Binding NfcIsEnabled}"
+                            Text="Write Tag (Text)" />
+
+                            <Button Clicked="Button_Clicked_StartWriting_Uri"
+                            IsEnabled="{Binding NfcIsEnabled}"
+                            Text="Write Ta1g (Uri)" />
+
+                            <Button Clicked="Button_Clicked_StartWriting_Custom"
+                            IsEnabled="{Binding NfcIsEnabled}"
+                            Text="Write Tag (Custom)" />
+
+                        </StackLayout>
+                    </Frame>
+
+                    <Button Clicked="Button_Clicked_FormatTag"
+                    IsEnabled="{Binding NfcIsEnabled}"
+                    Text="Clear Tag" />
+
+                    <Label Margin="0,6,0,0"
+				   Padding="12,6"
+                   HorizontalOptions="CenterAndExpand"
+                   IsVisible="{Binding NfcIsDisabled}"
+                   Text="NFC IS DISABLED"
+				   FontAttributes="Bold"
+                   TextColor="White"
+				   BackgroundColor="Red"/>
+
+                </StackLayout>
+            </ScrollView>
     </ContentPage.Content>
 </ContentPage>
