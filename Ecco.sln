@@ -11,9 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ecco.Mobile", "Ecco.Mobile\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ecco.Entities", "Ecco.Entities\Ecco.Entities.csproj", "{E1B463BE-8C25-44A6-8F69-A9A8B07F7458}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecco.Web", "Ecco.Web\Ecco.Web.csproj", "{EE188B8C-B1FB-4205-BA9F-2AFF09A54956}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ecco.Web", "Ecco.Web\Ecco.Web.csproj", "{EE188B8C-B1FB-4205-BA9F-2AFF09A54956}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecco.Api", "Ecco.Api\Ecco.Api.csproj", "{1ECD36A2-1273-416B-AFA1-481752B66D0B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ecco.Api", "Ecco.Api\Ecco.Api.csproj", "{1ECD36A2-1273-416B-AFA1-481752B66D0B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ecco.Tests", "Ecco.Tests\Ecco.Tests.csproj", "{0C13CF3B-F2EA-4825-B646-C1A96B9D1BE3}"
 EndProject

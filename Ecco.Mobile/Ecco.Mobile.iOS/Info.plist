@@ -32,7 +32,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>Ecco Space</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.ecco-space.app2</string>
+	<string>com.ecco-space.mobile</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
 	<key>UILaunchStoryboardName</key>

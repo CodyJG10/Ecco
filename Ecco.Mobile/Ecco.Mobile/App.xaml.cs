@@ -52,7 +52,7 @@ namespace Ecco.Mobile
             container.Register<IDatabaseManager, DatabaseManager>();
             container.Resolve<IDatabaseManager>().SetUrl("https://ecco-space.azurewebsites.net/");
 
-            container.Register<IStorageManager>(new StorageManager("DefaultEndpointsProtocol=https;AccountName=eccodevstorage;AccountKey=8N0q/fS/d3cuNl48eleenu2EdU0VN3crTFUIegdVkBCP5wY1URNmC+XPBon8bOCShk8Ku8HV7CsmXm2cS7BUOg==;EndpointSuffix=core.windows.net"));
+            container.Register<IStorageManager>(new StorageManager("DefaultEndpointsProtocol=https;AccountName=eccospacestorage;AccountKey=Nr6eERil/QqRitQ/XThQ9yElPlH844fwAqE0LDOX6ktyYae0S5xtvv5W/d0lrM3Y7uI8KP7qRgoQ/unHCmYnIw==;EndpointSuffix=core.windows.net"));
         }
 
         protected override void OnStart()
