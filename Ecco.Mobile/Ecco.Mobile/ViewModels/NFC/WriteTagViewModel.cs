@@ -150,12 +150,13 @@ namespace Ecco.Mobile.ViewModels.NFC
 
 			try
 			{
-				string content = JsonConvert.SerializeObject(selectedCard.Card);
+				var cardId = selectedCard.Card.Id;
+				var payload = NFCUtils.EncodeToByteArray("https://ecco-space.azurewebsites.com/cards/" + selectedCard.Card.Id.ToString());
 				var record = new NFCNdefRecord
 				{
-					TypeFormat = NFCNdefTypeFormat.WellKnown,
+					TypeFormat = NFCNdefTypeFormat.Uri,
 					MimeType = "text/plain",
-					Payload = NFCUtils.EncodeToByteArray(content)
+					Payload = payload
 				};
 
 				if (!format && record == null)

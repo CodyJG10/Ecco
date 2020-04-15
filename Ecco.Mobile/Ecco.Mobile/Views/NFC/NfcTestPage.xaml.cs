@@ -127,11 +127,34 @@ namespace Ecco.Mobile.Views.NFC
 			}
 			else
 			{
+				IDatabaseManager db = TinyIoCContainer.Current.Resolve<IDatabaseManager>() as IDatabaseManager;
 				var first = tagInfo.Records[0];
-				string msg = first.Message;
-				try
+				//string msg = first.Message;
+				//string msgHex = NFCUtils.ByteArrayToHexString(tagInfo.Records[0].Payload);
+				//string msg = Convert.ToString(msgHex);
+				//string msg = NFCUtils.GetMessage(tagInfo.Records[0]);
+				//string msg = NFCUtils.GetMessage(tagInfo.Records[0]);
+				//string msg = Encoding.UTF8.GetString(first.Payload);
+				//string msg2 = GetMessage(first);
+				//string msg = Encoding.ASCII.GetString(first.Payload);
+				var msgSegments = first.Message.Split('/');
+				string msg = msgSegments[msgSegments.Length - 1];
+                try
 				{
-					Entities.Card card = JsonConvert.DeserializeObject<Entities.Card>(msg);
+					//byte[] ba = Encoding.Default.GetBytes(msg);
+					//var hexString = BitConverter.ToString(ba);
+					//hexString = hexString.Replace("-", "");
+					//var hexToValue = Convert.ToInt64(hexString, 16);
+					//long cardIdMsg = Convert.ToInt64(tagInfo.Records[0].Message, 16);
+
+					//var hexString = NFCUtils.ByteArrayToHexString(first.Payload);
+					//int cardId32 = Convert.ToInt32(hexString);
+					//long cardId64 = Convert.ToInt64(hexString);
+
+					//tring messageEncoded = Encoding.UTF8.GetString(tagInfo.Records[0].Payload);
+					//int cardId = int.Parse(int.Parse(c);
+					var card = await db.GetCard(int.Parse(msg));
+					//Entities.Card card = JsonConvert.DeserializeObject<Entities.Card>(msg);
 					var model = await CardModel.FromCard(card);
 					await Application.Current.MainPage.Navigation.PushAsync(new ViewCardPage(model));
 				}
