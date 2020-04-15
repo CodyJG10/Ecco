@@ -25,9 +25,9 @@ namespace Ecco.Mobile.iOS
     // User Interface of the application, as well as listening (and optionally responding) to 
     // application events from iOS.
     [Register("AppDelegate")]
-    public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate, INFCNdefReaderSessionDelegate
+    public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
     {
-        public NFCNdefReaderSession Session { get; set; }
+        //public NFCNdefReaderSession Session { get; set; }
 
         //
         // This method is invoked when the application has loaded and is ready to run. In this 
@@ -54,12 +54,12 @@ namespace Ecco.Mobile.iOS
             SfDataFormRenderer.Init();
             SfShimmerRenderer.Init();
 
-            if (Session == null)
-            {
-                Session = new NFCNdefReaderSession(this, null, true);
-            }
-            Session = new NFCNdefReaderSession(this, null, true);
-            Session?.BeginSession();
+            //if (Session == null)
+            //{
+            //    Session = new NFCNdefReaderSession(this, null, true);
+            //}
+            //Session = new NFCNdefReaderSession(this, null, true);
+            //Session?.BeginSession();
 
             LoadApplication(new App());
 
