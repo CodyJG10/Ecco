@@ -64,10 +64,10 @@ namespace Ecco.Mobile.iOS.Dependencies
 
         public Task<string> ScanAsync()
         {
-            if (!NFCNdefReaderSession.ReadingAvailable)
-            {
-                throw new InvalidOperationException("Reading NDEF is not available");
-            }
+            //if (!NFCNdefReaderSession.ReadingAvailable)
+            //{
+            //    throw new InvalidOperationException("Reading NDEF is not available");
+            //}
 
             _tcs = new TaskCompletionSource<string>();
             _session = new NFCNdefReaderSession(this, null, true);
