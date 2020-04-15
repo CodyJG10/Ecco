@@ -154,7 +154,6 @@ namespace Ecco.Mobile.Views.NFC
 		{
 			base.OnAppearing();
 
-			DependencyService.Get<INFCReader>().ReadTag();
 
 			//if (CrossNFC.IsSupported)
 			//{
@@ -316,14 +315,16 @@ namespace Ecco.Mobile.Views.NFC
 
 		async void Button_Clicked_StartListening(object sender, System.EventArgs e)
 		{
-			try
-			{
-				CrossNFC.Current.StartListening();
-			}
-			catch (Exception ex)
-			{
-				await ShowAlert(ex.Message);
-			}
+			DependencyService.Get<INFCReader>().ReadTag();
+
+			//try
+			//{
+			//	CrossNFC.Current.StartListening();
+			//}
+			//catch (Exception ex)
+			//{
+			//	await ShowAlert(ex.Message);
+			//}
 		}
 
 		void Button_Clicked_StartWriting(object sender, System.EventArgs e) => Publish(NFCNdefTypeFormat.WellKnown);

@@ -16,6 +16,8 @@ using Syncfusion.XForms.iOS.ComboBox;
 using Syncfusion.ListView.XForms.iOS;
 using Syncfusion.SfPicker.XForms.iOS;
 using Syncfusion.XForms.iOS.Shimmer;
+using CoreNFC;
+using System.Text;
 
 namespace Ecco.Mobile.iOS
 {
@@ -23,8 +25,10 @@ namespace Ecco.Mobile.iOS
     // User Interface of the application, as well as listening (and optionally responding) to 
     // application events from iOS.
     [Register("AppDelegate")]
-    public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
+    public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate, INFCNdefReaderSessionDelegate
     {
+        public NFCNdefReaderSession Session { get; set; }
+
         //
         // This method is invoked when the application has loaded and is ready to run. In this 
         // method you should instantiate the window, load the UI into it and then make the window
@@ -50,9 +54,28 @@ namespace Ecco.Mobile.iOS
             SfDataFormRenderer.Init();
             SfShimmerRenderer.Init();
 
+            if (Session == null)
+            {
+                Session = new NFCNdefReaderSession(this, null, true);
+            }
+            Session = new NFCNdefReaderSession(this, null, true);
+            Session?.BeginSession();
+
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);
+        }
+
+        public void DidInvalidate(NFCNdefReaderSession session, NSError error)
+        {
+            Console.WriteLine("ServiceToolStandard DidInvalidate: " + error.ToString());
+        }
+
+        public void DidDetect(NFCNdefReaderSession session, NFCNdefMessage[] messages)
+        {
+            var bytes = messages[0].Records[0].Payload.Skip(3).ToArray();
+            var message = Encoding.UTF8.GetString(bytes);
+            Console.WriteLine("ServiceToolStandard DidDetect: " + message);
         }
     }
 }

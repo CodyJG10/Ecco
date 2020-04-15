@@ -1,4 +1,5 @@
 ﻿using Ecco.Api;
+using Ecco.Mobile.Dependencies;
 using Ecco.Mobile.Views;
 using Ecco.Mobile.Views.Authentication;
 using Nancy.TinyIoc;
@@ -18,15 +19,18 @@ namespace Ecco.Mobile
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MjM1NDA2QDMxMzgyZTMxMmUzMGZGWjB2Z0prb1hpcCtLTDZPVUo3bXhnUGFnV0VRcTZCUEk3UXZZdFB5M1U9");
 
             InitDatabase();
+            
+
             MainPage = new LoadingPage();
-            if (!CrossSettings.Current.GetValueOrDefault("Username", "_").Equals("_"))
-            {
-                AutoLogin();
-            }
-            else
-            {
-                MainPage = new LoginPage();
-            }
+            DependencyService.Get<INFCReader>().ReadTag();
+            //if (!CrossSettings.Current.GetValueOrDefault("Username", "_").Equals("_"))
+            //{
+            //    AutoLogin();
+            //}
+            //else
+            //{
+            //    MainPage = new LoginPage();
+            //}
         }
 
         private async void AutoLogin()
