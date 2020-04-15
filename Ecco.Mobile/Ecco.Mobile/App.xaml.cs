@@ -23,14 +23,14 @@ namespace Ecco.Mobile
 
             MainPage = new LoadingPage();
             //DependencyService.Get<INFCReader>().ReadTag();
-            //if (!CrossSettings.Current.GetValueOrDefault("Username", "_").Equals("_"))
-            //{
-            //    AutoLogin();
-            //}
-            //else
-            //{
-            //    MainPage = new LoginPage();
-            //}
+            if (!CrossSettings.Current.GetValueOrDefault("Username", "_").Equals("_"))
+            {
+                AutoLogin();
+            }
+            else
+            {
+                MainPage = new LoginPage();
+            }
         }
 
         private async void AutoLogin()

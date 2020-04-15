@@ -33,6 +33,12 @@
                               Text="Test NFC Functions"
                               Visual="Material"/>
 
+            <buttons:SfButton HorizontalOptions="Center"
+                              Margin="15"
+                              Command="{Binding WriteTagCommand}"
+                              Text="Test NFC Functions"
+                              Visual="Material"/>
+
         </StackLayout>
   </ContentPage.Content>
 </ContentPage>

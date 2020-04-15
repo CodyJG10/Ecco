@@ -22,21 +22,18 @@ namespace Ecco.Mobile.iOS.Dependencies
         private NFCNdefReaderSession _session;
         private TaskCompletionSource<string> _tcs;
 
-        
-
-        public string ScanAsync()
+        public  Task<string> ScanAsync()
         {
-            //if (!NFCNdefReaderSession.ReadingAvailable)
-            //{
-            //    throw new InvalidOperationException("Reading NDEF is not available");
-            //}
+            if (!NFCNdefReaderSession.ReadingAvailable)
+            {
+                throw new InvalidOperationException("Reading NDEF is not available");
+            }
 
-            //_tcs = new TaskCompletionSource<string>();
+            _tcs = new TaskCompletionSource<string>();
             _session = new NFCNdefReaderSession(this, null, true);
             _session.BeginSession();
 
-            return "";
-            //return _tcs.Task;
+            return _tcs.Task;
         }
 
         public void DidInvalidate(NFCNdefReaderSession session, NSError error)

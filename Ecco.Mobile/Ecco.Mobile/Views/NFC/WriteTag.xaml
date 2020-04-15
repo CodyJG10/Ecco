@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.NFC"
+             xmlns:listviews="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+             xmlns:card="clr-namespace:Ecco.Mobile.Views.Card"
+             mc:Ignorable="d"
+             x:Class="Ecco.Mobile.Views.NFC.WriteTag">
+
+    <ContentPage.BindingContext>
+        <viewmodels:WriteTagViewModel/>
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Content>
+        <StackLayout>
+            <!-- Myy Cards List -->
+            <listviews:SfListView ItemsSource="{Binding MyCards}"
+                                      x:Name="listMyCards"
+                                      SelectionChanged="listMyCards_SelectionChanged"
+                                      BackgroundColor="{StaticResource Gray-300}"
+                                      VerticalOptions="FillAndExpand"
+                                      HorizontalOptions="FillAndExpand" 
+                                      ItemSpacing="5"
+                                      ItemSize="250">
+
+                <listviews:SfListView.ItemTemplate>
+                    <DataTemplate>
+
+                        <Frame CornerRadius="15"
+                                   BackgroundColor="Transparent">
+
+                            <StackLayout Margin="2">
+
+                                <Label HorizontalTextAlignment="Center"
+                                           VerticalTextAlignment="Center"
+                                           Text="{Binding Card.CardTitle}"/>
+
+                                <card:Card BindingContext="{Binding .}"
+                                           HorizontalOptions="Center"
+                                           VerticalOptions="Center"
+                                           WidthRequest="350"
+                                           HeightRequest="200"/>
+
+                            </StackLayout>
+                        </Frame>
+
+                    </DataTemplate>
+                </listviews:SfListView.ItemTemplate>
+
+            </listviews:SfListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

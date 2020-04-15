@@ -12,11 +12,13 @@ namespace Ecco.Mobile.ViewModels.Home
     {
         public ICommand SendConnectionCommand { get; set; }
         public ICommand TestNfcCommand { get; set; }
+        public ICommand WriteTagCommand { get; set; }
 
         public ScanCardViewModel()
         {
             SendConnectionCommand = new Command(x => Application.Current.MainPage.Navigation.PushAsync(new SendCard()));
             TestNfcCommand = new Command(x => Application.Current.MainPage.Navigation.PushAsync(new NfcTestPage()));
+            WriteTagCommand = new Command(x => Application.Current.MainPage.Navigation.PushAsync(new WriteTag()));
         }
     }
 }

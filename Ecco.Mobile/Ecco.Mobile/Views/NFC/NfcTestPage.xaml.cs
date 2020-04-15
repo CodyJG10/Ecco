@@ -1,4 +1,10 @@
-﻿using Ecco.Mobile.Dependencies;
+﻿using Ecco.Api;
+using Ecco.Mobile.Dependencies;
+using Ecco.Mobile.Models;
+using Ecco.Mobile.Util;
+using Ecco.Mobile.Views.Pages.Cards;
+using Nancy.TinyIoc;
+using Newtonsoft.Json;
 using Plugin.NFC;
 using Plugin.Permissions;
 using Plugin.Permissions.Abstractions;
@@ -22,116 +28,8 @@ namespace Ecco.Mobile.Views.NFC
             InitializeComponent();
         }
 
-		//protected async override void OnAppearing()
-		//{
-		//	base.OnAppearing();
-
-		//	//var permissionStatus = await CrossPermissions.Current.CheckPermissionStatusAsync(Permission.);
-
-		//	if (CrossNFC.IsSupported)
-		//	{
-		//		if (!CrossNFC.Current.IsAvailable)
-		//			await Application.Current.MainPage.DisplayAlert("NFC", "NFC is not available", "Ok");
-
-		//		if (!CrossNFC.Current.IsEnabled)
-		//			await Application.Current.MainPage.DisplayAlert("NFC", "NFC is disabled", "Ok");
-
-		//		SubscribeEvents();
-
-		//		//CrossNFC.Current.StartListening();
-
-		//		//if (Device.RuntimePlatform != Device.iOS)
-		//		//{
-		//		//	CrossNFC.Current.StartListening();
-		//		//}
-		//	}
-		//}
-
-		//protected override bool OnBackButtonPressed()
-		//{
-		//	UnsubscribeEvents();
-		//	CrossNFC.Current.StopListening();
-		//	return base.OnBackButtonPressed();
-		//}
-
-		//void SubscribeEvents()
-		//{
-		//	CrossNFC.Current.OnMessageReceived += Current_OnMessageReceived;
-
-		//	if (Device.RuntimePlatform == Device.iOS)
-		//		CrossNFC.Current.OniOSReadingSessionCancelled += Current_OniOSReadingSessionCancelled;
-		//}
-
-		//void UnsubscribeEvents()
-		//{
-		//	CrossNFC.Current.OnMessageReceived -= Current_OnMessageReceived;
-
-		//	if (Device.RuntimePlatform == Device.iOS)
-		//		CrossNFC.Current.OniOSReadingSessionCancelled -= Current_OniOSReadingSessionCancelled;
-		//}
-
-		//async void Current_OnMessageReceived(ITagInfo tagInfo)
-		//{
-		//	if (tagInfo == null)
-		//	{
-		//		await Application.Current.MainPage.DisplayAlert("NFC", "No tag found", "Ok");
-		//		return;
-		//	}
-
-		//	// Customized serial number
-		//	var identifier = tagInfo.Identifier;
-		//	var serialNumber = NFCUtils.ByteArrayToHexString(identifier, ":");
-		//	var title = !string.IsNullOrWhiteSpace(serialNumber) ? $"Tag [{serialNumber}]" : "Tag Info";
-
-		//	if (!tagInfo.IsSupported)
-		//	{
-		//		await Application.Current.MainPage.DisplayAlert("NFC", "Unsupported Tag", "Ok");
-		//	}
-		//	else if (tagInfo.IsEmpty)
-		//	{
-		//		await Application.Current.MainPage.DisplayAlert("NFC", "Empty Tag", "Ok");
-		//	}
-		//	else
-		//	{
-		//		var first = tagInfo.Records[0];
-		//		await Application.Current.MainPage.DisplayAlert("NFC", GetMessage(first), "Ok");
-		//	}
-		//}
-
-		//void Current_OniOSReadingSessionCancelled(object sender, EventArgs e) => Application.Current.MainPage.DisplayAlert("NFC", "User has cancelled NFC Session", "Ok");
-
-		//string GetMessage(NFCNdefRecord record)
-		//{
-		//	var message = $"Message: {record.Message}";
-		//	message += Environment.NewLine;
-		//	message += $"RawMessage: {Encoding.UTF8.GetString(record.Payload)}";
-		//	message += Environment.NewLine;
-		//	message += $"Type: {record.TypeFormat.ToString()}";
-
-		//	if (!string.IsNullOrWhiteSpace(record.MimeType))
-		//	{
-		//		message += Environment.NewLine;
-		//		message += $"MimeType: {record.MimeType}";
-		//	}
-
-		//	return message;
-		//}
-
-		//private void ButtonStartListening_Clicked(object sender, EventArgs e)
-		//{
-		//	try
-		//	{
-		//		CrossNFC.Current.StartListening();
-		//	}
-		//	catch (Exception ex)
-		//	{
-		//		Console.WriteLine(ex.Message);
-		//	}
-		//}
-
-
 		public const string ALERT_TITLE = "NFC";
-		public const string MIME_TYPE = "application/com.companyname.nfcsample";
+		public const string MIME_TYPE = "application/com.ecco-space.mobile";
 
 		NFCNdefTypeFormat _type;
 		bool _makeReadOnly = false;
@@ -150,28 +48,33 @@ namespace Ecco.Mobile.Views.NFC
 
 		public bool NfcIsDisabled => !NfcIsEnabled;
 
-		protected async override void OnAppearing()
+		protected override void OnAppearing()
 		{
 			base.OnAppearing();
+			InitNfc();
+		}
 
+		private async void InitNfc()
+		{
+			if (CrossNFC.IsSupported)
+			{
+				if (!CrossNFC.Current.IsAvailable)
+				{ 
+					await ShowAlert("NFC is not available");
+				}
+				NfcIsEnabled = CrossNFC.Current.IsEnabled;
+				if (!NfcIsEnabled)
+				{
+					await ShowAlert("NFC is disabled");
+				}
+				SubscribeEvents();
 
-			//if (CrossNFC.IsSupported)
-			//{
-			//	if (!CrossNFC.Current.IsAvailable)
-			//		await ShowAlert("NFC is not available");
-
-			//	NfcIsEnabled = CrossNFC.Current.IsEnabled;
-			//	if (!NfcIsEnabled)
-			//		await ShowAlert("NFC is disabled");
-
-			//	SubscribeEvents();
-
-			//	if (Device.RuntimePlatform != Device.iOS)
-			//	{
-			//		// Start NFC tag listening manually
-			//		CrossNFC.Current.StartListening();
-			//	}
-			//}
+				if (Device.RuntimePlatform != Device.iOS)
+				{
+					// Start NFC tag listening manually
+					CrossNFC.Current.StartListening();
+				}
+			}
 		}
 
 		protected override bool OnBackButtonPressed()
@@ -186,7 +89,6 @@ namespace Ecco.Mobile.Views.NFC
 			CrossNFC.Current.OnMessageReceived += Current_OnMessageReceived;
 			CrossNFC.Current.OnMessagePublished += Current_OnMessagePublished;
 			CrossNFC.Current.OnTagDiscovered += Current_OnTagDiscovered;
-			CrossNFC.Current.OnNfcStatusChanged += Current_OnNfcStatusChanged;
 
 			if (Device.RuntimePlatform == Device.iOS)
 				CrossNFC.Current.OniOSReadingSessionCancelled += Current_OniOSReadingSessionCancelled;
@@ -197,16 +99,9 @@ namespace Ecco.Mobile.Views.NFC
 			CrossNFC.Current.OnMessageReceived -= Current_OnMessageReceived;
 			CrossNFC.Current.OnMessagePublished -= Current_OnMessagePublished;
 			CrossNFC.Current.OnTagDiscovered -= Current_OnTagDiscovered;
-			CrossNFC.Current.OnNfcStatusChanged -= Current_OnNfcStatusChanged;
 
 			if (Device.RuntimePlatform == Device.iOS)
 				CrossNFC.Current.OniOSReadingSessionCancelled -= Current_OniOSReadingSessionCancelled;
-		}
-
-		async void Current_OnNfcStatusChanged(bool isEnabled)
-		{
-			NfcIsEnabled = isEnabled;
-			await ShowAlert($"NFC has been {(isEnabled ? "enabled" : "disabled")}");
 		}
 
 		async void Current_OnMessageReceived(ITagInfo tagInfo)
@@ -233,7 +128,18 @@ namespace Ecco.Mobile.Views.NFC
 			else
 			{
 				var first = tagInfo.Records[0];
-				await ShowAlert(GetMessage(first), title);
+				string msg = first.Message;
+				try
+				{
+					Entities.Card card = JsonConvert.DeserializeObject<Entities.Card>(msg);
+					var model = await CardModel.FromCard(card);
+					await Application.Current.MainPage.Navigation.PushAsync(new ViewCardPage(model));
+				}
+				catch (Exception e)
+				{
+					Console.WriteLine(e.Message);
+				}
+				//await ShowAlert(GetMessage(first), title);
 			}
 		}
 
@@ -315,16 +221,15 @@ namespace Ecco.Mobile.Views.NFC
 
 		async void Button_Clicked_StartListening(object sender, System.EventArgs e)
 		{
-			DependencyService.Get<INFCReader>().ReadTag();
 
-			//try
-			//{
-			//	CrossNFC.Current.StartListening();
-			//}
-			//catch (Exception ex)
-			//{
-			//	await ShowAlert(ex.Message);
-			//}
+			try
+			{
+				CrossNFC.Current.StartListening();
+			}
+			catch (Exception ex)
+			{
+				await ShowAlert(ex.Message);
+			}
 		}
 
 		void Button_Clicked_StartWriting(object sender, System.EventArgs e) => Publish(NFCNdefTypeFormat.WellKnown);

@@ -1,4 +1,6 @@
 ﻿using Ecco.Mobile.Models;
+using Ecco.Mobile.Views.NFC;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -36,8 +38,10 @@ namespace Ecco.Mobile.ViewModels.Home.Card
         }
 
         private void AddToContacts()
-        { 
-            
+        {
+            string json = JsonConvert.SerializeObject(Card.Card);
+            Console.WriteLine("Test");
+            //Application.Current.MainPage.Navigation.PushAsync(new WriteTag(Card)); 
         }
     }
 }
