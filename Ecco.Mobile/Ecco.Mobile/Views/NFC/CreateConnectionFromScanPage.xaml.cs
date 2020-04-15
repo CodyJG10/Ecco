@@ -1,4 +1,5 @@
-﻿using Ecco.Mobile.ViewModels.NFC;
+﻿using Ecco.Mobile.Models;
+using Ecco.Mobile.ViewModels.NFC;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,17 +12,12 @@ using Xamarin.Forms.Xaml;
 namespace Ecco.Mobile.Views.NFC
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ReadTagPage : ContentPage
+    public partial class CreateConnectionFromScanPage : ContentPage
     {
-        public ReadTagPage()
+        public CreateConnectionFromScanPage(CardModel model)
         {
             InitializeComponent();
-        }
-
-        protected override bool OnBackButtonPressed()
-        {
-            (BindingContext as ReadTagViewModel).UnsubscribeEvents();
-            return base.OnBackButtonPressed();
+            BindingContext = new CreateConnectionFromScanPageViewModel(model);
         }
     }
 }

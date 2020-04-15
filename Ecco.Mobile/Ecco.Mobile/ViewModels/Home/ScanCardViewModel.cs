@@ -17,7 +17,7 @@ namespace Ecco.Mobile.ViewModels.Home
         public ScanCardViewModel()
         {
             SendConnectionCommand = new Command(x => Application.Current.MainPage.Navigation.PushAsync(new SendCard()));
-            TestNfcCommand = new Command(x => Application.Current.MainPage.Navigation.PushAsync(new NfcTestPage()));
+            TestNfcCommand = new Command(x => Application.Current.MainPage.Navigation.PushAsync(new ReadTagPage()));
             WriteTagCommand = new Command(x => Application.Current.MainPage.Navigation.PushAsync(new WriteTag()));
         }
     }

@@ -63,7 +63,7 @@
     <EmbeddedResource Update="Views\LoadingPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\NFC\NfcTestPage.xaml">
+    <EmbeddedResource Update="Views\NFC\CreateConnectionFromScanPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\NFC\ReadTagPage.xaml">

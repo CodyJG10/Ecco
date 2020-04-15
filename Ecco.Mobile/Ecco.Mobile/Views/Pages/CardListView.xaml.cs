@@ -15,7 +15,7 @@ namespace Ecco.Mobile.Views.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CardListView : ContentPage
     {
-        private CardModel _swipedCard;
+        private ConnectionModel _swipedCard;
 
         public CardListView()
         {
@@ -55,10 +55,10 @@ namespace Ecco.Mobile.Views.Pages
 
         private void ConnectionsList_SwipeStarted(object sender, Syncfusion.ListView.XForms.SwipeStartedEventArgs e)
         {
-            _swipedCard = e.ItemData as CardModel;
+            _swipedCard = e.ItemData as ConnectionModel;
         }
 
-        private void Button_Clicked(object sender, EventArgs e)
+        private void ButtonDeleteCard_Clicked(object sender, EventArgs e)
         {
             var popupLayout = new SfPopupLayout();
 

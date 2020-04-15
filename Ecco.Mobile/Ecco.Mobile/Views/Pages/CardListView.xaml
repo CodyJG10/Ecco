@@ -107,33 +107,29 @@
                                 <listview:SfListView ItemsSource="{Binding Cards}"
                                                  IsVisible="{Binding HasConnections}"
                                                  x:Name="ConnectionsList"
-                                                 ItemSize="350"
+                                                 ItemSize="200"
                                                  AllowSwiping="True"
                                                  SwipeStarted="ConnectionsList_SwipeStarted">
 
                                     <!-- Left Swipe Template -->
                                     <listview:SfListView.LeftSwipeTemplate>
                                         <DataTemplate>
-                                            <Grid HorizontalOptions="Fill"
-                                              VerticalOptions="Fill">
-
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="*"/>
-                                                    <ColumnDefinition Width="*"/>
-                                                </Grid.ColumnDefinitions>
+                                            <StackLayout HorizontalOptions="FillAndExpand"
+                                                         VerticalOptions="FillAndExpand"
+                                                         Spacing="0">
 
                                                 <buttons:SfButton Text="{StaticResource Trash}"
-                                                              Style="{StaticResource IconButtonStyle}"
-                                                              BackgroundColor="Red"
-                                                              HorizontalOptions="Fill"
-                                                              HeightRequest="150"
-                                                              Grid.Column="0"
-                                                              FontSize="Large"
-                                                              TextColor="White"
-                                                              x:Name="Button"
-                                                              Clicked="Button_Clicked"/>
+                                                                  Style="{StaticResource IconButtonStyle}"
+                                                                  x:Name="ButtonDeleteCard"
+                                                                  Clicked="ButtonDeleteCard_Clicked"
+                                                                  BackgroundColor="Red"
+                                                                  HorizontalOptions="FillAndExpand"
+                                                                  VerticalOptions="FillAndExpand"
+                                                                  FontSize="Large"
+                                                                  TextColor="White"/>
 
-                                            </Grid>
+
+                                            </StackLayout>
                                         </DataTemplate>
                                     </listview:SfListView.LeftSwipeTemplate>
 
