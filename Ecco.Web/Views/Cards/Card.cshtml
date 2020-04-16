@@ -1,0 +1,22 @@
+﻿@model Ecco.Entities.Card
+
+@{
+    ViewData["Title"] = "Card";
+}
+
+<h1>Card</h1>
+
+<div id="CardBackground">
+    <label>@Model.FullName</label>
+    <label>@Model.CardTitle</label>
+    <label>@Model.Phone</label>
+    <label>@Model.Email</label>
+</div>
+
+<img src="https://eccospacestorage.blob.core.windows.net/templates/biz__card_background.jpg"/>
+
+<style>
+    #CardBackground {
+        background-image: url(https://eccospacestorage.blob.core.windows.net/templates/biz__card_background.jpg);
+    }
+</style>
