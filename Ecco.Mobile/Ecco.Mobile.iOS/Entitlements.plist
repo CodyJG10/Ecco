@@ -9,7 +9,7 @@
 	</array>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>ecco-space.azurewebsites.net</string>
+		<string>applinks:ecco-space.azurewebsites.net</string>
 	</array>
 </dict>
 </plist>

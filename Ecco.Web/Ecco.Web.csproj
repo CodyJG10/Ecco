@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -38,12 +38,5 @@
 
   <ItemGroup>
     <Folder Include="Data\Migrations\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="wwwroot\apple-app-site-associationconfig" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Remove="wwwroot\apple-app-site-associationconfig" />
   </ItemGroup>
 </Project>

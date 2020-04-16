@@ -151,7 +151,7 @@ namespace Ecco.Mobile.ViewModels.NFC
 			try
 			{
 				var cardId = selectedCard.Card.Id;
-				var payload = NFCUtils.EncodeToByteArray("https://ecco-space.azurewebsites.com/cards/" + selectedCard.Card.Id.ToString());
+				var payload = NFCUtils.EncodeToByteArray("https://ecco-space.azurewebsites.net/cards/" + selectedCard.Card.Id.ToString());
 				var record = new NFCNdefRecord
 				{
 					TypeFormat = NFCNdefTypeFormat.Uri,
