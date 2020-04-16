@@ -40,4 +40,10 @@
     <Folder Include="Data\Migrations\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\apple-app-site-associationconfig" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\apple-app-site-associationconfig" />
+  </ItemGroup>
 </Project>

@@ -66,6 +66,11 @@ namespace Ecco.Mobile.iOS
             return base.FinishedLaunching(app, options);
         }
 
+        public override bool ContinueUserActivity(UIApplication application, NSUserActivity userActivity, UIApplicationRestorationHandler completionHandler)
+        {
+            return base.ContinueUserActivity(application, userActivity, completionHandler);
+        }
+
         //public void DidInvalidate(NFCNdefReaderSession session, NSError error)
         //{
         //    Console.WriteLine("ServiceToolStandard DidInvalidate: " + error.ToString());
