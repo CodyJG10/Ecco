@@ -83,7 +83,9 @@ namespace Ecco.Mobile.ViewModels.NFC
 			{
 				if (!CrossNFC.Current.IsAvailable)
 				{
-					//await ShowAlert("NFC is not available");
+					Application.Current.MainPage.DisplayAlert("Error", "NFC is not available", "Return");
+					Application.Current.MainPage.Navigation.PopAsync();
+					return;
 				}
 
 				SubscribeEvents();
@@ -132,12 +134,13 @@ namespace Ecco.Mobile.ViewModels.NFC
 				else
 				{
 					Application.Current.MainPage.DisplayAlert("Success", "Wrote to tag succesfully", "Ok");
-					//await ShowAlert("Writing tag successfully");
 				}
 			}
 			catch (Exception ex)
 			{
-				//await ShowAlert(ex.Message);
+				Application.Current.MainPage.DisplayAlert("Error", "Experienced an error when writing tag: " + ex.Message, "Returning");
+				Application.Current.MainPage.Navigation.PopAsync();
+				return;
 			}
 		}
 
@@ -164,17 +167,12 @@ namespace Ecco.Mobile.ViewModels.NFC
 
 				tagInfo.Records = new[] { record };
 
-				//if (format)
-				//{ 
-				//	CrossNFC.Current.ClearMessage(tagInfo);
-				//}
-
 				CrossNFC.Current.PublishMessage(tagInfo, false);
 			}
 			catch (System.Exception ex)
 			{
-				//await ShowAlert(ex.Message);
-				return;
+				Application.Current.MainPage.DisplayAlert("Error", "Experienced an error when writing tag: " + ex.Message, "Returning");
+				Application.Current.MainPage.Navigation.PopAsync();
 			}
 		}
 

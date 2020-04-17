@@ -14,14 +14,7 @@ namespace Ecco.Mobile.iOS
         {
             // if you want to use a different Application Delegate class from "AppDelegate"
             // you can specify it here.
-            try
-            {
-                UIApplication.Main(args, null, "AppDelegate");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
+            UIApplication.Main(args, null, "AppDelegate");
         }
     }
 }
