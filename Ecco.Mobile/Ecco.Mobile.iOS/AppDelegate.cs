@@ -18,6 +18,7 @@ using Syncfusion.SfPicker.XForms.iOS;
 using Syncfusion.XForms.iOS.Shimmer;
 using CoreNFC;
 using System.Text;
+using Newtonsoft.Json.Linq;
 
 namespace Ecco.Mobile.iOS
 {
@@ -54,12 +55,7 @@ namespace Ecco.Mobile.iOS
             SfDataFormRenderer.Init();
             SfShimmerRenderer.Init();
 
-            //if (Session == null)
-            //{
-            //    Session = new NFCNdefReaderSession(this, null, true);
-            //}
-            //Session = new NFCNdefReaderSession(this, null, true);
-            //Session?.BeginSession();
+            InitNotificationsHub();
 
             LoadApplication(new App());
 
@@ -71,16 +67,73 @@ namespace Ecco.Mobile.iOS
             return base.ContinueUserActivity(application, userActivity, completionHandler);
         }
 
-        //public void DidInvalidate(NFCNdefReaderSession session, NSError error)
+        private void InitNotificationsHub()
+        {
+            //string connectionString = "Endpoint=sb://ecco-space.servicebus.windows.net/;SharedAccessKeyName=DefaultListenSharedAccessSignature;SharedAccessKey=YO5k7/KyXURG9UpFnMifwvzhjSTTqhT2kOWRko93qlw=";
+            // Register for push notifications.
+            var settings = UIUserNotificationSettings.GetSettingsForTypes(
+                UIUserNotificationType.Alert
+                | UIUserNotificationType.Badge
+                | UIUserNotificationType.Sound,
+                new NSSet());
+
+            UIApplication.SharedApplication.RegisterUserNotificationSettings(settings);
+            UIApplication.SharedApplication.RegisterForRemoteNotifications();
+        }
+
+        //public override void RegisteredForRemoteNotifications(UIApplication application, NSData deviceToken)
         //{
-        //    Console.WriteLine("ServiceToolStandard DidInvalidate: " + error.ToString());
+        //    const string templateBodyAPNS = "{\"aps\":{\"alert\":\"$(messageParam)\"}}";
+
+        //    JObject templates = new JObject();
+        //    templates["genericMessage"] = new JObject
+        //    {
+        //    {"body", templateBodyAPNS}
+        //    };
+
+        //    // Register for push with your mobile app
+        //    Push push = TodoItemManager.DefaultManager.CurrentClient.GetPush();
+        //    push.RegisterAsync(deviceToken, templates);
         //}
 
-        //public void DidDetect(NFCNdefReaderSession session, NFCNdefMessage[] messages)
-        //{
-        //    var bytes = messages[0].Records[0].Payload.Skip(3).ToArray();
-        //    var message = Encoding.UTF8.GetString(bytes);
-        //    Console.WriteLine("ServiceToolStandard DidDetect: " + message);
-        //}
+        public override void RegisteredForRemoteNotifications(UIApplication application, NSData deviceToken)
+        {
+            // Connection string from your azure dashboard
+            var cs = SBConnectionString.CreateListenAccess(
+                new NSUrl("sb://" + HUB_NAME + "-ns.servicebus.windows.net/"),
+                HUB_LISTEN_SECRET);
+
+            // Register our info with Azure
+            var hub = new SBNotificationHub(cs, HUB_NAME);
+            hub.RegisterNative(deviceToken, null, err => {
+
+                if (err != null)
+                {
+                    Console.WriteLine("Error: " + err.Description);
+                    homeViewController.RegisteredForNotifications("Error: " + err.Description);
+                }
+                else
+                {
+                    Console.WriteLine("Success");
+                    homeViewController.RegisteredForNotifications("Successfully registered for notifications");
+                }
+            });
+        }
+
+        public override void DidReceiveRemoteNotification(UIApplication application, NSDictionary userInfo, Action<UIBackgroundFetchResult> completionHandler)
+        {
+            NSDictionary aps = userInfo.ObjectForKey(new NSString("aps")) as NSDictionary;
+
+            string alert = string.Empty;
+            if (aps.ContainsKey(new NSString("alert")))
+                alert = (aps[new NSString("alert")] as NSString).ToString();
+
+            //show alert
+            if (!string.IsNullOrEmpty(alert))
+            {
+                UIAlertView avAlert = new UIAlertView("Notification", alert, null, "OK", null);
+                avAlert.Show();
+            }
+        }
     }
 }
