@@ -14,13 +14,21 @@ namespace Ecco.Mobile.ViewModels.Auth
 {
     public class LoginPageViewModel : LoginViewModelBase
     { 
-        private IDatabaseManager _database;
+        private readonly IDatabaseManager _database;
+        
+        public ICommand ForgotPasswordCommand { get; set; }
 
         public LoginPageViewModel()
         {
             _database = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
             LoginCommand = new Command(async () => await Login());
             RegisterCommand = new Command(Register);
+            ForgotPasswordCommand = new Command(ForgotPassword);
+        }
+
+        private void ForgotPassword()
+        {
+            Application.Current.MainPage.DisplayAlert("Reset Password Request Recieved", "Please check the email sent to you for a link to reset you password", "Ok");
         }
 
         public async Task<Task> Login()

@@ -18,6 +18,7 @@ namespace Ecco.Api
         Task<UserData> GetUserData(Guid id);
         Task<UserData> GetUserData(string profileName);
         Task<bool> UserExists(string userName);
+        void ForgotPassword(string email);
 
         #endregion
 

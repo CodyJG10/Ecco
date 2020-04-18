@@ -14,9 +14,8 @@
     xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
     NavigationPage.HasNavigationBar="False"
 
-    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" xmlns:loadingSpinner="clr-namespace:Ecco.Mobile.Views.Loading">
-    <!--BackgroundImageSource="{core:OnPlatformOrientationStringValue Default=LoginBackground.png}"
-        Style="{StaticResource ContentPageStyle}"-->
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:loadingSpinner="clr-namespace:Ecco.Mobile.Views.Loading">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -104,7 +103,7 @@
                         </border:SfBorder>
 
                         <!--  Forgot password link  -->
-                        <!--<Label
+                        <Label
                             x:Name="ForgotPasswordLabel"
                             Grid.Row="4"
                             Margin="0,16"
@@ -114,9 +113,10 @@
                             Text="FORGOT PASSWORD?"
                             TextColor="White">
                             <Label.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding ForgotPasswordCommand}" CommandParameter="{x:Reference ForgotPasswordLabel}" />
+                                <TapGestureRecognizer Command="{Binding ForgotPasswordCommand}"
+                                                      CommandParameter="{x:Reference ForgotPasswordLabel}" />
                             </Label.GestureRecognizers>
-                        </Label>-->
+                        </Label>
 
                         <!--  Login button  -->
                         <buttons:SfButton

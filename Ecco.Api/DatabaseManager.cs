@@ -108,6 +108,11 @@ namespace Ecco.Api
             return JsonConvert.DeserializeObject<bool>(result);
         }
 
+        public void ForgotPassword(string email)
+        {
+            client.GetAsync("auth/ForgotPassword?email=" + email);
+        }
+
         #endregion
 
         #region Cards
