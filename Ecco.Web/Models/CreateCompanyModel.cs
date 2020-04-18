@@ -1,4 +1,4 @@
-﻿]using Ecco.Entities.Company;
+﻿using Ecco.Entities.Company;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
