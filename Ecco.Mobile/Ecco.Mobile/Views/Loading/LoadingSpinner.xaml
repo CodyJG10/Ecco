@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
+             mc:Ignorable="d"
+             x:Class="Ecco.Mobile.Views.Loading.LoadingSpinner">
+  <ContentView.Content>
+      <StackLayout>
+
+            <busyindicator:SfBusyIndicator AnimationType="Box" 
+                                           ViewBoxWidth = "150" 
+                                           ViewBoxHeight="150" 
+                                           TextColor="{StaticResource PrimaryBusyIndicatorColor}" />
+          
+        </StackLayout>
+  </ContentView.Content>
+</ContentView>

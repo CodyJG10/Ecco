@@ -19,6 +19,8 @@
     <Color x:Key="LightGreen">#35c659</Color>
     <Color x:Key="OrangeyYellow">#fcbc0f</Color>
 
+    <Color x:Key="PrimaryBusyIndicatorColor">Black</Color>
+
     <x:String x:Key="Rating">&#xe70c;</x:String>
     <x:String x:Key="Back">&#xe709;</x:String>
     <x:String x:Key="ArrowRight">&#xe728;</x:String>

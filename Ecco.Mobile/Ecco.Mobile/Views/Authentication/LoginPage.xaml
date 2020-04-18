@@ -14,13 +14,14 @@
     xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
     NavigationPage.HasNavigationBar="False"
 
-    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core">
+    xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" xmlns:loadingSpinner="clr-namespace:Ecco.Mobile.Views.Loading">
     <!--BackgroundImageSource="{core:OnPlatformOrientationStringValue Default=LoginBackground.png}"
         Style="{StaticResource ContentPageStyle}"-->
 
     <ContentPage.Resources>
         <ResourceDictionary>
             <converter:BooleanToColorConverter x:Key="ColorConverter" />
+            <converter:NegateBooleanValue x:Key="BooleanConverter"/>
             <ResourceDictionary.MergedDictionaries>
                 <local:Styles/>
             </ResourceDictionary.MergedDictionaries>
@@ -123,19 +124,16 @@
                             Margin="0,16"
                             Command="{Binding LoginCommand}"
                             Style="{StaticResource SfButtonStyle}"
-                            Text="LOG IN" />
+                            Text="LOG IN"
+                            IsCheckable="{Binding Loading, Converter={StaticResource BooleanConverter}}"/>
 
-                        <busyindicator:SfBusyIndicator x:Name="busyindicator" 
-                                                       AnimationType="DoubleCircle" 
-                                                       ViewBoxWidth = "150" 
-                                                       ViewBoxHeight="150" 
-                                                       Grid.Row="6"
-                                                       TextColor="Maroon" 
+                        <loadingSpinner:LoadingSpinner Grid.Row="6"
                                                        HorizontalOptions="Center"
                                                        IsVisible="{Binding Loading}"/>
 
                     </Grid>
 
+                    <!-- Sign Up Section -->
                     <StackLayout
                         HorizontalOptions="Center"
                         Orientation="Horizontal"

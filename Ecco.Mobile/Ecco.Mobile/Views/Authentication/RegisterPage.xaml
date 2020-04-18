@@ -11,12 +11,13 @@
     xmlns:gradient="clr-namespace:Syncfusion.XForms.Graphics;assembly=Syncfusion.Core.XForms"
     xmlns:viewModel="clr-namespace:Ecco.Mobile.ViewModels.Auth"
     xmlns:local="clr-namespace:Ecco.Mobile.Views.Authentication" 
-    xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
+    xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms" xmlns:loadingSpinner="clr-namespace:Ecco.Mobile.Views.Loading"
     Title="Sign Up"
     NavigationPage.HasNavigationBar="False">
 
     <ContentPage.Resources>
         <ResourceDictionary>
+            <converter:NegateBooleanValue x:Key="BooleanConverter"/>
             <converter:BooleanToColorConverter x:Key="ColorConverter" />
             <ResourceDictionary.MergedDictionaries>
                 <local:Styles/>
@@ -102,18 +103,15 @@
                                           CornerRadius="20"
                                           FontFamily="{StaticResource Montserrat-SemiBold}"
                                           Style="{StaticResource SfButtonStyle}"
-                                          Text="REGISTER" />
+                                          Text="REGISTER" 
+                                          IsCheckable="{Binding Loading, Converter={StaticResource BooleanConverter}}"/>
 
-                        <busyindicator:SfBusyIndicator x:Name="busyindicator" 
-                                                       AnimationType="DoubleCircle" 
-                                                       ViewBoxWidth = "150" 
-                                                       ViewBoxHeight="150" 
-                                                       Grid.Row="6"
-                                                       TextColor="Maroon" 
+                        <loadingSpinner:LoadingSpinner Grid.Row="6"
                                                        HorizontalOptions="Center"
                                                        IsVisible="{Binding Loading}"/>
                     </StackLayout>
 
+                    <!-- Login Button -->
                     <StackLayout
                         HorizontalOptions="Center"
                         Orientation="Horizontal"

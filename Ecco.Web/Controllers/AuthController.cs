@@ -83,6 +83,7 @@ namespace Ecco.Web.Controllers
             EccoUser user = new EccoUser
             {
                 UserName = model.Email,
+                Email = model.Email,
                 ProfileName = model.UserName
             };
 
