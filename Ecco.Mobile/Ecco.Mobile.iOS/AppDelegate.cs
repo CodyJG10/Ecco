@@ -19,6 +19,8 @@ using Syncfusion.XForms.iOS.Shimmer;
 using CoreNFC;
 using System.Text;
 using Newtonsoft.Json.Linq;
+using UserNotifications;
+using WindowsAzure.Messaging;
 
 namespace Ecco.Mobile.iOS
 {
@@ -28,7 +30,7 @@ namespace Ecco.Mobile.iOS
     [Register("AppDelegate")]
     public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
     {
-       // public NFCNdefReaderSession Session { get; set; }
+        private SBNotificationHub Hub { get; set; }
 
         //
         // This method is invoked when the application has loaded and is ready to run. In this 
@@ -55,9 +57,9 @@ namespace Ecco.Mobile.iOS
             SfDataFormRenderer.Init();
             SfShimmerRenderer.Init();
 
-            InitNotificationsHub();
-
             LoadApplication(new App());
+
+            RegisterForRemoteNotifications();
 
             return base.FinishedLaunching(app, options);
         }
@@ -67,73 +69,83 @@ namespace Ecco.Mobile.iOS
             return base.ContinueUserActivity(application, userActivity, completionHandler);
         }
 
-        private void InitNotificationsHub()
+        #region Notifications
+
+        void RegisterForRemoteNotifications()
         {
-            //string connectionString = "Endpoint=sb://ecco-space.servicebus.windows.net/;SharedAccessKeyName=DefaultListenSharedAccessSignature;SharedAccessKey=YO5k7/KyXURG9UpFnMifwvzhjSTTqhT2kOWRko93qlw=";
-            // Register for push notifications.
-            var settings = UIUserNotificationSettings.GetSettingsForTypes(
-                UIUserNotificationType.Alert
-                | UIUserNotificationType.Badge
-                | UIUserNotificationType.Sound,
+            // register for remote notifications based on system version
+            if (UIDevice.CurrentDevice.CheckSystemVersion(10, 0))
+            {
+                UNUserNotificationCenter.Current.RequestAuthorization(UNAuthorizationOptions.Alert |
+                    UNAuthorizationOptions.Sound |
+                    UNAuthorizationOptions.Sound,
+                    (granted, error) =>
+                    {
+                        if (granted)
+                            InvokeOnMainThread(UIApplication.SharedApplication.RegisterForRemoteNotifications);
+                    });
+            }
+            else if (UIDevice.CurrentDevice.CheckSystemVersion(8, 0))
+            {
+                var pushSettings = UIUserNotificationSettings.GetSettingsForTypes(
+                UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound,
                 new NSSet());
 
-            UIApplication.SharedApplication.RegisterUserNotificationSettings(settings);
-            UIApplication.SharedApplication.RegisterForRemoteNotifications();
+                UIApplication.SharedApplication.RegisterUserNotificationSettings(pushSettings);
+                UIApplication.SharedApplication.RegisterForRemoteNotifications();
+            }
+            else
+            {
+                UIRemoteNotificationType notificationTypes = UIRemoteNotificationType.Alert | UIRemoteNotificationType.Badge | UIRemoteNotificationType.Sound;
+                UIApplication.SharedApplication.RegisterForRemoteNotificationTypes(notificationTypes);
+            }
         }
-
-        //public override void RegisteredForRemoteNotifications(UIApplication application, NSData deviceToken)
-        //{
-        //    const string templateBodyAPNS = "{\"aps\":{\"alert\":\"$(messageParam)\"}}";
-
-        //    JObject templates = new JObject();
-        //    templates["genericMessage"] = new JObject
-        //    {
-        //    {"body", templateBodyAPNS}
-        //    };
-
-        //    // Register for push with your mobile app
-        //    Push push = TodoItemManager.DefaultManager.CurrentClient.GetPush();
-        //    push.RegisterAsync(deviceToken, templates);
-        //}
 
         public override void RegisteredForRemoteNotifications(UIApplication application, NSData deviceToken)
         {
-            // Connection string from your azure dashboard
-            var cs = SBConnectionString.CreateListenAccess(
-                new NSUrl("sb://" + HUB_NAME + "-ns.servicebus.windows.net/"),
-                HUB_LISTEN_SECRET);
+            string connectionString = "Endpoint=sb://ecco-space.servicebus.windows.net/;SharedAccessKeyName=DefaultListenSharedAccessSignature;SharedAccessKey=YO5k7/KyXURG9UpFnMifwvzhjSTTqhT2kOWRko93qlw=";
+            string hubName = "Ecco-Space";
+            Hub = new SBNotificationHub(connectionString, hubName);
 
-            // Register our info with Azure
-            var hub = new SBNotificationHub(cs, HUB_NAME);
-            hub.RegisterNative(deviceToken, null, err => {
+            Hub.UnregisterAll(deviceToken, (error) => {
+                if (error != null)
+                {
+                    System.Diagnostics.Debug.WriteLine("Error calling Unregister: {0}", error.ToString());
+                    return;
+                }
 
-                if (err != null)
-                {
-                    Console.WriteLine("Error: " + err.Description);
-                    homeViewController.RegisteredForNotifications("Error: " + err.Description);
-                }
-                else
-                {
-                    Console.WriteLine("Success");
-                    homeViewController.RegisteredForNotifications("Successfully registered for notifications");
-                }
+                NSSet tags = null; // create tags if you want
+                Hub.RegisterNativeAsync(deviceToken, tags);
             });
         }
 
-        public override void DidReceiveRemoteNotification(UIApplication application, NSDictionary userInfo, Action<UIBackgroundFetchResult> completionHandler)
+        public override void ReceivedRemoteNotification(UIApplication application, NSDictionary userInfo)
         {
-            NSDictionary aps = userInfo.ObjectForKey(new NSString("aps")) as NSDictionary;
+            ProcessNotification(userInfo, false);
+        }
 
-            string alert = string.Empty;
-            if (aps.ContainsKey(new NSString("alert")))
-                alert = (aps[new NSString("alert")] as NSString).ToString();
-
-            //show alert
-            if (!string.IsNullOrEmpty(alert))
+        void ProcessNotification(NSDictionary options, bool fromFinishedLaunching)
+        {
+            // make sure we have a payload
+            if (options != null && options.ContainsKey(new NSString("aps")))
             {
-                UIAlertView avAlert = new UIAlertView("Notification", alert, null, "OK", null);
-                avAlert.Show();
+                // get the APS dictionary and extract message payload. Message JSON will be converted
+                // into a NSDictionary so more complex payloads may require more processing
+                NSDictionary aps = options.ObjectForKey(new NSString("aps")) as NSDictionary;
+                string payload = string.Empty;
+                NSString payloadKey = new NSString("alert");
+                if (aps.ContainsKey(payloadKey))
+                {
+                    payload = aps[payloadKey].ToString();
+                }
+            }
+            else
+            {
+                Console.WriteLine($"Received request to process notification but there was no payload.");
             }
         }
+
+        #endregion
+
     }
 }

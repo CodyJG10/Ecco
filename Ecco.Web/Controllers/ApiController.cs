@@ -8,10 +8,12 @@ using Ecco.Entities;
 using Ecco.Entities.Constants;
 using Ecco.Web.Areas.Identity;
 using Ecco.Web.Data;
+using Ecco.Web.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -24,11 +26,13 @@ namespace Ecco.Web.Controllers
     {
         private ApplicationDbContext _context;
         private readonly UserManager<EccoUser> _userManager;
+        private readonly NotificationService _notifications;
 
-        public ApiController(ApplicationDbContext context, UserManager<EccoUser> userManager)
+        public ApiController(ApplicationDbContext context, UserManager<EccoUser> userManager, NotificationService notificationService)
         {
             _context = context;
             _userManager = userManager;
+            _notifications = notificationService;
         }
 
         [HttpGet("UserInfo")]
@@ -116,7 +120,7 @@ namespace Ecco.Web.Controllers
 
         [HttpGet("MyConnections")]
         public List<Connection> Connections(string id)
-        {   
+        {
             return _context.Connections.Where(x => x.ToId == new Guid(id) && x.Status == ConnectionConstants.COMPLETE).ToList();
         }
 
@@ -197,6 +201,15 @@ namespace Ecco.Web.Controllers
         {
             return _context.Templates.Single(x => x.Id == id);
         }
+
+        #endregion
+
+        #region Notifications
+
+        //public void SendUserNotification()
+        //{ 
+        
+        //}
 
         #endregion
     }

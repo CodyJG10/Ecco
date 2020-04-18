@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Ecco.Entities.Constants;
 using Microsoft.Azure.NotificationHubs;
 
 namespace Ecco.Web.Services
@@ -13,20 +15,29 @@ namespace Ecco.Web.Services
             _hub = NotificationHubClient.CreateClientFromConnectionString(connectionString, hubName);
         }
 
-        public async void SendNotification(string hubName, string connectionString, string notificationText)
+        public void SendNotification(string message, int deviceType)
         {
-            Dictionary<string, string> templateParams = new Dictionary<string, string>();
-            templateParams["messageParam"] = notificationText;
-
-            try
+            switch (deviceType)
             {
-                var result = await _hub.SendTemplateNotificationAsync(templateParams);
-            }
-            catch (System.Exception ex)
-            {
-                Console.WriteLine(ex.Message);
+                case DeviceTypeConstants.IOS:
+                    SendNotificationToApple(message);
+                    break;
+                case DeviceTypeConstants.ANDROID:
+                    SendNotificationToAndroid(message);
+                    break;
             }
         }
 
+        private async void SendNotificationToApple(string message)
+        {
+            string payload = "{\"aps\":{\"alert\":\"" + message +"\"}}";
+            await _hub.SendAppleNativeNotificationAsync(payload);
+        }
+
+        private async void SendNotificationToAndroid(string message)
+        {
+            string payload = "{ \"data\":{ \"message\":\"" + message + "\"} }";
+            await _hub.SendFcmNativeNotificationAsync(payload);
+        }
     }
 }
