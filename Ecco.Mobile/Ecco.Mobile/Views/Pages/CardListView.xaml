@@ -140,7 +140,9 @@
                                                        BackgroundColor="Transparent">
                                                     <cardViews:Card HorizontalOptions="Center"
                                                                     VerticalOptions="Center"
-                                                                    BindingContext="{Binding Card}">
+                                                                    BindingContext="{Binding Card}"
+                                                                    WidthRequest="{StaticResource CardWidth}"
+                                                                    HeightRequest="{StaticResource CardHeight}">
                                                         <cardViews:Card.GestureRecognizers>
                                                             <TapGestureRecognizer Command="{Binding Source={x:Reference cardListViewPage}, Path=BindingContext.SelectCardCommand}"
                                                                   CommandParameter="{Binding .}"/>

@@ -105,7 +105,9 @@ xmlns:popuplayout="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusi
 
                                                     <cardViews:Card HorizontalOptions="CenterAndExpand"
                                                                 VerticalOptions="CenterAndExpand"
-                                                                BindingContext="{Binding .}">
+                                                                BindingContext="{Binding .}"
+                                                                WidthRequest="{StaticResource CardWidth}"
+                                                                HeightRequest="{StaticResource CardHeight}">
                                                     <cardViews:Card.GestureRecognizers>
                                                         <TapGestureRecognizer Command="{Binding Source={x:Reference myCardsView}, Path=BindingContext.SelectCardCommand}"
                                                                               CommandParameter="{Binding .}"/>

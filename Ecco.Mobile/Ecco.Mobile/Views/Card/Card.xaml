@@ -5,8 +5,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:viewmodels="clr-namespace:Ecco.Mobile.Models"
              mc:Ignorable="d"
              x:Class="Ecco.Mobile.Views.Card.Card"
-             HeightRequest="200"
-             WidthRequest="350">
+             HeightRequest="{StaticResource CardHeight}"
+             WidthRequest="{StaticResource CardWidth}">
 
     <ContentView.Resources>
         <Style x:Key="styleLabelPrimary" TargetType="Label">

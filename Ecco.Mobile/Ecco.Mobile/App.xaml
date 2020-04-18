@@ -9,6 +9,10 @@
              xmlns:styles="clr-namespace:Ecco.Mobile.Views">
     <Application.Resources>
         <ResourceDictionary>
+
+            <x:Integer x:Key="CardWith">300</x:Integer>
+            <x:Integer x:Key="CardHeight">200</x:Integer>
+
             <ResourceDictionary.MergedDictionaries>
                 <theme:LightTheme />
                 <styles:Styles/>

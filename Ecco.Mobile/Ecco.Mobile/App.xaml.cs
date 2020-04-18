@@ -6,11 +6,14 @@ using Ecco.Mobile.Views;
 using Ecco.Mobile.Views.Authentication;
 using Ecco.Mobile.Views.NFC;
 using Ecco.Mobile.Views.Pages.Cards;
+using Foundation;
 using Nancy.TinyIoc;
 using Newtonsoft.Json;
 using Plugin.Settings;
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
+using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -27,7 +30,6 @@ namespace Ecco.Mobile
             InitDatabase();
             
             MainPage = new LoadingPage();
-            //DependencyService.Get<INFCReader>().ReadTag();
             if (!CrossSettings.Current.GetValueOrDefault("Username", "_").Equals("_"))
             {
                 AutoLogin();
@@ -37,6 +39,25 @@ namespace Ecco.Mobile
                 MainPage = new LoginPage();
             }
         }
+
+        private async void AutoLogin()
+        {
+            string username = CrossSettings.Current.GetValueOrDefault("Username", "");
+            string password = CrossSettings.Current.GetValueOrDefault("Password", "");
+            var db = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
+            var loginSuccesful = await db.Login(username, password);
+            if (loginSuccesful)
+            {
+                MainPage = new NavigationPage(new Home());
+            }
+            else
+            {
+                MainPage = new LoginPage();
+                await MainPage.DisplayAlert("Authentication Error", "You have been logged out", "Ok");
+            }
+        }
+
+        #region iOS Deep Linking
 
         protected override async void OnAppLinkRequestReceived(Uri uri)
         {
@@ -48,36 +69,6 @@ namespace Ecco.Mobile
             // Check if a user is logged in
             if (!CrossSettings.Current.GetValueOrDefault("Username", "_").Equals("_"))
             {
-
-
-
-
-
-                //var db = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
-
-                //var userData = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
-
-                //// Show card
-                //var card = await db.GetCard(int.Parse(cardId));
-                //var model = await CardModel.FromCard(card);
-
-                ////If the user does not have this card added we display a modal of the card
-                //if (!await UserHasCard(model, userData.Id))
-                //{
-                //    // If this is a new card, we show the create conection from scan page
-                //    await Current.MainPage.Navigation.PushAsync(new CreateConnectionFromScanPage(model));
-                //}
-                //else
-                //{
-                //    // If the card is already in the users card list, we just show the card
-                //    await Current.MainPage.Navigation.PushAsync(new ViewCardPage(model));
-                //}
-
-
-
-
-
-
                 // Auto login user
                 string username = CrossSettings.Current.GetValueOrDefault("Username", "");
                 string password = CrossSettings.Current.GetValueOrDefault("Password", "");
@@ -128,22 +119,7 @@ namespace Ecco.Mobile
             return false;
         }
 
-        private async void AutoLogin()
-        {
-            string username = CrossSettings.Current.GetValueOrDefault("Username", "");
-            string password = CrossSettings.Current.GetValueOrDefault("Password", "");
-            var db = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
-            var loginSuccesful = await db.Login(username, password);
-            if (loginSuccesful)
-            {
-                MainPage = new NavigationPage(new Home());
-            }
-            else
-            {
-                MainPage = new LoginPage();
-                await MainPage.DisplayAlert("Authentication Error", "You have been logged out", "Ok");
-            }
-        }
+        #endregion
 
         private void InitDatabase()
         {
@@ -153,6 +129,38 @@ namespace Ecco.Mobile
 
             container.Register<IStorageManager>(new StorageManager("DefaultEndpointsProtocol=https;AccountName=eccospacestorage;AccountKey=Nr6eERil/QqRitQ/XThQ9yElPlH844fwAqE0LDOX6ktyYae0S5xtvv5W/d0lrM3Y7uI8KP7qRgoQ/unHCmYnIw==;EndpointSuffix=core.windows.net"));
         }
+
+        //public override void ReceivedRemoteNotification(UIApplication application, NSDictionary userInfo)
+        //{
+        //    ProcessNotification(userInfo, false);
+        //}
+
+        //void ProcessNotification(NSDictionary options, bool fromFinishedLaunching)
+        //{
+        //    // make sure we have a payload
+        //    if (options != null && options.ContainsKey(new NSString("aps")))
+        //    {
+        //        // get the APS dictionary and extract message payload. Message JSON will be converted
+        //        // into a NSDictionary so more complex payloads may require more processing
+        //        NSDictionary aps = options.ObjectForKey(new NSString("aps")) as NSDictionary;
+        //        string payload = string.Empty;
+        //        NSString payloadKey = new NSString("alert");
+        //        if (aps.ContainsKey(payloadKey))
+        //        {
+        //            payload = aps[payloadKey].ToString();
+        //        }
+
+        //        if (!string.IsNullOrWhiteSpace(payload))
+        //        {
+        //            (App.Current.MainPage)?.AddMessage(payload);
+        //        }
+
+        //    }
+        //    else
+        //    {
+        //        Debug.WriteLine($"Received request to process notification but there was no payload.");
+        //    }
+        //}
 
         protected override void OnStart()
         {
