@@ -1,4 +1,5 @@
 ﻿using Ecco.Entities;
+using Ecco.Entities.Company;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -48,6 +49,17 @@ namespace Ecco.Api
 
         Task<List<Template>> GetTemplates();
         Task<Template> GetTemplate(int id);
+
+        #endregion
+
+        #region Company
+
+        Task<bool> CreateCompany(Company copmany);
+        Task<bool> InviteEmployee(EmployeeInvitation invitation);
+        Task<Company> GetCompany(int id);
+        Task<Company> GetMyOwnedCompany(Guid id);
+        Task<List<Company>> GetMyEmployers(string userId);
+        Task<bool> LeaveCompany(Company company, Guid userId);
 
         #endregion
     }

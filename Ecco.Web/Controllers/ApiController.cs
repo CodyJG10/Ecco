@@ -5,9 +5,11 @@ using System.Security.Claims;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Ecco.Entities;
+using Ecco.Entities.Company;
 using Ecco.Entities.Constants;
 using Ecco.Web.Areas.Identity;
 using Ecco.Web.Data;
+using Ecco.Web.Models;
 using Ecco.Web.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -35,6 +37,8 @@ namespace Ecco.Web.Controllers
             _notifications = notificationService;
         }
 
+        #region Auth
+
         [HttpGet("UserInfo")]
         public async Task<EccoUser> GetUserInfo()
         {
@@ -42,6 +46,8 @@ namespace Ecco.Web.Controllers
             var name = allClaims.First(c => c.Type.Contains("nameidentifier")).Value;
             return await _userManager.FindByNameAsync(name);
         }
+
+        #endregion
 
         #region Cards
 
@@ -208,8 +214,99 @@ namespace Ecco.Web.Controllers
 
         //public void SendUserNotification()
         //{ 
-        
+
         //}
+
+        #endregion
+
+        #region Company
+
+        [HttpPost("CreateCompany")]
+        public async Task<bool> CreateCompany([FromBody]Company company)
+        {
+            if (company != null)
+            {
+                _context.Companies.Add(company);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        [HttpPost("InviteEmployee")]
+        public async Task<bool> InviteEmployee([FromForm]EmployeeInvitation model)
+        {
+            if (model != null)
+            {
+                _context.EmployeeInvitations.Add(model);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        [HttpGet("Company")]
+        public Company GetCompany(int id)
+        {
+            var company = _context.Companies.Single(x => x.Id == id);
+            return company;
+        }
+
+        [HttpGet("MyOwnedCompany")]
+        public async Task<Company> GetMyOwnedCompany(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            Guid id = new Guid(userId);
+            if (_context.Companies.Any(x => x.OwnerId == id))
+            {
+                return _context.Companies.Single(x => x.OwnerId == id);
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        [HttpGet("MyEmployers")]
+        public List<Company> GetMyEmployers(string userId)
+        {
+            Guid id = new Guid(userId);
+            List<Company> companies = new List<Company>();
+            if (_context.EmployeeInvitations.Any(x => x.UserId == id))
+            {
+                foreach (var invitation in _context.EmployeeInvitations.Where(x => x.UserId == id))
+                {
+                    if (invitation.Status == ConnectionConstants.COMPLETE)
+                    {
+                        var company = _context.Companies.Single(x => x.Id == invitation.CompanyId);
+                        companies.Add(company);
+                    }
+                }
+            }
+            return companies;
+        }
+
+        [HttpPost("LeaveCompany")]
+        public async Task<bool> LeaveCompany([FromBody]Company company, string userId)
+        {
+            if (company != null && userId != null)
+            {
+                var employeeInvitation = _context.EmployeeInvitations.Single(x => x.CompanyId == company.Id && x.UserId == new Guid(userId));
+                _context.EmployeeInvitations.Remove(employeeInvitation);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         #endregion
     }

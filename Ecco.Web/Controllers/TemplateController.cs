@@ -111,7 +111,7 @@ namespace Ecco.Web.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost("Edit/{id}")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Files,FileName,Title")] Template template)
+        public async Task<IActionResult> Edit(int id, [Bind("File,FileName,Title")] Template template)
         {
             if (id != template.Id)
             {

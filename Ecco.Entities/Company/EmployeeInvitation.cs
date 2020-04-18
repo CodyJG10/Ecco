@@ -9,5 +9,6 @@ namespace Ecco.Entities.Company
         public int Id { get; set; }
         public int CompanyId { get; set; }
         public int Status { get; set; }
+        public Guid UserId { get; set; }
     }
 }
