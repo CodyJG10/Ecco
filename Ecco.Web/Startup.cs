@@ -81,6 +81,11 @@ namespace Ecco.Web
             string sendGridApiKey = Configuration["SendGridKey"];
             services.AddSingleton(typeof(IEmailSender), new EccoEmailSender(sendGridApiKey));
 
+            string notificationHubConnectionString = Configuration.GetConnectionString("NotificationHub");
+            services.AddSingleton(typeof(NotificationService), new NotificationService("Ecco-Space", notificationHubConnectionString));
+
+            services.AddSession();
+
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
@@ -107,6 +112,8 @@ namespace Ecco.Web
             });
 
             app.UseRouting();
+
+            app.UseSession();
 
             app.UseAuthentication();
             app.UseAuthorization();

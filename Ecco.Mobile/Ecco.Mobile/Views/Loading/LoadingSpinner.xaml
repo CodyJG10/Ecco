@@ -9,8 +9,8 @@
       <StackLayout>
 
             <busyindicator:SfBusyIndicator AnimationType="Box" 
-                                           ViewBoxWidth = "150" 
-                                           ViewBoxHeight="150" 
+                                           ViewBoxWidth = "75" 
+                                           ViewBoxHeight="75" 
                                            TextColor="{StaticResource PrimaryBusyIndicatorColor}" />
           
         </StackLayout>
