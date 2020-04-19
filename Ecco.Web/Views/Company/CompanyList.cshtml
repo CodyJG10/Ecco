@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Ecco.Entities.Company.Company>
+@inject ApplicationDbContext _context 
+
+@{
+    ViewData["Title"] = "CompanyList";
+}
+
+<h1>CompanyList</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.OwnerId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompanyName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CompanyDescription)
+            </th>
+            <th>
+                @Html.Label("Template Image")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.OwnerId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CompanyDescription)
+            </td>
+            <td>
+                @{
+                    if (_context.Templates.Any(x => x.Id == item.TemplateId))
+                    {
+
+                        var template = _context.Templates.Single(x => x.Id == item.TemplateId);
+                        string url = "https://eccospacestorage.blob.core.windows.net/templates/" + template.FileName; 
+                        <image src="@url" height="200" width="350" />
+                    }
+                    else
+                    {
+                        @Html.Label("No template found");
+                    }
+                }
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

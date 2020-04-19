@@ -23,6 +23,10 @@
                    Margin="50"
                    Style="{StaticResource HeaderLabelStyle}"/>
 
+            <Button Text="My Company"
+                    Command="{Binding MyCompanyCommand}"
+                    HorizontalOptions="Center"/>
+
             <Button Text="Logout" Command="{Binding LogoutCommand}"
                     HorizontalOptions="Center"
                     VerticalOptions="EndAndExpand"/>

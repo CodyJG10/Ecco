@@ -55,13 +55,13 @@ xmlns:popuplayout="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusi
                     
                         <border:SfBorder HorizontalOptions="Center" 
                                          VerticalOptions="Center"
-                                         BorderWidth="1"
+                                         BorderWidth="3"
                                          BorderColor="{StaticResource Gray-300}">
                     
                             <listview:SfListView ItemsSource="{Binding Cards}"
-                                                 ItemSize="250"
+                                                 ItemSize="200"
                                                  AllowSwiping="True"
-                                                 ItemSpacing="15"
+                                                 ItemSpacing="5"
                                                  x:Name="CardList" 
                                                  SwipeStarted="CardList_SwipeStarted">
                         
@@ -105,9 +105,7 @@ xmlns:popuplayout="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusi
 
                                                     <cardViews:Card HorizontalOptions="CenterAndExpand"
                                                                 VerticalOptions="CenterAndExpand"
-                                                                BindingContext="{Binding .}"
-                                                                WidthRequest="{StaticResource CardWidth}"
-                                                                HeightRequest="{StaticResource CardHeight}">
+                                                                BindingContext="{Binding .}">
                                                     <cardViews:Card.GestureRecognizers>
                                                         <TapGestureRecognizer Command="{Binding Source={x:Reference myCardsView}, Path=BindingContext.SelectCardCommand}"
                                                                               CommandParameter="{Binding .}"/>

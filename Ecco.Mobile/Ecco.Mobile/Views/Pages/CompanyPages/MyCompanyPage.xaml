@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.CompanyPages" 
+             xmlns:loadingview="clr-namespace:Ecco.Mobile.Views.Loading" xmlns:converters="clr-namespace:Ecco.Mobile.Converters"
+             mc:Ignorable="d"
+             x:Class="Ecco.Mobile.Views.Pages.CompanyPages.MyCompanyPage">
+
+    <ContentPage.BindingContext>
+        <viewmodels:MyCompanyPageViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <converters:NegateBooleanValue x:Key="BoolConverter"/>
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        <StackLayout>
+
+            <loadingview:LoadingSpinner WidthRequest="75"
+                                        HeightRequest="75"
+                                        HorizontalOptions="CenterAndExpand"
+                                        VerticalOptions="CenterAndExpand"
+                                        IsEnabled="{Binding Loading}"
+                                        IsVisible="{Binding Loading}"/>
+
+            <Label Text="{Binding Company.CompanyName}"
+                   HorizontalOptions="Center"
+                   IsEnabled="{Binding Loading, Converter={StaticResource BoolConverter}}"
+                   IsVisible="{Binding Loading, Converter={StaticResource BoolConverter}}"/>
+
+            <Image Source="{Binding TemplateImage}"
+                   WidthRequest="300"
+                   HeightRequest="200"
+                   HorizontalOptions="Center"
+                   IsEnabled="{Binding Loading, Converter={StaticResource BoolConverter}}"
+                   IsVisible="{Binding Loading, Converter={StaticResource BoolConverter}}"/>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

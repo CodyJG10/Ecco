@@ -16,5 +16,6 @@ namespace Ecco.Entities
         public string Phone { get; set; }
         public int TemplateId { get; set; }
         public int ServiceType { get; set; }
+        public bool IsUsingCompanyTemplate { get; set; }
     }
 }

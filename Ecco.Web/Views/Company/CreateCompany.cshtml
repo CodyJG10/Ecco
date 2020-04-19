@@ -5,11 +5,11 @@
     ViewData["Title"] = "CreateCompany";
 }
 
-<h1>CreateCompany</h1>
+<h1>Create Your Company</h1>
 
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="CreateCompany">
+        <form asp-action="CreateCompany"  enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="CompanyName" class="control-label"></label>

@@ -130,43 +130,10 @@ namespace Ecco.Mobile
             container.Register<IStorageManager>(new StorageManager("DefaultEndpointsProtocol=https;AccountName=eccospacestorage;AccountKey=Nr6eERil/QqRitQ/XThQ9yElPlH844fwAqE0LDOX6ktyYae0S5xtvv5W/d0lrM3Y7uI8KP7qRgoQ/unHCmYnIw==;EndpointSuffix=core.windows.net"));
         }
 
-        //public override void ReceivedRemoteNotification(UIApplication application, NSDictionary userInfo)
-        //{
-        //    ProcessNotification(userInfo, false);
-        //}
-
-        //void ProcessNotification(NSDictionary options, bool fromFinishedLaunching)
-        //{
-        //    // make sure we have a payload
-        //    if (options != null && options.ContainsKey(new NSString("aps")))
-        //    {
-        //        // get the APS dictionary and extract message payload. Message JSON will be converted
-        //        // into a NSDictionary so more complex payloads may require more processing
-        //        NSDictionary aps = options.ObjectForKey(new NSString("aps")) as NSDictionary;
-        //        string payload = string.Empty;
-        //        NSString payloadKey = new NSString("alert");
-        //        if (aps.ContainsKey(payloadKey))
-        //        {
-        //            payload = aps[payloadKey].ToString();
-        //        }
-
-        //        if (!string.IsNullOrWhiteSpace(payload))
-        //        {
-        //            (App.Current.MainPage)?.AddMessage(payload);
-        //        }
-
-        //    }
-        //    else
-        //    {
-        //        Debug.WriteLine($"Received request to process notification but there was no payload.");
-        //    }
-        //}
-
         protected override void OnStart()
         {
         }
-
-        protected override void OnSleep()
+                protected override void OnSleep()
         {
         }
 

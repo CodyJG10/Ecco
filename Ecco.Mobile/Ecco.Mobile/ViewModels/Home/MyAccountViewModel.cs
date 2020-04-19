@@ -2,6 +2,7 @@
 using Ecco.Entities;
 using Ecco.Mobile.Views;
 using Ecco.Mobile.Views.Authentication;
+using Ecco.Mobile.Views.Pages.CompanyPages;
 using Nancy.TinyIoc;
 using Newtonsoft.Json;
 using Plugin.Settings;
@@ -33,6 +34,7 @@ namespace Ecco.Mobile.ViewModels.Home
         }
 
         public ICommand LogoutCommand { get; set; }
+        public ICommand MyCompanyCommand { get; set; }
 
         public MyAccountViewModel()
         {
@@ -40,6 +42,7 @@ namespace Ecco.Mobile.ViewModels.Home
             UserData = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
 
             LogoutCommand = new Command(Logout);
+            MyCompanyCommand = new Command(x => Application.Current.MainPage.Navigation.PushAsync(new MyCompanyPage()));
         }
 
         private void Logout()

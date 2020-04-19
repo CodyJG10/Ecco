@@ -16,10 +16,7 @@
     </ContentPage.BindingContext>
     
   <ContentPage.Content>
-      <StackLayout>
-
-            <!--<Button Text="Send A Connection"
-                    Command="{Binding SendConnectionCommand}"/>-->
+        <StackLayout>
 
             <buttons:SfButton HorizontalOptions="Center"
                               Margin="15"

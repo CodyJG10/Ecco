@@ -14,7 +14,8 @@
             BarBackgroundColor="White"
             NavigationPage.HasNavigationBar="False"
             BackgroundColor="{DynamicResource Gray-Black}"
-            xmlns:style="clr-namespace:Ecco.Mobile.Views" xmlns:themes="clr-namespace:Ecco.Mobile.Themes">
+            xmlns:style="clr-namespace:Ecco.Mobile.Views"
+            xmlns:themes="clr-namespace:Ecco.Mobile.Themes">
 
     <TabbedPage.BindingContext>
         <viewmodels:HomeViewModel/>

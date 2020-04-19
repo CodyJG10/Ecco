@@ -10,5 +10,6 @@ namespace Ecco.Entities.Company
         public Guid OwnerId { get; set; }
         public string CompanyName { get; set; }
         public string CompanyDescription { get; set; }
+        public int TemplateId { get; set; }
     }
 }

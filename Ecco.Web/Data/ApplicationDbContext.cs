@@ -23,7 +23,6 @@ namespace Ecco.Web.Data
         #region Company System
 
         public DbSet<Company> Companies { get; set; }
-        public DbSet<CompanyTemplate> CompanyTemplates { get; set; }
         public DbSet<EmployeeInvitation> EmployeeInvitations { get; set; }
 
         #endregion
