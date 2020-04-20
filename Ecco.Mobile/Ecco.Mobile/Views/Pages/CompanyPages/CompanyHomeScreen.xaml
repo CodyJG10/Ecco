@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.CompanyPages" xmlns:converters="clr-namespace:Ecco.Mobile.Converters" xmlns:loadingspinner="clr-namespace:Ecco.Mobile.Views.Loading" xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             mc:Ignorable="d"
+             x:Class="Ecco.Mobile.Views.Pages.CompanyPages.CompanyHomeScreen"
+             Title="Company Home">
+
+    <ContentPage.BindingContext>
+        <viewmodels:CompanyHomeScreenViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <converters:NegateBooleanValue x:Key="NegBoolConverter"/>
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        <StackLayout>
+
+            <StackLayout IsVisible="{Binding Loading, Converter={StaticResource NegBoolConverter}}">
+            
+                <!-- Company Owner Section -->
+                <Label Text="You are the owner of a company"
+                       HorizontalOptions="Center"
+                       IsVisible="{Binding IsCompanyOwner}"/>
+
+                <buttons:SfButton Text="Manage Company"
+                        Command="{Binding ViewMyCompanyCommand}"
+                        HorizontalOptions="Center"
+                        IsVisible="{Binding IsCompanyOwner}"
+                        Style="{StaticResource CompanyButtonStyle}"/>
+
+                <Label Text="Would you like to create a company? With your own company, you can upload custom business card templates and invite all of your employees to use them."
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center"
+                       IsVisible="{Binding IsCompanyOwner, Converter={StaticResource NegBoolConverter}}"/>
+
+                <buttons:SfButton Text="Create A Company"
+                        HorizontalOptions="Center"
+                        IsVisible="{Binding IsCompanyOwner, Converter={StaticResource NegBoolConverter}}"
+                        Style="{StaticResource CompanyButtonStyle}"/>
+
+                <!-- Employee Section -->
+           
+                <Label Text="You are a member of one or more companies"
+                   HorizontalOptions="Center"
+                   IsVisible="{Binding HasEmployers}"/>
+
+                <buttons:SfButton Text="Employee Section"
+                        Command="{Binding ViewEmployeeHomeCommand}"
+                        HorizontalOptions="Center"
+                        Style="{StaticResource CompanyButtonStyle}"/>
+
+            </StackLayout>
+
+            <StackLayout IsVisible="{Binding Loading}">
+
+                <loadingspinner:LoadingSpinner VerticalOptions="Center"
+                                               HorizontalOptions="Center"/>
+
+            </StackLayout>
+            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

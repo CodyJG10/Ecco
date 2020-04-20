@@ -87,6 +87,24 @@ namespace Ecco.Mobile.ViewModels.Home
 
         private async void LoadTemplates()
         {
+            var userData = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
+
+            if ((await _db.GetMyEmployers(userData.Id.ToString())).Count > 0)
+            {
+                var myEmployers = await _db.GetMyEmployers(userData.Id.ToString());
+                foreach (var employer in myEmployers)
+                {
+                    var template = await _db.GetTemplate(employer.TemplateId);
+                    var templateImage = await TemplateUtil.LoadImageSource(new Entities.Card() { TemplateId = template.Id }, _db, _storage);
+                    TemplateModel templateModel = new TemplateModel()
+                    {
+                        Template = template,
+                        TemplateImage = templateImage
+                    };
+                    Templates.Add(templateModel);
+                }
+            }
+
             var allTemplates = await _db.GetTemplates();
             foreach (var template in allTemplates)
             {

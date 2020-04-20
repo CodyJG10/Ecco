@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:sflistview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms" xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.CompanyPages" xmlns:converters="clr-namespace:Ecco.Mobile.Converters" xmlns:loadingspinner="clr-namespace:Ecco.Mobile.Views.Loading"
+             mc:Ignorable="d"
+             x:Class="Ecco.Mobile.Views.Pages.CompanyPages.MyPendingEmployeeInvitesPage"
+             x:Name="Page"
+             Title="Employer Invitations">
+
+    <ContentPage.BindingContext>
+        <viewmodels:MyPendingEmployeeInvitesPageViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <converters:NegateBooleanValue x:Key="NegBoolConverter"/>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <StackLayout>
+
+            <StackLayout IsVisible="{Binding Loading, Converter={StaticResource NegBoolConverter}}">
+
+                <sflistview:SfListView SelectionMode="None"
+                                       ItemsSource="{Binding MyEmployeeInvitations}"
+                                       ItemSize="115">
+                    <sflistview:SfListView.ItemTemplate>
+                        <DataTemplate>
+
+                            <Frame CornerRadius="15" 
+                                   BackgroundColor="White"
+                                   HasShadow="True"
+                                   Margin="15">
+
+                                <StackLayout>
+
+                                    <Label Text="{Binding Company.CompanyName}"
+                                           HorizontalOptions="Center"/>
+
+                                    <StackLayout Orientation="Horizontal"
+                                                 HorizontalOptions="FillAndExpand">
+                                    
+                                        <Button Text="Accept"
+                                                Command="{Binding BindingContext.InvitationAcceptedCommand, Source={x:Reference Page}}"
+                                                CommandParameter="{Binding .}"
+                                                HorizontalOptions="CenterAndExpand"
+                                                VerticalOptions="Center"
+                                                Margin="15,0,0,0"/>
+
+                                        <Button Text="Deny"
+                                                Command="{Binding BindingContext.InvitationDeniedCommand, Source={x:Reference Page}}"
+                                                CommandParameter="{Binding .}"
+                                                HorizontalOptions="CenterAndExpand"
+                                                VerticalOptions="Center"
+                                                Margin="0,0,15,0"/>
+
+                                    </StackLayout>
+
+                                </StackLayout>
+                            
+                            </Frame>
+                        
+                        </DataTemplate>
+                    </sflistview:SfListView.ItemTemplate>
+                </sflistview:SfListView>
+
+            </StackLayout>
+
+            <StackLayout IsVisible="{Binding Loading}">
+
+                <loadingspinner:LoadingSpinner VerticalOptions="Center"
+                                               HorizontalOptions="Center"/>
+
+            </StackLayout>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -4,9 +4,10 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.CompanyPages" 
-             xmlns:loadingview="clr-namespace:Ecco.Mobile.Views.Loading" xmlns:converters="clr-namespace:Ecco.Mobile.Converters"
+             xmlns:loadingview="clr-namespace:Ecco.Mobile.Views.Loading" xmlns:converters="clr-namespace:Ecco.Mobile.Converters" xmlns:sfbutton="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
              mc:Ignorable="d"
-             x:Class="Ecco.Mobile.Views.Pages.CompanyPages.MyCompanyPage">
+             x:Class="Ecco.Mobile.Views.Pages.CompanyPages.MyCompanyPage"
+             Title="My Company">
 
     <ContentPage.BindingContext>
         <viewmodels:MyCompanyPageViewModel/>
@@ -31,12 +32,21 @@
                    IsEnabled="{Binding Loading, Converter={StaticResource BoolConverter}}"
                    IsVisible="{Binding Loading, Converter={StaticResource BoolConverter}}"/>
 
+            <Label Text="{Binding Company.CompanyDescription}"
+                   HorizontalOptions="Center"
+                   IsEnabled="{Binding Loading, Converter={StaticResource BoolConverter}}"
+                   IsVisible="{Binding Loading, Converter={StaticResource BoolConverter}}"/>
+
             <Image Source="{Binding TemplateImage}"
                    WidthRequest="300"
                    HeightRequest="200"
                    HorizontalOptions="Center"
                    IsEnabled="{Binding Loading, Converter={StaticResource BoolConverter}}"
                    IsVisible="{Binding Loading, Converter={StaticResource BoolConverter}}"/>
+
+            <sfbutton:SfButton Text="Invite An Employee"
+                               HorizontalOptions="Center"
+                               Command="{Binding InviteEmployeeCommand}"/>
 
         </StackLayout>
     </ContentPage.Content>

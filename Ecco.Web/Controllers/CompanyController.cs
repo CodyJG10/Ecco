@@ -1,5 +1,6 @@
 ﻿using Ecco.Entities;
 using Ecco.Entities.Company;
+using Ecco.Entities.Constants;
 using Ecco.Web.Areas.Identity;
 using Ecco.Web.Data;
 using Ecco.Web.Models;
@@ -53,7 +54,8 @@ namespace Ecco.Web.Controllers
                 Template template = new Template()
                 {
                     Title = model.CompanyName,
-                    FileName = fileName
+                    FileName = fileName,
+                    IsPublic = false,
                 };
 
                 _context.Add(template);
@@ -73,11 +75,61 @@ namespace Ecco.Web.Controllers
                 _context.Add(company);
                 await _context.SaveChangesAsync();
 
+                var companyId = _context.Companies.Single(x => x.OwnerId == userId).Id;
+                EmployeeInvitation invitation = new EmployeeInvitation()
+                {
+                    CompanyId = companyId,
+                    Status = ConnectionConstants.COMPLETE,
+                    UserId = userId
+                };
+
+                _context.Add(invitation);
+                await _context.SaveChangesAsync();
+
                 //Upload image to storage
                 await _storage.CloudBlobClient.GetContainerReference("templates").GetBlockBlobReference(fileName).UploadFromStreamAsync(model.File.OpenReadStream());
                 return Ok();
             }
             return BadRequest();
+        }
+
+        [HttpGet("InviteEmployeeToCompany")]
+        public IActionResult InviteEmployeeToCompany()
+        {
+            return View();
+        }
+
+        [HttpPost("InviteEmployeeToCompany")]
+        public async Task<IActionResult> InviteEmployeeToCompany(InviteEmployeeModel model)
+        {
+            if (model != null)
+            {
+                var userToInvite = await _userManager.FindByNameAsync(model.Username);
+                var currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
+
+                Company company = _context.Companies.Single(x => x.OwnerId == new Guid(currentUser.Id));
+
+                if (_context.EmployeeInvitations.Any(x => x.UserId == new Guid(userToInvite.Id) && x.CompanyId == company.Id))
+                {
+                    return Content("This user has already been invited to " + company.CompanyName);
+                }
+
+                EmployeeInvitation invitationModel = new EmployeeInvitation()
+                {
+                    CompanyId = company.Id,
+                    Status = ConnectionConstants.PENDING,
+                    UserId = new Guid(userToInvite.Id)
+                };
+
+                _context.Add(invitationModel);
+                await _context.SaveChangesAsync();
+
+                return Content("Succesfully invited user to " + company.CompanyName);
+            }
+            else
+            {
+                return Content("No input detected");
+            }
         }
     }
 }

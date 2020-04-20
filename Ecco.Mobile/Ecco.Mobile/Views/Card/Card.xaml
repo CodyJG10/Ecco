@@ -26,10 +26,13 @@
 
     <ContentView.Content>
 
-        <Grid BackgroundColor="Red"
-              RowSpacing="25"
-              VerticalOptions="FillAndExpand"
-              HorizontalOptions="FillAndExpand">
+        <Frame BackgroundColor="White"
+               HasShadow="True"
+               Padding="0">
+            
+            <Grid RowSpacing="25"
+                  VerticalOptions="FillAndExpand"
+                  HorizontalOptions="FillAndExpand">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
@@ -64,7 +67,6 @@
                    Grid.Row="3"/>
 
         </Grid>
-        
-        
+        </Frame>
   </ContentView.Content>
 </ContentView>

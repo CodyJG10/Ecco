@@ -199,7 +199,7 @@ namespace Ecco.Web.Controllers
         [HttpGet("Templates")]
         public IEnumerable<Template> GetTemplates()
         {
-            return _context.Templates.ToList();
+            return _context.Templates.Where(x => x.IsPublic == true).ToList();
         }
 
         [HttpGet("Template")]
@@ -237,7 +237,7 @@ namespace Ecco.Web.Controllers
         }
 
         [HttpPost("InviteEmployee")]
-        public async Task<bool> InviteEmployee([FromForm]EmployeeInvitation model)
+        public async Task<bool> InviteEmployee(EmployeeInvitation model)
         {
             if (model != null)
             {
@@ -248,6 +248,39 @@ namespace Ecco.Web.Controllers
             else
             {
                 return false;
+            }
+        }
+
+        [HttpGet("AcceptEmployeeInvitation")]
+        public async Task<IActionResult> AcceptEmployeeInvitation(string userId, int companyId)
+        {
+            if (_context.EmployeeInvitations.Any(x => x.UserId.Equals(new Guid(userId)) && x.CompanyId == companyId))
+            {
+                var invitation = _context.EmployeeInvitations.Single(x => x.UserId.Equals(new Guid(userId)) && x.CompanyId == companyId);
+                invitation.Status = ConnectionConstants.COMPLETE;
+                _context.Update(invitation);
+                await _context.SaveChangesAsync();
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpGet("DenyEmployeeInvitation")]
+        public async Task<IActionResult> DenyEmployeeInvitation(string userId, int companyId)
+        {
+            if (_context.EmployeeInvitations.Any(x => x.UserId.Equals(new Guid(userId)) && x.CompanyId == companyId))
+            {
+                var invitation = _context.EmployeeInvitations.Single(x => x.UserId.Equals(new Guid(userId)) && x.CompanyId == companyId);
+                _context.Remove(invitation);
+                await _context.SaveChangesAsync();
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
             }
         }
 
@@ -280,16 +313,25 @@ namespace Ecco.Web.Controllers
             List<Company> companies = new List<Company>();
             if (_context.EmployeeInvitations.Any(x => x.UserId == id))
             {
-                foreach (var invitation in _context.EmployeeInvitations.Where(x => x.UserId == id))
+                var allInvitations = _context.EmployeeInvitations.Where(x => x.UserId == id);
+
+                allInvitations.ToList().ForEach(x =>
                 {
-                    if (invitation.Status == ConnectionConstants.COMPLETE)
+                    if (x.Status == ConnectionConstants.COMPLETE)
                     {
-                        var company = _context.Companies.Single(x => x.Id == invitation.CompanyId);
+                        var company = _context.Companies.Single(company => company.Id == x.CompanyId);
                         companies.Add(company);
                     }
-                }
+                });
             }
+
             return companies;
+        }
+
+        [HttpGet("MyPendingEmployeeInvites")]
+        public List<EmployeeInvitation> GetMyPendingEmployeeInvites(string userId)
+        {
+            return _context.EmployeeInvitations.Where(x => x.UserId == new Guid(userId) && x.Status == ConnectionConstants.PENDING).ToList();
         }
 
         [HttpPost("LeaveCompany")]

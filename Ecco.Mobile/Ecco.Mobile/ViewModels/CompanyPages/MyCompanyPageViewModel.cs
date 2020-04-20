@@ -2,23 +2,20 @@
 using Ecco.Entities;
 using Ecco.Entities.Company;
 using Ecco.Mobile.Util;
+using Ecco.Mobile.Views.Pages.CompanyPages;
 using Nancy.TinyIoc;
 using Newtonsoft.Json;
 using Plugin.Settings;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace Ecco.Mobile.ViewModels.CompanyPages
 {
-    public class MyCompanyPageViewModel : ViewModelBase
+    public class MyCompanyPageViewModel : LoadingViewModel
     {
-        #region Fields
-        private IDatabaseManager _db;
-        private IStorageManager _storage;
-        #endregion
-
         private Company _company;
         public Company Company
         {
@@ -47,28 +44,14 @@ namespace Ecco.Mobile.ViewModels.CompanyPages
             }
         }
 
-        private bool _loading;
-        public bool Loading
+        public ICommand InviteEmployeeCommand { get; set; }
+
+        public MyCompanyPageViewModel() : base()
         {
-            get
-            {
-                return _loading;
-            }
-            set
-            {
-                _loading = value;
-                OnPropertyChanged(nameof(Loading));
-            }
+            InviteEmployeeCommand = new Command(x => Application.Current.MainPage.Navigation.PushAsync(new InviteEmployeeToCompanyPage()));
         }
 
-        public MyCompanyPageViewModel()
-        {
-            _db = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
-            _storage = TinyIoCContainer.Current.Resolve<IStorageManager>();
-            Load();
-        }
-
-        private async void Load()
+        protected override async void Load()
         {
             Loading = true;
             

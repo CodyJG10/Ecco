@@ -20,6 +20,7 @@ namespace Ecco.Api
         Task<UserData> GetUserData(string profileName);
         Task<bool> UserExists(string userName);
         void ForgotPassword(string email);
+        Task<UserData> GetUserDataByEmail(string email);
 
         #endregion
 
@@ -60,6 +61,9 @@ namespace Ecco.Api
         Task<Company> GetMyOwnedCompany(Guid id);
         Task<List<Company>> GetMyEmployers(string userId);
         Task<bool> LeaveCompany(Company company, Guid userId);
+        Task<bool> AcceptEmployeeInvitation(Guid userId, int companyId);
+        Task<bool> DenyEmployeeInvitation(Guid userId, int companyId);
+        Task<List<EmployeeInvitation>> GetMyPendingEmployeeInvites(Guid userId);
 
         #endregion
     }

@@ -39,14 +39,28 @@ namespace Ecco.Api
         {
             var response = await client.GetAsync("api/MyOwnedCompany?userId=" + id.ToString());
             var content = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<Company>(content);
+            try
+            {
+                return JsonConvert.DeserializeObject<Company>(content);
+            }
+            catch(Exception)
+            {
+                return null;
+            }
         }
 
         public async Task<List<Company>> GetMyEmployers(string userId)
         {
-            var response = await client.GetAsync("api/MyEmployers?id=" + userId);
+            var response = await client.GetAsync("api/MyEmployers?userId=" + userId);
             var content = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<List<Company>>(content);
+            try
+            {
+                return JsonConvert.DeserializeObject<List<Company>>(content);
+            }
+            catch (Exception)
+            {
+                return new List<Company>();
+            }
         }
 
         public async Task<bool> LeaveCompany(Company company, Guid userId)
@@ -55,6 +69,25 @@ namespace Ecco.Api
             var content = new StringContent(json, Encoding.UTF8, "application/json");
             var response = await client.PostAsync("api/LeaveCompany?userId=" + userId.ToString(), content);
             return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> AcceptEmployeeInvitation(Guid userId, int companyId)
+        {
+            var response = await client.GetAsync("api/AcceptEmployeeInvitation?userId=" + userId.ToString() + "&companyId=" + companyId);
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<bool> DenyEmployeeInvitation(Guid userId, int companyId)
+        {
+            var response = await client.GetAsync("api/DenyEmployeeInvitation?userId=" + userId.ToString() + "&companyId=" + companyId);
+            return response.IsSuccessStatusCode;
+        }
+
+        public async Task<List<EmployeeInvitation>> GetMyPendingEmployeeInvites(Guid userId)
+        {
+            var response = await client.GetAsync("api/MyPendingEmployeeInvites?userId=" + userId.ToString());
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<List<EmployeeInvitation>>(content);
         }
     }
 }

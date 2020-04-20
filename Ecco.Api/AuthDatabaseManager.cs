@@ -85,6 +85,13 @@ namespace Ecco.Api
             return JsonConvert.DeserializeObject<UserData>(result);
         }
 
+        public async Task<UserData> GetUserDataByEmail(string email)
+        {
+            var response = await client.GetAsync("auth/UserData?email=" + email);
+            var result = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<UserData>(result);
+        }
+
         public async Task<bool> UserExists(string profileName)
         {
             var response = await client.GetAsync("auth/UserExists?profileName=" + profileName);

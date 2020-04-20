@@ -6,9 +6,10 @@
              mc:Ignorable="d"
              x:Class="Ecco.Mobile.Views.Pages.MyAccountView"
              xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.Home"
-             xmlns:themes="clr-namespace:Ecco.Mobile.Themes" xmlns:style="clr-namespace:Ecco.Mobile.Views"
+             xmlns:themes="clr-namespace:Ecco.Mobile.Themes"
+             xmlns:style="clr-namespace:Ecco.Mobile.Views"
              BackgroundColor="{DynamicResource Gray-White}"
-             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
              ios:Page.UseSafeArea="true">
 
     <ContentPage.BindingContext>
@@ -23,9 +24,10 @@
                    Margin="50"
                    Style="{StaticResource HeaderLabelStyle}"/>
 
-            <Button Text="My Company"
-                    Command="{Binding MyCompanyCommand}"
-                    HorizontalOptions="Center"/>
+            <buttons:SfButton Text="My Company"
+                              Command="{Binding MyCompanyCommand}"
+                              HorizontalOptions="Center"
+                              Style="{StaticResource CompanyButtonStyle}"/>
 
             <Button Text="Logout" Command="{Binding LogoutCommand}"
                     HorizontalOptions="Center"

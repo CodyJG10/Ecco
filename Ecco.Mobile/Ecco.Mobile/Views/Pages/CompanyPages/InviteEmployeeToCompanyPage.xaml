@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.CompanyPages" xmlns:converters="clr-namespace:Ecco.Mobile.Converters" xmlns:sfbutton="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             mc:Ignorable="d"
+             x:Class="Ecco.Mobile.Views.Pages.CompanyPages.InviteEmployeeToCompanyPage"
+             Title="Invite An Employee To Your Company">
+
+    <ContentPage.BindingContext>
+        <viewmodels:InviteEmployeeToCompanyPageViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <converters:NegateBooleanValue x:Key="NegBoolVal"/>
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        <StackLayout>
+
+            <Label Text="use the form below to Invite an employee to your company"
+                   HorizontalOptions="CenterAndExpand"
+                   HorizontalTextAlignment="Center"
+                   Margin="5"/>
+
+            <Entry Placeholder="Email"
+                   HorizontalOptions="FillAndExpand"
+                   HorizontalTextAlignment="Center"
+                   Margin="15,5,15,5"
+                   Text="{Binding ToUsername}"/>
+
+            <sfbutton:SfButton Text="Invite"
+                               Command="{Binding SendCommand}"
+                               IsEnabled="{Binding Loading, Converter={StaticResource NegBoolVal}}"
+                               HorizontalOptions="Center"/>
+
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

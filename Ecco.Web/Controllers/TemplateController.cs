@@ -76,7 +76,8 @@ namespace Ecco.Web.Controllers
                 Template template = new Template()
                 {
                     FileName = fileName,
-                    Title = templateModel.Title
+                    Title = templateModel.Title,
+                    IsPublic = true
                 };
                 _context.Add(template);
                 await _context.SaveChangesAsync();

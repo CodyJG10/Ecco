@@ -248,5 +248,23 @@
         <Setter Property="HorizontalOptions" Value="End"/>
 
     </Style>
+    
+    <!-- Common style for create button -->
+    <Style x:Key="CreateButtonStyle" TargetType="buttons:SfButton">
+        <Setter Property="TextColor" Value="White"/>
+        <Setter Property="FontFamily" Value="{StaticResource Montserrat-Medium}"/>
+        <Setter Property="CornerRadius" Value="0"/>
+        <Setter Property="BorderWidth" Value="3"/>
+        <Setter Property="BackgroundColor" Value="Red"/>
+    </Style>
+
+    <!-- Company Button Style -->
+    <Style x:Key="CompanyButtonStyle" TargetType="buttons:SfButton">
+        <Setter Property="TextColor" Value="White"/>
+        <Setter Property="FontFamily" Value="{StaticResource Montserrat-Medium}"/>
+        <Setter Property="CornerRadius" Value="0"/>
+        <Setter Property="BorderWidth" Value="3"/>
+        <Setter Property="BackgroundColor" Value="Red"/>
+    </Style>
 
 </ResourceDictionary>

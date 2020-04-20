@@ -4,7 +4,9 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
              mc:Ignorable="d"
-             x:Class="Ecco.Mobile.Views.Loading.LoadingSpinner">
+             x:Class="Ecco.Mobile.Views.Loading.LoadingSpinner"
+             WidthRequest="75"
+             HeightRequest="75">
   <ContentView.Content>
       <StackLayout>
 

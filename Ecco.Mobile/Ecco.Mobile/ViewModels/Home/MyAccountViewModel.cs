@@ -42,7 +42,7 @@ namespace Ecco.Mobile.ViewModels.Home
             UserData = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
 
             LogoutCommand = new Command(Logout);
-            MyCompanyCommand = new Command(x => Application.Current.MainPage.Navigation.PushAsync(new MyCompanyPage()));
+            MyCompanyCommand = new Command(x => Application.Current.MainPage.Navigation.PushAsync(new CompanyHomeScreen()));
         }
 
         private void Logout()

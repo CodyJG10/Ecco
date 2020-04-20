@@ -140,16 +140,21 @@ namespace Ecco.Web.Controllers
 
         [HttpGet("UserData")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<string> GetUserData(string id = null, string profileName = null) 
+        public async Task<string> GetUserData(string id = null, string profileName = null, string email = null) 
         {
             if (id != null)
             {
                 var user = await _userManager.FindByIdAsync(id);
                 return JsonConvert.SerializeObject(user);
             }
-            else
+            else if (profileName != null)
             {
                 var user = _userManager.Users.Single(x => x.ProfileName.Equals(profileName));
+                return JsonConvert.SerializeObject(user);
+            }
+            else
+            {
+                var user = _userManager.Users.Single(x => x.Email.ToLower().Equals(email.ToLower()));
                 return JsonConvert.SerializeObject(user);
             }
         }

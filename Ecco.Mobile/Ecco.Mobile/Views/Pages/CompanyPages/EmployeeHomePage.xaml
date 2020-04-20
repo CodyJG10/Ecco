@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.CompanyPages"
+             xmlns:sflistview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms" xmlns:loadingspinner="clr-namespace:Ecco.Mobile.Views.Loading" xmlns:converters="clr-namespace:Ecco.Mobile.Converters" xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             mc:Ignorable="d"
+             x:Class="Ecco.Mobile.Views.Pages.CompanyPages.EmployeeHomePage"
+             Title="Employee Home">
+
+    <ContentPage.BindingContext>
+        <viewmodels:EmployeeHomePageViewModel/>
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Resources>
+        <converters:NegateBooleanValue x:Key="NegBoolConverter"/>
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        <StackLayout>
+
+            <StackLayout IsVisible="{Binding Loading, Converter={StaticResource NegBoolConverter}}">
+            
+                <!-- Pending Invites Section -->
+                <Label Text="You have one or more employee invitations to respond to"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center"
+                       IsVisible="{Binding HasPendingInvitations}"/>
+                
+                <buttons:SfButton Text="View"
+                        HorizontalOptions="Center"
+                        Command="{Binding ViewPendingInvitationsCommand}"
+                        IsVisible="{Binding HasPendingInvitations}"
+                        Style="{StaticResource CompanyButtonStyle}"/>
+
+                <!-- My Employers Section -->
+                <Label Text="Your Employers"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center"
+                       FontSize="Header"/>
+
+                <sflistview:SfListView ItemSize="100"
+                                       SelectionMode="None"
+                                       ItemsSource="{Binding MyEmployers}">
+                    <sflistview:SfListView.ItemTemplate>
+                        <DataTemplate>
+
+                            <Frame CornerRadius="15"
+                                   BackgroundColor="White"
+                                   Margin="15"
+                                   HasShadow="True">
+                            
+                                <Label Text="{Binding CompanyName}"
+                                       HorizontalOptions="Center"
+                                       VerticalOptions="Center"/>
+
+                            </Frame>
+
+                        </DataTemplate>
+                    </sflistview:SfListView.ItemTemplate>
+                </sflistview:SfListView>
+                
+            </StackLayout>
+
+            <StackLayout IsVisible="{Binding Loading}">
+
+                <loadingspinner:LoadingSpinner VerticalOptions="Center"
+                                               HorizontalOptions="Center"/>
+
+            </StackLayout>
+
+        </StackLayout>
+        
+    </ContentPage.Content>
+</ContentPage>
