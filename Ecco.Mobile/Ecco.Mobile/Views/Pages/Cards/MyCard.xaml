@@ -10,17 +10,9 @@
 
             <card:Card BindingContext="{Binding CardModel}"/>
 
-            <sfbarcode:SfBarcode BackgroundColor="Gray" 
-                                 Text="{Binding QrCodeUrl}"
-                                 Symbology="QRCode">
-
-                <sfbarcode:SfBarcode.SymbologySettings>
-
-                    <sfbarcode:QRBarcodeSettings XDimension="6"/>
-
-                </sfbarcode:SfBarcode.SymbologySettings>
-
-            </sfbarcode:SfBarcode>
+            <sfbarcode:SfBarcode Text="{Binding QrCodeUrl}"
+                                 Symbology="QRCode"
+                                 HorizontalOptions="Center"/>
 
         </StackLayout>
     </ContentPage.Content>
