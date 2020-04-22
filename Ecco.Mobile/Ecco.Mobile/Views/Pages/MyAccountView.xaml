@@ -26,7 +26,6 @@
 
             <buttons:SfButton Text="My Company"
                               Command="{Binding MyCompanyCommand}"
-                              HorizontalOptions="Center"
                               Style="{StaticResource CompanyButtonStyle}"/>
 
             <Button Text="Logout" Command="{Binding LogoutCommand}"

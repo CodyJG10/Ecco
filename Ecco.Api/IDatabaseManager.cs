@@ -43,6 +43,7 @@ namespace Ecco.Api
         Task<bool> AcceptConnection(Connection connection);
         Task<bool> DeleteConnection(Connection connection);
         Task<Connection> GetConnection(int id);
+        Task<bool> CreateConnectionAndAccept(Connection connection);
 
         #endregion
 
@@ -64,6 +65,12 @@ namespace Ecco.Api
         Task<bool> AcceptEmployeeInvitation(Guid userId, int companyId);
         Task<bool> DenyEmployeeInvitation(Guid userId, int companyId);
         Task<List<EmployeeInvitation>> GetMyPendingEmployeeInvites(Guid userId);
+
+        #endregion
+
+        #region Notifications
+
+        Task<bool> RegisterDevice(DeviceRegistration device);
 
         #endregion
     }

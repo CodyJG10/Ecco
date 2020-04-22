@@ -27,7 +27,6 @@
 
                 <buttons:SfButton Text="Manage Company"
                         Command="{Binding ViewMyCompanyCommand}"
-                        HorizontalOptions="Center"
                         IsVisible="{Binding IsCompanyOwner}"
                         Style="{StaticResource CompanyButtonStyle}"/>
 
@@ -37,7 +36,6 @@
                        IsVisible="{Binding IsCompanyOwner, Converter={StaticResource NegBoolConverter}}"/>
 
                 <buttons:SfButton Text="Create A Company"
-                        HorizontalOptions="Center"
                         IsVisible="{Binding IsCompanyOwner, Converter={StaticResource NegBoolConverter}}"
                         Style="{StaticResource CompanyButtonStyle}"/>
 
@@ -49,7 +47,6 @@
 
                 <buttons:SfButton Text="Employee Section"
                         Command="{Binding ViewEmployeeHomeCommand}"
-                        HorizontalOptions="Center"
                         Style="{StaticResource CompanyButtonStyle}"/>
 
             </StackLayout>

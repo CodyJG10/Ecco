@@ -29,7 +29,6 @@
                        IsVisible="{Binding HasPendingInvitations}"/>
                 
                 <buttons:SfButton Text="View"
-                        HorizontalOptions="Center"
                         Command="{Binding ViewPendingInvitationsCommand}"
                         IsVisible="{Binding HasPendingInvitations}"
                         Style="{StaticResource CompanyButtonStyle}"/>

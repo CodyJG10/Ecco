@@ -20,8 +20,6 @@ namespace Ecco.Api
 
         #endregion
 
-        #region Auth
-
         public async Task<bool> Login(string username, string password)
         {
             var formContent = new FormUrlEncodedContent(new[]
@@ -103,7 +101,5 @@ namespace Ecco.Api
         {
             client.GetAsync("auth/ForgotPassword?email=" + email);
         }
-
-        #endregion
     }
 }

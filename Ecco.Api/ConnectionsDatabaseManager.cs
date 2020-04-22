@@ -63,5 +63,15 @@ namespace Ecco.Api
             var content = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<Connection>(content);
         }
+
+        public async Task<bool> CreateConnectionAndAccept(Connection connection)
+        {
+            string connectionJson = JsonConvert.SerializeObject(connection);
+
+            var content = new StringContent(connectionJson, Encoding.UTF8, "application/json");
+
+            var response = await client.PutAsync("api/AcceptConnection", content);
+            return response.IsSuccessStatusCode;
+        }
     }
 }

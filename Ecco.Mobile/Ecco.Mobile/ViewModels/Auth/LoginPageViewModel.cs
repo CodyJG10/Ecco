@@ -1,4 +1,5 @@
 ﻿using Ecco.Api;
+using Ecco.Mobile.Dependencies;
 using Ecco.Mobile.Views.Authentication;
 using Nancy.TinyIoc;
 using Newtonsoft.Json;
@@ -43,6 +44,7 @@ namespace Ecco.Mobile.ViewModels.Auth
                 CrossSettings.Current.AddOrUpdateValue("UserData", userDataJson);
                 SavePreferences(Email, Password);
                 Application.Current.MainPage = new NavigationPage(new Views.Home());
+
             }
             else
             {

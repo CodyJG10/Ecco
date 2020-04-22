@@ -75,6 +75,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Dependencies\NFCReader.cs" />
+    <Compile Include="Dependencies\NotificationRegister.cs" />
+    <Compile Include="Dependencies\NotificationServiceUpdater.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Renderers\BorderlessEntryRenderer.cs" />
@@ -211,6 +213,9 @@
     <PackageReference Include="Syncfusion.Xamarin.SfBackdrop">
       <Version>18.1.0.43</Version>
     </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfBarcode">
+      <Version>18.1.0.45</Version>
+    </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator">
       <Version>18.1.0.43</Version>
     </PackageReference>
@@ -243,6 +248,14 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
+    <ProjectReference Include="..\..\Ecco.Api\Ecco.Api.csproj">
+      <Project>{1ECD36A2-1273-416B-AFA1-481752B66D0B}</Project>
+      <Name>Ecco.Api</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Ecco.Entities\Ecco.Entities.csproj">
+      <Project>{E1B463BE-8C25-44A6-8F69-A9A8B07F7458}</Project>
+      <Name>Ecco.Entities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Ecco.Mobile\Ecco.Mobile.csproj">
       <Project>{438FE6DB-BAA1-4296-8216-E44C4ED8271E}</Project>
       <Name>Ecco.Mobile</Name>

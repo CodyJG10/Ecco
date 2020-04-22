@@ -1,5 +1,6 @@
 ﻿using Ecco.Api;
 using Ecco.Entities;
+using Ecco.Mobile.AutoUpdate;
 using Ecco.Mobile.Views;
 using Ecco.Mobile.Views.Authentication;
 using Ecco.Mobile.Views.Pages.CompanyPages;
@@ -47,7 +48,12 @@ namespace Ecco.Mobile.ViewModels.Home
 
         private void Logout()
         {
-            CrossSettings.Current.Clear();
+            //CrossSettings.Current.Clear();
+            CrossSettings.Current.Remove("UserData");
+            CrossSettings.Current.Remove("Username");
+            CrossSettings.Current.Remove("Password");
+            (TinyIoCContainer.Current.Resolve<AutoUpdater>()).Stop();
+            TinyIoCContainer.Current.Unregister(typeof(AutoUpdater));
             Application.Current.MainPage = new LoginPage();
         }
     }

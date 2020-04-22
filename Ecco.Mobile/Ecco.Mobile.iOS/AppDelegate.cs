@@ -21,6 +21,10 @@ using System.Text;
 using Newtonsoft.Json.Linq;
 using UserNotifications;
 using WindowsAzure.Messaging;
+using Microsoft.Azure.NotificationHubs;
+using Xamarin.Essentials;
+using Syncfusion.SfBarcode.iOS;
+using Syncfusion.SfBarcode.XForms.iOS;
 
 namespace Ecco.Mobile.iOS
 {
@@ -30,15 +34,8 @@ namespace Ecco.Mobile.iOS
     [Register("AppDelegate")]
     public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
     {
-        private SBNotificationHub Hub { get; set; }
+        private string username;
 
-        //
-        // This method is invoked when the application has loaded and is ready to run. In this 
-        // method you should instantiate the window, load the UI into it and then make the window
-        // visible.
-        //
-        // You have 17 seconds to return from this method, or iOS will terminate your application.
-        //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             new Syncfusion.SfAutoComplete.XForms.iOS.SfAutoCompleteRenderer();
@@ -57,9 +54,11 @@ namespace Ecco.Mobile.iOS
             SfDataFormRenderer.Init();
             SfShimmerRenderer.Init();
 
+            new SfBarcodeRenderer();
+
             LoadApplication(new App());
 
-            RegisterForRemoteNotifications();
+            //RegisterForRemoteNotifications();
 
             return base.FinishedLaunching(app, options);
         }
@@ -71,8 +70,9 @@ namespace Ecco.Mobile.iOS
 
         #region Notifications
 
-        void RegisterForRemoteNotifications()
+        public void RegisterForRemoteNotifications(string username)
         {
+            this.username = username;
             // register for remote notifications based on system version
             if (UIDevice.CurrentDevice.CheckSystemVersion(10, 0))
             {
@@ -105,17 +105,18 @@ namespace Ecco.Mobile.iOS
         {
             string connectionString = "Endpoint=sb://ecco-space.servicebus.windows.net/;SharedAccessKeyName=DefaultListenSharedAccessSignature;SharedAccessKey=YO5k7/KyXURG9UpFnMifwvzhjSTTqhT2kOWRko93qlw=";
             string hubName = "Ecco-Space";
-            Hub = new SBNotificationHub(connectionString, hubName);
+            var hub = new SBNotificationHub(connectionString, hubName);
 
-            Hub.UnregisterAll(deviceToken, (error) => {
+            hub.UnregisterAll(deviceToken, (error) =>
+            {
                 if (error != null)
                 {
                     System.Diagnostics.Debug.WriteLine("Error calling Unregister: {0}", error.ToString());
                     return;
                 }
 
-                NSSet tags = null; // create tags if you want
-                Hub.RegisterNativeAsync(deviceToken, tags);
+                NSSet tags = new NSSet(new string[] { username });
+                hub.RegisterNativeAsync(deviceToken, tags);
             });
         }
 

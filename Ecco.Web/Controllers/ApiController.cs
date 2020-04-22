@@ -47,6 +47,37 @@ namespace Ecco.Web.Controllers
             return await _userManager.FindByNameAsync(name);
         }
 
+        //[HttpPost("RegisterDevice")]
+        //public async Task<IActionResult> RegisterDevice(string username, [FromBody]DeviceRegistration deviceRegistration)
+        //{
+        //    if (deviceRegistration != null)
+        //    {
+        //        await _notifications.RegisterDevice(deviceRegistration, username, _context, _userManager);
+        //        return Ok();
+        //    }
+        //    else
+        //    {
+        //        return BadRequest();
+        //    }
+        //}
+
+        //[HttpGet("RegisterDevice")]
+        //public async Task<IActionResult> RegisterDevice(string username, string registration)
+        //{
+        //    var user = await _userManager.FindByNameAsync(username);
+        //    user.DeviceInstallationId = registration;
+        //    await _userManager.UpdateAsync(user);
+        //    await _context.SaveChangesAsync();
+        //    return Ok();
+        //}
+
+        [HttpGet("GetDeviceRegistration")]
+        public async Task<DeviceRegistration> GetDeviceRegistration(string username)
+        {
+            var user = await _userManager.FindByNameAsync(username);
+            return await _notifications.GetDeviceRegistration(username, _userManager);
+        }
+            
         #endregion
 
         #region Cards
@@ -176,6 +207,21 @@ namespace Ecco.Web.Controllers
             _context.Update(connection);
             await _context.SaveChangesAsync();
             return Ok();
+        }
+
+        [HttpPost("CreateConnectionAndAccept")]
+        public async Task<IActionResult> CreateConnectionAndAccept(Connection connection)
+        {
+            if (connection != null)
+            {
+                _context.Add(connection);
+                await _context.SaveChangesAsync();
+                return Ok();
+            }
+            else
+            {
+                return BadRequest();
+            }
         }
 
         [HttpPut("DeleteConnection")]

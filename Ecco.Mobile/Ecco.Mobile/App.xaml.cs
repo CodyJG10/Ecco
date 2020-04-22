@@ -1,5 +1,6 @@
 ﻿using Ecco.Api;
 using Ecco.Entities;
+using Ecco.Mobile.AutoUpdate;
 using Ecco.Mobile.Dependencies;
 using Ecco.Mobile.Models;
 using Ecco.Mobile.Views;
@@ -126,14 +127,14 @@ namespace Ecco.Mobile
             var container = TinyIoCContainer.Current;
             container.Register<IDatabaseManager, DatabaseManager>();
             container.Resolve<IDatabaseManager>().SetUrl("https://ecco-space.azurewebsites.net/");
-
             container.Register<IStorageManager>(new StorageManager("DefaultEndpointsProtocol=https;AccountName=eccospacestorage;AccountKey=Nr6eERil/QqRitQ/XThQ9yElPlH844fwAqE0LDOX6ktyYae0S5xtvv5W/d0lrM3Y7uI8KP7qRgoQ/unHCmYnIw==;EndpointSuffix=core.windows.net"));
         }
 
         protected override void OnStart()
         {
         }
-                protected override void OnSleep()
+        
+        protected override void OnSleep()
         {
         }
 

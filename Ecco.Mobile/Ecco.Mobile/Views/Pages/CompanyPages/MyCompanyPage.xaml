@@ -45,7 +45,6 @@
                    IsVisible="{Binding Loading, Converter={StaticResource BoolConverter}}"/>
 
             <sfbutton:SfButton Text="Invite An Employee"
-                               HorizontalOptions="Center"
                                Command="{Binding InviteEmployeeCommand}"/>
 
         </StackLayout>

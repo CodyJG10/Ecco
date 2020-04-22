@@ -1,5 +1,6 @@
 ﻿using Ecco.Api;
 using Ecco.Entities;
+using Ecco.Mobile.AutoUpdate;
 using Ecco.Mobile.Models;
 using Ecco.Mobile.Util;
 using Ecco.Mobile.Views.Pages.Cards;
@@ -101,6 +102,8 @@ namespace Ecco.Mobile.ViewModels.Home
             SelectCardCommand = new Command<CardModel>(x => Application.Current.MainPage.Navigation.PushAsync(new ViewCardPage(x)));
 
             Load();
+
+            InitAutoUpdate();
         }
 
         private async void Load()
@@ -109,6 +112,19 @@ namespace Ecco.Mobile.ViewModels.Home
             await LoadPendingConnections();
             await LoadConnections();
             Loading = false;
+        }
+
+        private void InitAutoUpdate()
+        {
+            MessagingCenter.Instance.Subscribe<AutoUpdater, string>(this, AutoUpdater.CONNECTIONS, (sender, json) =>
+            {
+                if (Loading) return;
+                var connections = JsonConvert.DeserializeObject<List<Connection>>(json);
+                if (Cards.Count != connections.Count)
+                {
+                    Refresh();
+                }
+            });
         }
 
         #region Loading

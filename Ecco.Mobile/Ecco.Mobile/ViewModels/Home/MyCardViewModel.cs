@@ -1,6 +1,7 @@
 ﻿using Ecco.Api;
 using Ecco.Entities;
 using Ecco.Entities.Attributes;
+using Ecco.Mobile.AutoUpdate;
 using Ecco.Mobile.Models;
 using Ecco.Mobile.Util;
 using Ecco.Mobile.Views.Pages;
@@ -74,9 +75,24 @@ namespace Ecco.Mobile.ViewModels.Home
             RefreshCommand = new Command(LoadCards);
             EditCardCommand = new Command<CardModel>(EditCard);
             DeleteCardCommand = new Command<CardModel>(DeleteCard);
-            SelectCardCommand = new Command<CardModel>(x => Application.Current.MainPage.Navigation.PushAsync(new ViewCardPage(x)));
+            SelectCardCommand = new Command<CardModel>(x => Application.Current.MainPage.Navigation.PushAsync(new MyCard(x)));
 
             LoadCards();
+
+            InitAutoUpdate();
+        }
+
+        private void InitAutoUpdate()
+        {
+            MessagingCenter.Instance.Subscribe<AutoUpdater, string>(this, AutoUpdater.CARDS, (sender, json) =>
+            {
+                if (Loading) return;
+                var cards = JsonConvert.DeserializeObject<List<Entities.Card>>(json);
+                if (Cards.Count != cards.Count)
+                {
+                    LoadCards();
+                }
+            });
         }
 
         private async void LoadCards()

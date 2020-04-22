@@ -43,17 +43,16 @@ namespace Ecco.Mobile.ViewModels.NFC
                 CardId = Model.Card.Id
             };
 
-            if (await _db.CreateConnection(Model.Card.UserId, _userData.Id, Model.Card.Id))
+            var success = await _db.CreateConnectionAndAccept(connection);
+            if (success)
             {
-                if (await _db.AcceptConnection(connection))
-                {
-                    await Application.Current.MainPage.DisplayAlert("Success!", "Connection succesfully saved", "Great");
-                    await Application.Current.MainPage.Navigation.PopAsync();
-                    await Application.Current.MainPage.Navigation.PushAsync(new ViewCardPage(Model));
-                    return;
-                }
+                await Application.Current.MainPage.DisplayAlert("Success!", "Connection succesfully saved", "Great");
+                await Application.Current.MainPage.Navigation.PopAsync();
             }
-            await Application.Current.MainPage.DisplayAlert("Error", "There was an error creating the connection", "Ok");
+            else
+            { 
+                await Application.Current.MainPage.DisplayAlert("Error", "There was an error creating the connection", "Ok");
+            }
         }
     }
 }
