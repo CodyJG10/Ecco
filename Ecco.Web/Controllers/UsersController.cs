@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Ecco.Web.Controllers
 {
-    [Route("{controller}")]
+    [Route("Users")]
     [Authorize(Roles = "Moderator,Admin")]
     public class UsersController : Controller
     {

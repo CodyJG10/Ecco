@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Ecco.Web.Controllers
 {
-    [Route("{controller}")]
+    [Route("CardManager")]
     [Authorize(Roles = "Moderator,Admin")]
     public class CardManagerController : Controller
     {

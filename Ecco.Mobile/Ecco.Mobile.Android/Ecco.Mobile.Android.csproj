@@ -81,6 +81,9 @@
     <PackageReference Include="Syncfusion.Xamarin.SfBackdrop">
       <Version>18.1.0.43</Version>
     </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfBadgeView">
+      <Version>18.1.0.45</Version>
+    </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator">
       <Version>18.1.0.43</Version>
     </PackageReference>

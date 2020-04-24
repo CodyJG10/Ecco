@@ -47,37 +47,6 @@ namespace Ecco.Web.Controllers
             return await _userManager.FindByNameAsync(name);
         }
 
-        //[HttpPost("RegisterDevice")]
-        //public async Task<IActionResult> RegisterDevice(string username, [FromBody]DeviceRegistration deviceRegistration)
-        //{
-        //    if (deviceRegistration != null)
-        //    {
-        //        await _notifications.RegisterDevice(deviceRegistration, username, _context, _userManager);
-        //        return Ok();
-        //    }
-        //    else
-        //    {
-        //        return BadRequest();
-        //    }
-        //}
-
-        //[HttpGet("RegisterDevice")]
-        //public async Task<IActionResult> RegisterDevice(string username, string registration)
-        //{
-        //    var user = await _userManager.FindByNameAsync(username);
-        //    user.DeviceInstallationId = registration;
-        //    await _userManager.UpdateAsync(user);
-        //    await _context.SaveChangesAsync();
-        //    return Ok();
-        //}
-
-        [HttpGet("GetDeviceRegistration")]
-        public async Task<DeviceRegistration> GetDeviceRegistration(string username)
-        {
-            var user = await _userManager.FindByNameAsync(username);
-            return await _notifications.GetDeviceRegistration(username, _userManager);
-        }
-            
         #endregion
 
         #region Cards
@@ -192,6 +161,12 @@ namespace Ecco.Web.Controllers
 
             _context.Connections.Add(connection);
             await _context.SaveChangesAsync();
+
+            var from = await _userManager.FindByIdAsync(id);
+            var to = await _userManager.FindByIdAsync(toId);
+
+            _notifications.SendNotification(from.ProfileName + " has sent you their business card!", to);
+
             return Ok();
         }
 
@@ -206,6 +181,12 @@ namespace Ecco.Web.Controllers
             connection.Status = ConnectionConstants.COMPLETE;
             _context.Update(connection);
             await _context.SaveChangesAsync();
+
+            var from = await _userManager.FindByIdAsync(connection.FromId.ToString());
+            var to = await _userManager.FindByIdAsync(connection.ToId.ToString());
+
+            _notifications.SendNotification(to.ProfileName + " has accepted you business card connection!", from);
+
             return Ok();
         }
 
@@ -256,15 +237,6 @@ namespace Ecco.Web.Controllers
 
         #endregion
 
-        #region Notifications
-
-        //public void SendUserNotification()
-        //{ 
-
-        //}
-
-        #endregion
-
         #region Company
 
         [HttpPost("CreateCompany")]
@@ -289,6 +261,11 @@ namespace Ecco.Web.Controllers
             {
                 _context.EmployeeInvitations.Add(model);
                 await _context.SaveChangesAsync();
+
+                var company = _context.Companies.Single(x => x.Id == model.CompanyId);
+
+                _notifications.SendNotification("You have been invited to the company: " + company.CompanyName, await _userManager.FindByIdAsync(model.UserId.ToString()));
+
                 return true;
             }
             else

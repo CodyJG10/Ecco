@@ -2,17 +2,25 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:card="clr-namespace:Ecco.Mobile.Views.Card" xmlns:sfbarcode="clr-namespace:Syncfusion.SfBarcode.XForms;assembly=Syncfusion.SfBarcode.XForms"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:card="clr-namespace:Ecco.Mobile.Views.Card" xmlns:sfbarcode="clr-namespace:Syncfusion.SfBarcode.XForms;assembly=Syncfusion.SfBarcode.XForms" xmlns:sfbutton="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
              mc:Ignorable="d"
-             x:Class="Ecco.Mobile.Views.Pages.Cards.MyCard">
+             x:Class="Ecco.Mobile.Views.Pages.Cards.MyCard"
+             Title="My Card">
     <ContentPage.Content>
         <StackLayout>
 
-            <card:Card BindingContext="{Binding CardModel}"/>
+            <card:Card BindingContext="{Binding CardModel}"
+                       Margin="15"/>
 
             <sfbarcode:SfBarcode Text="{Binding QrCodeUrl}"
+                                 BackgroundColor="Transparent"
                                  Symbology="QRCode"
                                  HorizontalOptions="Center"/>
+
+            <sfbutton:SfButton HorizontalOptions="Center"
+                               Text="Share Card"
+                               Command="{Binding ShareCommand}"
+                               WidthRequest="115"/>
 
         </StackLayout>
     </ContentPage.Content>

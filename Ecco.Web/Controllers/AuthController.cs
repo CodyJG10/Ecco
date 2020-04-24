@@ -7,6 +7,7 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Ecco.Web.Areas.Identity;
+using Ecco.Web.Data;
 using Ecco.Web.Models;
 using Ecco.Web.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -29,11 +30,13 @@ namespace Ecco.Web.Controllers
     {
         private UserManager<EccoUser> _userManager;
         private IEmailSender _emailSender;
+        private ApplicationDbContext _context;
 
-        public AuthController(UserManager<EccoUser> userManager, IEmailSender emailSender)
+        public AuthController(UserManager<EccoUser> userManager, IEmailSender emailSender, ApplicationDbContext context)
         {
             _userManager = userManager;
             _emailSender = emailSender;
+            _context = context;
         }
 
         [HttpPost("token")]
@@ -87,6 +90,11 @@ namespace Ecco.Web.Controllers
                 Email = model.Email,
                 ProfileName = model.UserName
             };
+
+            if (_context.Users.Any(x => x.ProfileName == model.UserName))
+            {
+                return BadRequest();
+            }
 
             IdentityResult result = await _userManager.CreateAsync(user, model.Password);
             var errorResult = GetErrorResult(result);

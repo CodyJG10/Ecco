@@ -70,7 +70,8 @@ namespace Ecco.Api
 
         #region Notifications
 
-        Task<bool> RegisterDevice(DeviceRegistration device);
+        Task<string> RegisterDevice();
+        Task<bool> EnablePushNotifications(string id, DeviceRegistration deviceUpdate);
 
         #endregion
     }

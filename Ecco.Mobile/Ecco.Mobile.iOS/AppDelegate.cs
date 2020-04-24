@@ -25,6 +25,8 @@ using Microsoft.Azure.NotificationHubs;
 using Xamarin.Essentials;
 using Syncfusion.SfBarcode.iOS;
 using Syncfusion.SfBarcode.XForms.iOS;
+using Syncfusion.XForms.iOS.BadgeView;
+using System.Threading.Tasks;
 
 namespace Ecco.Mobile.iOS
 {
@@ -34,7 +36,7 @@ namespace Ecco.Mobile.iOS
     [Register("AppDelegate")]
     public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
     {
-        private string username;
+        public string PushNotificationsHandle { get; set; }
 
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
@@ -53,12 +55,13 @@ namespace Ecco.Mobile.iOS
             SfPullToRefreshRenderer.Init();
             SfDataFormRenderer.Init();
             SfShimmerRenderer.Init();
+            SfBadgeViewRenderer.Init();
 
             new SfBarcodeRenderer();
 
             LoadApplication(new App());
 
-            //RegisterForRemoteNotifications();
+            RegisterForRemoteNotifications();
 
             return base.FinishedLaunching(app, options);
         }
@@ -70,10 +73,8 @@ namespace Ecco.Mobile.iOS
 
         #region Notifications
 
-        public void RegisterForRemoteNotifications(string username)
+        public void RegisterForRemoteNotifications()
         {
-            this.username = username;
-            // register for remote notifications based on system version
             if (UIDevice.CurrentDevice.CheckSystemVersion(10, 0))
             {
                 UNUserNotificationCenter.Current.RequestAuthorization(UNAuthorizationOptions.Alert |
@@ -103,21 +104,21 @@ namespace Ecco.Mobile.iOS
 
         public override void RegisteredForRemoteNotifications(UIApplication application, NSData deviceToken)
         {
-            string connectionString = "Endpoint=sb://ecco-space.servicebus.windows.net/;SharedAccessKeyName=DefaultListenSharedAccessSignature;SharedAccessKey=YO5k7/KyXURG9UpFnMifwvzhjSTTqhT2kOWRko93qlw=";
-            string hubName = "Ecco-Space";
-            var hub = new SBNotificationHub(connectionString, hubName);
-
-            hub.UnregisterAll(deviceToken, (error) =>
+            var oldDeviceToken = NSUserDefaults.StandardUserDefaults.StringForKey("PushDeviceToken");
+            if (string.IsNullOrEmpty(oldDeviceToken))
             {
-                if (error != null)
-                {
-                    System.Diagnostics.Debug.WriteLine("Error calling Unregister: {0}", error.ToString());
-                    return;
-                }
 
-                NSSet tags = new NSSet(new string[] { username });
-                hub.RegisterNativeAsync(deviceToken, tags);
-            });
+                byte[] bytes = deviceToken.ToArray<byte>();
+                string[] hexArray = bytes.Select(b => b.ToString("x2")).ToArray();
+                string newDeviceToken = string.Join(string.Empty, hexArray);
+
+                NSUserDefaults.StandardUserDefaults.SetString("PushDeviceToken", newDeviceToken);
+                PushNotificationsHandle = newDeviceToken;
+            }
+            else
+            {
+                PushNotificationsHandle = oldDeviceToken;
+            }
         }
 
         public override void ReceivedRemoteNotification(UIApplication application, NSDictionary userInfo)

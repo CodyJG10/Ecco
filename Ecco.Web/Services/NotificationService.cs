@@ -20,88 +20,61 @@ namespace Ecco.Web.Services
             _hub = NotificationHubClient.CreateClientFromConnectionString(connectionString, hubName);
         }
 
-        //public async Task<Task> RegisterDevice(DeviceRegistration deviceRegistration, ApplicationDbContext context, UserManager<EccoUser> userManager)
-        //{
-
-
-        //    Installation installation = new Installation
-        //    {
-        //        InstallationId = deviceRegistration.InstallationId,
-        //        PushChannel = deviceRegistration.PushChannel,
-        //        Tags = deviceRegistration.Tags,
-        //    };
-
-        //    switch (deviceRegistration.Platform)
-        //    {
-        //        case "apns":
-        //            installation.Platform = NotificationPlatform.Apns;
-        //            break;
-        //        case "fcm":
-        //            installation.Platform = NotificationPlatform.Fcm;
-        //            break;
-        //    }
-
-        //    await _hub.CreateOrUpdateInstallationAsync(installation);
-
-        //    var user = await userManager.FindByNameAsync(deviceRegistration.Username);
-        //    user.DeviceInstallationId = deviceRegistration.InstallationId;
-        //    context.Update(user);
-        //    await context.SaveChangesAsync();
-
-        //    return Task.CompletedTask;
-        //}
-
-        public async Task<string> Post(string handle = null)
+        public async Task<bool> RegisterForPushNotifications(string id, DeviceRegistration deviceUpdate, UserManager<EccoUser> userManager)
         {
-            string newRegistrationId = null;
+            RegistrationDescription registrationDescription = null;
+            int deviceType = 0;
 
-            if (handle != null)
+            switch (deviceUpdate.Platform)
             {
-                var registrations = await _hub.GetRegistrationsByChannelAsync(handle, 100);
-
-                foreach (RegistrationDescription registration in registrations)
-                {
-                    if (newRegistrationId == null)
-                    {
-                        newRegistrationId = registration.RegistrationId;
-                    }
-                    else
-                    {
-                        await _hub.DeleteRegistrationAsync(registration);
-                    }
-                }
+                case "apns":
+                    registrationDescription = new AppleRegistrationDescription(deviceUpdate.Handle, deviceUpdate.Tags);
+                    deviceType = DeviceTypeConstants.IOS;
+                    break;
+                case "fcm":
+                    registrationDescription = new FcmRegistrationDescription(deviceUpdate.Handle, deviceUpdate.Tags);
+                    deviceType = DeviceTypeConstants.ANDROID;
+                    break;
             }
 
-            if (newRegistrationId == null)
-                newRegistrationId = await _hub.CreateRegistrationIdAsync();
+            registrationDescription.RegistrationId = id;
+            if (deviceUpdate.Tags != null)
+                registrationDescription.Tags = new HashSet<string>(deviceUpdate.Tags);
 
-            return newRegistrationId;
+            try
+            {
+                var user = await userManager.FindByNameAsync(deviceUpdate.Tags[0].Split(":")[1]);
+                user.PushNotificationProvider = deviceType;
+                await userManager.UpdateAsync(user);
+                await _hub.CreateOrUpdateRegistrationAsync(registrationDescription);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
-        public async Task<DeviceRegistration> GetDeviceRegistration(string userName, UserManager<EccoUser> userManager)
+        public async Task<string> CreateRegistrationId()
         {
-            var user = await userManager.FindByNameAsync(userName);
-            var installation = await _hub.GetInstallationAsync(user.DeviceInstallationId);
-            DeviceRegistration registration = new DeviceRegistration()
-            {
-                InstallationId = user.DeviceInstallationId,
-                Platform = installation.Platform.ToString(),
-                PushChannel = installation.PushChannel,
-                Tags = installation.Tags.ToArray()
-            };
-            return registration; 
+            return await _hub.CreateRegistrationIdAsync();
         }
 
-        public void SendNotification(string message, int deviceType, string userName)
+        #region Pushing Notifications
+
+        public void SendNotification(string message, EccoUser user)
         {
-            switch (deviceType)
+            if (user.PushNotificationProvider != 0 && user != null)
             {
-                case DeviceTypeConstants.IOS:
-                    SendNotificationToApple(message, userName);
-                    break;
-                case DeviceTypeConstants.ANDROID:
-                    SendNotificationToAndroid(message, userName);
-                    break;
+                switch (user.PushNotificationProvider)
+                {
+                    case DeviceTypeConstants.IOS:
+                        SendNotificationToApple(message, "username:" + user.UserName);
+                        break;
+                    case DeviceTypeConstants.ANDROID:
+                        SendNotificationToAndroid(message, "username:" + user.UserName);
+                        break;
+                }
             }
         }
 
@@ -116,5 +89,7 @@ namespace Ecco.Web.Services
             string payload = "{ \"data\":{ \"message\":\"" + message + "\"} }";
             await _hub.SendFcmNativeNotificationAsync(payload, toUsername);
         }
+
+        #endregion
     }
 }

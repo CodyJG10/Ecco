@@ -1,4 +1,5 @@
-﻿using Ecco.Entities;
+﻿using Ecco.Api;
+using Ecco.Entities;
 using Ecco.Mobile.AutoUpdate;
 using Ecco.Mobile.Dependencies;
 using Nancy.TinyIoc;
@@ -16,7 +17,7 @@ namespace Ecco.Mobile.ViewModels
     {
         public HomeViewModel()
         {
-            //RegisterForPushNotifications();
+            RegisterForPushNotifications();
             AutoUpdater autoUpdater = new AutoUpdater();
             TinyIoCContainer.Current.Register(autoUpdater);
             autoUpdater.Start();
@@ -25,7 +26,8 @@ namespace Ecco.Mobile.ViewModels
         void RegisterForPushNotifications()
         {
             var userData = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
-            DependencyService.Get<INotificationRegister>().RegisterForRemoteNotifications(userData.UserName);
+            IDatabaseManager db = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
+            DependencyService.Get<INotificationRegister>().RegisterForRemoteNotifications(userData.UserName, db);
         }
     }
 }

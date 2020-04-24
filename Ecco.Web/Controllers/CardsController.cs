@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Ecco.Web.Controllers
 {
-    [Route("{controller}")]
+    [Route("Cards")]
     public class CardsController : Controller
     {
         private readonly ApplicationDbContext _context;

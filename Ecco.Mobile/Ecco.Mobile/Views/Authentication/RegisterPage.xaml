@@ -104,7 +104,7 @@
                                           FontFamily="{StaticResource Montserrat-SemiBold}"
                                           Style="{StaticResource SfButtonStyle}"
                                           Text="REGISTER" 
-                                          IsCheckable="{Binding Loading, Converter={StaticResource BooleanConverter}}"/>
+                                          IsEnabled="{Binding Loading, Converter={StaticResource BooleanConverter}}"/>
 
                         <loadingSpinner:LoadingSpinner Grid.Row="6"
                                                        HorizontalOptions="Center"

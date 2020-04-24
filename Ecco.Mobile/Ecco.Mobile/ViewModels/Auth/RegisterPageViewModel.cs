@@ -33,6 +33,7 @@ namespace Ecco.Mobile.ViewModels.Auth
 
         public async Task<Task> Register()
         {
+            Loading = true;
             var registerSuccesful = await _database.Register(Username, Email, Password, ConfirmPasswordText);
             if (registerSuccesful)
             {
@@ -52,6 +53,7 @@ namespace Ecco.Mobile.ViewModels.Auth
             {
                 Console.WriteLine("Registration Unsuccesful!");
                 await Application.Current.MainPage.DisplayAlert("Registration Error", "Could not register with the given credentials", "Return");
+                Loading = false;
             }
             return Task.CompletedTask;
         }

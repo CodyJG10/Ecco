@@ -14,18 +14,20 @@ using System.Threading.Tasks;
 
 namespace Ecco.Web.Controllers
 {
-    [Route("{controller}")]
+    [Route("Company")]
     public class CompanyController : Controller
     {
         private ApplicationDbContext _context;
         private StorageService _storage;
         private UserManager<EccoUser> _userManager;
+        private NotificationService _notifications;
 
-        public CompanyController(ApplicationDbContext context, StorageService storage, UserManager<EccoUser> userManager)
+        public CompanyController(ApplicationDbContext context, StorageService storage, UserManager<EccoUser> userManager, NotificationService notifications)
         {
             _context = context;
             _storage = storage;
             _userManager = userManager;
+            _notifications = notifications;
         }
 
         [HttpGet("CreateCompany")]
@@ -123,6 +125,8 @@ namespace Ecco.Web.Controllers
 
                 _context.Add(invitationModel);
                 await _context.SaveChangesAsync();
+
+                _notifications.SendNotification("You have a new company invite!", await _userManager.FindByNameAsync(model.Username));
 
                 return Content("Succesfully invited user to " + company.CompanyName);
             }

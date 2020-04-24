@@ -6,7 +6,7 @@ namespace Ecco.Entities.Constants
 {
     public class DeviceTypeConstants
     {
-        public const int IOS = 0;
-        public const int ANDROID = 1;
+        public const int IOS = 1;
+        public const int ANDROID = 2;
     }
 }

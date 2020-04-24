@@ -23,6 +23,7 @@ namespace Ecco.Mobile.AutoUpdate
 
         public const string CARDS = "Cards";
         public const string CONNECTIONS = "Connections";
+        public const string CONNECTION_INVITATION = "Connection Invitation";
 
         public AutoUpdater()
         {
@@ -52,6 +53,7 @@ namespace Ecco.Mobile.AutoUpdate
                 Thread.Sleep(delay);
                 RecieveUserCards();
                 RecieveUserConnections();
+                RecieveUserPendingConnections();
             }
         }
 
@@ -67,6 +69,13 @@ namespace Ecco.Mobile.AutoUpdate
             var connections = await _db.GetMyConnections(_userData.Id);
             string json = JsonConvert.SerializeObject(connections);
             MessagingCenter.Send(this, CONNECTIONS, json);
+        }
+
+        private async void RecieveUserPendingConnections()
+        {
+            var connections = await _db.GetMyPendingConnections(_userData.Id);
+            string json = JsonConvert.SerializeObject(connections);
+            MessagingCenter.Send(this, CONNECTION_INVITATION, json);
         }
     }
 }

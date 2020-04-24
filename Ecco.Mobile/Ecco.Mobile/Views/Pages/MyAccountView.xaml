@@ -9,7 +9,8 @@
              xmlns:themes="clr-namespace:Ecco.Mobile.Themes"
              xmlns:style="clr-namespace:Ecco.Mobile.Views"
              BackgroundColor="{DynamicResource Gray-White}"
-             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms" xmlns:SfBorder="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
              ios:Page.UseSafeArea="true">
 
     <ContentPage.BindingContext>
@@ -19,18 +20,52 @@
     <ContentPage.Content>
         <StackLayout>
 
-            <Label Text="{Binding UserData.ProfileName}"
-                   HorizontalOptions="CenterAndExpand"
-                   Margin="50"
-                   Style="{StaticResource HeaderLabelStyle}"/>
+            <Label Text="Your Account"
+                   HorizontalOptions="Center"
+                   FontFamily="{StaticResource Montserrat-Bold}"
+                   FontSize="Header"/>
 
-            <buttons:SfButton Text="My Company"
+            <Grid Margin="0,50,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Label Text="Username"
+                       HorizontalOptions="Center"
+                       FontFamily="{StaticResource Montserrat-Regular}"
+                       FontSize="Caption"
+                       Grid.Row="0"/>
+
+                <SfBorder:SfBorder Grid.Row="1"
+                                   HorizontalOptions="Center"
+                                   CornerRadius="10"
+                                   BorderWidth="1"
+                                   BorderColor="Gray"
+                                   BackgroundColor="{StaticResource Gray-100}">
+                    <SfBorder:SfBorder.Content>
+                        <Label Text="{Binding UserData.ProfileName}"
+                               HorizontalOptions="Center"
+                               Padding="25,0,25,0"
+                               Style="{StaticResource HeaderLabelStyle}"/>
+                    </SfBorder:SfBorder.Content>
+                </SfBorder:SfBorder>
+         
+
+            </Grid>
+            
+           
+
+            <buttons:SfButton Text="Company Portal"
                               Command="{Binding MyCompanyCommand}"
-                              Style="{StaticResource CompanyButtonStyle}"/>
+                              Style="{StaticResource CompanyButtonStyle}"
+                              VerticalOptions="CenterAndExpand"/>
 
-            <Button Text="Logout" Command="{Binding LogoutCommand}"
-                    HorizontalOptions="Center"
-                    VerticalOptions="EndAndExpand"/>
+            <buttons:SfButton Text="Logout"
+                              Command="{Binding LogoutCommand}"
+                              HorizontalOptions="Center"
+                              WidthRequest="125"   
+                              VerticalOptions="EndAndExpand"/>
 
         </StackLayout>
   </ContentPage.Content>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Ecco.Api;
 using Ecco.Entities;
 using Ecco.Mobile.Dependencies;
@@ -15,34 +16,24 @@ namespace Ecco.Mobile.iOS.Dependencies
 {
     public class NotificationRegister : INotificationRegister
     {
-        //        public async void RegisterForRemoteNotifications(string username, IDatabaseManager db, string installationId = null)
-        //        {
-        //            //var app = (AppDelegate)UIApplication.SharedApplication.Delegate;
-        //            //var deviceToken = app.DeviceToken;
-        //            //if (deviceToken != null)
-        //            //{
-        //            //    DeviceRegistration registration = new DeviceRegistration()
-        //            //    {
-        //            //        InstallationId = deviceToken.
-        //            //    };
-
-        //            //    db.RegisterDevice()
-        //            //}
-
-
-
-        //            if (installationId == null)
-        //            {
-        //                installationId = Guid.NewGuid().ToString();
-        //            }
-
-        //            var pushNotificationChannel = await PushNotificationChannelManager.CreatePushNotificationChannelForApplicationAsync();
-
-        //        }
-        public void RegisterForRemoteNotifications(string username)
+        public async void RegisterForRemoteNotifications(string username, IDatabaseManager db)
         {
             var app = (AppDelegate)UIApplication.SharedApplication.Delegate;
-            app.RegisterForRemoteNotifications(username);
+            if (app.PushNotificationsHandle != null)
+            {
+
+                var id = await db.RegisterDevice();
+                var handle = app.PushNotificationsHandle;
+                DeviceRegistration deviceUpdate = new DeviceRegistration()
+                {
+                    Handle = handle,
+                    Platform = "apns",
+                    Tags = new string[] { "username:" + username }
+                };
+
+                var result = await db.EnablePushNotifications(id, deviceUpdate);
+                Console.WriteLine(result);
+            }
         }
     }
 }

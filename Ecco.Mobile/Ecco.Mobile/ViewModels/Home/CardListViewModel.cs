@@ -124,6 +124,17 @@ namespace Ecco.Mobile.ViewModels.Home
                 {
                     Refresh();
                 }
+
+            });
+
+            MessagingCenter.Instance.Subscribe<AutoUpdater, string>(this, AutoUpdater.CONNECTION_INVITATION, (sender, json) =>
+            {
+                if (Loading) return;
+                var connections = JsonConvert.DeserializeObject<List<Connection>>(json);
+                if (HasPendingConnections == false && connections.Count > 0)
+                {
+                    Refresh();
+                }
             });
         }
 

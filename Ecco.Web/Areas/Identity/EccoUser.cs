@@ -9,6 +9,6 @@ namespace Ecco.Web.Areas.Identity
     public class EccoUser : IdentityUser
     {
         public string ProfileName { get; set; }
-        public string DeviceInstallationId { get; set; }
+        public int PushNotificationProvider { get; set; }
     }
 }
