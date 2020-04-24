@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1078851058570",
+    "firebase_url": "https://ecco-space.firebaseio.com",
+    "project_id": "ecco-space",
+    "storage_bucket": "ecco-space.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1078851058570:android:6eae6afb400294587e2673",
+        "android_client_info": {
+          "package_name": "com.ecco.mobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1078851058570-s01ui25ijtl6imu59nqmegd2eqq2kl8a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUp6c6LPCzCPjFwSV-Kje5Pjn9p1Dh5eU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1078851058570-s01ui25ijtl6imu59nqmegd2eqq2kl8a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

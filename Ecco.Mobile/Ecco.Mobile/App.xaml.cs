@@ -7,14 +7,12 @@ using Ecco.Mobile.Views;
 using Ecco.Mobile.Views.Authentication;
 using Ecco.Mobile.Views.NFC;
 using Ecco.Mobile.Views.Pages.Cards;
-using Foundation;
 using Nancy.TinyIoc;
 using Newtonsoft.Json;
 using Plugin.Settings;
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
