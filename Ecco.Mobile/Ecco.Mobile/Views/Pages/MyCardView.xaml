@@ -35,7 +35,6 @@ xmlns:popuplayout="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusi
             <Label Text="My Cards" 
                    HorizontalOptions="Center"
                    Style="{StaticResource HeaderLabelStyle}"
-                   FontSize="Large"
                    TextColor="{StaticResource PrimaryColor}"/>
 
             <pulltorefresh:SfPullToRefresh IsRefreshing="{Binding Loading}"

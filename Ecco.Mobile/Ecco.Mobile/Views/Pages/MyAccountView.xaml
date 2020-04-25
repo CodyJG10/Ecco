@@ -23,7 +23,7 @@
             <Label Text="Your Account"
                    HorizontalOptions="Center"
                    FontFamily="{StaticResource Montserrat-Bold}"
-                   FontSize="Header"/>
+                   Style="{StaticResource HeaderLabelStyle}"/>
 
             <Grid Margin="0,50,0,0">
                 <Grid.RowDefinitions>
@@ -54,8 +54,6 @@
 
             </Grid>
             
-           
-
             <buttons:SfButton Text="Company Portal"
                               Command="{Binding MyCompanyCommand}"
                               Style="{StaticResource CompanyButtonStyle}"

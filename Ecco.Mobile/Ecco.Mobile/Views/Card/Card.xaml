@@ -28,6 +28,7 @@
 
         <Frame BackgroundColor="White"
                HasShadow="True"
+               CornerRadius="7"
                Padding="0">
             
             <Grid RowSpacing="25"
