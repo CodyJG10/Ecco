@@ -3,6 +3,7 @@ using Ecco.Entities;
 using Ecco.Entities.Attributes;
 using Ecco.Mobile.Models;
 using Ecco.Mobile.Util;
+using Ecco.Mobile.Views.Pages.Cards;
 using Nancy.TinyIoc;
 using Newtonsoft.Json;
 using Plugin.Settings;
@@ -160,15 +161,67 @@ namespace Ecco.Mobile.ViewModels.Home
                 ServiceType = serviceTypeId
             };
 
-            var succeeded = await _db.CreateCard(card);
-            if (succeeded)
+            var templateImage = await TemplateUtil.LoadImageSource(card, _db, _storage);
+
+            CardModel model = new CardModel()
             {
-                await Application.Current.MainPage.Navigation.PopAsync();
-            }
-            else
-            {
-                await Application.Current.MainPage.DisplayAlert("Error", "An error was encountered when attempting to create the card.", "Ok");
-            }
+                Card = card,
+                TemplateImage = templateImage
+            };
+
+            var page = new CreateCardEditor(model);
+            await Application.Current.MainPage.Navigation.PushAsync(page);
+
+
+            //UserData user = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
+
+            //string selectedServiceType = CardModel.ServiceCategory;
+
+            //var fields = typeof(ServiceTypes).GetFields();
+            //int serviceTypeId = 1;
+            //foreach (var field in fields)
+            //{
+            //    var serviceInfo = field.GetCustomAttributes(true)[0] as ServiceInfo;
+            //    string title = serviceInfo.Title;
+            //    if (title.Equals(selectedServiceType))
+            //    {
+            //        int id = (int)field.GetValue(null);
+            //        serviceTypeId = id;
+            //        break;
+            //    }
+            //}
+
+            //if (SelectedTemplate == null)
+            //    SelectedTemplate = new TemplateModel()
+            //    {
+            //        Template = new Template()
+            //        {
+            //            Id = 1
+            //        }
+            //    };
+
+            //Entities.Card card = new Entities.Card()
+            //{
+            //    CardTitle = CardModel.CardTitle,
+            //    Description = CardModel.Description,
+            //    Email = CardModel.Email,
+            //    FullName = CardModel.FullName,
+            //    JobTitle = CardModel.JobTitle,
+            //    Phone = CardModel.PhoneNumber,
+            //    UserId = user.Id,
+            //    TemplateId = SelectedTemplate.Template.Id,
+            //    ServiceType = serviceTypeId
+            //};
+
+            //var succeeded = await _db.CreateCard(card);
+            //if (succeeded)
+            //{
+            //    await Application.Current.MainPage.Navigation.PopAsync();
+            //}
+            //else
+            //{
+            //    await Application.Current.MainPage.DisplayAlert("Error", "An error was encountered when attempting to create the card.", "Ok");
+            //}
         }
     }
 }
