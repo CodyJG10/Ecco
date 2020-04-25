@@ -50,11 +50,19 @@
                                                     VerticalOptions="Center"
                                                     HorizontalOptions="Center"/>
 
-                                        <Button Text="Accept" 
-                                                HorizontalOptions="Center"
+                                        <StackLayout Orientation="Horizontal"
+                                                     HorizontalOptions="Center">
+
+                                            <Button Text="Accept" 
                                                 Command="{Binding Source={x:Reference pendingConnectionsPage}, Path=BindingContext.AcceptPendingConnectionCommand}"
                                                 CommandParameter="{Binding Connection}"/>
-                                    
+
+                                            <Button Text="Delete"
+                                                    Command="{Binding Source={x:Reference pendingConnectionsPage}, Path=BindingContext.DeletePendingConnectionCommand}"
+                                                    CommandParameter="{Binding Connection}"
+
+                                        </StackLayout>
+                                        
                                     </StackLayout>
                                 </Frame>
                             </DataTemplate>

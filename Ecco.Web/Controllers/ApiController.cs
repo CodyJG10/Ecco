@@ -190,6 +190,22 @@ namespace Ecco.Web.Controllers
             return Ok();
         }
 
+        [HttpDelete("DeletePendingConnection")]
+        public async Task<IActionResult> DeletePendingConnection(int connectionId)
+        {
+            try
+            {
+                var connection = _context.Connections.Single(x => x.Id == connectionId);
+                _context.Remove(connection);
+                await _context.SaveChangesAsync();
+                return Ok();
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
+        }
+
         [HttpPost("CreateConnectionAndAccept")]
         public async Task<IActionResult> CreateConnectionAndAccept(Connection connection)
         {

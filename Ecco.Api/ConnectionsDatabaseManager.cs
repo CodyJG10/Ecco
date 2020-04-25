@@ -73,5 +73,11 @@ namespace Ecco.Api
             var response = await client.PutAsync("api/AcceptConnection", content);
             return response.IsSuccessStatusCode;
         }
+
+        public async Task<bool> DeletePendingConnection(Connection connection)
+        {
+            var result = await client.DeleteAsync("api/DeletePendingConnection?connectionId=" + connection.Id);
+            return result.IsSuccessStatusCode;
+        }
     }
 }

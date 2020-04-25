@@ -44,6 +44,7 @@ namespace Ecco.Api
         Task<bool> DeleteConnection(Connection connection);
         Task<Connection> GetConnection(int id);
         Task<bool> CreateConnectionAndAccept(Connection connection);
+        Task<bool> DeletePendingConnection(Connection connection);
 
         #endregion
 

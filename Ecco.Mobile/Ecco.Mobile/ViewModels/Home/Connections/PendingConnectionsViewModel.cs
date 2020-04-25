@@ -50,6 +50,7 @@ namespace Ecco.Mobile.ViewModels.Home.Connections
         }
 
         public ICommand AcceptPendingConnectionCommand { get; set; }
+        public ICommand DeletePendingConnectionCommand { get; set; }
         public ICommand RefreshCommand { get; set; }
 
         public PendingConnectionsViewModel()
@@ -59,6 +60,7 @@ namespace Ecco.Mobile.ViewModels.Home.Connections
             _user = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
 
             AcceptPendingConnectionCommand = new Command<Connection>(AcceptPendingConnection);
+            DeletePendingConnectionCommand = new Command<Connection>(DeletePendingConnection);
             RefreshCommand = new Command(LoadPendingConnections);
 
             LoadPendingConnections();
@@ -104,6 +106,19 @@ namespace Ecco.Mobile.ViewModels.Home.Connections
             else
             {
                 await Application.Current.MainPage.DisplayAlert("Uh Oh!", "An error occured when attempting to accept this connection", "Ok");
+            }
+        }
+
+        private async void DeletePendingConnection(Connection connection)
+        {
+            var succesful = await _db.DeletePendingConnection(connection);
+            if (succesful)
+            {
+                LoadPendingConnections();
+            }
+            else
+            { 
+                await Application.Current.MainPage.DisplayAlert("Uh Oh!", "An error occured when attempting to delete this connection", "Ok");
             }
         }
     }
