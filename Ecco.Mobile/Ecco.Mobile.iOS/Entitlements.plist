@@ -12,6 +12,8 @@
 		<string>applinks:ecco-space.azurewebsites.net</string>
 	</array>
 	<key>aps-environment</key>
-	<string>production</string>
+	<string>development</string>
+	<key>com.apple.developer.networking.wifi-info</key>
+	<true/>
 </dict>
 </plist>
