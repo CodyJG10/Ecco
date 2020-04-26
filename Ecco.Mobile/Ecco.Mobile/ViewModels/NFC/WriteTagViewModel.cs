@@ -56,8 +56,8 @@ namespace Ecco.Mobile.ViewModels.NFC
 
 			foreach (var card in cards)
 			{
-				CardModel model = CardModel.FromCard(card);
-				MyCards.Add(model);
+				var cardModel = CardModel.FromCard(card, _user);
+				MyCards.Add(cardModel);
 			}
 
 			Loading = false;

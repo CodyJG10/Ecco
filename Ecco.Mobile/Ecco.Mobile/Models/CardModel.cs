@@ -17,13 +17,12 @@ namespace Ecco.Mobile.Models
         public Card Card { get; set; }
         public ImageSource CardImage { get; set; }
 
-        public static CardModel FromCard(Card card)
+        public static CardModel FromCard(Card card, UserData user)
         {
-            UserData userData = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
             return new CardModel()
             {
                 Card = card,
-                CardImage = ImageLoader.LoadCardImage(card, userData.UserName)
+                CardImage = ImageLoader.LoadCardImage(card, user.UserName)
             };
         }
     }

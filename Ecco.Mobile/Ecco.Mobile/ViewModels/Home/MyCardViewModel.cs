@@ -19,11 +19,8 @@ using static Ecco.Api.DatabaseManager;
 
 namespace Ecco.Mobile.ViewModels.Home
 {
-    public class MyCardViewModel : ViewModelBase
+    public class MyCardViewModel : LoadingViewModel
     {
-        private IDatabaseManager _db;
-        private IStorageManager _storage;
-
         #region Content
 
         private List<CardModel> _cards = new List<CardModel>();
@@ -40,20 +37,6 @@ namespace Ecco.Mobile.ViewModels.Home
             }
         }
 
-        private bool _loading;
-        public bool Loading
-        {
-            get
-            {
-                return _loading;
-            }
-            set
-            {
-                _loading = value;
-                OnPropertyChanged(nameof(Loading));
-            }
-        }
-
         #endregion
 
         #region Commands
@@ -66,11 +49,8 @@ namespace Ecco.Mobile.ViewModels.Home
 
         #endregion
 
-        public MyCardViewModel()
+        public MyCardViewModel() : base()
         {
-            _db = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
-            _storage = TinyIoCContainer.Current.Resolve<IStorageManager>();
-
             CreateCardCommand = new Command(() => Application.Current.MainPage.Navigation.PushAsync(new CreateCardPage()));
             RefreshCommand = new Command(LoadCards);
             EditCardCommand = new Command<CardModel>(EditCard);
@@ -109,8 +89,8 @@ namespace Ecco.Mobile.ViewModels.Home
 
             foreach (var card in cards)
             {
-                CardModel model = CardModel.FromCard(card);
-                cardModels.Add(model);
+                var cardModel = CardModel.FromCard(card, _userData);
+                cardModels.Add(cardModel);
             }
 
             Cards = cardModels;
