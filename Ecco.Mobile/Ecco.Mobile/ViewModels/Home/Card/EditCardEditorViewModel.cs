@@ -12,21 +12,16 @@ using Xamarin.Forms;
 
 namespace Ecco.Mobile.ViewModels.Home.Card
 {
-    public class CreateCardEditorViewModel : LoadingViewModel
+    public class EditCardEditorViewModel : LoadingViewModel
     {
-        private IDatabaseManager _db;
-        private UserData _userData;
-
         public CreateCardModel Model { get; set; }
 
-        public CreateCardEditorViewModel(CreateCardModel model)
+        public EditCardEditorViewModel(CreateCardModel model) : base()
         {
             Model = model;
-            _db = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
-            _userData = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
         }
 
-        public async void CreateCard()
+        public async void SaveCard()
         {
             Entities.Card card = new Entities.Card()
             {
@@ -54,7 +49,7 @@ namespace Ecco.Mobile.ViewModels.Home.Card
 
             card.ServiceType = serviceTypeId;
 
-            var succeeded = await _db.CreateCard(card);
+            var succeeded = await _db.EditCard(card);
             if (succeeded)
             {
                 await Application.Current.MainPage.Navigation.PopAsync();

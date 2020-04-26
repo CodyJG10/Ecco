@@ -19,37 +19,48 @@ using Xamarin.Forms.Xaml;
 namespace Ecco.Mobile.Views.Pages.Cards
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CreateCardEditor : ContentPage
+    public partial class EditCardEditor : ContentPage
     {
         private readonly CreateCardModel _cardModel;
         private readonly IStorageManager _storage;
         private readonly UserData _userData;
 
-        private CreateCardEditorViewModel ViewModel
+        private EditCardEditorViewModel ViewModel
         {
-            get 
+            get
             {
-                return BindingContext as CreateCardEditorViewModel;
+                return BindingContext as EditCardEditorViewModel;
             }
         }
 
-        public CreateCardEditor(CreateCardModel model)
+        public EditCardEditor(CreateCardModel model)
         {
+            InitializeComponent();
+
             _cardModel = model;
             _storage = TinyIoCContainer.Current.Resolve<IStorageManager>();
             _userData = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
 
-            InitializeComponent();
-            BindingContext = new CreateCardEditorViewModel(model);
+            BindingContext = new EditCardEditorViewModel(model);
             ImageEditor.SetToolbarItemVisibility("path,shape,transform,effects,save", false);
 
-            ImageEditor.ToolbarSettings.ToolbarItems.Add(new HeaderToolbarItem() { Text = "Create" });
+            ImageEditor.ToolbarSettings.ToolbarItems.Add(new HeaderToolbarItem() { Text = "Update" });
             ImageEditor.ToolbarSettings.ToolbarItemSelected += ToolbarSettings_ToolbarItemSelected;
+
+            LoadText();
+        }
+
+        private void LoadText()
+        {
+            string json = _cardModel.ExportedImageData;
+            byte[] bytes = Encoding.ASCII.GetBytes(json);
+            MemoryStream stream = new MemoryStream(bytes);
+            ImageEditor.LoadEdits(stream);
         }
 
         private async void ToolbarSettings_ToolbarItemSelected(object sender, ToolbarItemSelectedEventArgs e)
         {
-            if (e.ToolbarItem.Text == "Create")
+            if (e.ToolbarItem.Text == "Update")
             {
                 if (ViewModel.Loading) return;
 
@@ -67,7 +78,7 @@ namespace Ecco.Mobile.Views.Pages.Cards
 
                 await _storage.SaveCard(_cardModel.CardTitle, imageStream, _userData.UserName);
 
-                ViewModel.CreateCard();
+                ViewModel.SaveCard();
             }
         }
     }

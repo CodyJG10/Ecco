@@ -35,7 +35,7 @@ namespace Ecco.Api
         {
             string containerName = "username-" + username.Replace("@", "-").Replace(".", "-");
             var container = CloudBlobClient.GetContainerReference(containerName);
-            var blob = container.GetBlockBlobReference(file.Replace("%20", " ") + ".png");
+            var blob = container.GetBlockBlobReference(file.Replace(" ", "%20") + ".png");
             MemoryStream memoryStream;
             using (memoryStream = new MemoryStream())
             {

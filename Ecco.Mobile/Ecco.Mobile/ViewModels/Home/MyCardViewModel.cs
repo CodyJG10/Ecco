@@ -130,7 +130,10 @@ namespace Ecco.Mobile.ViewModels.Home
                 CardTitle = card.Card.CardTitle,
                 Email = card.Card.Email,
                 PhoneNumber = card.Card.Phone,
-                ServiceCategory = serviceTitle
+                ServiceCategory = serviceTitle,
+                ExportedImageData = card.Card.ExportedImageData,
+                TemplateId = card.Card.TemplateId,
+                TemplateImage = await TemplateUtil.LoadImageSource(card.Card.TemplateId, _db, _storage)
             };
 
             await Application.Current.MainPage.Navigation.PushAsync(new EditCardPage(model, card.Card.TemplateId, card.Card.Id));

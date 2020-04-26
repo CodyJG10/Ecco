@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using Ecco.Api;
@@ -8,6 +9,7 @@ using Ecco.Entities;
 using Ecco.Entities.Attributes;
 using Ecco.Mobile.Models;
 using Ecco.Mobile.Util;
+using Ecco.Mobile.Views.Pages.Cards;
 using Nancy.TinyIoc;
 using Newtonsoft.Json;
 using Plugin.Settings;
@@ -99,47 +101,20 @@ namespace Ecco.Mobile.ViewModels.Home.Card
 
         private async void Save()
         {
-            UserData user = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
+            //TemplateModel selectedTemplate = Templates.Single(x => x.Template.Id == SelectedTemplate.Id);
 
-            string selectedServiceType = CardModel.ServiceCategory;
-
-            var fields = typeof(ServiceTypes).GetFields();
-            int serviceTypeId = 1;
-            foreach (var field in fields)
+            TemplateModel templateModel = new TemplateModel()
             {
-                var serviceInfo = field.GetCustomAttributes(true)[0] as ServiceInfo;
-                string title = serviceInfo.Title;
-                if (title.Equals(selectedServiceType))
-                {
-                    int id = (int)field.GetValue(null);
-                    serviceTypeId = id;
-                    break;
-                }
-            }
-
-            Entities.Card card = new Entities.Card()
-            {
-                CardTitle = CardModel.CardTitle,
-                Email = CardModel.Email,
-                Phone = CardModel.PhoneNumber,
-                UserId = user.Id,
-                TemplateId = SelectedTemplate.Id,
-                ServiceType = serviceTypeId,
-                Id = _cardId
+                Template = SelectedTemplate,
+                TemplateImage = await TemplateUtil.LoadImageSource(SelectedTemplate.Id, _db, _storage)
             };
+            
+            CardModel.TemplateImage = templateModel.TemplateImage;
+            CardModel.TemplateId = templateModel.Template.Id;
+            CardModel.IsCompanyTemplate = templateModel.Template.IsPublic == false;
 
-
-            var succesful = await _db.EditCard(card);
-            if (succesful)
-            {
-                await Application.Current.MainPage.Navigation.PopAsync();
-                await Application.Current.MainPage.DisplayAlert("Success", "Changes saved", "Ok");
-            }
-            else
-            {
-                await Application.Current.MainPage.Navigation.PopAsync();
-                await Application.Current.MainPage.DisplayAlert("Error", "An error was encountered while trying to save your changes. Please try again later.", "Ok");
-            }
+            var page = new EditCardEditor(CardModel);
+            await Application.Current.MainPage.Navigation.PushAsync(page);
         }
     }
 }
