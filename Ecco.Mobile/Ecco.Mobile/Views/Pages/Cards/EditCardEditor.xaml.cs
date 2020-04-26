@@ -46,8 +46,6 @@ namespace Ecco.Mobile.Views.Pages.Cards
 
             ImageEditor.ToolbarSettings.ToolbarItems.Add(new HeaderToolbarItem() { Text = "Update" });
             ImageEditor.ToolbarSettings.ToolbarItemSelected += ToolbarSettings_ToolbarItemSelected;
-
-            LoadText();
         }
 
         private void LoadText()
@@ -80,6 +78,11 @@ namespace Ecco.Mobile.Views.Pages.Cards
 
                 ViewModel.SaveCard();
             }
+        }
+
+        private void ImageEditor_ImageLoaded(object sender, ImageLoadedEventArgs args)
+        {
+            LoadText();
         }
     }
 }

@@ -41,5 +41,7 @@ namespace Ecco.Mobile.Models
 
         [Display(AutoGenerateField = false)]
         public bool IsCompanyTemplate { get; set; }
+
+        public int id;
     }
 }

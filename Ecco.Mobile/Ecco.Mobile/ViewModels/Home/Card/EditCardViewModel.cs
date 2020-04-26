@@ -101,8 +101,6 @@ namespace Ecco.Mobile.ViewModels.Home.Card
 
         private async void Save()
         {
-            //TemplateModel selectedTemplate = Templates.Single(x => x.Template.Id == SelectedTemplate.Id);
-
             TemplateModel templateModel = new TemplateModel()
             {
                 Template = SelectedTemplate,
@@ -112,6 +110,7 @@ namespace Ecco.Mobile.ViewModels.Home.Card
             CardModel.TemplateImage = templateModel.TemplateImage;
             CardModel.TemplateId = templateModel.Template.Id;
             CardModel.IsCompanyTemplate = templateModel.Template.IsPublic == false;
+            CardModel.id = _cardId;
 
             var page = new EditCardEditor(CardModel);
             await Application.Current.MainPage.Navigation.PushAsync(page);

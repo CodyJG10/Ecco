@@ -55,7 +55,7 @@ namespace Ecco.Mobile.Views.Pages.Cards
 
                 ViewModel.Loading = true;
 
-                ImageEditor.Save(".png");
+                ImageEditor.Save();
 
                 var editStream = ImageEditor.SaveEdits();
                 StreamReader reader = new StreamReader(editStream);
@@ -69,6 +69,11 @@ namespace Ecco.Mobile.Views.Pages.Cards
 
                 ViewModel.CreateCard();
             }
+        }
+
+        private void ImageEditor_ImageSaving(object sender, ImageSavingEventArgs args)
+        {
+            args.Cancel = true;
         }
     }
 }

@@ -8,6 +8,7 @@
              Title="Card Editor">
     <ContentPage.Content>
         <imageeditor:SfImageEditor Source="{Binding Model.TemplateImage}"
-                                   x:Name="ImageEditor"/>
+                                   x:Name="ImageEditor"
+                                   ImageLoaded="ImageEditor_ImageLoaded"/>
     </ContentPage.Content>
 </ContentPage>
