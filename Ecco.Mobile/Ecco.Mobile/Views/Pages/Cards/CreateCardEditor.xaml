@@ -6,6 +6,10 @@
              mc:Ignorable="d"
              x:Class="Ecco.Mobile.Views.Pages.Cards.CreateCardEditor">
     <ContentPage.Content>
-        <imageeditor:SfImageEditor Source="{Binding Model.TemplateImage}"/>
+        <imageeditor:SfImageEditor Source="{Binding Model.TemplateImage}"
+                                   x:Name="ImageEditor"
+                                   ImageSaved="ImageEditor_ImageSaved"
+                                   ImageEdited="ImageEditor_ImageEdited"
+                                   ItemSelected="ImageEditor_ItemSelected"/>
     </ContentPage.Content>
 </ContentPage>
