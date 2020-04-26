@@ -1,6 +1,9 @@
 ﻿using Ecco.Api;
+using Ecco.Entities;
 using Ecco.Mobile.Util;
 using Nancy.TinyIoc;
+using Newtonsoft.Json;
+using Plugin.Settings;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,17 +14,16 @@ namespace Ecco.Mobile.Models
 {
     public class CardModel
     {
-        public Entities.Card Card { get; set; }
-        public ImageSource TemplateImage { get; set; }
+        public Card Card { get; set; }
+        public ImageSource CardImage { get; set; }
 
-        public static async Task<CardModel> FromCard(Entities.Card card)
+        public static CardModel FromCard(Card card)
         {
-            IDatabaseManager db = TinyIoCContainer.Current.Resolve<IDatabaseManager>() as IDatabaseManager;
-            IStorageManager storage = TinyIoCContainer.Current.Resolve<IStorageManager>() as IStorageManager;
+            UserData userData = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
             return new CardModel()
             {
                 Card = card,
-                TemplateImage = await TemplateUtil.LoadImageSource(card, db, storage)
+                CardImage = ImageLoader.LoadCardImage(card, userData.UserName)
             };
         }
     }

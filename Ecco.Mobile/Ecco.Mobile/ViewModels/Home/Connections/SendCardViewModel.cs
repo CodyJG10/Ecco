@@ -73,12 +73,7 @@ namespace Ecco.Mobile.ViewModels.Home
 
             foreach (var card in cards)
             {
-                var templateImage = await TemplateUtil.LoadImageSource(card, _db, _storage);
-                CardModel model = new CardModel()
-                {
-                    Card = card,
-                    TemplateImage = templateImage
-                };
+                CardModel model = CardModel.FromCard(card);
                 MyCards.Add(model);
             }
 

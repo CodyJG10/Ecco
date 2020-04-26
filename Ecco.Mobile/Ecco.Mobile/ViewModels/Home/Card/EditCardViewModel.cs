@@ -120,10 +120,7 @@ namespace Ecco.Mobile.ViewModels.Home.Card
             Entities.Card card = new Entities.Card()
             {
                 CardTitle = CardModel.CardTitle,
-                Description = CardModel.Description,
                 Email = CardModel.Email,
-                FullName = CardModel.FullName,
-                JobTitle = CardModel.JobTitle,
                 Phone = CardModel.PhoneNumber,
                 UserId = user.Id,
                 TemplateId = SelectedTemplate.Id,

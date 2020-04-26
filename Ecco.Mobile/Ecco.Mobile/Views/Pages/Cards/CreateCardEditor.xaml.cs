@@ -1,7 +1,10 @@
-﻿using Ecco.Entities.CardText;
+﻿using Ecco.Api;
+using Ecco.Entities;
 using Ecco.Mobile.Models;
 using Ecco.Mobile.ViewModels.Home.Card;
+using Nancy.TinyIoc;
 using Newtonsoft.Json;
+using Plugin.Settings;
 using Syncfusion.SfImageEditor.XForms;
 using System;
 using System.Collections.Generic;
@@ -18,46 +21,42 @@ namespace Ecco.Mobile.Views.Pages.Cards
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CreateCardEditor : ContentPage
     {
-        public CreateCardEditor(CardModel model)
+        private readonly CreateCardModel _cardModel;
+        private readonly IStorageManager _storage;
+        private readonly UserData _userData;
+
+        public CreateCardEditor(CreateCardModel model)
         {
+            _cardModel = model;
+            _storage = TinyIoCContainer.Current.Resolve<IStorageManager>();
+            _userData = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
+
             InitializeComponent();
             BindingContext = new CreateCardEditorViewModel(model);
-            ImageEditor.SetToolbarItemVisibility("path,shape,transform,effects", false);
+            ImageEditor.SetToolbarItemVisibility("path,shape,transform,effects,save", false);
 
-            ImageEditor.ToolbarSettings.ToolbarItems.Add(new HeaderToolbarItem() { Text = "Export" });
-            ImageEditor.ToolbarSettings.ToolbarItemSelected += ToolbarSettings_ToolbarItemSelected; ;
+            ImageEditor.ToolbarSettings.ToolbarItems.Add(new HeaderToolbarItem() { Text = "Create" });
+            ImageEditor.ToolbarSettings.ToolbarItemSelected += ToolbarSettings_ToolbarItemSelected;
         }
 
-        private void ToolbarSettings_ToolbarItemSelected(object sender, ToolbarItemSelectedEventArgs e)
+        private async void ToolbarSettings_ToolbarItemSelected(object sender, ToolbarItemSelectedEventArgs e)
         {
-            if (e.ToolbarItem.Text == "Export")
+            if (e.ToolbarItem.Text == "Create")
             {
-                var saveStream = ImageEditor.SaveEdits();
-                StreamReader reader = new StreamReader(saveStream);
+                ImageEditor.Save(".png");
+
+                var editStream = ImageEditor.SaveEdits();
+                StreamReader reader = new StreamReader(editStream);
                 string json = reader.ReadToEnd();
 
-                TextObjectList list = TextObjectList.FromJson(json);
+                _cardModel.ExportedImageData = json;
 
-                Console.WriteLine(json);
+                var imageStream = await ImageEditor.GetStream();
+
+                await _storage.SaveCard(_cardModel.CardTitle, imageStream, _userData.UserName);
+
+                ((BindingContext) as CreateCardEditorViewModel).CreateCard();
             }
-        }
-
-        private void ImageEditor_ImageSaved(object sender, Syncfusion.SfImageEditor.XForms.ImageSavedEventArgs args)
-        {
-            
-        }
-
-        private void ImageEditor_ImageEdited(object sender, Syncfusion.SfImageEditor.XForms.ImageEditedEventArgs e)
-        {
-            if(e.IsImageEdited)
-            {
-                
-            }
-        }
-
-        private void ImageEditor_ItemSelected(object sender, ItemSelectedEventArgs args)
-        {
-          
         }
     }
 }

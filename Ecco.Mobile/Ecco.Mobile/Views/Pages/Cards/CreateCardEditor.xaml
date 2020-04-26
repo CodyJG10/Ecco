@@ -4,12 +4,10 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:imageeditor="clr-namespace:Syncfusion.SfImageEditor.XForms;assembly=Syncfusion.SfImageEditor.XForms"
              mc:Ignorable="d"
-             x:Class="Ecco.Mobile.Views.Pages.Cards.CreateCardEditor">
+             x:Class="Ecco.Mobile.Views.Pages.Cards.CreateCardEditor"
+             Title="Card Editor">
     <ContentPage.Content>
         <imageeditor:SfImageEditor Source="{Binding Model.TemplateImage}"
-                                   x:Name="ImageEditor"
-                                   ImageSaved="ImageEditor_ImageSaved"
-                                   ImageEdited="ImageEditor_ImageEdited"
-                                   ItemSelected="ImageEditor_ItemSelected"/>
+                                   x:Name="ImageEditor"/>
     </ContentPage.Content>
 </ContentPage>

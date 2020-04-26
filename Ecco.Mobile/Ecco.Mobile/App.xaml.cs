@@ -81,7 +81,7 @@ namespace Ecco.Mobile
 
                     // Show card
                     var card = await db.GetCard(int.Parse(cardId));
-                    var model = await CardModel.FromCard(card);
+                    var model = CardModel.FromCard(card);
 
                     //If the user does not have this card added we display a modal of the card
                     if (!await UserHasCard(model, userData.Id))

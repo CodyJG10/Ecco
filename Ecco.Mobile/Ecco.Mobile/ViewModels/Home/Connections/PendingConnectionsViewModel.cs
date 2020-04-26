@@ -73,13 +73,9 @@ namespace Ecco.Mobile.ViewModels.Home.Connections
             {
                 Entities.Card card = await _db.GetCard(pendingConnection.CardId);
                 var userData = await _db.GetUserData(pendingConnection.FromId);
-                
-                CardModel cardModel = new CardModel()
-                {
-                    Card = card,
-                    TemplateImage = await TemplateUtil.LoadImageSource(card, _db, _storage)
-                };
-               
+
+                CardModel cardModel = CardModel.FromCard(card);
+
                 ConnectionModel model = new ConnectionModel()
                 {
                     Card = cardModel,

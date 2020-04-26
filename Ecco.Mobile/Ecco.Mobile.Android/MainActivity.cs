@@ -9,6 +9,7 @@ using Android.OS;
 using System.Net;
 using Plugin.NFC;
 using Android.Content;
+using Android;
 
 namespace Ecco.Mobile.Droid
 {
@@ -34,7 +35,26 @@ namespace Ecco.Mobile.Droid
 
             LoadApplication(new App());
 
+            CheckAppPermissions();
+
             CreateNotificationChannel();
+        }
+
+        private void CheckAppPermissions()
+        {
+            if ((int)Build.VERSION.SdkInt < 23)
+            {
+                return;
+            }
+            else
+            {
+                if (PackageManager.CheckPermission(Manifest.Permission.ReadExternalStorage, PackageName) != Permission.Granted
+                    && PackageManager.CheckPermission(Manifest.Permission.WriteExternalStorage, PackageName) != Permission.Granted)
+                {
+                    var permissions = new string[] { Manifest.Permission.ReadExternalStorage, Manifest.Permission.WriteExternalStorage };
+                    RequestPermissions(permissions, 1);
+                }
+            }
         }
 
         protected override void OnNewIntent(Intent intent)
