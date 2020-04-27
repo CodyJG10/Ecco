@@ -31,6 +31,7 @@ namespace Ecco.Mobile.ViewModels.Home.Card
                 ExportedImageData = Model.ExportedImageData,
                 UserId = _userData.Id,
                 TemplateId = Model.TemplateId,
+                FullName = Model.FullName,
                 Id = Model.id
             };
 

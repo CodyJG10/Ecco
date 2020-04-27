@@ -17,6 +17,10 @@ namespace Ecco.Mobile.Models
         [Required(AllowEmptyStrings = false, ErrorMessage = "You must provide a card title")]
         public string CardTitle { get; set; }
 
+        [Display(Name = "Full Name")]
+        [Required(AllowEmptyStrings = false, ErrorMessage = "You must provide a name")]
+        public string FullName { get; set; }
+
         [Display(Name = "Your Email")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "You must provide an email")]
         public string Email { get; set; }

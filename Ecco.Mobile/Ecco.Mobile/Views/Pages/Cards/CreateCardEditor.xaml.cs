@@ -47,6 +47,32 @@ namespace Ecco.Mobile.Views.Pages.Cards
             ImageEditor.ToolbarSettings.ToolbarItemSelected += ToolbarSettings_ToolbarItemSelected;
         }
 
+        private void AutoFillText()
+        {
+            string cardTitle = _cardModel.CardTitle;
+            string phoneNumber = _cardModel.PhoneNumber;
+            string email = _cardModel.Email;
+            string name = _cardModel.FullName;
+
+            int yGap = 50;
+            TextSettings GenerateTextSettings(int y) 
+            {
+                return new TextSettings()
+                {
+                    Bounds = new Rectangle()
+                    {
+                        X = 175,
+                        Y = y
+                    }
+                };
+            }
+
+            ImageEditor.AddText(cardTitle, GenerateTextSettings(0));
+            ImageEditor.AddText(phoneNumber, GenerateTextSettings(yGap));
+            ImageEditor.AddText(email, GenerateTextSettings(yGap * 2));
+            ImageEditor.AddText(name, GenerateTextSettings(yGap * 3));
+        }
+
         private async void ToolbarSettings_ToolbarItemSelected(object sender, ToolbarItemSelectedEventArgs e)
         {
             if (e.ToolbarItem.Text == "Create")
@@ -74,6 +100,11 @@ namespace Ecco.Mobile.Views.Pages.Cards
         private void ImageEditor_ImageSaving(object sender, ImageSavingEventArgs args)
         {
             args.Cancel = true;
+        }
+
+        private void ImageEditor_ImageLoaded(object sender, ImageLoadedEventArgs args)
+        {
+            AutoFillText();
         }
     }
 }

@@ -9,6 +9,7 @@
     <ContentPage.Content>
         <imageeditor:SfImageEditor Source="{Binding Model.TemplateImage}"
                                    x:Name="ImageEditor"
-                                   ImageSaving="ImageEditor_ImageSaving"/>
+                                   ImageSaving="ImageEditor_ImageSaving"
+                                   ImageLoaded="ImageEditor_ImageLoaded"/>
     </ContentPage.Content>
 </ContentPage>
