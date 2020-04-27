@@ -100,10 +100,8 @@ namespace Ecco.Mobile.ViewModels.Home
 
         private async void EditCard(CardModel card)
         {
-
             string serviceTitle = "";
             typeof(ServiceTypes).GetFields().ToList().ForEach(field => { if ((int)field.GetValue(null) == card.Card.ServiceType) serviceTitle = (field.GetCustomAttributes(true)[0] as ServiceInfo).Title; });
-
 
             CreateCardModel model = new CreateCardModel()
             {

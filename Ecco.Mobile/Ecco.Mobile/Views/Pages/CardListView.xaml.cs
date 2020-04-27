@@ -1,5 +1,6 @@
 ﻿using Ecco.Mobile.Models;
 using Ecco.Mobile.ViewModels.Home;
+using Syncfusion.XForms.Buttons;
 using Syncfusion.XForms.PopupLayout;
 using System;
 using System.Collections.Generic;
@@ -61,13 +62,19 @@ namespace Ecco.Mobile.Views.Pages
         private void ButtonDeleteCard_Clicked(object sender, EventArgs e)
         {
             var popupLayout = new SfPopupLayout();
+            popupLayout.PopupView.AnimationMode = AnimationMode.Zoom;
+            popupLayout.PopupView.ShowHeader = false;
 
             var templateView = new DataTemplate(() =>
             {
-                var popupContent = new Label();
-                popupContent.Text = "Are you sure you want to delete this users card from your connections list?";
-                popupContent.BackgroundColor = Color.White;
-                popupContent.HorizontalTextAlignment = TextAlignment.Center;
+                var popupContent = new Label
+                {
+                    Text = "Are you sure you want to delete this card?",
+                    HorizontalOptions = LayoutOptions.Center,
+                    HorizontalTextAlignment = TextAlignment.Center,
+                    FontSize = 18,
+                };
+
                 return popupContent;
             });
 
@@ -76,17 +83,22 @@ namespace Ecco.Mobile.Views.Pages
                 var stackLayout = new StackLayout()
                 {
                     Orientation = StackOrientation.Horizontal,
-                    HorizontalOptions = LayoutOptions.CenterAndExpand,
+                    HorizontalOptions = LayoutOptions.Center,
                 };
 
-                var yesButton = new Button()
+                var yesButton = new SfButton()
                 {
                     Text = "Yes",
+                    WidthRequest = 65d,
+                    HorizontalOptions = LayoutOptions.FillAndExpand,
                 };
-                var noButton = new Button()
+                var noButton = new SfButton()
                 {
-                    Text = "No"
+                    Text = "No",
+                    WidthRequest = 65d,
+                    HorizontalOptions = LayoutOptions.FillAndExpand,
                 };
+
                 noButton.Clicked += (s, a) =>
                 {
                     popupLayout.IsOpen = false;
