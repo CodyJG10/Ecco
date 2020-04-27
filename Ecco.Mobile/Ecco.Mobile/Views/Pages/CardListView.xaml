@@ -111,18 +111,19 @@
                                 <listview:SfListView.LeftSwipeTemplate>
                                     <DataTemplate>
                                         <StackLayout HorizontalOptions="FillAndExpand"
-                                                        VerticalOptions="FillAndExpand"
-                                                        Spacing="0">
+                                                     VerticalOptions="FillAndExpand"
+                                                     Spacing="0">
 
                                             <buttons:SfButton Text="{StaticResource Trash}"
-                                                                Style="{StaticResource IconButtonStyle}"
-                                                                x:Name="ButtonDeleteCard"
-                                                                Clicked="ButtonDeleteCard_Clicked"
-                                                                BackgroundColor="Red"
-                                                                HorizontalOptions="FillAndExpand"
-                                                                VerticalOptions="FillAndExpand"
-                                                                FontSize="Large"
-                                                                TextColor="White"/>
+                                                              Style="{StaticResource IconButtonStyle}"
+                                                              x:Name="ButtonDeleteCard"
+                                                              Clicked="ButtonDeleteCard_Clicked"
+                                                              BackgroundColor="Red"
+                                                              HorizontalOptions="FillAndExpand"
+                                                              CornerRadius="8"
+                                                              VerticalOptions="FillAndExpand"
+                                                              FontSize="Large"
+                                                              TextColor="White"/>
 
                                         </StackLayout>
                                     </DataTemplate>
@@ -131,7 +132,9 @@
                                 <listview:SfListView.ItemTemplate>
                                     <DataTemplate>
                                         
-                                            <Frame BackgroundColor="Transparent">
+                                            <Frame BackgroundColor="White"
+                                                   Margin="3"
+                                                   CornerRadius="8">
                                                 
                                                 <cardViews:Card HorizontalOptions="Center"
                                                                 VerticalOptions="Center"

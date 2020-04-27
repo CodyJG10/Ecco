@@ -68,29 +68,31 @@ xmlns:popuplayout="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusi
                             <listview:SfListView.LeftSwipeTemplate>
                                 <DataTemplate>
                                     <StackLayout Orientation="Horizontal"
-                                                    HorizontalOptions="FillAndExpand"
-                                                    VerticalOptions="FillAndExpand"
-                                                    Spacing="0">
+                                                 HorizontalOptions="FillAndExpand"
+                                                 VerticalOptions="FillAndExpand"
+                                                 Spacing="0">
 
                                         <buttons:SfButton Text="{StaticResource Trash}"
-                                                            Style="{StaticResource IconButtonStyle}"
-                                                            x:Name="ButtonDeleteCard"
-                                                            Clicked="ButtonDeleteCard_Clicked"
-                                                            BackgroundColor="Red"
-                                                            HorizontalOptions="FillAndExpand"
-                                                            VerticalOptions="FillAndExpand"
-                                                            FontSize="Large"
-                                                            TextColor="White"/>
+                                                          Style="{StaticResource IconButtonStyle}"
+                                                          x:Name="ButtonDeleteCard"
+                                                          Clicked="ButtonDeleteCard_Clicked"
+                                                          BackgroundColor="Red"
+                                                          HorizontalOptions="FillAndExpand"
+                                                          VerticalOptions="FillAndExpand"
+                                                          CornerRadius="8"
+                                                          FontSize="Large"
+                                                          TextColor="White"/>
 
                                         <buttons:SfButton Text="{StaticResource Edit}"
-                                                    Style="{StaticResource IconButtonStyle}"
-                                                    BackgroundColor="Blue"
-                                                    x:Name="ButtonEditCard"
-                                                    Clicked="ButtonEditCard_Clicked"
-                                                    HorizontalOptions="FillAndExpand"
-                                                    VerticalOptions="FillAndExpand"
-                                                    FontSize="Large"
-                                                    TextColor="White"/>
+                                                          Style="{StaticResource IconButtonStyle}"
+                                                          BackgroundColor="Blue"
+                                                          x:Name="ButtonEditCard"
+                                                          Clicked="ButtonEditCard_Clicked"
+                                                          HorizontalOptions="FillAndExpand"
+                                                          VerticalOptions="FillAndExpand"
+                                                          CornerRadius="8"
+                                                          FontSize="Large"
+                                                          TextColor="White"/>
 
                                     </StackLayout>
                                 </DataTemplate>
@@ -99,14 +101,16 @@ xmlns:popuplayout="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusi
                             <listview:SfListView.ItemTemplate>
                                 <DataTemplate>
                                    
-                                    <Frame BackgroundColor="Transparent">
+                                    <Frame BackgroundColor="White"
+                                           Margin="3"
+                                           CornerRadius="8">
 
                                         <cardViews:Card BindingContext="{Binding .}"
                                                         VerticalOptions="Center"
                                                         HorizontalOptions="Center">
                                             <cardViews:Card.GestureRecognizers>
                                                 <TapGestureRecognizer Command="{Binding Source={x:Reference myCardsView}, Path=BindingContext.SelectCardCommand}"
-                                                                        CommandParameter="{Binding .}"/>
+                                                                      CommandParameter="{Binding .}"/>
                                             </cardViews:Card.GestureRecognizers>
                                         </cardViews:Card>
                                     
