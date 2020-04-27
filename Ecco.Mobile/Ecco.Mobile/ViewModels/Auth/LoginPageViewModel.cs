@@ -1,6 +1,8 @@
 ﻿using Ecco.Api;
 using Ecco.Mobile.Dependencies;
+using Ecco.Mobile.Util;
 using Ecco.Mobile.Views.Authentication;
+using Nancy;
 using Nancy.TinyIoc;
 using Newtonsoft.Json;
 using Plugin.Settings;
@@ -35,8 +37,8 @@ namespace Ecco.Mobile.ViewModels.Auth
         public async Task<Task> Login()
         {
             Loading = true;
-            var loginSuccesful = await _database.Login(Email, Password);
-            if (loginSuccesful)
+            var loginResponse = await _database.Login(Email, Password);
+            if (loginResponse.IsSuccessStatusCode)
             {
                 Console.WriteLine("Succesfully logged in!");
                 var userInfo = await _database.GetUserData();
@@ -48,8 +50,7 @@ namespace Ecco.Mobile.ViewModels.Auth
             }
             else
             {
-                Console.WriteLine("Login was unsuccesful");
-                await Application.Current.MainPage.DisplayAlert("Authentication Error", "The provided credentials were incorrect", "Return");
+                await Application.Current.MainPage.DisplayAlert("Authentication Error", "Please make sure you've entered the correct credentials", "Return");
             }
             Loading = false;
             return Task.CompletedTask;

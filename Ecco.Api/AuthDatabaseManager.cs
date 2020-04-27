@@ -20,7 +20,7 @@ namespace Ecco.Api
 
         #endregion
 
-        public async Task<bool> Login(string username, string password)
+        public async Task<HttpResponseMessage> Login(string username, string password)
         {
             var formContent = new FormUrlEncodedContent(new[]
             {
@@ -35,12 +35,9 @@ namespace Ecco.Api
                 LoginResult content = JsonConvert.DeserializeObject<LoginResult>(result);
                 string token = content.token;
                 SetToken(token);
-                return true;
             }
-            else
-            {
-                return false;
-            }
+
+            return response;
         }
 
         public void SetToken(string token)
@@ -48,7 +45,7 @@ namespace Ecco.Api
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
 
-        public async Task<bool> Register(string username, string email, string password, string confirmPassword)
+        public async Task<HttpResponseMessage> Register(string username, string email, string password, string confirmPassword)
         {
             var formContent = new FormUrlEncodedContent(new[]
             {
@@ -57,9 +54,7 @@ namespace Ecco.Api
                 new KeyValuePair<string, string>("Password", password),
                 new KeyValuePair<string, string>("ConfirmPassword", confirmPassword)
             });
-            var response = await client.PostAsync("auth/register", formContent);
-
-            return response.IsSuccessStatusCode;
+            return await client.PostAsync("auth/register", formContent);
         }
 
         public async Task<UserData> GetUserData()
