@@ -44,17 +44,18 @@
                                           FontFamily="{StaticResource EccoFont}"
                                           FontSize="Large"
                                           Style="{StaticResource SfButtonStyle}"
-                                          WidthRequest="150"
-                                          HeightRequest="50"
+                                          WidthRequest="100"
+                                          HeightRequest="20"
                                           Command="{Binding CallCommand}"/>
 
-                        <buttons:SfButton Text="{StaticResource MailButtonText}"
+                        <buttons:SfButton Text="&#xe707;"
                                           FontSize="Large"
                                           Style="{StaticResource SfButtonStyle}"
-                                          WidthRequest="150"
-                                          HeightRequest="50"
+                                          WidthRequest="200"
+                                          HeightRequest="20"
                                           FontFamily="EccoFont"
-                                          Command="{Binding EmailCommand}"/>
+                                          Command="{Binding EmailCommand}">
+                        </buttons:SfButton>
 
                     </StackLayout>
 

@@ -39,11 +39,13 @@ namespace Ecco.Mobile.ViewModels.CompanyPages
 
         public ICommand ViewMyCompanyCommand { get; set; }
         public ICommand ViewEmployeeHomeCommand { get; set; }
+        public ICommand CreateCompanyCommand { get; set; }
 
         public CompanyHomeScreenViewModel() : base()
         {
             ViewMyCompanyCommand = new Command(x => Application.Current.MainPage.Navigation.PushAsync(new MyCompanyPage()));
             ViewEmployeeHomeCommand = new Command(x => Application.Current.MainPage.Navigation.PushAsync(new EmployeeHomePage()));
+            CreateCompanyCommand = new Command(x => Application.Current.MainPage.Navigation.PushAsync(new CreateCompanyPage()));
         }
 
         protected async override void Load()

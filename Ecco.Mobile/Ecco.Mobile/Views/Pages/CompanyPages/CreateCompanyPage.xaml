@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:sfbutton="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms" xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.CompanyPages" xmlns:converters="clr-namespace:Ecco.Mobile.Converters" xmlns:loadingspinner="clr-namespace:Ecco.Mobile.Views.Loading"
+             mc:Ignorable="d"
+             x:Class="Ecco.Mobile.Views.Pages.CompanyPages.CreateCompanyPage"
+             Title="Create A Company">
+
+    <ContentPage.BindingContext>
+        <viewmodels:CreateCompanyPageViewModel/> 
+    </ContentPage.BindingContext>
+
+    <ContentPage.Resources>
+        <converters:NegateBooleanValue x:Key="BoolConverter"/>
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+        <StackLayout>
+
+            <Label Text="Please fill in the fields below"
+                   HorizontalOptions="Center"/>
+
+            <Entry Placeholder="Company Name"
+                   HorizontalOptions="Center"/>
+
+            <sfbutton:SfButton Text="Create"
+                               IsEnabled="{Binding Loading, Converter={StaticResource BoolConverter}}"
+                               Command="{Binding CreateCommand}"/>
+
+            <loadingspinner:LoadingSpinner HorizontalOptions="Center"
+                                           IsVisible="{Binding Loading}"/>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

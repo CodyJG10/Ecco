@@ -1,0 +1,17 @@
+﻿@inject UserManager<EccoUser> _userMan
+@inject ApplicationDbContext _context    
+
+@{
+    ViewData["Title"] = "MyCompany";
+}
+
+<h1>Your Company</h1>
+
+@{ 
+    var user = await _userMan.FindByNameAsync(User.Identity.Name);
+    var company = _context.Companies.Single(x => x.OwnerId.ToString() == user.Id);
+}
+
+<label asp-for="@company.CompanyName"></label>
+
+<label asp-for="@company.CompanyDescription"></label>

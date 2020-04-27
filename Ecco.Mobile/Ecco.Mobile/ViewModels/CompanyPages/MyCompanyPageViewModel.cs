@@ -58,9 +58,16 @@ namespace Ecco.Mobile.ViewModels.CompanyPages
             var userData = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
             Company = await _db.GetMyOwnedCompany(userData.Id);
 
-            TemplateImage = await TemplateUtil.LoadImageSource(Company, _db, _storage);
-            
-            Loading = false;
+            try
+            {
+                TemplateImage = await TemplateUtil.LoadImageSource(Company, _db, _storage);
+                Loading = false;
+            }
+            catch (Exception)
+            {
+                await Application.Current.MainPage.DisplayAlert("Invalid Company", "Please finish setting up your company via the link that was emailed to you.", "Ok");
+                await Application.Current.MainPage.Navigation.PopAsync();
+            }   
         }
     }
 }

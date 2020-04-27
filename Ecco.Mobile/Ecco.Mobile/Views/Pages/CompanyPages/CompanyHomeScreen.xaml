@@ -37,7 +37,8 @@
 
                 <buttons:SfButton Text="Create A Company"
                         IsVisible="{Binding IsCompanyOwner, Converter={StaticResource NegBoolConverter}}"
-                        Style="{StaticResource CompanyButtonStyle}"/>
+                        Style="{StaticResource CompanyButtonStyle}"
+                                  Command="{Binding CreateCompanyCommand}"/>
 
                 <!-- Employee Section -->
            

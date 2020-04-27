@@ -29,12 +29,14 @@ namespace Ecco.Web.Controllers
         private ApplicationDbContext _context;
         private readonly UserManager<EccoUser> _userManager;
         private readonly NotificationService _notifications;
+        private readonly IEmailSender _emailSender;
 
-        public ApiController(ApplicationDbContext context, UserManager<EccoUser> userManager, NotificationService notificationService)
+        public ApiController(ApplicationDbContext context, UserManager<EccoUser> userManager, NotificationService notificationService, IEmailSender emailSender)
         {
             _context = context;
             _userManager = userManager;
             _notifications = notificationService;
+            _emailSender = emailSender;
         }
 
         #region Auth
@@ -261,6 +263,13 @@ namespace Ecco.Web.Controllers
             if (company != null)
             {
                 _context.Companies.Add(company);
+
+                var userId = company.OwnerId;
+                var user = await _userManager.FindByIdAsync(userId.ToString());
+                await _userManager.AddToRoleAsync(user, "Company Owner");
+
+                await _emailSender.SendEmailAsync(user.Email, "You Are Now The Owner Of " + company.CompanyName, "Please complete the setup of your company at the following address: https://ecco-space.azurewebsites.net/Company/MyCompany");
+
                 await _context.SaveChangesAsync();
                 return true;
             }
