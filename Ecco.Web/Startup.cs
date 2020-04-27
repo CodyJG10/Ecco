@@ -20,6 +20,7 @@ using Microsoft.Azure.Storage;
 using Microsoft.Azure.Storage.Blob;
 using Ecco.Web.Services;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Westwind.AspNetCore.LiveReload;
 
 namespace Ecco.Web
 {
@@ -86,8 +87,16 @@ namespace Ecco.Web
 
             services.AddSession();
 
+            services.AddLiveReload(config => 
+            {
+                config.LiveReloadEnabled = true;
+                config.ClientFileExtensions = ".cshtml,.css,.js,.htm,.html,.ts,.razor,.custom";
+            });
+
             services.AddControllersWithViews();
-            services.AddRazorPages();
+            //services.AddRazorPages();
+            services.AddRazorPages().AddRazorRuntimeCompilation();
+            services.AddMvc().AddRazorRuntimeCompilation();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -104,6 +113,9 @@ namespace Ecco.Web
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseLiveReload();
+
             app.UseHttpsRedirection();
             app.UseStaticFiles(new StaticFileOptions
             {

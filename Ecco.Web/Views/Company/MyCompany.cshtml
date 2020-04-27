@@ -1,17 +1,115 @@
 ﻿@inject UserManager<EccoUser> _userMan
-@inject ApplicationDbContext _context    
+@inject ApplicationDbContext _context
 
 @{
     ViewData["Title"] = "MyCompany";
 }
 
-<h1>Your Company</h1>
+<h1 class="d-flex justify-content-center">Your Company</h1>
+<div class="container border">
 
-@{ 
-    var user = await _userMan.FindByNameAsync(User.Identity.Name);
-    var company = _context.Companies.Single(x => x.OwnerId.ToString() == user.Id);
-}
+    @{
+        var user = await _userMan.FindByNameAsync(User.Identity.Name);
+        var company = _context.Companies.Single(x => x.OwnerId.ToString() == user.Id);
+    }
 
-<label asp-for="@company.CompanyName"></label>
+    @if (company.CompanyName != null && company.CompanyDescription != null)
+    {
+    <style>
+            table,
+            thead,
+            tr,
+            tbody,
+            th,
+            td {
+              text-align: center;
+            }
 
-<label asp-for="@company.CompanyDescription"></label>
+            .table td {
+              text-align: center;
+            }
+    </style>
+
+        <div class="container border" style="margin: 15px;">
+            <h1 class="text-center">Company Details</h1>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            <label>Company Name</label>
+                        </th>
+                        <th>
+                            <label>Company Description</label>
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => company.CompanyName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => company.CompanyDescription)
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+    }
+    else
+    {
+        <label>
+            We just need a little more information to get your company set up.
+            Please start
+        </label>
+        <a asp-action="EditCompany">HERE</a>
+    }
+
+    @if (company.TemplateId != 0)
+    {
+        <div class="container border" style="padding: 15px; margin:15px;">
+            <h1 class="d-flex justify-content-center">Your Company Template</h1>
+            @{
+                var template = _context.Templates.Single(x => x.Id == company.TemplateId);
+                string url = "https://eccospacestorage.blob.core.windows.net/templates/" + template.FileName;
+            }
+            <div class="d-flex justify-content-center">
+                <image src="@url" height="200" width="350" />
+            </div>
+            <a asp-action="CreateTemplate" class="d-flex justify-content-center">Change Template</a>
+        </div>
+    }
+    else
+    {
+        <label>Your company is not up and running just yet.</label>
+        <label>Just one more step before your company is up and running.</label>
+        <a asp-action="CreateTemplate">Please upload a template</a>
+    }
+
+    @{
+        var employees = _context.EmployeeInvitations.Where(x => x.CompanyId == company.Id && x.Status == Ecco.Entities.Constants.ConnectionConstants.COMPLETE).ToList();
+    }
+
+    @if (employees.Count > 0)
+    {
+        <div class="container border" style="margin:15px;">
+            <h1 class="text-center">Your Employees</h1>
+            <ul class="list-group">
+
+                @foreach (var employee in employees)
+                {
+                    EccoUser employeeUser = _context.Users.Single(x => x.Id == employee.UserId.ToString());
+                    <li class="list-group-item text-center">@employeeUser.ProfileName</li>
+                }
+            </ul>
+            <a asp-action="InviteEmployee" class="d-flex justify-content-center">Invite An Employee</a>
+        </div>
+    }
+    else
+    {
+        <label>You don't have any employees!</label>
+        <label>You can add some <a asp-action="InviteEmployee">Here</a></label>
+    }
+</div>

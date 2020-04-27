@@ -6,7 +6,10 @@ using Ecco.Web.Data;
 using Ecco.Web.Models;
 using Ecco.Web.Services;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.V3.Pages.Account.Manage.Internal;
+using Microsoft.AspNetCore.Identity.UI.V3.Pages.Internal.Account.Manage;
 using Microsoft.AspNetCore.Mvc;
+using SQLitePCL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +32,95 @@ namespace Ecco.Web.Controllers
             _userManager = userManager;
             _notifications = notifications;
         }
+
+        [Route("")]
+        [Route("Index")]
+        [Route("MyCompany")]
+        public IActionResult MyCompany()
+        {
+            return View();
+        }
+
+        [HttpGet("EditCompany")]
+        public async Task<IActionResult> EditCompany()
+        {
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var company = _context.Companies.Single(x => x.OwnerId.ToString() == user.Id);
+            EditCompanyModel model = new EditCompanyModel()
+            {
+                CompanyName = company.CompanyName,
+                CompanyDescription = company.CompanyDescription
+            };
+            return View("EditCompanyDetails", model);
+        }
+
+        [HttpPost("EditCompany")]
+        public async Task<IActionResult> EditCompany([FromForm] EditCompanyModel model)
+        {
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var company = _context.Companies.Single(x => x.OwnerId.ToString() == user.Id);
+            company.CompanyName = model.CompanyName;
+            company.CompanyDescription = model.CompanyDescription;
+            _context.Update(company);
+            await _context.SaveChangesAsync();
+            return View("MyCompany");
+        }
+
+        [Route("CreateTemplate")]
+        public IActionResult CreateTemplate()
+        {
+            return View();
+        }
+
+        [HttpPost("CreateTemplate")]
+        public async Task<IActionResult> CreateTemplate([FromForm] EditCompanyModel model)
+        {
+
+            if (model.File != null)
+            {
+                var user = await _userManager.FindByNameAsync(User.Identity.Name);
+                var company = _context.Companies.Single(x => x.OwnerId.ToString() == user.Id);
+
+                string fileName = Guid.NewGuid().ToString();
+
+                if (company.TemplateId != 0)
+                {
+                    var oldTemplate = _context.Templates.Single(x => x.Id == company.TemplateId);
+
+                    fileName = oldTemplate.FileName;
+
+                    await _storage.CloudBlobClient.GetContainerReference("templates").GetBlockBlobReference(fileName).UploadFromStreamAsync(model.File.OpenReadStream());
+
+                    _context.Templates.Update(oldTemplate);
+                    await _context.SaveChangesAsync();
+                }
+                else
+                {
+                    //Upload template object
+                    Template template = new Template()
+                    {
+                        FileName = fileName,
+                        Title = company.CompanyName,
+                        IsPublic = false
+                    };
+
+                    _context.Add(template);
+                    await _context.SaveChangesAsync();
+
+                    //Upload image to storage
+                    await _storage.CloudBlobClient.GetContainerReference("templates").GetBlockBlobReference(fileName).UploadFromStreamAsync(model.File.OpenReadStream());
+
+                    var newTemplate = _context.Templates.Single(x => x.FileName == fileName && x.Title == company.CompanyName);
+                    company.TemplateId = newTemplate.Id;
+
+                    _context.Update(company);
+                    await _context.SaveChangesAsync();
+                }
+            }
+
+            return View("MyCompany");
+        }
+
 
         [HttpGet("CreateCompany")]
         public IActionResult CreateCompany()
@@ -95,13 +187,13 @@ namespace Ecco.Web.Controllers
             return BadRequest();
         }
 
-        [HttpGet("InviteEmployeeToCompany")]
+        [HttpGet("InviteEmployee")]
         public IActionResult InviteEmployeeToCompany()
         {
             return View();
         }
 
-        [HttpPost("InviteEmployeeToCompany")]
+        [HttpPost("InviteEmployee")]
         public async Task<IActionResult> InviteEmployeeToCompany(InviteEmployeeModel model)
         {
             if (model != null)

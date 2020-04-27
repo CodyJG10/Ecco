@@ -59,7 +59,7 @@
 
                                             <Button Text="Delete"
                                                     Command="{Binding Source={x:Reference pendingConnectionsPage}, Path=BindingContext.DeletePendingConnectionCommand}"
-                                                    CommandParameter="{Binding Connection}"
+                                                    CommandParameter="{Binding Connection}"/>
 
                                         </StackLayout>
                                         

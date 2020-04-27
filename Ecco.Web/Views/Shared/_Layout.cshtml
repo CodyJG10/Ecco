@@ -59,8 +59,15 @@
                                         </li>
                                     </ul>
                                 </li>
-                            }
-                        }
+                           }
+
+                           if (await _userManager.IsInRoleAsync(user, "Company Owner"))
+                           { 
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Company" asp-action="MyCompany">My Company</a>
+                            </li>
+                           }
+                       }
                     </ul>
                 </div>
             </div>
