@@ -31,7 +31,7 @@
                CornerRadius="7"
                Padding="0">
             
-            <Grid RowSpacing="25"
+            <!--<Grid RowSpacing="25"
                   VerticalOptions="FillAndExpand"
                   HorizontalOptions="FillAndExpand">
 
@@ -67,7 +67,11 @@
                    Margin="15,0,0,5"
                    Grid.Row="3"/>
 
-        </Grid>
+            </Grid>-->
+
+            <Image Source="{Binding CardImage}"
+                   Aspect="Fill"/>
+
         </Frame>
   </ContentView.Content>
 </ContentView>

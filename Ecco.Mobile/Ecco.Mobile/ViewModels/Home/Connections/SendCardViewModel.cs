@@ -73,12 +73,7 @@ namespace Ecco.Mobile.ViewModels.Home
 
             foreach (var card in cards)
             {
-                var templateImage = await TemplateUtil.LoadImageSource(card, _db, _storage);
-                CardModel model = new CardModel()
-                {
-                    Card = card,
-                    TemplateImage = templateImage
-                };
+                var model = CardModel.FromCard(card, _user);
                 MyCards.Add(model);
             }
 
@@ -87,6 +82,19 @@ namespace Ecco.Mobile.ViewModels.Home
 
         private async void Send()
         {
+
+            if (cardToSendId == 0)
+            { 
+                await Application.Current.MainPage.DisplayAlert("Issue Sending", "Please select what card you would like to send", "Ok");
+                return;
+            }
+
+            if (toId == null || toId.Length == 0)
+            { 
+                await Application.Current.MainPage.DisplayAlert("Issue Sending", "Please select who you would like to send your card to", "Ok");
+                return;
+            }
+
             bool succesful = await _db.CreateConnection(_user.Id, new Guid(toId), cardToSendId);
             if (succesful)
             {

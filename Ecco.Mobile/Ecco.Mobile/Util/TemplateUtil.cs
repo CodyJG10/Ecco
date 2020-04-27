@@ -25,5 +25,12 @@ namespace Ecco.Mobile.Util
             var templateImageStream = storage.GetTemplate(template.FileName);
             return ImageSource.FromStream(() => new MemoryStream(templateImageStream.ToArray()));
         }
+
+        public static async Task<ImageSource> LoadImageSource(int templateId, IDatabaseManager db, IStorageManager storage)
+        {
+            var template = await db.GetTemplate(templateId);
+            var templateImageStream = storage.GetTemplate(template.FileName);
+            return ImageSource.FromStream(() => new MemoryStream(templateImageStream.ToArray()));
+        }
     }
 }

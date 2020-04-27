@@ -17,5 +17,6 @@ namespace Ecco.Entities
         public int TemplateId { get; set; }
         public int ServiceType { get; set; }
         public bool IsUsingCompanyTemplate { get; set; }
+        public string ExportedImageData { get; set; }
     }
 }

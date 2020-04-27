@@ -7,6 +7,7 @@ using Newtonsoft.Json;
 using Plugin.Settings;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,73 +16,39 @@ using Xamarin.Forms;
 
 namespace Ecco.Mobile.ViewModels.Home.Connections
 {
-    public class PendingConnectionsViewModel : ViewModelBase
+    public class PendingConnectionsViewModel : LoadingViewModel
     {
-        private IDatabaseManager _db;
-        private IStorageManager _storage;
-        private UserData _user;
-
-        private List<ConnectionModel> _pendingConnections;
-        public List<ConnectionModel> PendingConnections
-        {
-            get
-            {
-                return _pendingConnections;
-            }
-            set
-            {
-                _pendingConnections = value;
-                OnPropertyChanged(nameof(PendingConnections));
-            }
-        }
-
-        private bool _loading;
-        public bool Loading
-        {
-            get
-            {
-                return _loading;
-            }
-            set
-            {
-                _loading = value;
-                OnPropertyChanged(nameof(Loading));
-            }
-        }
+        public ObservableCollection<ConnectionModel> PendingConnections { get; set; } = new ObservableCollection<ConnectionModel>();
 
         public ICommand AcceptPendingConnectionCommand { get; set; }
         public ICommand DeletePendingConnectionCommand { get; set; }
         public ICommand RefreshCommand { get; set; }
 
-        public PendingConnectionsViewModel()
+        public PendingConnectionsViewModel() : base()
         {
-            _db = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
-            _storage = TinyIoCContainer.Current.Resolve<IStorageManager>();
-            _user = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
-
             AcceptPendingConnectionCommand = new Command<Connection>(AcceptPendingConnection);
             DeletePendingConnectionCommand = new Command<Connection>(DeletePendingConnection);
             RefreshCommand = new Command(LoadPendingConnections);
-
             LoadPendingConnections();
         }
 
         private async void LoadPendingConnections()
         {
             Loading = true;
-            var pendingConnections = (await _db.GetMyPendingConnections(_user.Id)).ToList();
+            var pendingConnections = (await _db.GetMyPendingConnections(_userData.Id)).ToList();
             List<ConnectionModel> pendingConnectionModels = new List<ConnectionModel>();
+
+            if (PendingConnections.Count != 0)
+            {
+                PendingConnections.Clear();
+            }
+
             foreach (var pendingConnection in pendingConnections)
             {
                 Entities.Card card = await _db.GetCard(pendingConnection.CardId);
                 var userData = await _db.GetUserData(pendingConnection.FromId);
-                
-                CardModel cardModel = new CardModel()
-                {
-                    Card = card,
-                    TemplateImage = await TemplateUtil.LoadImageSource(card, _db, _storage)
-                };
-               
+                var cardModel = CardModel.FromCard(card, await _db.GetUserData(card.UserId));
+
                 ConnectionModel model = new ConnectionModel()
                 {
                     Card = cardModel,
@@ -89,9 +56,9 @@ namespace Ecco.Mobile.ViewModels.Home.Connections
                     Name = userData.ProfileName
                 };
 
-                pendingConnectionModels.Add(model);
+                PendingConnections.Add(model);
             }
-            PendingConnections = pendingConnectionModels;
+
             Loading = false;
         }
 

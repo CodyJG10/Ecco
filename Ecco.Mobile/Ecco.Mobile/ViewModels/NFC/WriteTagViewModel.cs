@@ -56,13 +56,8 @@ namespace Ecco.Mobile.ViewModels.NFC
 
 			foreach (var card in cards)
 			{
-				var templateImage = await TemplateUtil.LoadImageSource(card, _db, _storage);
-				CardModel model = new CardModel()
-				{
-					Card = card,
-					TemplateImage = templateImage
-				};
-				MyCards.Add(model);
+				var cardModel = CardModel.FromCard(card, _user);
+				MyCards.Add(cardModel);
 			}
 
 			Loading = false;

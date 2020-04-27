@@ -3,6 +3,7 @@ using Ecco.Entities;
 using Ecco.Entities.Attributes;
 using Ecco.Mobile.Models;
 using Ecco.Mobile.Util;
+using Ecco.Mobile.Views.Pages.Cards;
 using Nancy.TinyIoc;
 using Newtonsoft.Json;
 using Plugin.Settings;
@@ -120,24 +121,6 @@ namespace Ecco.Mobile.ViewModels.Home
 
         public async void CreateCard()
         {
-            UserData user = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
-
-            string selectedServiceType = CardModel.ServiceCategory;
-
-            var fields = typeof(ServiceTypes).GetFields();
-            int serviceTypeId = 1;
-            foreach (var field in fields)
-            {
-                var serviceInfo = field.GetCustomAttributes(true)[0] as ServiceInfo;
-                string title = serviceInfo.Title;
-                if (title.Equals(selectedServiceType))
-                {
-                    int id = (int)field.GetValue(null);
-                    serviceTypeId = id;
-                    break;
-                }
-            }
-
             if (SelectedTemplate == null)
                 SelectedTemplate = new TemplateModel()
                 {
@@ -147,28 +130,12 @@ namespace Ecco.Mobile.ViewModels.Home
                     }
                 };
 
-            Entities.Card card = new Entities.Card()
-            {
-                CardTitle = CardModel.CardTitle,
-                Description = CardModel.Description,
-                Email = CardModel.Email,
-                FullName = CardModel.FullName,
-                JobTitle = CardModel.JobTitle,
-                Phone = CardModel.PhoneNumber,
-                UserId = user.Id,
-                TemplateId = SelectedTemplate.Template.Id,
-                ServiceType = serviceTypeId
-            };
+            CardModel.TemplateImage = SelectedTemplate.TemplateImage;
+            CardModel.TemplateId = SelectedTemplate.Template.Id;
+            CardModel.IsCompanyTemplate = SelectedTemplate.Template.IsPublic == false;
 
-            var succeeded = await _db.CreateCard(card);
-            if (succeeded)
-            {
-                await Application.Current.MainPage.Navigation.PopAsync();
-            }
-            else
-            {
-                await Application.Current.MainPage.DisplayAlert("Error", "An error was encountered when attempting to create the card.", "Ok");
-            }
+            var page = new CreateCardEditor(CardModel);
+            await Application.Current.MainPage.Navigation.PushAsync(page);
         }
     }
 }

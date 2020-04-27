@@ -19,11 +19,8 @@ using static Ecco.Api.DatabaseManager;
 
 namespace Ecco.Mobile.ViewModels.Home
 {
-    public class MyCardViewModel : ViewModelBase
+    public class MyCardViewModel : LoadingViewModel
     {
-        private IDatabaseManager _db;
-        private IStorageManager _storage;
-
         #region Content
 
         private List<CardModel> _cards = new List<CardModel>();
@@ -40,20 +37,6 @@ namespace Ecco.Mobile.ViewModels.Home
             }
         }
 
-        private bool _loading;
-        public bool Loading
-        {
-            get
-            {
-                return _loading;
-            }
-            set
-            {
-                _loading = value;
-                OnPropertyChanged(nameof(Loading));
-            }
-        }
-
         #endregion
 
         #region Commands
@@ -66,11 +49,8 @@ namespace Ecco.Mobile.ViewModels.Home
 
         #endregion
 
-        public MyCardViewModel()
+        public MyCardViewModel() : base()
         {
-            _db = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
-            _storage = TinyIoCContainer.Current.Resolve<IStorageManager>();
-
             CreateCardCommand = new Command(() => Application.Current.MainPage.Navigation.PushAsync(new CreateCardPage()));
             RefreshCommand = new Command(LoadCards);
             EditCardCommand = new Command<CardModel>(EditCard);
@@ -109,13 +89,8 @@ namespace Ecco.Mobile.ViewModels.Home
 
             foreach (var card in cards)
             {
-                var templateImage = await TemplateUtil.LoadImageSource(card, _db, _storage);
-                CardModel model = new CardModel()
-                {
-                    Card = card,
-                    TemplateImage = templateImage
-                };
-                cardModels.Add(model);
+                var cardModel = CardModel.FromCard(card, _userData);
+                cardModels.Add(cardModel);
             }
 
             Cards = cardModels;
@@ -133,12 +108,12 @@ namespace Ecco.Mobile.ViewModels.Home
             CreateCardModel model = new CreateCardModel()
             {
                 CardTitle = card.Card.CardTitle,
-                Description = card.Card.Description,
                 Email = card.Card.Email,
-                FullName = card.Card.FullName,
-                JobTitle = card.Card.JobTitle,
                 PhoneNumber = card.Card.Phone,
-                ServiceCategory = serviceTitle
+                ServiceCategory = serviceTitle,
+                ExportedImageData = card.Card.ExportedImageData,
+                TemplateId = card.Card.TemplateId,
+                TemplateImage = await TemplateUtil.LoadImageSource(card.Card.TemplateId, _db, _storage)
             };
 
             await Application.Current.MainPage.Navigation.PushAsync(new EditCardPage(model, card.Card.TemplateId, card.Card.Id));
