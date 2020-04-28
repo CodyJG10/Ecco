@@ -45,7 +45,7 @@
                             <Label Text="You have cards to accept!"
                                     HorizontalOptions="Center"
                                     Style="{StaticResource HeaderLabelStyle}"
-                                    FontSize="Large"/>
+                                    FontSize="Small"/>
                             <Button Text="View"
                                 HorizontalOptions="Center"
                                 Command="{Binding ViewPendingConnectionsCommand}"/>
@@ -54,8 +54,9 @@
                         <!-- No Pending Connections Label -->
                         <StackLayout IsVisible="{Binding HasPendingConnections, Converter={StaticResource inverter}}">
                             <Label Text="You have no pending cards to accept!"
-                                    HorizontalOptions="Center"
-                                    Style="{StaticResource HeaderLabelStyle}"/>
+                                   HorizontalTextAlignment="Center"
+                                   FontSize="Small"
+                                   Style="{StaticResource HeaderLabelStyle}"/>
                         </StackLayout>
 
                         <!-- Connections Label -->

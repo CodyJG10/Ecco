@@ -75,6 +75,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Dependencies\NotificationRegister.cs" />
+    <Compile Include="Dependencies\SaveContactToDevice.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Renderers\BorderlessEntryRenderer.cs" />
@@ -295,7 +296,7 @@
   </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties XamarinHotReloadWrongLinkerErrorInfoBarEccoMobileiOSHideInfoBar="True" XamarinHotReloadDebuggerTimeoutExceptionEccoMobileiOSHideInfoBar="True" />
+      <UserProperties XamarinHotReloadDebuggerTimeoutExceptionEccoMobileiOSHideInfoBar="True" XamarinHotReloadWrongLinkerErrorInfoBarEccoMobileiOSHideInfoBar="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

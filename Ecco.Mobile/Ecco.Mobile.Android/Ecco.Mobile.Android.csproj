@@ -138,6 +138,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dependencies\NotificationService.cs" />
+    <Compile Include="Dependencies\SaveContactToDevice.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Notifications\FirebaseService.cs" />
     <Compile Include="Resources\Resource.designer.cs" />

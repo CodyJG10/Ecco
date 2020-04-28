@@ -54,10 +54,12 @@
     <x:String x:Key="SaveContact">&#xe708;</x:String>
     <x:String x:Key="Edit">&#xe705;</x:String>
     <x:String x:Key="Trash">&#xe704;</x:String>
+    <x:String x:Key="NFCIcon">&#xe709;</x:String>
+    <x:String x:Key="SendIcon">&#xe70a;</x:String>
 
-    <x:String x:Key="CallButtonText">&#xe706; Call</x:String>
-    <x:String x:Key="MailButtonText">&#xe707; E-Mail</x:String>
-    <x:String x:Key="AddToContactsButtonText">&#xe708; Add To Contacts</x:String>
+    <x:String x:Key="CallButtonText">&#xe706; &#10; Call</x:String>
+    <x:String x:Key="MailButtonText">&#xe707;&#x0a;E-Mail</x:String>
+    <x:String x:Key="AddToContactsButtonText">&#xe708;&#x0a;Add To Contacts</x:String>
 
     <!-- Common style for rating labels -->
     <Style x:Key="RatingLabelStyle" TargetType="Label">

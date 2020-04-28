@@ -18,61 +18,49 @@
                         VerticalOptions="Start"
                         Margin="15"/>
 
-            
-            
             <!-- Options Grid -->
-
             <border:SfBorder VerticalOptions="EndAndExpand"
                              Margin="15"
                              BorderColor="{StaticResource Gray-300}"
                              BackgroundColor="{StaticResource Gray-200}">
-            
-                <Grid HorizontalOptions="Center"
-                      Margin="0,45">
 
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
+                <StackLayout>
+
+                    <Label Text="Contact Options"
+                           Style="{StaticResource HeaderLabelStyle}"
+                           FontSize="Large"
+                           HorizontalTextAlignment="Center"/>
 
                     <StackLayout Grid.Row="0"
                                  Orientation="Horizontal"
                                  HorizontalOptions="Center"
-                                 Spacing="50">
+                                 Spacing="15"
+                                 Margin="25">
 
-                        <buttons:SfButton Text="{StaticResource Key=CallButtonText}"
+                        <buttons:SfButton Text="{StaticResource CallButtonText}"
                                           FontFamily="{StaticResource EccoFont}"
                                           FontSize="Large"
-                                          Style="{StaticResource SfButtonStyle}"
-                                          WidthRequest="100"
-                                          HeightRequest="20"
-                                          Command="{Binding CallCommand}"/>
+                                          Command="{Binding CallCommand}"
+                                          WidthRequest="75"
+                                          HorizontalOptions="Center"/>
 
-                        <buttons:SfButton Text="&#xe707;"
+                        <buttons:SfButton Text="{StaticResource MailButtonText}"
                                           FontSize="Large"
-                                          Style="{StaticResource SfButtonStyle}"
-                                          WidthRequest="200"
-                                          HeightRequest="20"
-                                          FontFamily="EccoFont"
-                                          Command="{Binding EmailCommand}">
-                        </buttons:SfButton>
+                                          FontFamily="{StaticResource EccoFont}"
+                                          Command="{Binding EmailCommand}"
+                                          WidthRequest="75"
+                                          HorizontalOptions="Center"/>
+
+                        <buttons:SfButton Text="{StaticResource AddToContactsButtonText}"
+                                          FontSize="Large"
+                                          WidthRequest="75"
+                                          FontFamily="{StaticResource EccoFont}"
+                                          Command="{Binding AddToContactsCommand}"
+                                          HorizontalOptions="Center"/>
 
                     </StackLayout>
 
-                    <buttons:SfButton Text="{StaticResource AddToContactsButtonText}"
-                                      FontSize="Large"
-                                      FontFamily="{StaticResource EccoFont}"
-                                      Command="{Binding AddToContactsCommand}"
-                                      Style="{StaticResource SfButtonStyle}"
-                                      WidthRequest="250"
-                                      HeightRequest="50"
-                                      HorizontalOptions="Center"
-                                      VerticalOptions="Center"
-                                      CornerRadius="8"
-                                      Margin="0,15"
-                                      Grid.Row="1"/>
-
-                </Grid>
+                </StackLayout>
             </border:SfBorder>
         </StackLayout>
     </ContentPage.Content>
