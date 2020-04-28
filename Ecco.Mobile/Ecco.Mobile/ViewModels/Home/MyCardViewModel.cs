@@ -110,6 +110,7 @@ namespace Ecco.Mobile.ViewModels.Home
                 PhoneNumber = card.Card.Phone,
                 ServiceCategory = serviceTitle,
                 ExportedImageData = card.Card.ExportedImageData,
+                FullName = card.Card.FullName,
                 TemplateId = card.Card.TemplateId,
                 TemplateImage = await TemplateUtil.LoadImageSource(card.Card.TemplateId, _db, _storage)
             };
