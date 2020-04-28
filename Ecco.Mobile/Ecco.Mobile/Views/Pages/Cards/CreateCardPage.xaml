@@ -71,9 +71,8 @@ xmlns:dataform="clr-namespace:Syncfusion.XForms.DataForm;assembly=Syncfusion.SfD
                                         <Label Text="{Binding Template.Title}"
                                                                HorizontalOptions="Center"/>
                                         <Image Source="{Binding TemplateImage}"
-                                                       Aspect="AspectFit"
-                                                       WidthRequest="350"
-                                                       HeightRequest="200"/>
+                                               WidthRequest="350"
+                                               HeightRequest="200"/>
                                     </StackLayout>
                                 </DataTemplate>
                             </xforms:SfListView.ItemTemplate>
@@ -87,7 +86,8 @@ xmlns:dataform="clr-namespace:Syncfusion.XForms.DataForm;assembly=Syncfusion.SfD
             <buttons:SfButton Text="Begin Editing" 
                               HorizontalOptions="Center"
                               Command="{Binding CreateCommand}"
-                              Margin="0,0,0,0"/>
+                              Margin="0,0,0,0"
+                              HeightRequest="85"/>
 
         </StackLayout>
         

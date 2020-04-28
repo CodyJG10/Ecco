@@ -35,7 +35,6 @@ namespace Ecco.Mobile.Views.Pages
 
             if (Device.RuntimePlatform == Device.iOS)
             {
-                DataForm.RegisterEditor("MultilineText", new CustomMultilineTextEditor(DataForm));
                 DataForm.RegisterEditor("Text", new CustomTextEditor(DataForm));
                 DataForm.RegisterEditor("MaskedEditText", new CustomMaskedEditor(DataForm));
             }
@@ -53,6 +52,13 @@ namespace Ecco.Mobile.Views.Pages
 
             else if (e.DataFormItem != null && e.DataFormItem.Name == "Email")
                 (e.DataFormItem as DataFormTextItem).KeyBoard = Keyboard.Email;
+
+            else if (e.DataFormItem.Name == "Phone")
+            { 
+                var form = e.DataFormItem as DataFormMaskedEditTextItem;
+                //form.FocusedColor = Color.Black;
+                //form.UnfocusedColor = Color.Black;
+            }
         }
 
         private void TemplateListView_SelectionChanged(object sender, Syncfusion.ListView.XForms.ItemSelectionChangedEventArgs e)
@@ -82,18 +88,6 @@ namespace Ecco.Mobile.Views.Pages
 
     #region Custom Editors
 
-    public class CustomMultilineTextEditor : DataFormMultiLineTextEditor
-    {
-        public CustomMultilineTextEditor(SfDataForm dataForm) : base(dataForm) { }
-        protected override void OnInitializeView(DataFormItem dataFormItem, Editor view)
-        {
-            base.OnInitializeView(dataFormItem, view);
-            view.TextColor = Color.Black;
-            view.BackgroundColor = Color.White;
-            view.PlaceholderColor = Color.Black;
-        }
-    }
-
     public class CustomTextEditor : DataFormTextEditor
     {
         public CustomTextEditor(SfDataForm dataForm) : base(dataForm) { }
@@ -113,11 +107,9 @@ namespace Ecco.Mobile.Views.Pages
         protected override void OnInitializeView(DataFormItem dataFormItem, SfMaskedEdit view)
         {
             base.OnInitializeView(dataFormItem, view);
-            view.Keyboard = Keyboard.Numeric;
             view.TextColor = Color.Black;
-            view.BorderColor = Color.Black;
             view.ErrorBorderColor = Color.Red;
-            view.BackgroundColor = Color.LightBlue;
+            view.BorderColor = Color.Black;
         }
     }
 

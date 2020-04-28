@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace Ecco.Mobile.ViewModels.NFC
@@ -20,12 +21,14 @@ namespace Ecco.Mobile.ViewModels.NFC
 		private IDatabaseManager _db;
 		private UserData _userData;
 
+		public ICommand BeginReadingCommand { get; set; }
+
 		public ReadTagViewModel()
 		{
 			_db = TinyIoCContainer.Current.Resolve<IDatabaseManager>() as IDatabaseManager;
 			_userData = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
 
-			InitNfc();
+			BeginReadingCommand = new Command(InitNfc);
 		}
 
 		private void InitNfc()

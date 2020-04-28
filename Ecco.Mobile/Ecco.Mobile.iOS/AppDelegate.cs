@@ -28,6 +28,7 @@ using Syncfusion.SfBarcode.XForms.iOS;
 using Syncfusion.XForms.iOS.BadgeView;
 using System.Threading.Tasks;
 using Syncfusion.SfImageEditor.XForms.iOS;
+using Syncfusion.XForms.iOS.MaskedEdit;
 
 namespace Ecco.Mobile.iOS
 {
@@ -58,6 +59,7 @@ namespace Ecco.Mobile.iOS
             SfShimmerRenderer.Init();
             SfBadgeViewRenderer.Init();
             SfImageEditorRenderer.Init();
+            SfMaskedEditRenderer.Init();
 
             new SfBarcodeRenderer();
 

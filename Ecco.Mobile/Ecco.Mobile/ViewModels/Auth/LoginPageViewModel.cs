@@ -26,11 +26,12 @@ namespace Ecco.Mobile.ViewModels.Auth
             _database = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
             LoginCommand = new Command(async () => await Login());
             RegisterCommand = new Command(Register);
-            ForgotPasswordCommand = new Command(ForgotPassword);
+            ForgotPasswordCommand = new Command<string>(ForgotPassword);
         }
 
-        private void ForgotPassword()
+        private void ForgotPassword(string email)
         {
+
             Application.Current.MainPage.DisplayAlert("Reset Password Request Recieved", "Please check the email sent to you for a link to reset you password", "Ok");
         }
 
