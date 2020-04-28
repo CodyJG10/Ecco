@@ -22,7 +22,8 @@
             <border:SfBorder VerticalOptions="EndAndExpand"
                              Margin="15"
                              BorderColor="{StaticResource Gray-300}"
-                             BackgroundColor="{StaticResource Gray-200}">
+                             BackgroundColor="{StaticResource Gray-200}"
+                             CornerRadius="15">
 
                 <StackLayout>
 

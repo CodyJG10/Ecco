@@ -42,7 +42,9 @@
 	<string>Assets.xcassets/AppIcon-1.appiconset</string>
 	<key>NFCReaderUsageDescription</key>
 	<string>NFC tag to read NDEF messages into the application</string>
-	<key>CFBundleShortVersionString</key>
+  <key>NSContactsUsageDescription</key>
+  <string>Used to save card to contact list</string>
+  <key>CFBundleShortVersionString</key>
 	<string>1</string>
 </dict>
 </plist>
