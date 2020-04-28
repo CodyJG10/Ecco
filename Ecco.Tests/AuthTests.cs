@@ -24,7 +24,7 @@ namespace Ecco.Tests
         {
             string username = "codyjg10@gmail.com";
             string password = "Airplane10";
-            bool loginResult = _db.Login(username, password).GetAwaiter().GetResult();
+            bool loginResult = _db.Login(username, password).GetAwaiter().GetResult().IsSuccessStatusCode;
             string message = loginResult ? "Login Succeeded" : "Login Failed";
             Assert.IsTrue(loginResult, message);
         }
@@ -36,7 +36,7 @@ namespace Ecco.Tests
             string password = "NotMyPassword";
             _db = new DatabaseManager();
             _db.SetUrl("https://ecco-space.azurewebsites.net");
-            bool loginResult = _db.Login(username, password).GetAwaiter().GetResult();
+            bool loginResult = _db.Login(username, password).GetAwaiter().GetResult().IsSuccessStatusCode;
             string message = loginResult ? "Login Succeeded" : "Login Failed";
             Assert.IsFalse(loginResult, message);
         }
