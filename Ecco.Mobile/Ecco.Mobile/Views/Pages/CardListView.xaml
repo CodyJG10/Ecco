@@ -93,7 +93,7 @@
 
                         <!-- Card List -->
                         <border:SfBorder HorizontalOptions="Center" 
-                                         VerticalOptions="Center"
+                                         VerticalOptions="CenterAndExpand"
                                          BorderWidth="2"
                                          BorderColor="{StaticResource Gray-300}"
                                          CornerRadius="15"
@@ -133,20 +133,21 @@
                                 <listview:SfListView.ItemTemplate>
                                     <DataTemplate>
                                         
-                                            <Frame BackgroundColor="White"
-                                                   Margin="3"
-                                                   CornerRadius="8">
+                                        <Frame BackgroundColor="White"
+                                                Margin="8,8,8,0"
+                                                HasShadow="False"
+                                                CornerRadius="8">
                                                 
-                                                <cardViews:Card HorizontalOptions="Center"
-                                                                VerticalOptions="Center"
-                                                                BindingContext="{Binding Card}">
-                                                    <cardViews:Card.GestureRecognizers>
-                                                        <TapGestureRecognizer Command="{Binding Source={x:Reference cardListViewPage}, Path=BindingContext.SelectCardCommand}"
-                                                                CommandParameter="{Binding .}"/>
-                                                    </cardViews:Card.GestureRecognizers>
-                                                </cardViews:Card>
+                                            <cardViews:Card HorizontalOptions="Center"
+                                                            VerticalOptions="Center"
+                                                            BindingContext="{Binding Card}">
+                                                <cardViews:Card.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding Source={x:Reference cardListViewPage}, Path=BindingContext.SelectCardCommand}"
+                                                            CommandParameter="{Binding .}"/>
+                                                </cardViews:Card.GestureRecognizers>
+                                            </cardViews:Card>
                                                 
-                                            </Frame>
+                                        </Frame>
                                         
                                     </DataTemplate>
                                 </listview:SfListView.ItemTemplate>
