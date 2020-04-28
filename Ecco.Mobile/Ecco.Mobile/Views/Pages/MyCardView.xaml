@@ -20,30 +20,7 @@ xmlns:popuplayout="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusi
 
     <ContentPage.Content>
         <StackLayout>
-
-            <!-- Delete Card Popup Template -->
-            <!--<popuplayout:SfPopupLayout x:Name="DeleteCardConfirmation">
-                <popuplayout:SfPopupLayout.Content>
-                    <StackLayout>
-                        <Label Style="{StaticResource HeaderLabelStyle}"
-                               Text="Are you sure you want to delete this card?"
-                               HorizontalTextAlignment="Center"/>
-
-                        <StackLayout Orientation="Horizontal"
-                                     VerticalOptions="Center">
-                            <buttons:SfButton Text="Yes"
-                                              x:Name="DeleteConfirmed"
-                                              Clicked="DeleteConfirmed_Clicked"/>
-                            <buttons:SfButton Text="No"
-                                              x:Name="DeleteDenied"
-                                              Clicked="DeleteDenied_Clicked"/>
-                        </StackLayout>
-
-                    </StackLayout>
-                </popuplayout:SfPopupLayout.Content>
-            </popuplayout:SfPopupLayout>-->
             
-            <!-- Create Card Button -->
             <buttons:SfButton Text="Create Card" 
                               HorizontalOptions="Center"
                               Margin="0,15"
@@ -56,6 +33,7 @@ xmlns:popuplayout="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusi
             <!-- My Cards Header -->
             <Label Text="My Cards" 
                    HorizontalOptions="Center"
+                   FontSize="Large"
                    Style="{StaticResource HeaderLabelStyle}"
                    TextColor="{StaticResource PrimaryColor}"/>
 
