@@ -4,7 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.CompanyPages"
-             xmlns:sflistview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms" xmlns:loadingspinner="clr-namespace:Ecco.Mobile.Views.Loading" xmlns:converters="clr-namespace:Ecco.Mobile.Converters" xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             xmlns:sflistview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms" xmlns:loadingspinner="clr-namespace:Ecco.Mobile.Views.Loading" xmlns:converters="clr-namespace:Ecco.Mobile.Converters" xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms" xmlns:popupLayout="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusion.SfPopupLayout.XForms"
              mc:Ignorable="d"
              x:Class="Ecco.Mobile.Views.Pages.CompanyPages.EmployeeHomePage"
              Title="Employee Home">
@@ -20,12 +20,28 @@
     <ContentPage.Content>
         <StackLayout>
 
+            <popupLayout:SfPopupLayout>
+                <popupLayout:PopupView>
+                    <popupLayout:PopupView.ContentTemplate>
+                        <DataTemplate>
+                            <StackLayout VerticalOptions="FillAndExpand"
+                                         HorizontalOptions="FillAndExpand">
+                                
+                                
+                                
+                            </StackLayout>
+                        </DataTemplate>
+                    </popupLayout:PopupView.ContentTemplate>
+                </popupLayout:PopupView>
+            </popupLayout:SfPopupLayout>
+
             <StackLayout IsVisible="{Binding Loading, Converter={StaticResource NegBoolConverter}}">
             
                 <!-- Pending Invites Section -->
                 <Label Text="You have one or more employee invitations to respond to"
                        HorizontalOptions="Center"
                        HorizontalTextAlignment="Center"
+                       Style="{StaticResource HeaderLabelStyle}"
                        IsVisible="{Binding HasPendingInvitations}"/>
                 
                 <buttons:SfButton Text="View"
@@ -37,7 +53,8 @@
                 <Label Text="Your Employers"
                        HorizontalOptions="Center"
                        HorizontalTextAlignment="Center"
-                       FontSize="Header"/>
+                       FontSize="Medium"
+                       Style="{StaticResource HeaderLabelStyle}"/>
 
                 <sflistview:SfListView ItemSize="100"
                                        SelectionMode="None"
