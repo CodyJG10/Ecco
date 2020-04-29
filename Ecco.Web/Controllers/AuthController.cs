@@ -39,6 +39,13 @@ namespace Ecco.Web.Controllers
             _context = context;
         }
 
+        public async Task<IActionResult> Test()
+        {
+            var user = await _userManager.FindByNameAsync("epicemail10@gmail.com");
+            await _userManager.AddToRoleAsync(user, "Company Owner");
+            return Content("Added user to role");
+        }
+
         [HttpPost("token")]
         [AllowAnonymous]
         public async Task<IActionResult> GenerateToken([FromForm]LoginModel model)

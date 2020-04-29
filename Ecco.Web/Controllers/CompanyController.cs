@@ -37,14 +37,14 @@ namespace Ecco.Web.Controllers
         [Route("")]
         [Route("Index")]
         [Route("MyCompany")]
-        [Authorize("Company Owner")]
+        [Authorize(Roles = "Company Owner")]
         public IActionResult MyCompany()
         {
             return View();
         }
 
         [HttpGet("EditCompany")]
-        [Authorize("Company Owner")]
+        [Authorize(Roles = "Company Owner")]
         public async Task<IActionResult> EditCompany()
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
@@ -58,7 +58,7 @@ namespace Ecco.Web.Controllers
         }
 
         [HttpPost("EditCompany")]
-        [Authorize("Company Owner")]
+        [Authorize(Roles = "Company Owner")]
         public async Task<IActionResult> EditCompany([FromForm] EditCompanyModel model)
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
@@ -71,14 +71,14 @@ namespace Ecco.Web.Controllers
         }
 
         [Route("CreateTemplate")]
-        [Authorize("Company Owner")]
+        [Authorize(Roles = "Company Owner")]
         public IActionResult CreateTemplate()
         {
             return View();
         }
 
         [HttpPost("CreateTemplate")]
-        [Authorize("Company Owner")]
+        [Authorize(Roles =  "Company Owner")]
         public async Task<IActionResult> CreateTemplate([FromForm] EditCompanyModel model)
         {
 
@@ -128,14 +128,14 @@ namespace Ecco.Web.Controllers
         }
 
         [HttpGet("InviteEmployee")]
-        [Authorize("Company Owner")]
+        [Authorize(Roles = "Company Owner")]
         public IActionResult InviteEmployeeToCompany()
         {
             return View();
         }
 
         [HttpPost("InviteEmployee")]
-        [Authorize("Company Owner")]
+        [Authorize(Roles = "Company Owner")]
         public async Task<IActionResult> InviteEmployeeToCompany(InviteEmployeeModel model)
         {
             if (model != null)

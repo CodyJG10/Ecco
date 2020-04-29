@@ -33,7 +33,6 @@ xmlns:dataform="clr-namespace:Syncfusion.XForms.DataForm;assembly=Syncfusion.SfD
         <StackLayout>
 
             <ScrollView VerticalOptions="FillAndExpand">
-                
                 <!-- Data Form -->
                 <dataform:SfDataForm x:Name="DataForm" 
                                      AutoGeneratingDataFormItem="DataForm_AutoGeneratingDataFormItem"
@@ -43,11 +42,60 @@ xmlns:dataform="clr-namespace:Syncfusion.XForms.DataForm;assembly=Syncfusion.SfD
                                      ContainerType="Outlined"
                                      LabelPosition="Top"/>
 
+                <!--<xforms:SfListView ItemsSource="{Binding Templates}"
+                                       ItemSize="225"
+                                   HeightRequest="200"
+                                       x:Name="TemplateListView"
+                                       SelectionChanged="TemplateListView_SelectionChanged">
+
+                        <xforms:SfListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout>
+
+                                    <Label Text="{Binding Template.Title}"
+                                               HorizontalOptions="Center"
+                                               Style="{StaticResource HeaderLabelStyle}"/>
+
+                                    <Image Source="{Binding TemplateImage}"
+                                               WidthRequest="350"
+                                               HeightRequest="200"
+                                               Aspect="Fill"/>
+
+                                </StackLayout>
+                            </DataTemplate>
+                        </xforms:SfListView.ItemTemplate>
+                    </xforms:SfListView>-->
+                    
             </ScrollView>
+
+            <!--<xforms:SfListView ItemsSource="{Binding Templates}"
+                                       ItemSize="250"
+                                       VerticalOptions="Fill"
+                                       x:Name="TemplateListView"
+                                       SelectionChanged="TemplateListView_SelectionChanged">
+
+                <xforms:SfListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout>
+
+                            <Label Text="{Binding Template.Title}"
+                                           HorizontalOptions="Center"
+                                           Style="{StaticResource HeaderLabelStyle}"/>
+
+                            <Image Source="{Binding TemplateImage}"
+                                           WidthRequest="350"
+                                           HeightRequest="200"
+                                           Aspect="Fill"/>
+
+                        </StackLayout>
+                    </DataTemplate>
+                </xforms:SfListView.ItemTemplate>
+
+            </xforms:SfListView>-->
 
             <!-- Expander -->
             <syncfusion:SfExpander x:Name="TemplateExpander">
-                <!-- Expander Header -->
+                 <!--Expander Header--> 
                 <syncfusion:SfExpander.Header>
                     <Grid>
                         <Label TextColor="#495F6E" 
@@ -57,28 +105,31 @@ xmlns:dataform="clr-namespace:Syncfusion.XForms.DataForm;assembly=Syncfusion.SfD
                     </Grid>
                 </syncfusion:SfExpander.Header>
                 <syncfusion:SfExpander.Content>
-                    <StackLayout Padding="10,10,10,10" BackgroundColor="#FFFFFF">
-                        <!-- Card Template List -->
-                        <xforms:SfListView ItemsSource="{Binding Templates}"
-                                                   ItemSize="250"
-                                                   x:Name="TemplateListView"
-                                                   SelectionChanged="TemplateListView_SelectionChanged">
+                     <!--Card Template List--> 
+                    <xforms:SfListView ItemsSource="{Binding Templates}"
+                                       ItemSize="250"
+                                       VerticalOptions="Fill"
+                                       x:Name="TemplateListView"
+                                       SelectionChanged="TemplateListView_SelectionChanged">
 
-                            <xforms:SfListView.ItemTemplate>
-                                <DataTemplate>
-                                    <StackLayout>
+                        <xforms:SfListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackLayout>
 
-                                        <Label Text="{Binding Template.Title}"
-                                                               HorizontalOptions="Center"/>
-                                        <Image Source="{Binding TemplateImage}"
-                                               WidthRequest="350"
-                                               HeightRequest="200"/>
-                                    </StackLayout>
-                                </DataTemplate>
-                            </xforms:SfListView.ItemTemplate>
+                                    <Label Text="{Binding Template.Title}"
+                                           HorizontalOptions="Center"
+                                           Style="{StaticResource HeaderLabelStyle}"/>
 
-                        </xforms:SfListView>
-                    </StackLayout>
+                                    <Image Source="{Binding TemplateImage}"
+                                           WidthRequest="350"
+                                           HeightRequest="200"
+                                           Aspect="Fill"/>
+
+                                </StackLayout>
+                            </DataTemplate>
+                        </xforms:SfListView.ItemTemplate>
+
+                    </xforms:SfListView>
                 </syncfusion:SfExpander.Content>
             </syncfusion:SfExpander>
 
