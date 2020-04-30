@@ -397,6 +397,31 @@ namespace Ecco.Web.Controllers
                 return false;
             }
         }
+
+        [HttpDelete("DeleteCompany")]
+        public async Task<IActionResult> DeleteCompany(Company company)
+        {
+            if (company != null)
+            {
+                _context.Remove(company);
+
+                if (_context.EmployeeInvitations.Any(x => x.CompanyId == company.Id))
+                {
+                    foreach (var employee in _context.EmployeeInvitations.Where(x => x.CompanyId == company.Id))
+                    {
+                        _context.Remove(employee);
+                    }
+                }
+
+                await _context.SaveChangesAsync();
+
+                return Ok();
+            }
+            else
+            {
+                return NotFound("The provided company could not be found");
+            }
+        }
         #endregion
     }
 }
