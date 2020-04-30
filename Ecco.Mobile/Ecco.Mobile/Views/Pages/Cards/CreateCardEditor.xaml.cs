@@ -41,7 +41,9 @@ namespace Ecco.Mobile.Views.Pages.Cards
 
             InitializeComponent();
             BindingContext = new CreateCardEditorViewModel(model);
-            ImageEditor.SetToolbarItemVisibility("path,shape,transform,effects,save", false);
+            //ImageEditor.SetToolbarItemVisibility("path,shape,transform,effects,save", false);
+
+            ImageEditor.SetToolbarItemVisibility("path,transform,save", false);
 
             ImageEditor.ToolbarSettings.ToolbarItems.Add(new HeaderToolbarItem() { Text = "Create" });
             ImageEditor.ToolbarSettings.ToolbarItemSelected += ToolbarSettings_ToolbarItemSelected;
