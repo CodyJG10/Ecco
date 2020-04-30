@@ -47,6 +47,15 @@
             <sfbutton:SfButton Text="Invite An Employee"
                                Command="{Binding InviteEmployeeCommand}"/>
 
+            <sfbutton:SfButton Text="Delete Company"
+                               BackgroundColor="Red"
+                               TextColor="White"
+                               CornerRadius="5"
+                               x:Name="DeleteCompanyButton"
+                               HorizontalOptions="Center"
+                               Clicked="DeleteCompanyButton_Clicked"
+                               WidthRequest="150"/>
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

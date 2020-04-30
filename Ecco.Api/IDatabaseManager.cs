@@ -67,6 +67,7 @@ namespace Ecco.Api
         Task<bool> AcceptEmployeeInvitation(Guid userId, int companyId);
         Task<bool> DenyEmployeeInvitation(Guid userId, int companyId);
         Task<List<EmployeeInvitation>> GetMyPendingEmployeeInvites(Guid userId);
+        Task<HttpResponseMessage> DeleteCompany(Company company);
 
         #endregion
 

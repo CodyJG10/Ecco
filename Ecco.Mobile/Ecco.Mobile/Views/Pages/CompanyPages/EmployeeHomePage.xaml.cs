@@ -23,15 +23,16 @@ namespace Ecco.Mobile.Views.Pages.CompanyPages
             InitializeComponent();
         }
 
-        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        private void ButtonLeave_Clicked(object sender, EventArgs e)
+        {
+            var viewModel = OptionsMenu.BindingContext as EmployeeHomePageViewModel;
+            viewModel.LeaveCompanyCommand.Execute(_selectedCompany);
+        }
+
+        private void ListMyEmployers_SelectionChanged(object sender, Syncfusion.ListView.XForms.ItemSelectionChangedEventArgs e)
         {
             _selectedCompany = ListMyEmployers.SelectedItem as Company;
             OptionsMenu.ShowAtTouchPoint();
-        }
-
-        private void ButtonDelete_Clicked(object sender, EventArgs e)
-        {
-            (BindingContext as EmployeeHomePageViewModel).LeaveCompanyCommand.Execute(_selectedCompany);
         }
     }
 }

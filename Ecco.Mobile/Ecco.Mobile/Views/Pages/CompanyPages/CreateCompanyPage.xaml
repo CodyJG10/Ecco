@@ -17,7 +17,7 @@
     </ContentPage.Resources>
     
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout VerticalOptions="Center">
 
             <Label Text="Please fill in the fields below"
                    HorizontalOptions="Center"/>

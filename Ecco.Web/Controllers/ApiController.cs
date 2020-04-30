@@ -398,8 +398,8 @@ namespace Ecco.Web.Controllers
             }
         }
 
-        [HttpDelete("DeleteCompany")]
-        public async Task<IActionResult> DeleteCompany(Company company)
+        [HttpPost("DeleteCompany")]
+        public async Task<IActionResult> DeleteCompany([FromBody]Company company)
         {
             if (company != null)
             {
@@ -419,7 +419,7 @@ namespace Ecco.Web.Controllers
             }
             else
             {
-                return NotFound("The provided company could not be found");
+                return NotFound("The provided company could not be found ");
             }
         }
         #endregion

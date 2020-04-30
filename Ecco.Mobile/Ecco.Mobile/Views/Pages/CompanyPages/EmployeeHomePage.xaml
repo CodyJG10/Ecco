@@ -40,9 +40,9 @@
                     <DataTemplate>
                         <StackLayout>
 
-                            <buttons:SfButton x:Name="ButtonDelete"
-                                              Text="Delete"
-                                              Clicked="ButtonDelete_Clicked"
+                            <buttons:SfButton x:Name="ButtonLeave"
+                                              Text="Leave Company"
+                                              Clicked="ButtonLeave_Clicked"
                                               BackgroundColor="{StaticResource Gray-300}"
                                               TextColor="Black"/>
 
@@ -78,9 +78,9 @@
                     Style="{StaticResource HeaderLabelStyle}"/>
 
                     <sflistview:SfListView ItemSize="100"
-                                    SelectionMode="None"
                                     ItemsSource="{Binding MyEmployers}"
-                                    x:Name="ListMyEmployers">
+                                    x:Name="ListMyEmployers"
+                                        SelectionChanged="ListMyEmployers_SelectionChanged">
                         <sflistview:SfListView.ItemTemplate>
                             <DataTemplate>
 
@@ -92,10 +92,6 @@
                                     <Label Text="{Binding CompanyName}"
                                     HorizontalOptions="Center"
                                     VerticalOptions="Center"/>
-
-                                    <Frame.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
-                                    </Frame.GestureRecognizers>
 
                                 </Frame>
 

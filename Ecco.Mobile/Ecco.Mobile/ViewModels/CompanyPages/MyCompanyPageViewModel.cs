@@ -45,10 +45,12 @@ namespace Ecco.Mobile.ViewModels.CompanyPages
         }
 
         public ICommand InviteEmployeeCommand { get; set; }
+        public ICommand DeleteCompanyCommand { get; set; }
 
         public MyCompanyPageViewModel() : base()
         {
             InviteEmployeeCommand = new Command(x => Application.Current.MainPage.Navigation.PushAsync(new InviteEmployeeToCompanyPage()));
+            DeleteCompanyCommand = new Command(DeleteCompany);
         }
 
         protected override async void Load()
@@ -68,6 +70,17 @@ namespace Ecco.Mobile.ViewModels.CompanyPages
                 await Application.Current.MainPage.DisplayAlert("Invalid Company", "Please finish setting up your company via the link that was emailed to you.", "Ok");
                 await Application.Current.MainPage.Navigation.PopAsync();
             }   
+        }
+
+        private async void DeleteCompany()
+        {
+            var result = await _db.DeleteCompany(Company);
+            if (result.IsSuccessStatusCode)
+            {
+                await Application.Current.MainPage.DisplayAlert("Success", "You have succesfully deleted your company", "Ok");
+                await Application.Current.MainPage.Navigation.PopAsync();
+                await Application.Current.MainPage.Navigation.PopAsync();
+            }
         }
     }
 }
