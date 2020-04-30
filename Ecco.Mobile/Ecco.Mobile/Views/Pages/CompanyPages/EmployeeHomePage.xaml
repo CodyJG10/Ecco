@@ -61,6 +61,7 @@
                     <!-- Pending Invites Section -->
                     <Label Text="You have one or more employee invitations to respond to"
                     HorizontalOptions="Center"
+                           FontSize="Medium"
                     HorizontalTextAlignment="Center"
                     Style="{StaticResource HeaderLabelStyle}"
                     IsVisible="{Binding HasPendingInvitations}"/>

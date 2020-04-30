@@ -289,7 +289,9 @@ namespace Ecco.Web.Controllers
 
                 var company = _context.Companies.Single(x => x.Id == model.CompanyId);
 
-                _notifications.SendNotification("You have been invited to the company: " + company.CompanyName, await _userManager.FindByIdAsync(model.UserId.ToString()));
+                var to = await _userManager.FindByIdAsync(model.UserId.ToString());
+
+                _notifications.SendNotification("You have been invited to the company: " + company.CompanyName, to);
 
                 return true;
             }
@@ -308,6 +310,13 @@ namespace Ecco.Web.Controllers
                 invitation.Status = ConnectionConstants.COMPLETE;
                 _context.Update(invitation);
                 await _context.SaveChangesAsync();
+
+                var company = _context.Companies.Single(x => x.Id == companyId);
+                var from = await _userManager.FindByIdAsync(userId);
+                var companyOwner = await _userManager.FindByIdAsync(company.OwnerId.ToString());
+
+                _notifications.SendNotification(from.UserName + " has joined your company", companyOwner);
+
                 return Ok();
             }
             else
