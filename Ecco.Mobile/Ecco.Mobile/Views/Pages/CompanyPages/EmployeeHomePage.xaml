@@ -20,19 +20,18 @@
     <ContentPage.Content>
         <StackLayout>
 
-            <popupLayout:SfPopupLayout>
-                <popupLayout:PopupView>
-                    <popupLayout:PopupView.ContentTemplate>
-                        <DataTemplate>
-                            <StackLayout VerticalOptions="FillAndExpand"
-                                         HorizontalOptions="FillAndExpand">
-                                
-                                
-                                
-                            </StackLayout>
-                        </DataTemplate>
-                    </popupLayout:PopupView.ContentTemplate>
-                </popupLayout:PopupView>
+            <popupLayout:SfPopupLayout x:Name="OptionsPopup">
+                <popupLayout:SfPopupLayout.Content>
+                    <StackLayout VerticalOptions="FillAndExpand"
+                                        HorizontalOptions="FillAndExpand">
+
+                        <buttons:SfButton Text="Leave Company"
+                                                HorizontalOptions="Center"
+                                                x:Name="ButtonLeaveCompany"
+                                                Clicked="ButtonLeaveCompany_Clicked"/>
+
+                    </StackLayout>
+                </popupLayout:SfPopupLayout.Content>
             </popupLayout:SfPopupLayout>
 
             <StackLayout IsVisible="{Binding Loading, Converter={StaticResource NegBoolConverter}}">
@@ -58,7 +57,8 @@
 
                 <sflistview:SfListView ItemSize="100"
                                        SelectionMode="None"
-                                       ItemsSource="{Binding MyEmployers}">
+                                       ItemsSource="{Binding MyEmployers}"
+                                       x:Name="ListMyEmployers">
                     <sflistview:SfListView.ItemTemplate>
                         <DataTemplate>
 
@@ -71,6 +71,10 @@
                                        HorizontalOptions="Center"
                                        VerticalOptions="Center"/>
 
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                                </Frame.GestureRecognizers>
+                                
                             </Frame>
 
                         </DataTemplate>
