@@ -100,23 +100,23 @@ xmlns:popuplayout="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusi
                         
                             <listview:SfListView.ItemTemplate>
                                 <DataTemplate>
-                                   
+
                                     <Frame BackgroundColor="White"
-                                           Margin="8,8,8,0"
-                                           HasShadow="False"
-                                           CornerRadius="8">
+                                            Margin="8,8,8,0"
+                                            HasShadow="False"
+                                            CornerRadius="8">
 
                                         <cardViews:Card BindingContext="{Binding .}"
                                                         VerticalOptions="Center"
                                                         HorizontalOptions="Center">
                                             <cardViews:Card.GestureRecognizers>
                                                 <TapGestureRecognizer Command="{Binding Source={x:Reference myCardsView}, Path=BindingContext.SelectCardCommand}"
-                                                                      CommandParameter="{Binding .}"/>
+                                                                        CommandParameter="{Binding .}"/>
                                             </cardViews:Card.GestureRecognizers>
                                         </cardViews:Card>
                                     
                                     </Frame>
-                                    
+
                                 </DataTemplate>
                             </listview:SfListView.ItemTemplate>
                    
