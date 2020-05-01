@@ -13,7 +13,17 @@ using Android;
 
 namespace Ecco.Mobile.Droid
 {
-    [Activity(Label = "Ecco.Mobile", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, LaunchMode = LaunchMode.SingleTop)]
+    [IntentFilter(new[] { Intent.ActionView },
+              Categories = new[] { Intent.CategoryBrowsable, Intent.CategoryDefault },
+              DataScheme = "https",
+              DataHost = "ecco-space.azurewebsites.net",
+              DataPathPrefix = "/cards",
+              AutoVerify = true)]
+    [Activity(Label = "Ecco.Mobile",
+              Icon = "@mipmap/icon", 
+              Theme = "@style/MainTheme",
+              MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation,
+              LaunchMode = LaunchMode.SingleTop)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         public string DeviceToken { get; set; }
