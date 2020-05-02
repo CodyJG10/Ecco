@@ -15,7 +15,9 @@
             xmlns:style="clr-namespace:Ecco.Mobile.Views"
             xmlns:themes="clr-namespace:Ecco.Mobile.Themes"
             BarTextColor="White"
-            BarBackgroundColor="{StaticResource NavbarBackground}">
+            BarBackgroundColor="{StaticResource Gray-900}"
+            CurrentPageChanged="TabbedPage_CurrentPageChanged"
+            x:Name="HomePage">
 
     <TabbedPage.BindingContext>
         <viewmodels:HomeViewModel/>

@@ -8,7 +8,7 @@
              xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.Home" xmlns:themes="clr-namespace:Ecco.Mobile.Themes" xmlns:style="clr-namespace:Ecco.Mobile.Views"
              BackgroundColor="{DynamicResource Gray-White}"
              xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
-             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" xmlns:gradient="clr-namespace:Syncfusion.XForms.Graphics;assembly=Syncfusion.Core.XForms"
              ios:Page.UseSafeArea="true">
     
     <ContentPage.BindingContext>
@@ -16,20 +16,43 @@
     </ContentPage.BindingContext>
     
   <ContentPage.Content>
-        <StackLayout>
 
-            <buttons:SfButton HorizontalOptions="Center"
-                              Margin="15"
-                              Command="{Binding SendConnectionCommand}"
-                              Text="Send Card By Username"
-                              Visual="Material"/>
+        <Grid>
+            <Image Source="city.jpg" Aspect="Fill"/>
 
-            <buttons:SfButton HorizontalOptions="Center"
-                              Margin="15"
-                              Command="{Binding EccoCardCommand}"
-                              Text="Read / Write Ecco Card"
-                              Visual="Material"/>
+            <!--<gradient:SfGradientView Style="{StaticResource SfGradientViewStyle}"/>-->
 
-        </StackLayout>
-  </ContentPage.Content>
+            <StackLayout>
+
+                <buttons:SfButton HorizontalOptions="Center"
+                                  Margin="75"
+                                  FontSize="18"
+                                  FontFamily="{StaticResource Montserrat-Bold}"
+                                  VerticalOptions="FillAndExpand"
+                                  CornerRadius="50"
+                                  Command="{Binding SendConnectionCommand}"
+                                  BackgroundColor="Black"
+                                  Opacity="0.75"
+                                  HasShadow="True">
+                    <buttons:SfButton.Text>
+                        <x:String>Send Card By Username</x:String>
+                    </buttons:SfButton.Text>
+                </buttons:SfButton>
+
+                <buttons:SfButton HorizontalOptions="Center"
+                                  Margin="75"
+                                  VerticalOptions="FillAndExpand"
+                                  CornerRadius="50"
+                                  FontFamily="{StaticResource Montserrat-Regular}"
+                                  FontSize="20"
+                                  Command="{Binding EccoCardCommand}"
+                                  Text="Read / Write Ecco Card"
+                                  BackgroundColor="Green"
+                                  Opacity="0.9"
+                                  HasShadow="True"/>
+
+            </StackLayout>
+
+        </Grid>
+    </ContentPage.Content>
 </ContentPage>

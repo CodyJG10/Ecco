@@ -8,103 +8,35 @@ using Xamarin.Forms;
 
 namespace Ecco.Mobile.ViewModels.Onboarding
 {
-    public class OnboardingWelcomeScreenViewModel : ViewModelBase
+    public class OnboardingWelcomeScreenViewModel : OnboardingViewModelBase
     {
-        private int position;
-        public int Position
-        {
-            get => position;
-            set
-            {
-                position = value;
-                UpdateSkipButtonText();
-            }
-        }
+        public OnboardingWelcomeScreenViewModel() : base() { } 
 
-        public ObservableCollection<OnboardingOverviewModel> Items { get; set; }
-
-        private string skipButtonText;
-        public string SkipButtonText
-        {
-            get => skipButtonText;
-            set 
-            {
-                skipButtonText = value;
-                OnPropertyChanged(nameof(SkipButtonText));
-            }
-        }
-
-        public ICommand SkipCommand { get; private set; }
-
-        public OnboardingWelcomeScreenViewModel()
-        {
-            SkipButtonText = "SKIP";
-            InitializeOnBoarding();
-            InitializeSkipCommand();
-        }
-
-        private void InitializeOnBoarding()
+        protected override void InitializeOnBoarding()
         {
             Items = new ObservableCollection<OnboardingOverviewModel>
             {
                 new OnboardingOverviewModel
                 {
-                    Title = "Welcome to \n TABIA",
-                    Content = "Tabia helps you build habits that stick.",
-                    ImageUrl = "icon.png"
+                    Title = "Welcome to \n Ecco Space!",
+                    Content = "Ecco Space removes the hassle of old fashioned & inconvenient business cards with a digital, advanced, & effective online approach.",
+                    ImageUrl = "ecco_logo.png"
                 },
                 new OnboardingOverviewModel
                 {
-                    Title = "Reminder",
-                    Content = "Reminder helps you execute your habits each day.",
+                    Title = "Create A Business Card",
+                    Content = "Create your business card to your own speicification using a simple drag & drop editor",
                     ImageUrl = "onboarding_create_card.png"
                 },
                 new OnboardingOverviewModel
                 {
-                    Title = "Track your progress",
-                    Content = "Charts help you visualize your efforts over time.",
+                    Title = "Grow Your Network",
+                    Content = "You can easily keep track of Ecco business cards you recieve \n \n" +
+                               "The advantage of using Ecco business cards is the versability and technological capabilities \n \n" +
+                               "Your paper business card can't dial a phone can it? Well, Ecco business cards can!",
                     ImageUrl = "onboarding_card"
                 }
             };
-        }
-
-        private void InitializeSkipCommand()
-        {
-            SkipCommand = new Command(() =>
-            {
-                if (LastPositionReached())
-                {
-                    ExitOnBoarding();
-                }
-                else
-                {
-                    MoveToNextPosition();
-                }
-            });
-        }
-
-        private static void ExitOnBoarding()
-            => Application.Current.MainPage.Navigation.PopModalAsync();
-
-        private void MoveToNextPosition()
-        {
-            var nextPosition = ++Position;
-            Position = nextPosition;
-        }
-
-        private bool LastPositionReached()
-            => Position == Items.Count - 1;      
-
-        private void UpdateSkipButtonText()
-        {
-            if (LastPositionReached())
-            {
-                SkipButtonText = "GOT IT";
-            }
-            else
-            {
-                SkipButtonText = "SKIP";
-            }
         }
     }
 }
