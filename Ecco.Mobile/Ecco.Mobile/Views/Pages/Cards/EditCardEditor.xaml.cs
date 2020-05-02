@@ -42,7 +42,9 @@ namespace Ecco.Mobile.Views.Pages.Cards
             _userData = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
 
             BindingContext = new EditCardEditorViewModel(model);
-            ImageEditor.SetToolbarItemVisibility("path,shape,transform,effects,save", false);
+            //ImageEditor.SetToolbarItemVisibility("path,shape,transform,effects,save", false);
+
+            ImageEditor.SetToolbarItemVisibility("path,transform,save", false);
 
             ImageEditor.ToolbarSettings.ToolbarItems.Add(new HeaderToolbarItem() { Text = "Update" });
             ImageEditor.ToolbarSettings.ToolbarItemSelected += ToolbarSettings_ToolbarItemSelected;

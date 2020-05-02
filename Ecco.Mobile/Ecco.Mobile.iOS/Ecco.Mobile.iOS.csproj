@@ -75,6 +75,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Dependencies\NotificationRegister.cs" />
+    <Compile Include="Dependencies\SaveContactToDevice.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Renderers\BorderlessEntryRenderer.cs" />
@@ -251,6 +252,9 @@
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfListView">
       <Version>18.1.0.45</Version>
+    </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfMaskedEdit">
+      <Version>18.1.0.46</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfPicker">
       <Version>18.1.0.45</Version>

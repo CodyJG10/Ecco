@@ -289,7 +289,9 @@ namespace Ecco.Web.Controllers
 
                 var company = _context.Companies.Single(x => x.Id == model.CompanyId);
 
-                _notifications.SendNotification("You have been invited to the company: " + company.CompanyName, await _userManager.FindByIdAsync(model.UserId.ToString()));
+                var to = await _userManager.FindByIdAsync(model.UserId.ToString());
+
+                _notifications.SendNotification("You have been invited to the company: " + company.CompanyName, to);
 
                 return true;
             }
@@ -308,6 +310,13 @@ namespace Ecco.Web.Controllers
                 invitation.Status = ConnectionConstants.COMPLETE;
                 _context.Update(invitation);
                 await _context.SaveChangesAsync();
+
+                var company = _context.Companies.Single(x => x.Id == companyId);
+                var from = await _userManager.FindByIdAsync(userId);
+                var companyOwner = await _userManager.FindByIdAsync(company.OwnerId.ToString());
+
+                _notifications.SendNotification(from.UserName + " has joined your company", companyOwner);
+
                 return Ok();
             }
             else
@@ -395,6 +404,31 @@ namespace Ecco.Web.Controllers
             else
             {
                 return false;
+            }
+        }
+
+        [HttpPost("DeleteCompany")]
+        public async Task<IActionResult> DeleteCompany([FromBody]Company company)
+        {
+            if (company != null)
+            {
+                _context.Remove(company);
+
+                if (_context.EmployeeInvitations.Any(x => x.CompanyId == company.Id))
+                {
+                    foreach (var employee in _context.EmployeeInvitations.Where(x => x.CompanyId == company.Id))
+                    {
+                        _context.Remove(employee);
+                    }
+                }
+
+                await _context.SaveChangesAsync();
+
+                return Ok();
+            }
+            else
+            {
+                return NotFound("The provided company could not be found ");
             }
         }
         #endregion

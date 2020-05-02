@@ -14,9 +14,11 @@
              xmlns:syncfusion="clr-namespace:Syncfusion.XForms.Expander;assembly=Syncfusion.Expander.XForms"
              xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
              xmlns:sfPopup="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusion.SfPopupLayout.XForms" 
-             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms" xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
              BackgroundColor="{DynamicResource Gray-White}"
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
              ios:Page.UseSafeArea="true">
 
     <ContentPage.Resources>
@@ -45,7 +47,7 @@
                             <Label Text="You have cards to accept!"
                                     HorizontalOptions="Center"
                                     Style="{StaticResource HeaderLabelStyle}"
-                                    FontSize="Large"/>
+                                    FontSize="Small"/>
                             <Button Text="View"
                                 HorizontalOptions="Center"
                                 Command="{Binding ViewPendingConnectionsCommand}"/>
@@ -54,8 +56,9 @@
                         <!-- No Pending Connections Label -->
                         <StackLayout IsVisible="{Binding HasPendingConnections, Converter={StaticResource inverter}}">
                             <Label Text="You have no pending cards to accept!"
-                                    HorizontalOptions="Center"
-                                    Style="{StaticResource HeaderLabelStyle}"/>
+                                   HorizontalTextAlignment="Center"
+                                   FontSize="Small"
+                                   Style="{StaticResource HeaderLabelStyle}"/>
                         </StackLayout>
 
                         <!-- Connections Label -->
@@ -80,19 +83,56 @@
                                 </syncfusion:SfExpander.Header>
                                 <!-- Content -->
                                 <syncfusion:SfExpander.Content>
-                                    <Grid Padding="10,10,10,10" BackgroundColor="#FFFFFF">
+
+
+                                    <StackLayout>
+
+                                        <Grid>
+                                            
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+
+                                            <Label Text="Filter By:"
+                                                   HorizontalTextAlignment="Center"
+                                                   FontSize="Small"/>
+
+                                            <combobox:SfComboBox HeightRequest="40" 
+                                                                 x:Name="FilterComboBox"
+                                                                 MaximumDropDownHeight="200" 
+                                                                 IsEditableMode="false"
+                                                                 Grid.Column="1"
+                                                                 SelectionChanged="FilterComboBox_SelectionChanged"/>
+
+
+                                        </Grid>
+
+                                        <Grid Padding="10,10,10,10" BackgroundColor="#FFFFFF">
                                         <SearchBar Placeholder="Cardholder Name" 
-                                                       x:Name="CardholderNameSearchbar"
-                                                       TextChanged="CardholderNameSearchbar_TextChanged"
-                                                       BackgroundColor="Transparent"/>
-                                    </Grid>
+                                                   x:Name="FilterInput"
+                                                   TextChanged="CardholderNameSearchbar_TextChanged"
+                                                   BackgroundColor="Transparent"
+                                                   TextColor="Black"/>
+                                        </Grid>
+
+                                    </StackLayout>
+
+                                    <!--<Grid Padding="10,10,10,10" BackgroundColor="#FFFFFF">
+                                        <SearchBar Placeholder="Cardholder Name" 
+                                                   x:Name="CardholderNameSearchbar"
+                                                   TextChanged="CardholderNameSearchbar_TextChanged"
+                                                   BackgroundColor="Transparent"
+                                                   TextColor="Black"/>
+                                    </Grid>-->
                                 </syncfusion:SfExpander.Content>
                             </syncfusion:SfExpander>
                         </StackLayout>
 
                         <!-- Card List -->
                         <border:SfBorder HorizontalOptions="Center" 
-                                         VerticalOptions="Center"
+                                         VerticalOptions="CenterAndExpand"
                                          BorderWidth="2"
                                          BorderColor="{StaticResource Gray-300}"
                                          CornerRadius="15"
@@ -111,18 +151,19 @@
                                 <listview:SfListView.LeftSwipeTemplate>
                                     <DataTemplate>
                                         <StackLayout HorizontalOptions="FillAndExpand"
-                                                        VerticalOptions="FillAndExpand"
-                                                        Spacing="0">
+                                                     VerticalOptions="FillAndExpand"
+                                                     Spacing="0">
 
                                             <buttons:SfButton Text="{StaticResource Trash}"
-                                                                Style="{StaticResource IconButtonStyle}"
-                                                                x:Name="ButtonDeleteCard"
-                                                                Clicked="ButtonDeleteCard_Clicked"
-                                                                BackgroundColor="Red"
-                                                                HorizontalOptions="FillAndExpand"
-                                                                VerticalOptions="FillAndExpand"
-                                                                FontSize="Large"
-                                                                TextColor="White"/>
+                                                              Style="{StaticResource IconButtonStyle}"
+                                                              x:Name="ButtonDeleteCard"
+                                                              Clicked="ButtonDeleteCard_Clicked"
+                                                              BackgroundColor="Red"
+                                                              HorizontalOptions="FillAndExpand"
+                                                              CornerRadius="8"
+                                                              VerticalOptions="FillAndExpand"
+                                                              FontSize="Large"
+                                                              TextColor="White"/>
 
                                         </StackLayout>
                                     </DataTemplate>
@@ -131,18 +172,20 @@
                                 <listview:SfListView.ItemTemplate>
                                     <DataTemplate>
                                         
-                                            <Frame BackgroundColor="Transparent">
+                                        <Frame BackgroundColor="White"
+                                                HasShadow="False"
+                                                CornerRadius="8">
                                                 
-                                                <cardViews:Card HorizontalOptions="Center"
-                                                                VerticalOptions="Center"
-                                                                BindingContext="{Binding Card}">
-                                                    <cardViews:Card.GestureRecognizers>
-                                                        <TapGestureRecognizer Command="{Binding Source={x:Reference cardListViewPage}, Path=BindingContext.SelectCardCommand}"
-                                                                CommandParameter="{Binding .}"/>
-                                                    </cardViews:Card.GestureRecognizers>
-                                                </cardViews:Card>
+                                            <cardViews:Card HorizontalOptions="Center"
+                                                            VerticalOptions="Center"
+                                                            BindingContext="{Binding Card}">
+                                                <cardViews:Card.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding Source={x:Reference cardListViewPage}, Path=BindingContext.SelectCardCommand}"
+                                                            CommandParameter="{Binding .}"/>
+                                                </cardViews:Card.GestureRecognizers>
+                                            </cardViews:Card>
                                                 
-                                            </Frame>
+                                        </Frame>
                                         
                                     </DataTemplate>
                                 </listview:SfListView.ItemTemplate>

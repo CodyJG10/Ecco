@@ -39,6 +39,13 @@ namespace Ecco.Web.Controllers
             _context = context;
         }
 
+        public async Task<IActionResult> Test()
+        {
+            var user = await _userManager.FindByNameAsync("epicemail10@gmail.com");
+            await _userManager.AddToRoleAsync(user, "Company Owner");
+            return Content("Added user to role");
+        }
+
         [HttpPost("token")]
         [AllowAnonymous]
         public async Task<IActionResult> GenerateToken([FromForm]LoginModel model)
@@ -72,7 +79,8 @@ namespace Ecco.Web.Controllers
                     expiration = expirationText
                 });
             }
-            return Unauthorized();
+            ModelState.AddModelError("", "Your email or password did not match any users. Please verify you have entered the right credentials.");
+            return Unauthorized(ModelState);
         }
 
         [AllowAnonymous]
@@ -81,6 +89,12 @@ namespace Ecco.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
+                return BadRequest(ModelState);
+            }
+
+            if (!model.Password.Equals(model.ConfirmPassword))
+            {
+                ModelState.AddModelError("", "Password and Confirm Password do not match");
                 return BadRequest(ModelState);
             }
 
@@ -93,7 +107,8 @@ namespace Ecco.Web.Controllers
 
             if (_context.Users.Any(x => x.ProfileName == model.UserName))
             {
-                return BadRequest();
+                ModelState.AddModelError("", "the username " + model.UserName + " is already taken.");
+                return BadRequest(ModelState);
             }
 
             IdentityResult result = await _userManager.CreateAsync(user, model.Password);

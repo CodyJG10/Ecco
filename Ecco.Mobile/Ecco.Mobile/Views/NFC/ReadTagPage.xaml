@@ -4,6 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.NFC"
+             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
              mc:Ignorable="d"
              x:Class="Ecco.Mobile.Views.NFC.ReadTagPage"
              Title="Read A Card">
@@ -15,9 +16,15 @@
     <ContentPage.Content>
         <StackLayout>
 
-            <Label Text="Read A Tag"
+            <Label Text="Tap an Ecco Card to your phone to read the card!"
                    VerticalOptions="Start"
-                   HorizontalOptions="Center"/>
+                   FontSize="Large"
+                   Margin="5"
+                   Style="{StaticResource HeaderLabelStyle}"
+                   HorizontalTextAlignment="Center"/>
+
+            <buttons:SfButton Text="Begin Reading"
+                              Command="{Binding BeginReadingCommand}"/>
 
         </StackLayout>
     </ContentPage.Content>

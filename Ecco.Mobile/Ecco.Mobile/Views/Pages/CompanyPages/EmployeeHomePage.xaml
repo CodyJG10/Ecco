@@ -4,72 +4,114 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.CompanyPages"
-             xmlns:sflistview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms" xmlns:loadingspinner="clr-namespace:Ecco.Mobile.Views.Loading" xmlns:converters="clr-namespace:Ecco.Mobile.Converters" xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             xmlns:sflistview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+             xmlns:loadingspinner="clr-namespace:Ecco.Mobile.Views.Loading" 
+             xmlns:converters="clr-namespace:Ecco.Mobile.Converters" 
+             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             xmlns:popupLayout="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusion.SfPopupLayout.XForms"
              mc:Ignorable="d"
              x:Class="Ecco.Mobile.Views.Pages.CompanyPages.EmployeeHomePage"
              Title="Employee Home">
 
-    <ContentPage.BindingContext>
+    <!--<ContentPage.BindingContext>
         <viewmodels:EmployeeHomePageViewModel/>
     </ContentPage.BindingContext>
     
     <ContentPage.Resources>
         <converters:NegateBooleanValue x:Key="NegBoolConverter"/>
-    </ContentPage.Resources>
+    </ContentPage.Resources>-->
     
-    <ContentPage.Content>
-        <StackLayout>
 
-            <StackLayout IsVisible="{Binding Loading, Converter={StaticResource NegBoolConverter}}">
-            
-                <!-- Pending Invites Section -->
-                <Label Text="You have one or more employee invitations to respond to"
-                       HorizontalOptions="Center"
-                       HorizontalTextAlignment="Center"
-                       IsVisible="{Binding HasPendingInvitations}"/>
-                
-                <buttons:SfButton Text="View"
-                        Command="{Binding ViewPendingInvitationsCommand}"
-                        IsVisible="{Binding HasPendingInvitations}"
-                        Style="{StaticResource CompanyButtonStyle}"/>
+    <popupLayout:SfPopupLayout x:Name="OptionsMenu">
 
-                <!-- My Employers Section -->
-                <Label Text="Your Employers"
-                       HorizontalOptions="Center"
-                       HorizontalTextAlignment="Center"
-                       FontSize="Header"/>
+        <popupLayout:SfPopupLayout.BindingContext>
+            <viewmodels:EmployeeHomePageViewModel/>
+        </popupLayout:SfPopupLayout.BindingContext>
 
-                <sflistview:SfListView ItemSize="100"
-                                       SelectionMode="None"
-                                       ItemsSource="{Binding MyEmployers}">
-                    <sflistview:SfListView.ItemTemplate>
-                        <DataTemplate>
-
-                            <Frame CornerRadius="15"
-                                   BackgroundColor="White"
-                                   Margin="15"
-                                   HasShadow="True">
-                            
-                                <Label Text="{Binding CompanyName}"
-                                       HorizontalOptions="Center"
-                                       VerticalOptions="Center"/>
-
-                            </Frame>
-
-                        </DataTemplate>
-                    </sflistview:SfListView.ItemTemplate>
-                </sflistview:SfListView>
-                
-            </StackLayout>
-
-            <StackLayout IsVisible="{Binding Loading}">
-
-                <loadingspinner:LoadingSpinner VerticalOptions="Center"
-                                               HorizontalOptions="Center"/>
-
-            </StackLayout>
-
-        </StackLayout>
+        <popupLayout:SfPopupLayout.Resources>
+            <converters:NegateBooleanValue x:Key="NegBoolConverter"/>
+        </popupLayout:SfPopupLayout.Resources>
         
-    </ContentPage.Content>
+        <popupLayout:SfPopupLayout.PopupView>
+            <popupLayout:PopupView ShowFooter="False"
+                                   HeaderTitle="Options"
+                                   HeightRequest="100">
+                <popupLayout:PopupView.ContentTemplate>
+                    <DataTemplate>
+                        <StackLayout>
+
+                            <buttons:SfButton x:Name="ButtonLeave"
+                                              Text="Leave Company"
+                                              Clicked="ButtonLeave_Clicked"
+                                              BackgroundColor="{StaticResource Gray-300}"
+                                              TextColor="Black"/>
+
+                        </StackLayout>
+                    </DataTemplate>
+                </popupLayout:PopupView.ContentTemplate>
+            </popupLayout:PopupView>
+        </popupLayout:SfPopupLayout.PopupView>
+
+        <popupLayout:SfPopupLayout.Content>
+
+            <StackLayout>
+
+                <StackLayout IsVisible="{Binding Loading, Converter={StaticResource NegBoolConverter}}">
+
+                    <!-- Pending Invites Section -->
+                    <Label Text="You have one or more employee invitations to respond to"
+                    HorizontalOptions="Center"
+                           FontSize="Medium"
+                    HorizontalTextAlignment="Center"
+                    Style="{StaticResource HeaderLabelStyle}"
+                    IsVisible="{Binding HasPendingInvitations}"/>
+
+                    <buttons:SfButton Text="View"
+                    Command="{Binding ViewPendingInvitationsCommand}"
+                    IsVisible="{Binding HasPendingInvitations}"
+                    Style="{StaticResource CompanyButtonStyle}"/>
+
+                    <!-- My Employers Section -->
+                    <Label Text="Your Employers"
+                    HorizontalOptions="Center"
+                    HorizontalTextAlignment="Center"
+                    FontSize="Medium"
+                    Style="{StaticResource HeaderLabelStyle}"/>
+
+                    <sflistview:SfListView ItemSize="100"
+                                    ItemsSource="{Binding MyEmployers}"
+                                    x:Name="ListMyEmployers"
+                                        SelectionChanged="ListMyEmployers_SelectionChanged">
+                        <sflistview:SfListView.ItemTemplate>
+                            <DataTemplate>
+
+                                <Frame CornerRadius="15"
+                                BackgroundColor="White"
+                                Margin="15"
+                                HasShadow="True">
+
+                                    <Label Text="{Binding CompanyName}"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="Center"/>
+
+                                </Frame>
+
+                            </DataTemplate>
+                        </sflistview:SfListView.ItemTemplate>
+                    </sflistview:SfListView>
+
+                </StackLayout>
+
+                <StackLayout IsVisible="{Binding Loading}">
+
+                    <loadingspinner:LoadingSpinner VerticalOptions="Center"
+                                            HorizontalOptions="Center"/>
+
+                </StackLayout>
+
+            </StackLayout>
+        </popupLayout:SfPopupLayout.Content>
+    
+    </popupLayout:SfPopupLayout>
+    
 </ContentPage>

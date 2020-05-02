@@ -64,7 +64,7 @@ namespace Ecco.Mobile.Droid.Notifications
 
             var notificationBuilder = new NotificationCompat.Builder(this)
                 .SetContentTitle("Ecco Space")
-                .SetSmallIcon(Resource.Drawable.ic_launcher)
+                .SetSmallIcon(Resource.Drawable.Icon)
                 .SetContentText(body)
                 .SetAutoCancel(true)
                 .SetShowWhen(false)

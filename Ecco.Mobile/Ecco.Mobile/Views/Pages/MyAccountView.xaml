@@ -63,7 +63,9 @@
                               Command="{Binding LogoutCommand}"
                               HorizontalOptions="Center"
                               WidthRequest="125"   
-                              VerticalOptions="EndAndExpand"/>
+                              VerticalOptions="EndAndExpand"
+                              Margin="15"
+                              CornerRadius="5"/>
 
         </StackLayout>
   </ContentPage.Content>

@@ -9,33 +9,33 @@ xmlns:dataform="clr-namespace:Syncfusion.XForms.DataForm;assembly=Syncfusion.SfD
              Title="Create Card"
              xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.Home"
              xmlns:syncfusion="clr-namespace:Syncfusion.XForms.Expander;assembly=Syncfusion.Expander.XForms"
-             xmlns:xforms="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms" 
              xmlns:local="clr-namespace:Ecco.Mobile.Views.Authentication" 
              xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms" 
              xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms" 
              xmlns:control="clr-namespace:Ecco.Mobile.Controls" 
              xmlns:converter="clr-namespace:Ecco.Mobile.Converters"
              xmlns:popup="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusion.SfPopupLayout.XForms"
-             xmlns:Picker="clr-namespace:Syncfusion.SfPicker.XForms;assembly=Syncfusion.SfPicker.XForms">
+             xmlns:Picker="clr-namespace:Syncfusion.SfPicker.XForms;assembly=Syncfusion.SfPicker.XForms" xmlns:xforms="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms">
 
-    <ContentPage.BindingContext>
-        <viewmodels:CreateCardViewModel/>
-    </ContentPage.BindingContext>
+    <popup:SfPopupLayout x:Name="PopupLayout">
 
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <converter:BooleanToColorConverter x:Key="ColorConverter" />
-        </ResourceDictionary>
-    </ContentPage.Resources>
+        <popup:SfPopupLayout.BindingContext>
+            <viewmodels:CreateCardViewModel/>
+        </popup:SfPopupLayout.BindingContext>
 
-    <ContentPage.Content>
+        <popup:SfPopupLayout.Resources>
+            <ResourceDictionary>
+                <converter:BooleanToColorConverter x:Key="ColorConverter" />
+            </ResourceDictionary>
+        </popup:SfPopupLayout.Resources>
 
-        <StackLayout>
+        <popup:SfPopupLayout.Content>
 
-            <ScrollView VerticalOptions="FillAndExpand">
-                
-                <!-- Data Form -->
-                <dataform:SfDataForm x:Name="DataForm" 
+            <StackLayout>
+
+                <ScrollView VerticalOptions="FillAndExpand">
+                    <!-- Data Form -->
+                    <dataform:SfDataForm x:Name="DataForm" 
                                      AutoGeneratingDataFormItem="DataForm_AutoGeneratingDataFormItem"
                                      DataObject="{Binding CardModel}"
                                      HorizontalOptions="FillAndExpand"
@@ -43,53 +43,56 @@ xmlns:dataform="clr-namespace:Syncfusion.XForms.DataForm;assembly=Syncfusion.SfD
                                      ContainerType="Outlined"
                                      LabelPosition="Top"/>
 
-            </ScrollView>
+                </ScrollView>
 
-            <!-- Expander -->
-            <syncfusion:SfExpander x:Name="TemplateExpander">
-                <!-- Expander Header -->
-                <syncfusion:SfExpander.Header>
-                    <Grid>
-                        <Label TextColor="#495F6E" 
-                                       Text="Choose A Template" 
-                                       VerticalTextAlignment="Center"
-                                       FontSize="Large"/>
-                    </Grid>
-                </syncfusion:SfExpander.Header>
-                <syncfusion:SfExpander.Content>
-                    <StackLayout Padding="10,10,10,10" BackgroundColor="#FFFFFF">
-                        <!-- Card Template List -->
-                        <xforms:SfListView ItemsSource="{Binding Templates}"
-                                                   ItemSize="250"
-                                                   x:Name="TemplateListView"
-                                                   SelectionChanged="TemplateListView_SelectionChanged">
-
-                            <xforms:SfListView.ItemTemplate>
-                                <DataTemplate>
-                                    <StackLayout>
-
-                                        <Label Text="{Binding Template.Title}"
-                                                               HorizontalOptions="Center"/>
-                                        <Image Source="{Binding TemplateImage}"
-                                                       Aspect="AspectFit"
-                                                       WidthRequest="350"
-                                                       HeightRequest="200"/>
-                                    </StackLayout>
-                                </DataTemplate>
-                            </xforms:SfListView.ItemTemplate>
-
-                        </xforms:SfListView>
-                    </StackLayout>
-                </syncfusion:SfExpander.Content>
-            </syncfusion:SfExpander>
-
-            <!-- Create Button -->
-            <buttons:SfButton Text="Begin Editing" 
+                <!-- Create Button -->
+                <buttons:SfButton Text="Begin Editing" 
                               HorizontalOptions="Center"
-                              Command="{Binding CreateCommand}"
-                              Margin="0,0,0,0"/>
+                              x:Name="ButtonBeginEditing"
+                              Clicked="ButtonBeginEditing_Clicked"
+                              Margin="0,0,0,0"
+                              HeightRequest="85"/>
 
-        </StackLayout>
-        
-    </ContentPage.Content>
+            </StackLayout>
+
+        </popup:SfPopupLayout.Content>
+
+        <popup:SfPopupLayout.PopupView>
+            <popup:PopupView HeaderTitle="Please Select A Template"
+                             ShowFooter="False"
+                             VerticalOptions="FillAndExpand"
+                             HorizontalOptions="FillAndExpand">
+                <popup:PopupView.ContentTemplate>
+                    <DataTemplate>
+                        <StackLayout>
+                            <xforms:SfListView ItemsSource="{Binding Templates}"
+                                    ItemSize="250"
+                                    VerticalOptions="Fill"
+                                    SelectionChanged="TemplateListView_SelectionChanged">
+
+                                <xforms:SfListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackLayout>
+
+                                            <Label Text="{Binding Template.Title}"
+                                            HorizontalOptions="Center"
+                                            Style="{StaticResource HeaderLabelStyle}"/>
+
+                                            <Image Source="{Binding TemplateImage}"
+                                            WidthRequest="350"
+                                            HeightRequest="200"
+                                            Aspect="Fill"/>
+
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </xforms:SfListView.ItemTemplate>
+                            </xforms:SfListView>
+                        </StackLayout>
+                    </DataTemplate>
+                </popup:PopupView.ContentTemplate>
+            </popup:PopupView>
+        </popup:SfPopupLayout.PopupView>
+
+    </popup:SfPopupLayout>
+
 </ContentPage>

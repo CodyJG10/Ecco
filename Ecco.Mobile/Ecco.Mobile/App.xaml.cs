@@ -44,8 +44,8 @@ namespace Ecco.Mobile
             string username = CrossSettings.Current.GetValueOrDefault("Username", "");
             string password = CrossSettings.Current.GetValueOrDefault("Password", "");
             var db = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
-            var loginSuccesful = await db.Login(username, password);
-            if (loginSuccesful)
+            var loginResponse = await db.Login(username, password);
+            if (loginResponse.IsSuccessStatusCode)
             {
                 MainPage = new NavigationPage(new Home());
             }
@@ -72,8 +72,8 @@ namespace Ecco.Mobile
                 string username = CrossSettings.Current.GetValueOrDefault("Username", "");
                 string password = CrossSettings.Current.GetValueOrDefault("Password", "");
                 var db = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
-                var loginSuccesful = await db.Login(username, password);
-                if (loginSuccesful)
+                var loginResponse = await db.Login(username, password);
+                if (loginResponse.IsSuccessStatusCode)
                 {
                     // First, navigate to home page
                     MainPage = new NavigationPage(new Home());

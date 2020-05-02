@@ -12,8 +12,7 @@ namespace Ecco.Mobile.ViewModels.Home
     public class ScanCardViewModel : ViewModelBase
     {
         public ICommand SendConnectionCommand { get; set; }
-        public ICommand TestNfcCommand { get; set; }
-        public ICommand WriteTagCommand { get; set; }
+        public ICommand EccoCardCommand { get; set; }
 
         public ScanCardViewModel()
         {

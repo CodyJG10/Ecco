@@ -89,5 +89,13 @@ namespace Ecco.Api
             var content = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<List<EmployeeInvitation>>(content);
         }
+
+        public async Task<HttpResponseMessage> DeleteCompany(Company company)
+        {
+            string json = JsonConvert.SerializeObject(company);
+            var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
+            var response = await client.PostAsync("api/DeleteCompany", httpContent);
+            return response;
+        }
     }
 }

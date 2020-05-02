@@ -29,10 +29,21 @@ namespace Ecco.Mobile.ViewModels.CompanyPages
         public ObservableCollection<Company> MyEmployers { get; set; } = new ObservableCollection<Company>();
 
         public ICommand ViewPendingInvitationsCommand { get; set; }
+        public ICommand LeaveCompanyCommand { get; set; }
 
         public EmployeeHomePageViewModel() : base()
         {
             ViewPendingInvitationsCommand = new Command(x => Application.Current.MainPage.Navigation.PushAsync(new MyPendingEmployeeInvitesPage()));
+            LeaveCompanyCommand = new Command<Company>(LeaveCompany);
+        }
+
+        private async void LeaveCompany(Company company)
+        {
+            if (await _db.LeaveCompany(company, _userData.Id))
+            {
+                await Application.Current.MainPage.DisplayAlert("Success", "You've succesfully left the company", "Ok");
+                Load();
+            }
         }
 
         protected async override void Load()

@@ -24,7 +24,7 @@
 
                 <sflistview:SfListView SelectionMode="None"
                                        ItemsSource="{Binding MyEmployeeInvitations}"
-                                       ItemSize="115">
+                                       ItemSize="150">
                     <sflistview:SfListView.ItemTemplate>
                         <DataTemplate>
 

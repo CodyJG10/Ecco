@@ -1,4 +1,5 @@
 ﻿using Ecco.Api;
+using Ecco.Mobile.Util;
 using Ecco.Mobile.Views.Authentication;
 using Nancy.TinyIoc;
 using Newtonsoft.Json;
@@ -34,12 +35,12 @@ namespace Ecco.Mobile.ViewModels.Auth
         public async Task<Task> Register()
         {
             Loading = true;
-            var registerSuccesful = await _database.Register(Username, Email, Password, ConfirmPasswordText);
-            if (registerSuccesful)
+            var registrationResponse = await _database.Register(Username, Email, Password, ConfirmPasswordText);
+            if (registrationResponse.IsSuccessStatusCode)
             {
                 //Registration Complete
-                var loginSuccesful = await _database.Login(Email, Password);
-                if (loginSuccesful)
+                var loginResponse = await _database.Login(Email, Password);
+                if (loginResponse.IsSuccessStatusCode)
                 {
                     Console.WriteLine("Succesfully logged in!");
                     var userInfo = await _database.GetUserData();
@@ -51,8 +52,8 @@ namespace Ecco.Mobile.ViewModels.Auth
             }
             else
             {
-                Console.WriteLine("Registration Unsuccesful!");
-                await Application.Current.MainPage.DisplayAlert("Registration Error", "Could not register with the given credentials", "Return");
+                var error = await HttpResponseFormatter.GetErrorFromResponse(registrationResponse);
+                await Application.Current.MainPage.DisplayAlert("Registration Error", error, "Return");
                 Loading = false;
             }
             return Task.CompletedTask;

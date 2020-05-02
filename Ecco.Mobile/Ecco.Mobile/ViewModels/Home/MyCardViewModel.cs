@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using static Ecco.Api.DatabaseManager;
 
@@ -47,6 +48,7 @@ namespace Ecco.Mobile.ViewModels.Home
         public ICommand EditCardCommand { get; set; }
         public ICommand DeleteCardCommand { get; set; }
         public ICommand SelectCardCommand { get; set; }
+        public ICommand ShareCardCommand { get; set; }
 
         #endregion
 
@@ -57,6 +59,7 @@ namespace Ecco.Mobile.ViewModels.Home
             EditCardCommand = new Command<CardModel>(EditCard);
             DeleteCardCommand = new Command<CardModel>(DeleteCard);
             SelectCardCommand = new Command<CardModel>(x => Application.Current.MainPage.Navigation.PushAsync(new MyCard(x)));
+            ShareCardCommand = new Command<CardModel>(ShareCard);
 
             LoadCards();
 
@@ -101,10 +104,8 @@ namespace Ecco.Mobile.ViewModels.Home
 
         private async void EditCard(CardModel card)
         {
-
             string serviceTitle = "";
             typeof(ServiceTypes).GetFields().ToList().ForEach(field => { if ((int)field.GetValue(null) == card.Card.ServiceType) serviceTitle = (field.GetCustomAttributes(true)[0] as ServiceInfo).Title; });
-
 
             CreateCardModel model = new CreateCardModel()
             {
@@ -113,6 +114,7 @@ namespace Ecco.Mobile.ViewModels.Home
                 PhoneNumber = card.Card.Phone,
                 ServiceCategory = serviceTitle,
                 ExportedImageData = card.Card.ExportedImageData,
+                FullName = card.Card.FullName,
                 TemplateId = card.Card.TemplateId,
                 TemplateImage = await TemplateUtil.LoadImageSource(card.Card.TemplateId, _db, _storage)
             };
@@ -132,6 +134,16 @@ namespace Ecco.Mobile.ViewModels.Home
                 await Application.Current.MainPage.DisplayAlert("Error!", "An error was encountered when attempting to delete your card", "Ok");
                 LoadCards();
             }
+        }
+
+        private async void ShareCard(CardModel card)
+        {
+            await Share.RequestAsync(new ShareTextRequest()
+            {
+                Uri = "https://ecco-space.azurewebsites.net/" + card.Card.Id,
+                Text = "Hey, check out my digital business card on Ecco Space!",
+                Title = "Digital Business Card"
+            });
         }
     }
 }

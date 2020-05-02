@@ -16,5 +16,10 @@ namespace Ecco.Web.Services
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse(connectionString);
             CloudBlobClient = storageAccount.CreateCloudBlobClient();
         }
+
+        public string UsernameToContainerTitle(string username)
+        { 
+            return "username-" + username.Replace("@", "-").Replace(".", "-");
+        }
     }
 }

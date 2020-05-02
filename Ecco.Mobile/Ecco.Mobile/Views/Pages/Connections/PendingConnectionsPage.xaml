@@ -8,7 +8,7 @@
              xmlns:viewModels="clr-namespace:Ecco.Mobile.ViewModels.Home.Connections" xmlns:local="clr-namespace:Ecco.Mobile.Views.Card"
              x:Name="pendingConnectionsPage"
              Title="Pending Card Connections"
-             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" xmlns:listviews="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms" xmlns:refresh="clr-namespace:Syncfusion.SfPullToRefresh.XForms;assembly=Syncfusion.SfPullToRefresh.XForms"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" xmlns:listviews="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms" xmlns:refresh="clr-namespace:Syncfusion.SfPullToRefresh.XForms;assembly=Syncfusion.SfPullToRefresh.XForms" xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
              ios:Page.UseSafeArea="true"
              BackgroundColor="White">
 
@@ -37,12 +37,14 @@
                             <DataTemplate>
 
                                 <Frame BackgroundColor="Transparent">
+                                    
                                     <StackLayout BackgroundColor="{StaticResource Gray-200}">
 
                                         <Label Text="{Binding Name}"
                                                HorizontalOptions="CenterAndExpand"
                                                TextColor="Black"
-                                               VerticalOptions="Center"/>
+                                               VerticalOptions="Center"
+                                               Style="{StaticResource HeaderLabelStyle}"/>
 
                                         <local:Card BindingContext="{Binding Card}" 
                                                     WidthRequest="350"
@@ -51,15 +53,17 @@
                                                     HorizontalOptions="Center"/>
 
                                         <StackLayout Orientation="Horizontal"
-                                                     HorizontalOptions="Center">
+                                                     HorizontalOptions="Center"
+                                                     VerticalOptions="EndAndExpand"
+                                                     Margin="5">
 
-                                            <Button Text="Accept" 
-                                                Command="{Binding Source={x:Reference pendingConnectionsPage}, Path=BindingContext.AcceptPendingConnectionCommand}"
-                                                CommandParameter="{Binding Connection}"/>
+                                            <buttons:SfButton Text="Accept" 
+                                                              Command="{Binding Source={x:Reference pendingConnectionsPage}, Path=BindingContext.AcceptPendingConnectionCommand}"
+                                                              CommandParameter="{Binding Connection}"/>
 
-                                            <Button Text="Delete"
-                                                    Command="{Binding Source={x:Reference pendingConnectionsPage}, Path=BindingContext.DeletePendingConnectionCommand}"
-                                                    CommandParameter="{Binding Connection}"/>
+                                            <buttons:SfButton Text="Delete"
+                                                              Command="{Binding Source={x:Reference pendingConnectionsPage}, Path=BindingContext.DeletePendingConnectionCommand}"
+                                                              CommandParameter="{Binding Connection}"/>
 
                                         </StackLayout>
                                         

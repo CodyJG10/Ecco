@@ -1,4 +1,5 @@
-﻿using Ecco.Mobile.Models;
+﻿using Ecco.Mobile.Dependencies;
+using Ecco.Mobile.Models;
 using Ecco.Mobile.Views.NFC;
 using Newtonsoft.Json;
 using System;
@@ -37,11 +38,18 @@ namespace Ecco.Mobile.ViewModels.Home.Card
             Launcher.OpenAsync(new Uri("mailto:" + Card.Card.Email));
         }
 
-        private void AddToContacts()
+        private async void AddToContacts()
         {
-            string json = JsonConvert.SerializeObject(Card.Card);
-            Console.WriteLine("Test");
-            //Application.Current.MainPage.Navigation.PushAsync(new WriteTag(Card)); 
+            var permissionStatus = await Permissions.CheckStatusAsync<Permissions.ContactsWrite>();
+            if (permissionStatus != PermissionStatus.Granted)
+            { 
+                var status = await Permissions.RequestAsync<Permissions.ContactsWrite>();
+                if (status != PermissionStatus.Granted)
+                {
+                    return;
+                }
+            }
+            DependencyService.Get<ISaveContact>().SaveContact(Card.Card.FullName, Card.Card.Phone, Card.Card.Email);
         }
     }
 }

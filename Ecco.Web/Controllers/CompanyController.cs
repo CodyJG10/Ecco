@@ -5,6 +5,7 @@ using Ecco.Web.Areas.Identity;
 using Ecco.Web.Data;
 using Ecco.Web.Models;
 using Ecco.Web.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.V3.Pages.Account.Manage.Internal;
 using Microsoft.AspNetCore.Identity.UI.V3.Pages.Internal.Account.Manage;
@@ -36,12 +37,14 @@ namespace Ecco.Web.Controllers
         [Route("")]
         [Route("Index")]
         [Route("MyCompany")]
+        [Authorize(Roles = "Company Owner")]
         public IActionResult MyCompany()
         {
             return View();
         }
 
         [HttpGet("EditCompany")]
+        [Authorize(Roles = "Company Owner")]
         public async Task<IActionResult> EditCompany()
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
@@ -55,6 +58,7 @@ namespace Ecco.Web.Controllers
         }
 
         [HttpPost("EditCompany")]
+        [Authorize(Roles = "Company Owner")]
         public async Task<IActionResult> EditCompany([FromForm] EditCompanyModel model)
         {
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
@@ -67,12 +71,14 @@ namespace Ecco.Web.Controllers
         }
 
         [Route("CreateTemplate")]
+        [Authorize(Roles = "Company Owner")]
         public IActionResult CreateTemplate()
         {
             return View();
         }
 
         [HttpPost("CreateTemplate")]
+        [Authorize(Roles =  "Company Owner")]
         public async Task<IActionResult> CreateTemplate([FromForm] EditCompanyModel model)
         {
 
@@ -121,18 +127,54 @@ namespace Ecco.Web.Controllers
             return View("MyCompany");
         }
 
-
-        [HttpGet("CreateCompany")]
-        public IActionResult CreateCompany()
+        [HttpGet("InviteEmployee")]
+        [Authorize(Roles = "Company Owner")]
+        public IActionResult InviteEmployeeToCompany()
         {
             return View();
         }
 
-        [Route("CompanyList")]
-        public IActionResult CompanyList()
+        [HttpPost("InviteEmployee")]
+        [Authorize(Roles = "Company Owner")]
+        public async Task<IActionResult> InviteEmployeeToCompany(InviteEmployeeModel model)
         {
-            var companies = _context.Companies.ToList();
-            return View(companies);
+            if (model != null)
+            {
+                var userToInvite = await _userManager.FindByNameAsync(model.Username);
+                var currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
+
+                Company company = _context.Companies.Single(x => x.OwnerId == new Guid(currentUser.Id));
+
+                if (_context.EmployeeInvitations.Any(x => x.UserId == new Guid(userToInvite.Id) && x.CompanyId == company.Id))
+                {
+                    return Content("This user has already been invited to " + company.CompanyName);
+                }
+
+                EmployeeInvitation invitationModel = new EmployeeInvitation()
+                {
+                    CompanyId = company.Id,
+                    Status = ConnectionConstants.PENDING,
+                    UserId = new Guid(userToInvite.Id)
+                };
+
+                _context.Add(invitationModel);
+                await _context.SaveChangesAsync();
+
+                _notifications.SendNotification("You have a new company invite!", await _userManager.FindByNameAsync(model.Username));
+
+                return Content("Succesfully invited user to " + company.CompanyName);
+            }
+            else
+            {
+                return Content("No input detected");
+            }
+        }
+
+        [HttpGet("CreateCompany")]
+        [Authorize()]
+        public IActionResult CreateCompany()
+        {
+            return View();
         }
 
         [HttpPost("CreateCompany")]
@@ -187,45 +229,12 @@ namespace Ecco.Web.Controllers
             return BadRequest();
         }
 
-        [HttpGet("InviteEmployee")]
-        public IActionResult InviteEmployeeToCompany()
+        [Authorize("Admin")]
+        [Route("CompanyList")]
+        public IActionResult CompanyList()
         {
-            return View();
-        }
-
-        [HttpPost("InviteEmployee")]
-        public async Task<IActionResult> InviteEmployeeToCompany(InviteEmployeeModel model)
-        {
-            if (model != null)
-            {
-                var userToInvite = await _userManager.FindByNameAsync(model.Username);
-                var currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
-
-                Company company = _context.Companies.Single(x => x.OwnerId == new Guid(currentUser.Id));
-
-                if (_context.EmployeeInvitations.Any(x => x.UserId == new Guid(userToInvite.Id) && x.CompanyId == company.Id))
-                {
-                    return Content("This user has already been invited to " + company.CompanyName);
-                }
-
-                EmployeeInvitation invitationModel = new EmployeeInvitation()
-                {
-                    CompanyId = company.Id,
-                    Status = ConnectionConstants.PENDING,
-                    UserId = new Guid(userToInvite.Id)
-                };
-
-                _context.Add(invitationModel);
-                await _context.SaveChangesAsync();
-
-                _notifications.SendNotification("You have a new company invite!", await _userManager.FindByNameAsync(model.Username));
-
-                return Content("Succesfully invited user to " + company.CompanyName);
-            }
-            else
-            {
-                return Content("No input detected");
-            }
+            var companies = _context.Companies.ToList();
+            return View(companies);
         }
     }
 }

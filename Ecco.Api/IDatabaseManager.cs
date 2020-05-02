@@ -2,6 +2,7 @@
 using Ecco.Entities.Company;
 using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,8 +14,8 @@ namespace Ecco.Api
         #region Identity
 
         void SetUrl(string url);
-        Task<bool> Login(string username, string password);
-        Task<bool> Register(string username, string email, string password, string confirmPassword);
+        Task<HttpResponseMessage> Login(string username, string password);
+        Task<HttpResponseMessage> Register(string username, string email, string password, string confirmPassword);
         Task<UserData> GetUserData();
         Task<UserData> GetUserData(Guid id);
         Task<UserData> GetUserData(string profileName);
@@ -66,6 +67,7 @@ namespace Ecco.Api
         Task<bool> AcceptEmployeeInvitation(Guid userId, int companyId);
         Task<bool> DenyEmployeeInvitation(Guid userId, int companyId);
         Task<List<EmployeeInvitation>> GetMyPendingEmployeeInvites(Guid userId);
+        Task<HttpResponseMessage> DeleteCompany(Company company);
 
         #endregion
 
