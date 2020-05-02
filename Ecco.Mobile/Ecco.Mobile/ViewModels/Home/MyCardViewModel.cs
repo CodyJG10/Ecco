@@ -4,6 +4,7 @@ using Ecco.Entities.Attributes;
 using Ecco.Mobile.AutoUpdate;
 using Ecco.Mobile.Models;
 using Ecco.Mobile.Util;
+using Ecco.Mobile.Views.Onboarding;
 using Ecco.Mobile.Views.Pages;
 using Ecco.Mobile.Views.Pages.Cards;
 using Nancy.TinyIoc;

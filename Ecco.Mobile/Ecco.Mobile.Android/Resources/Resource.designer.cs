@@ -12361,58 +12361,64 @@ namespace Ecco.Mobile.Droid
 			public const int notify_panel_notification_icon_bg = 2131165379;
 			
 			// aapt resource value: 0x7F0700C4
-			public const int popup_forms_android_close_icon = 2131165380;
+			public const int onboarding_card = 2131165380;
 			
 			// aapt resource value: 0x7F0700C5
-			public const int popup_forms_android_shadow = 2131165381;
+			public const int onboarding_create_card = 2131165381;
 			
 			// aapt resource value: 0x7F0700C6
-			public const int popup_forms_dark_theme_close_icon = 2131165382;
+			public const int popup_forms_android_close_icon = 2131165382;
 			
 			// aapt resource value: 0x7F0700C7
-			public const int popup_forms_light_theme_close_icon = 2131165383;
+			public const int popup_forms_android_shadow = 2131165383;
 			
 			// aapt resource value: 0x7F0700C8
-			public const int roundCornerButton = 2131165384;
+			public const int popup_forms_dark_theme_close_icon = 2131165384;
 			
 			// aapt resource value: 0x7F0700C9
-			public const int savebutton = 2131165385;
+			public const int popup_forms_light_theme_close_icon = 2131165385;
 			
 			// aapt resource value: 0x7F0700CA
-			public const int Separator = 2131165386;
+			public const int roundCornerButton = 2131165386;
 			
 			// aapt resource value: 0x7F0700CB
-			public const int sfclosebutton = 2131165387;
+			public const int savebutton = 2131165387;
 			
 			// aapt resource value: 0x7F0700CC
-			public const int shadow_effect = 2131165388;
+			public const int Separator = 2131165388;
 			
 			// aapt resource value: 0x7F0700CD
-			public const int styleinfo = 2131165389;
+			public const int sfclosebutton = 2131165389;
 			
 			// aapt resource value: 0x7F0700CE
-			public const int text_color_button = 2131165390;
+			public const int shadow_effect = 2131165390;
 			
 			// aapt resource value: 0x7F0700CF
-			public const int toolbaritem_background = 2131165391;
+			public const int styleinfo = 2131165391;
 			
 			// aapt resource value: 0x7F0700D0
-			public const int toolbaritem_pressed = 2131165392;
+			public const int text_color_button = 2131165392;
 			
 			// aapt resource value: 0x7F0700D1
-			public const int tooltip_frame_dark = 2131165393;
+			public const int toolbaritem_background = 2131165393;
 			
 			// aapt resource value: 0x7F0700D2
-			public const int tooltip_frame_light = 2131165394;
-			
-			// aapt resource value: 0x7F0700D4
-			public const int undoButton = 2131165396;
+			public const int toolbaritem_pressed = 2131165394;
 			
 			// aapt resource value: 0x7F0700D3
-			public const int undo_redo_background = 2131165395;
+			public const int tooltip_frame_dark = 2131165395;
+			
+			// aapt resource value: 0x7F0700D4
+			public const int tooltip_frame_light = 2131165396;
+			
+			// aapt resource value: 0x7F0700D6
+			public const int undoButton = 2131165398;
 			
 			// aapt resource value: 0x7F0700D5
-			public const int UpButton = 2131165397;
+			public const int undo_redo_background = 2131165397;
+			
+			// aapt resource value: 0x7F0700D7
+			public const int UpButton = 2131165399;
 			
 			static Drawable()
 			{

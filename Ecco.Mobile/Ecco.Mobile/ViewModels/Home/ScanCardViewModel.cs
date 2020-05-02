@@ -1,4 +1,5 @@
 ﻿using Ecco.Mobile.Views.NFC;
+using Ecco.Mobile.Views.Onboarding;
 using Ecco.Mobile.Views.Pages;
 using System;
 using System.Collections.Generic;
@@ -16,9 +17,11 @@ namespace Ecco.Mobile.ViewModels.Home
 
         public ScanCardViewModel()
         {
-            SendConnectionCommand = new Command(x => Application.Current.MainPage.Navigation.PushAsync(new SendCard()));
-            TestNfcCommand = new Command(x => Application.Current.MainPage.Navigation.PushAsync(new ReadTagPage()));
-            WriteTagCommand = new Command(x => Application.Current.MainPage.Navigation.PushAsync(new WriteTag()));
+            //SendConnectionCommand = new Command(x => Application.Current.MainPage.Navigation.PushAsync(new SendCard()));
+
+            SendConnectionCommand = new Command(x => Application.Current.MainPage.Navigation.PushModalAsync(new WelcomeModal()));
+
+            EccoCardCommand = new Command(x => Application.Current.MainPage.Navigation.PushAsync(new EccoCardPage()));
         }
     }
 }

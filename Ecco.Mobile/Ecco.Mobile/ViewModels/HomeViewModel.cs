@@ -2,6 +2,7 @@
 using Ecco.Entities;
 using Ecco.Mobile.AutoUpdate;
 using Ecco.Mobile.Dependencies;
+using Ecco.Mobile.Views.Onboarding;
 using Nancy.TinyIoc;
 using Newtonsoft.Json;
 using Plugin.Settings;
@@ -20,7 +21,7 @@ namespace Ecco.Mobile.ViewModels
             RegisterForPushNotifications();
             AutoUpdater autoUpdater = new AutoUpdater();
             TinyIoCContainer.Current.Register(autoUpdater);
-            autoUpdater.Start();
+            autoUpdater.Start();   
         }
 
         void RegisterForPushNotifications()

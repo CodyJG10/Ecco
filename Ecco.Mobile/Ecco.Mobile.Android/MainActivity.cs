@@ -26,7 +26,9 @@ namespace Ecco.Mobile.Droid
             base.OnCreate(savedInstanceState);
 
             CrossNFC.Init(this);
-            
+
+            Xamarin.Forms.Forms.SetFlags(new string[] { "IndicatorView_Experimental" });
+
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
 
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
