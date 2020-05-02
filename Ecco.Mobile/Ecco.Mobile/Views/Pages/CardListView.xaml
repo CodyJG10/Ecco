@@ -14,9 +14,11 @@
              xmlns:syncfusion="clr-namespace:Syncfusion.XForms.Expander;assembly=Syncfusion.Expander.XForms"
              xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
              xmlns:sfPopup="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusion.SfPopupLayout.XForms" 
-             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms" xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
              BackgroundColor="{DynamicResource Gray-White}"
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             xmlns:combobox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
              ios:Page.UseSafeArea="true">
 
     <ContentPage.Resources>
@@ -81,13 +83,49 @@
                                 </syncfusion:SfExpander.Header>
                                 <!-- Content -->
                                 <syncfusion:SfExpander.Content>
-                                    <Grid Padding="10,10,10,10" BackgroundColor="#FFFFFF">
+
+
+                                    <StackLayout>
+
+                                        <Grid>
+                                            
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+
+                                            <Label Text="Filter By:"
+                                                   HorizontalTextAlignment="Center"
+                                                   FontSize="Small"/>
+
+                                            <combobox:SfComboBox HeightRequest="40" 
+                                                                 x:Name="FilterComboBox"
+                                                                 MaximumDropDownHeight="200" 
+                                                                 IsEditableMode="false"
+                                                                 Grid.Column="1"
+                                                                 SelectionChanged="FilterComboBox_SelectionChanged"/>
+
+
+                                        </Grid>
+
+                                        <Grid Padding="10,10,10,10" BackgroundColor="#FFFFFF">
+                                        <SearchBar Placeholder="Cardholder Name" 
+                                                   x:Name="FilterInput"
+                                                   TextChanged="CardholderNameSearchbar_TextChanged"
+                                                   BackgroundColor="Transparent"
+                                                   TextColor="Black"/>
+                                        </Grid>
+
+                                    </StackLayout>
+
+                                    <!--<Grid Padding="10,10,10,10" BackgroundColor="#FFFFFF">
                                         <SearchBar Placeholder="Cardholder Name" 
                                                    x:Name="CardholderNameSearchbar"
                                                    TextChanged="CardholderNameSearchbar_TextChanged"
                                                    BackgroundColor="Transparent"
                                                    TextColor="Black"/>
-                                    </Grid>
+                                    </Grid>-->
                                 </syncfusion:SfExpander.Content>
                             </syncfusion:SfExpander>
                         </StackLayout>
@@ -135,7 +173,6 @@
                                     <DataTemplate>
                                         
                                         <Frame BackgroundColor="White"
-                                                Margin="8,8,8,0"
                                                 HasShadow="False"
                                                 CornerRadius="8">
                                                 

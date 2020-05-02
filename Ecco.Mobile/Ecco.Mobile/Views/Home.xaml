@@ -8,14 +8,14 @@
             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
             android:TabbedPage.ToolbarPlacement="Bottom"
             android:TabbedPage.BarSelectedItemColor="{DynamicResource PrimaryColor}"
-            android:TabbedPage.BarItemColor="{DynamicResource Gray-600}"
+            android:TabbedPage.BarItemColor="{StaticResource Gray-100}"
             android:TabbedPage.IsSwipePagingEnabled="False"
             ios:NavigationPage.HideNavigationBarSeparator="False"
-            BarBackgroundColor="White"
             NavigationPage.HasNavigationBar="False"
-            BackgroundColor="{DynamicResource Gray-Black}"
             xmlns:style="clr-namespace:Ecco.Mobile.Views"
-            xmlns:themes="clr-namespace:Ecco.Mobile.Themes">
+            xmlns:themes="clr-namespace:Ecco.Mobile.Themes"
+            BarTextColor="White"
+            BarBackgroundColor="{StaticResource NavbarBackground}">
 
     <TabbedPage.BindingContext>
         <viewmodels:HomeViewModel/>

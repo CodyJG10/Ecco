@@ -1,10 +1,14 @@
-﻿using Ecco.Mobile.Models;
+﻿using Ecco.Entities;
+using Ecco.Entities.Attributes;
+using Ecco.Mobile.Models;
 using Ecco.Mobile.ViewModels.Home;
 using Syncfusion.XForms.Buttons;
+using Syncfusion.XForms.ComboBox;
 using Syncfusion.XForms.PopupLayout;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -21,42 +25,20 @@ namespace Ecco.Mobile.Views.Pages
         public CardListView()
         {
             InitializeComponent();
+            InitFilterComboBox();
+        }
+
+        private void InitFilterComboBox()
+        {
+            List<string> filters = new List<string>();
+            filters.Add("Cardholder");
+            filters.Add("Service Category ");
+            FilterComboBox.ComboBoxSource = filters;
         }
 
         public void Refresh()
         { 
             (BindingContext as CardListViewModel).RefreshCommand.Execute(null);
-        }
-
-        private void CardholderNameSearchbar_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            var searchBar = (sender as SearchBar);
-            if (ConnectionsList.DataSource != null)
-            {
-                ConnectionsList.DataSource.Filter = FilterCards;
-                ConnectionsList.DataSource.RefreshFilter();
-            }
-        }
-
-        private bool FilterCards(object obj)
-        {
-            if (CardholderNameSearchbar.Text == null)
-                return true;
-
-            var connection = obj as ConnectionModel;
-            if (connection.Card.Card.FullName.ToLower().Contains(CardholderNameSearchbar.Text.ToLower()))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        private void ConnectionsList_SwipeStarted(object sender, Syncfusion.ListView.XForms.SwipeStartedEventArgs e)
-        {
-            _swipedCard = e.ItemData as ConnectionModel;
         }
 
         private void ButtonDeleteCard_Clicked(object sender, EventArgs e)
@@ -121,5 +103,93 @@ namespace Ecco.Mobile.Views.Pages
 
             popupLayout.Show();
         }
+
+        private void ConnectionsList_SwipeStarted(object sender, Syncfusion.ListView.XForms.SwipeStartedEventArgs e)
+        {
+            _swipedCard = e.ItemData as ConnectionModel;
+        }
+
+        #region Filtering 
+
+        private void CardholderNameSearchbar_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (ConnectionsList.DataSource != null)
+            {
+                switch(FilterComboBox.SelectedIndex)
+                {
+                    case 0:
+                        ConnectionsList.DataSource.Filter = FilterByCardholder;
+                        break;
+                    case 1:
+                        ConnectionsList.DataSource.Filter = FilterByService;
+                        break;
+                }
+
+                ConnectionsList.DataSource.RefreshFilter();
+            }
+        }
+
+        private bool FilterByCardholder(object obj)
+        {
+            if (FilterInput.Text == null)
+                return true;
+
+            var connection = obj as ConnectionModel;
+            if (connection.Card.Card.FullName.ToLower().Contains(FilterInput.Text.ToLower()))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private bool FilterByService(object obj)
+        {
+            if (FilterInput.Text == null)
+                return true;
+
+            string GetTitle(int id)
+            {
+                foreach (var field in typeof(ServiceTypes).GetFields())
+                {
+                    if ((int)field.GetValue(null) == id)
+                    {
+                        var attribute = field.GetCustomAttribute<ServiceInfo>();
+                        return attribute.Title;
+                    }
+                }
+                return null;
+            }
+
+            var connection = obj as ConnectionModel;
+            string query = FilterInput.Text.ToLower();
+            string cardServiceTypeTitle = GetTitle(connection.Card.Card.ServiceType).ToLower();
+            if (cardServiceTypeTitle.Contains(query))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        private void FilterComboBox_SelectionChanged(object sender, Syncfusion.XForms.ComboBox.SelectionChangedEventArgs e)
+        {
+            if (FilterComboBox.SelectedIndex == 0)
+            {
+                //Cardholder
+                FilterInput.Placeholder = "Cardholder Name";
+            }
+            if (FilterComboBox.SelectedIndex == 1)
+            {
+                //Service Category
+                FilterInput.Placeholder = "Service Category";
+            }
+        }
+
+        #endregion
     }
 }
