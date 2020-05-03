@@ -43,6 +43,7 @@ namespace Ecco.Mobile.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             new Syncfusion.SfAutoComplete.XForms.iOS.SfAutoCompleteRenderer();
+            Xamarin.Forms.Forms.SetFlags("IndicatorView_Experimental");
 
             global::Xamarin.Forms.Forms.Init();
 

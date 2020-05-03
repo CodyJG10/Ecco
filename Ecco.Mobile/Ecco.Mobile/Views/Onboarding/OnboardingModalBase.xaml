@@ -17,6 +17,12 @@
         </ResourceDictionary>
     </ContentView.Resources>
 
+    <ContentView.Margin>
+        <OnPlatform x:TypeArguments="Thickness">
+            <On Platform="iOS" Value="0,35,0,0" />
+        </OnPlatform>
+    </ContentView.Margin>
+    
     <ContentView.Content>
         <Grid>
             <Grid.RowDefinitions>

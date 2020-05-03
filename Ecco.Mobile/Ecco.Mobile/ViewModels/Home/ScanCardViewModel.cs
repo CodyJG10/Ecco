@@ -1,6 +1,7 @@
 ﻿using Ecco.Mobile.Views.NFC;
 using Ecco.Mobile.Views.Onboarding;
 using Ecco.Mobile.Views.Pages;
+using Plugin.Settings;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,7 +19,9 @@ namespace Ecco.Mobile.ViewModels.Home
         {
             //SendConnectionCommand = new Command(x => Application.Current.MainPage.Navigation.PushAsync(new SendCard()));
 
-            SendConnectionCommand = new Command(x => Application.Current.MainPage.Navigation.PushModalAsync(new WelcomeModal()));
+            //SendConnectionCommand = new Command(x => Application.Current.MainPage.Navigation.PushModalAsync(new WelcomeModal()));
+
+            SendConnectionCommand = new Command(x => CrossSettings.Current.Clear());
 
             EccoCardCommand = new Command(x => Application.Current.MainPage.Navigation.PushAsync(new EccoCardPage()));
         }

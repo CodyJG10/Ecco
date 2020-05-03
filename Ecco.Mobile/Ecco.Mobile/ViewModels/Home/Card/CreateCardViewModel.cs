@@ -85,8 +85,8 @@ namespace Ecco.Mobile.ViewModels.Home
         }
 
         private void ShowOnboarding()
-        { 
-            Application.Current.MainPage.Navigation.PushModalAsync(new CreateCardModal());
+        {
+            OnboardingUtil.ShowOnboardingIfNotSeenBefore(new CreateCardModal());
         }
 
         private void TemplateSelected(TemplateModel templateModel)
