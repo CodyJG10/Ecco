@@ -19,6 +19,7 @@ namespace Ecco.Mobile.Views
         public Home()
         {
             InitializeComponent();
+            HomePage.CurrentPage = HomePage.Children[2];
         }
 
         private void TabbedPage_CurrentPageChanged(object sender, EventArgs e)
@@ -30,10 +31,14 @@ namespace Ecco.Mobile.Views
             }
 
             if (HomePage.CurrentPage.GetType() == typeof(CardListView))
-            { 
+            {
                 Application.Current.MainPage.Navigation.PushModalAsync(new ConnectionsModal());
             }
 
+            else if (HomePage.CurrentPage.GetType() == typeof(MyCardView))
+            { 
+                Application.Current.MainPage.Navigation.PushModalAsync(new MyCardsModal());
+            }
         }
     }
 }

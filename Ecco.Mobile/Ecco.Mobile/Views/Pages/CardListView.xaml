@@ -53,14 +53,6 @@
                                 Command="{Binding ViewPendingConnectionsCommand}"/>
                         </StackLayout>
 
-                        <!-- No Pending Connections Label -->
-                        <StackLayout IsVisible="{Binding HasPendingConnections, Converter={StaticResource inverter}}">
-                            <Label Text="You have no pending cards to accept!"
-                                   HorizontalTextAlignment="Center"
-                                   FontSize="Small"
-                                   Style="{StaticResource HeaderLabelStyle}"/>
-                        </StackLayout>
-
                         <!-- Connections Label -->
                         <Label Text="Connections" 
                                 HorizontalTextAlignment="Center" 

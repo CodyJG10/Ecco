@@ -3,6 +3,7 @@ using Ecco.Entities;
 using Ecco.Entities.Attributes;
 using Ecco.Mobile.Models;
 using Ecco.Mobile.Util;
+using Ecco.Mobile.Views.Onboarding;
 using Ecco.Mobile.Views.Pages.Cards;
 using Nancy.TinyIoc;
 using Newtonsoft.Json;
@@ -79,6 +80,13 @@ namespace Ecco.Mobile.ViewModels.Home
             TemplateSelectedCommand = new Command<TemplateModel>(TemplateSelected);
 
             LoadTemplates();
+
+            ShowOnboarding();
+        }
+
+        private void ShowOnboarding()
+        { 
+            Application.Current.MainPage.Navigation.PushModalAsync(new CreateCardModal());
         }
 
         private void TemplateSelected(TemplateModel templateModel)

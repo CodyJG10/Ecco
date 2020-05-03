@@ -14,16 +14,11 @@ namespace Ecco.Mobile.ViewModels.Home.Card
 {
     public class CreateCardEditorViewModel : LoadingViewModel
     {
-        private IDatabaseManager _db;
-        private UserData _userData;
-
         public CreateCardModel Model { get; set; }
 
-        public CreateCardEditorViewModel(CreateCardModel model)
+        public CreateCardEditorViewModel(CreateCardModel model) : base()
         {
             Model = model;
-            _db = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
-            _userData = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
         }
 
         public async void CreateCard()
