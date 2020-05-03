@@ -8,12 +8,12 @@ namespace Ecco.Mobile.Util
 {
     public static class OnboardingUtil
     {
-        public static void ShowOnboardingIfNotSeenBefore(ContentPage page)
+        public static async void ShowOnboardingIfNotSeenBefore(ContentPage page)
         {
             string keyName = "Onboarding_" + page.GetType().Name;
             if (!OnboardingHasBeenShown(keyName))
             {
-                Application.Current.MainPage.Navigation.PushModalAsync(page);
+                await Application.Current.MainPage.Navigation.PushModalAsync(page);
                 SetOnboardingHasBeenShown(keyName);
             }
         }

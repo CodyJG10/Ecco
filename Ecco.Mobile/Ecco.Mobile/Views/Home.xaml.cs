@@ -16,15 +16,21 @@ namespace Ecco.Mobile.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Home : TabbedPage
     {
+        private bool _isFirstLaunch = true;
+
         public Home()
         {
             InitializeComponent();
-            HomePage.CurrentPage = HomePage.Children[2];
-            OnboardingUtil.ShowOnboardingIfNotSeenBefore(new WelcomeModal());
         }
 
         private void TabbedPage_CurrentPageChanged(object sender, EventArgs e)
         {
+            if (_isFirstLaunch)
+            {
+                _isFirstLaunch = false;
+                return;
+            }
+
             if (HomePage.CurrentPage.GetType() == typeof(CardListView))
             {
                 OnboardingUtil.ShowOnboardingIfNotSeenBefore(new ConnectionsModal());
@@ -33,6 +39,17 @@ namespace Ecco.Mobile.Views
             else if (HomePage.CurrentPage.GetType() == typeof(MyCardView))
             {
                 OnboardingUtil.ShowOnboardingIfNotSeenBefore(new MyCardsModal());
+            }
+        }
+
+        private bool _shownWelcomeModal = false;
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            if (_shownWelcomeModal == false)
+            { 
+                OnboardingUtil.ShowOnboardingIfNotSeenBefore(new WelcomeModal());
+                _shownWelcomeModal = true;
             }
         }
     }

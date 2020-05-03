@@ -314,9 +314,30 @@
   <ItemGroup>
     <BundleResource Include="Resources\ecco_logo.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\onboarding_filter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\onboarding_info.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\onboarding_management.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\onboarding_network.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\onboarding_share.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\onboarding_templates.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\onboarding_editor.png" />
+  </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties XamarinHotReloadDebuggerTimeoutExceptionEccoMobileiOSHideInfoBar="True" XamarinHotReloadWrongLinkerErrorInfoBarEccoMobileiOSHideInfoBar="True" />
+      <UserProperties XamarinHotReloadWrongLinkerErrorInfoBarEccoMobileiOSHideInfoBar="True" XamarinHotReloadDebuggerTimeoutExceptionEccoMobileiOSHideInfoBar="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

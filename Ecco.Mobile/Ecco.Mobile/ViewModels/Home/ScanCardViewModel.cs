@@ -17,12 +17,7 @@ namespace Ecco.Mobile.ViewModels.Home
 
         public ScanCardViewModel()
         {
-            //SendConnectionCommand = new Command(x => Application.Current.MainPage.Navigation.PushAsync(new SendCard()));
-
-            //SendConnectionCommand = new Command(x => Application.Current.MainPage.Navigation.PushModalAsync(new WelcomeModal()));
-
-            SendConnectionCommand = new Command(x => CrossSettings.Current.Clear());
-
+            SendConnectionCommand = new Command(x => Application.Current.MainPage.Navigation.PushAsync(new SendCard()));
             EccoCardCommand = new Command(x => Application.Current.MainPage.Navigation.PushAsync(new EccoCardPage()));
         }
     }

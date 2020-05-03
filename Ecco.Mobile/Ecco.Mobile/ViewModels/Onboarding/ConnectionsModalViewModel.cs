@@ -20,21 +20,21 @@ namespace Ecco.Mobile.ViewModels.Onboarding
                 {
                     Title = "The Connections Page",
                     Content = "The Connections page allows you to easily manage, interact, & navigate the Ecco business cards you've recieved",
-                    ImageUrl = "ecco_logo.png"
+                    ImageUrl = "onboarding_network.png"
                 },
                 new OnboardingOverviewModel
                 {
                     Title = "Easily Organize & Find Other People's Business Cards",
                     Content = "Looking for a spefic person or maybe a certain service? \n" +
                               "With the filter dropdown, you can easily filter and view cards in your network to your specifications.",
-                    ImageUrl = "onboarding_create_card.png"
+                    ImageUrl = "onboarding_filter.png"
                 },
                 new OnboardingOverviewModel
                 {
                     Title = "Get In Contact With Someone",
                     Content = "With just a simple tap of anybody's card, you can easily reach get in contact" +
                               "in the form of a phone call, email, and even add the person to your phones contact list with a single tap!",
-                    ImageUrl = "onboarding_card"
+                    ImageUrl = "onboarding_share.png"
                 }
             };
         }

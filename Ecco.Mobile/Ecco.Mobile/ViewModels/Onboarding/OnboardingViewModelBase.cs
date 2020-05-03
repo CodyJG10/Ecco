@@ -17,6 +17,7 @@ namespace Ecco.Mobile.ViewModels.Onboarding
             set
             {
                 position = value;
+                OnPropertyChanged(nameof(Position));
                 UpdateSkipButtonText();
             }
         }

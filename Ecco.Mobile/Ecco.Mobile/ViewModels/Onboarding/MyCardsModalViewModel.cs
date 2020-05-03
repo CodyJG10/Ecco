@@ -18,28 +18,22 @@ namespace Ecco.Mobile.ViewModels.Onboarding
                 {
                     Title = "The My Cards Page",
                     Content = "The My Cards page allows you to create, edit, manage, & share your Ecco business cards.",
-                    ImageUrl = "ecco_logo.png"
+                    ImageUrl = "onboarding_card.png"
                 },
                 new OnboardingOverviewModel
                 {
                     Title = "Manage Your Cards",
                     Content = "A quick swipe on any of your cards will reveal options to delete or edit your card.",
-                    ImageUrl = "onboarding_create_card.png"
+                    ImageUrl = "onboarding_management.png"
                 },
                 new OnboardingOverviewModel
                 {
                     Title = "Share Your Card",
                     Content = "Easily share your cards with other people by tapping your card of choice. \n" + 
                               "To allow for the most versabliity, you can share your cards via any method such as link, email, text, and of course, a physical Ecco Card!",
-                    ImageUrl = "onboarding_card"
+                    ImageUrl = "onboarding_share.png"
                 }
             };
         }
-
-        //"All you have to do is: \n" +
-        //                     "1 - Provide some basic info \n" +
-        //                     "2 - Select the template of your choice \n" +
-        //                     "3 - Customize the content, look, & feel of your card \n \n" +
-        //                     "And just like that, your ready to grow your network and share your new business card!
     }
 }
