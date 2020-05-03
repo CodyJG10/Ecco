@@ -33,11 +33,8 @@
                                   Command="{Binding SendConnectionCommand}"
                                   BackgroundColor="Black"
                                   Opacity="0.75"
-                                  HasShadow="True">
-                    <buttons:SfButton.Text>
-                        <x:String>Send Card By Username</x:String>
-                    </buttons:SfButton.Text>
-                </buttons:SfButton>
+                                  HasShadow="True"
+                                  Text="Send A Card"/>
 
                 <buttons:SfButton HorizontalOptions="Center"
                                   Margin="75"

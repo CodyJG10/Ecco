@@ -27,14 +27,15 @@ xmlns:popuplayout="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusi
                               WidthRequest="250"
                               FontSize="Large"
                               CornerRadius="5"
-                              Command="{Binding CreateCardCommand}"
-                              Style="{StaticResource SfButtonStyle}"/>
+                              BackgroundColor="{StaticResource PrimaryDarkColor}"
+                              FontFamily="{StaticResource Montserrat-SemiBold}"
+                              Command="{Binding CreateCardCommand}"/>
 
             <!-- My Cards Header -->
             <Label Text="My Cards" 
                    HorizontalOptions="Center"
                    FontSize="Large"
-                   Style="{StaticResource HeaderLabelStyle}"
+                   FontFamily="{StaticResource Montserrat-SemiBold}"
                    TextColor="{StaticResource PrimaryColor}"/>
 
             <pulltorefresh:SfPullToRefresh IsRefreshing="{Binding Loading}"
