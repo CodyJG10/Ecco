@@ -76,7 +76,6 @@
                                 <!-- Content -->
                                 <syncfusion:SfExpander.Content>
 
-
                                     <StackLayout>
 
                                         <Grid>
@@ -93,6 +92,7 @@
 
                                             <combobox:SfComboBox HeightRequest="40" 
                                                                  x:Name="FilterComboBox"
+                                                                 WidthRequest="300"
                                                                  MaximumDropDownHeight="200" 
                                                                  IsEditableMode="false"
                                                                  Grid.Column="1"
