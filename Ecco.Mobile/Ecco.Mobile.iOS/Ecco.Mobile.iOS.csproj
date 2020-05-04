@@ -218,58 +218,58 @@
       <Version>6.0.1</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Buttons">
-      <Version>18.1.0.45</Version>
+      <Version>18.1.0.46</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Core">
-      <Version>18.1.0.45</Version>
+      <Version>18.1.0.46</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.DataSource">
-      <Version>18.1.0.45</Version>
+      <Version>18.1.0.46</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Expander">
-      <Version>18.1.0.45</Version>
+      <Version>18.1.0.46</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.GridCommon">
-      <Version>18.1.0.45</Version>
+      <Version>18.1.0.46</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfAutoComplete">
-      <Version>18.1.0.45</Version>
+      <Version>18.1.0.46</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfBackdrop">
-      <Version>18.1.0.45</Version>
+      <Version>18.1.0.46</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfBadgeView">
-      <Version>18.1.0.45</Version>
+      <Version>18.1.0.46</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfBarcode">
-      <Version>18.1.0.45</Version>
+      <Version>18.1.0.46</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator">
-      <Version>18.1.0.45</Version>
+      <Version>18.1.0.46</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfComboBox">
-      <Version>18.1.0.45</Version>
+      <Version>18.1.0.46</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfDataForm">
-      <Version>18.1.0.45</Version>
+      <Version>18.1.0.46</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfImageEditor">
-      <Version>18.1.0.45</Version>
+      <Version>18.1.0.46</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfListView">
-      <Version>18.1.0.45</Version>
+      <Version>18.1.0.46</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfMaskedEdit">
       <Version>18.1.0.46</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfPicker">
-      <Version>18.1.0.45</Version>
+      <Version>18.1.0.46</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfPopupLayout">
-      <Version>18.1.0.45</Version>
+      <Version>18.1.0.46</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfPullToRefresh">
-      <Version>18.1.0.45</Version>
+      <Version>18.1.0.46</Version>
     </PackageReference>
     <PackageReference Include="Xam.Plugins.Settings">
       <Version>3.1.1</Version>
@@ -277,7 +277,7 @@
     <PackageReference Include="Xamarin.Azure.NotificationHubs.iOS">
       <Version>2.0.4</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="4.5.0.657" />
+    <PackageReference Include="Xamarin.Forms" Version="4.6.0.726" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.1" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
@@ -337,7 +337,7 @@
   </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties XamarinHotReloadWrongLinkerErrorInfoBarEccoMobileiOSHideInfoBar="True" XamarinHotReloadDebuggerTimeoutExceptionEccoMobileiOSHideInfoBar="True" />
+      <UserProperties XamarinHotReloadDebuggerTimeoutExceptionEccoMobileiOSHideInfoBar="True" XamarinHotReloadWrongLinkerErrorInfoBarEccoMobileiOSHideInfoBar="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
