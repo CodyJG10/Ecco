@@ -69,6 +69,7 @@
     <CodesignKey>Apple Distribution: Cody Gordon (WG3574SASP)</CodesignKey>
     <CodesignProvision>Ecco Space Distribution</CodesignProvision>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <MtouchExtraArgs>--optimize=experimental-xforms-product-type</MtouchExtraArgs>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'Default' ">
     <AppExtensionDebugBundleId />
