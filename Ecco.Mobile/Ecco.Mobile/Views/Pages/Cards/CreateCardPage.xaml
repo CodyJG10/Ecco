@@ -15,7 +15,10 @@ xmlns:dataform="clr-namespace:Syncfusion.XForms.DataForm;assembly=Syncfusion.SfD
              xmlns:control="clr-namespace:Ecco.Mobile.Controls" 
              xmlns:converter="clr-namespace:Ecco.Mobile.Converters"
              xmlns:popup="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusion.SfPopupLayout.XForms"
-             xmlns:Picker="clr-namespace:Syncfusion.SfPicker.XForms;assembly=Syncfusion.SfPicker.XForms" xmlns:xforms="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms">
+             xmlns:Picker="clr-namespace:Syncfusion.SfPicker.XForms;assembly=Syncfusion.SfPicker.XForms"
+             xmlns:xforms="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             ios:Page.UseSafeArea="True">
 
     <popup:SfPopupLayout x:Name="PopupLayout">
 
@@ -62,6 +65,13 @@ xmlns:dataform="clr-namespace:Syncfusion.XForms.DataForm;assembly=Syncfusion.SfD
                              ShowFooter="False"
                              VerticalOptions="FillAndExpand"
                              HorizontalOptions="FillAndExpand">
+
+                <!--<popup:PopupView.Margin>
+                    <OnPlatform x:TypeArguments="Thickness">
+                        <On Platform="iOS" Value="0,30,0,0" />
+                    </OnPlatform>
+                </popup:PopupView.Margin>-->
+                
                 <popup:PopupView.ContentTemplate>
                     <DataTemplate>
                         <StackLayout>
