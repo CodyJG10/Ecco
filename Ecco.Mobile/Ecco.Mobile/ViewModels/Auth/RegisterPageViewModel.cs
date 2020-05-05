@@ -34,6 +34,7 @@ namespace Ecco.Mobile.ViewModels.Auth
 
         public async Task<Task> Register()
         {
+            if (Loading) return;
             Loading = true;
             var registrationResponse = await _database.Register(Username, Email, Password, ConfirmPasswordText);
             if (registrationResponse.IsSuccessStatusCode)
