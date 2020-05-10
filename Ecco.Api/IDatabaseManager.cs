@@ -22,6 +22,9 @@ namespace Ecco.Api
         Task<bool> UserExists(string userName);
         void ForgotPassword(string email);
         Task<UserData> GetUserDataByEmail(string email);
+        Task<bool> TokenIsValid();
+        Task<HttpResponseMessage> RefreshToken(string token, string refreshToken);
+        void SetToken(string token);
 
         #endregion
 

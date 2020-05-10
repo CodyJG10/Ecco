@@ -96,5 +96,23 @@ namespace Ecco.Api
         {
             client.GetAsync("auth/ForgotPassword?email=" + email);
         }
+
+        public async Task<bool> TokenIsValid()
+        {
+            var response = await client.GetAsync("auth/testtoken");
+            return response.IsSuccessStatusCode;
+        }
+        
+        public async Task<HttpResponseMessage> RefreshToken(string token, string refreshToken)
+        {
+            var formContent = new FormUrlEncodedContent(new[]
+            {
+                new KeyValuePair<string, string>("token", token),
+                new KeyValuePair<string, string>("refreshtoken", refreshToken)
+            });
+
+            var result = await client.PostAsync("auth/RefreshToken", formContent);
+            return result;
+        }
     }
 }

@@ -85,6 +85,8 @@ namespace Ecco.Web
             string notificationHubConnectionString = Configuration.GetConnectionString("NotificationHub");
             services.AddSingleton(typeof(NotificationService), new NotificationService("Ecco-Space", notificationHubConnectionString));
 
+            services.AddSingleton(typeof(IdentityService), new IdentityService(SigningKey));
+
             services.AddSession();
 
             services.AddLiveReload(config => 

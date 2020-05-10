@@ -7,6 +7,7 @@ using Ecco.Mobile.Views;
 using Ecco.Mobile.Views.Authentication;
 using Ecco.Mobile.Views.NFC;
 using Ecco.Mobile.Views.Pages.Cards;
+using Nancy.Diagnostics;
 using Nancy.TinyIoc;
 using Newtonsoft.Json;
 using Plugin.Settings;
@@ -29,27 +30,35 @@ namespace Ecco.Mobile
             InitDatabase();
             
             MainPage = new LoadingPage();
-            if (!CrossSettings.Current.GetValueOrDefault("Username", "_").Equals("_"))
+
+            if (!CrossSettings.Current.GetValueOrDefault("RefreshToken", "_").Equals("_"))
             {
-                AutoLogin();
+                RefreshToken();
             }
-            else
+            else 
             {
                 MainPage = new LoginPage();
             }
         }
 
-        private async void AutoLogin()
+        private async void RefreshToken()
         {
-            string username = CrossSettings.Current.GetValueOrDefault("Username", "");
-            string password = CrossSettings.Current.GetValueOrDefault("Password", "");
+            string refreshToken = CrossSettings.Current.GetValueOrDefault("RefreshToken", "_");
+            string token = CrossSettings.Current.GetValueOrDefault("Token", "_");
             var db = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
-            var loginResponse = await db.Login(username, password);
-            if (loginResponse.IsSuccessStatusCode)
+            var response = await db.RefreshToken(token, refreshToken);
+            if (response.IsSuccessStatusCode)
             {
+                var contentString = await response.Content.ReadAsStringAsync();
+                var content = JsonConvert.DeserializeObject<IdentityResponse>(contentString);
+                var newToken = content.Token;
+                var newRefreshToken = content.RefreshToken;
+                db.SetToken(token);
+                CrossSettings.Current.AddOrUpdateValue("RefreshToken", newRefreshToken);
+                CrossSettings.Current.AddOrUpdateValue("Token", newToken);
                 MainPage = new NavigationPage(new Home());
             }
-            else
+            else 
             {
                 MainPage = new LoginPage();
                 await MainPage.DisplayAlert("Authentication Error", "You have been logged out", "Ok");

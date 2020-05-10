@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
@@ -31,19 +32,14 @@ namespace Ecco.Web.Controllers
         private UserManager<EccoUser> _userManager;
         private IEmailSender _emailSender;
         private ApplicationDbContext _context;
+        private IdentityService _identityService;
 
-        public AuthController(UserManager<EccoUser> userManager, IEmailSender emailSender, ApplicationDbContext context)
+        public AuthController(UserManager<EccoUser> userManager, IEmailSender emailSender, ApplicationDbContext context, IdentityService identityService)
         {
             _userManager = userManager;
             _emailSender = emailSender;
             _context = context;
-        }
-
-        public async Task<IActionResult> Test()
-        {
-            var user = await _userManager.FindByNameAsync("epicemail10@gmail.com");
-            await _userManager.AddToRoleAsync(user, "Company Owner");
-            return Content("Added user to role");
+            _identityService = identityService;
         }
 
         [HttpPost("token")]
@@ -53,30 +49,22 @@ namespace Ecco.Web.Controllers
             var user = await _userManager.FindByNameAsync(model.Username);
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
-
-                var authClaims = new[]
-                {
-                    new Claim(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Sub, user.UserName),
-                    new Claim(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-                };
-
-                var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Startup.SigningKey));
-
-                var token = new JwtSecurityToken(
-                    issuer: "https://localhost:44355",
-                    audience: "https://localhost:44355",
-                    expires: DateTime.Now.AddDays(1),
-                    claims: authClaims,
-                    signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
-                    );
-
+                var token = _identityService.GenerateToken(user);
                 string tokenText = new JwtSecurityTokenHandler().WriteToken(token);
-                var expirationText = token.ValidTo;
+
+                var refreshToken = _identityService.GenerateRefreshToken();
+                user.RefreshToken = refreshToken;
+                _context.Update(user);
+                _context.SaveChanges();
+
+                string expirationString = token.Claims.Single(x => x.Type == "exp").Value;
+                DateTimeOffset dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(long.Parse(expirationString));
 
                 return Ok(new
                 {
                     token = tokenText,
-                    expiration = expirationText
+                    refreshToken,
+                    expiration = dateTimeOffset
                 });
             }
             ModelState.AddModelError("", "Your email or password did not match any users. Please verify you have entered the right credentials.");
@@ -126,7 +114,7 @@ namespace Ecco.Web.Controllers
                 pageHandler: null,
                 values: new { area = "Identity", userId = user.Id, code = code },
                 protocol: Request.Scheme);
-             
+
             await _emailSender.SendEmailAsync(user.UserName, "Welcome To Ecco Space!",
                 $"Thank you for signing up to Ecco Space! Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
@@ -163,7 +151,7 @@ namespace Ecco.Web.Controllers
 
         [HttpGet("UserData")]
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        public async Task<string> GetUserData(string id = null, string profileName = null, string email = null) 
+        public async Task<string> GetUserData(string id = null, string profileName = null, string email = null)
         {
             if (id != null)
             {
@@ -193,7 +181,9 @@ namespace Ecco.Web.Controllers
         [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IActionResult TestToken()
         {
-            return Ok("You're authorized!");
+            var allClaims = User.Claims.ToList();
+            var username = allClaims.First(c => c.Type.Contains("nameidentifier")).Value;
+            return Ok("You're authorized as " + username);
         }
 
         [HttpGet("ForgotPassword")]
@@ -213,6 +203,40 @@ namespace Ecco.Web.Controllers
                 email,
                 "Reset Password",
                 $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+        }
+
+        [HttpPost("RefreshToken")]
+        public IActionResult RefreshToken([FromForm]string token, [FromForm]string refreshToken)
+        {
+            var principal = _identityService.GetPrincipalFromExpiredToken(token);
+            var username = principal.Identity.Name;
+
+            var allClaims = principal.Claims.ToList();
+            var name = allClaims.First(c => c.Type.Contains("nameidentifier")).Value;
+            var user = _context.Users.Single(x => x.UserName == name);
+
+            var savedRefreshToken = user.RefreshToken; 
+            if (savedRefreshToken != refreshToken)
+                throw new SecurityTokenException("Invalid refresh token");
+            
+            var newJwtToken = _identityService.GenerateToken(user);
+            var newRefreshToken = _identityService.GenerateRefreshToken();
+
+            user.RefreshToken = newRefreshToken;
+            _context.Update(user);
+            _context.SaveChanges();
+
+            string tokenText = new JwtSecurityTokenHandler().WriteToken(newJwtToken);
+
+            string expirationString = newJwtToken.Claims.Single(x => x.Type == "exp").Value;
+            DateTimeOffset dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(long.Parse(expirationString));
+
+            return new ObjectResult(new
+            {
+                token = tokenText,
+                refreshToken = newRefreshToken,
+                expiration = dateTimeOffset
+            });
         }
     }
 }

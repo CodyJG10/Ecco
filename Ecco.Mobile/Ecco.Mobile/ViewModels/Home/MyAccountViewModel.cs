@@ -52,6 +52,7 @@ namespace Ecco.Mobile.ViewModels.Home
             CrossSettings.Current.Remove("UserData");
             CrossSettings.Current.Remove("Username");
             CrossSettings.Current.Remove("Password");
+            CrossSettings.Current.Remove("RefreshToken");
             (TinyIoCContainer.Current.Resolve<AutoUpdater>()).Stop();
             TinyIoCContainer.Current.Unregister(typeof(AutoUpdater));
             Application.Current.MainPage = new LoginPage();
