@@ -13,6 +13,7 @@ using Plugin.Settings;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Essentials;
@@ -62,11 +63,9 @@ namespace Ecco.Mobile.ViewModels.Home
             ShareCardCommand = new Command<CardModel>(ShareCard);
 
             LoadCards();
-
-            InitAutoUpdate();
         }
 
-        private void InitAutoUpdate()
+        public void SubscribeAutoUpdates()
         {
             MessagingCenter.Instance.Subscribe<AutoUpdater, string>(this, AutoUpdater.CARDS, (sender, json) =>
             {
@@ -78,6 +77,11 @@ namespace Ecco.Mobile.ViewModels.Home
                 }
             });
         }
+
+        public void UnsubscribeAutoUpdates() 
+        {
+            MessagingCenter.Instance.Unsubscribe<AutoUpdater>(this, AutoUpdater.CARDS);
+        }        
 
         private async void LoadCards()
         {

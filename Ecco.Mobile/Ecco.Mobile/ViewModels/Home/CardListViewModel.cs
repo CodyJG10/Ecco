@@ -103,8 +103,6 @@ namespace Ecco.Mobile.ViewModels.Home
             SelectCardCommand = new Command<CardModel>(x => Application.Current.MainPage.Navigation.PushAsync(new ViewCardPage(x)));
 
             Load();
-
-            InitAutoUpdate();
         }
 
         private async void Load()
@@ -115,7 +113,7 @@ namespace Ecco.Mobile.ViewModels.Home
             Loading = false;
         }
 
-        private void InitAutoUpdate()
+        public void SubscribeAutoUpdates()
         {
             MessagingCenter.Instance.Subscribe<AutoUpdater, string>(this, AutoUpdater.CONNECTIONS, (sender, json) =>
             {
@@ -137,6 +135,12 @@ namespace Ecco.Mobile.ViewModels.Home
                     Refresh();
                 }
             });
+        }
+
+        public void UnsubscribeAutoUpdates() 
+        {
+            MessagingCenter.Instance.Unsubscribe<AutoUpdater>(this, AutoUpdater.CONNECTIONS);
+            MessagingCenter.Instance.Unsubscribe<AutoUpdater>(this, AutoUpdater.CONNECTION_INVITATION);
         }
 
         #region Loading

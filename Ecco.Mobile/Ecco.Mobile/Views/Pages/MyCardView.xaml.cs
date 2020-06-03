@@ -18,6 +18,8 @@ namespace Ecco.Mobile.Views.Pages
     {
         private CardModel _swipedCard;
 
+        private MyCardViewModel ViewModel { get { return BindingContext as MyCardViewModel; } } 
+
         public MyCardView()
         {
             InitializeComponent();
@@ -94,6 +96,18 @@ namespace Ecco.Mobile.Views.Pages
         private void ButtonEditCard_Clicked(object sender, EventArgs e)
         {
             (BindingContext as MyCardViewModel).EditCardCommand.Execute(_swipedCard);
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            ViewModel.SubscribeAutoUpdates();
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            ViewModel.UnsubscribeAutoUpdates();
         }
     }
 }

@@ -22,6 +22,8 @@ namespace Ecco.Mobile.Views.Pages
     {
         private ConnectionModel _swipedCard;
 
+        private MyCardViewModel ViewModel { get { return BindingContext as MyCardViewModel; } }
+
         public CardListView()
         {
             InitializeComponent();
@@ -191,5 +193,17 @@ namespace Ecco.Mobile.Views.Pages
         }
 
         #endregion
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            ViewModel.SubscribeAutoUpdates();
+        }
+
+        protected override void OnDisappearing()
+        {
+            base.OnDisappearing();
+            ViewModel.UnsubscribeAutoUpdates();
+        }
     }
 }
