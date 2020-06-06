@@ -26,6 +26,7 @@ namespace Ecco.Mobile.Droid
 		
 		public static void UpdateIdValues()
 		{
+			global::Microsoft.Azure.Amqp.Resource.String.ApplicationName = global::Ecco.Mobile.Droid.Resource.String.ApplicationName;
 			global::Plugin.Permissions.Resource.Attribute.alpha = global::Ecco.Mobile.Droid.Resource.Attribute.alpha;
 			global::Plugin.Permissions.Resource.Attribute.coordinatorLayoutStyle = global::Ecco.Mobile.Droid.Resource.Attribute.coordinatorLayoutStyle;
 			global::Plugin.Permissions.Resource.Attribute.font = global::Ecco.Mobile.Droid.Resource.Attribute.font;

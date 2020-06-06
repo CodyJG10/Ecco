@@ -26,17 +26,22 @@ namespace Ecco.Web.Controllers
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class ApiController : ControllerBase
     {
-        private ApplicationDbContext _context;
+        private readonly ApplicationDbContext _context;
         private readonly UserManager<EccoUser> _userManager;
         private readonly NotificationService _notifications;
         private readonly IEmailSender _emailSender;
+        private readonly EventsHubService _eventsHubService;
 
-        public ApiController(ApplicationDbContext context, UserManager<EccoUser> userManager, NotificationService notificationService, IEmailSender emailSender)
+        public ApiController(ApplicationDbContext context, UserManager<EccoUser> userManager,
+            NotificationService notificationService, 
+            IEmailSender emailSender,
+            EventsHubService eventsHubService)
         {
             _context = context;
             _userManager = userManager;
             _notifications = notificationService;
             _emailSender = emailSender;
+            _eventsHubService = eventsHubService;
         }
 
         #region Auth
@@ -168,7 +173,7 @@ namespace Ecco.Web.Controllers
             var to = await _userManager.FindByIdAsync(toId);
 
             _notifications.SendNotification(from.ProfileName + " has sent you their business card!", to);
-
+            _eventsHubService.SendEvent("{CONNECTION_CREATED}");
             return Ok();
         }
 
@@ -188,6 +193,7 @@ namespace Ecco.Web.Controllers
             var to = await _userManager.FindByIdAsync(connection.ToId.ToString());
 
             _notifications.SendNotification(to.ProfileName + " has accepted you business card connection!", from);
+            _eventsHubService.SendEvent("{CONNECTION_CREATED}");
 
             return Ok();
         }
@@ -200,6 +206,7 @@ namespace Ecco.Web.Controllers
                 var connection = _context.Connections.Single(x => x.Id == connectionId);
                 _context.Remove(connection);
                 await _context.SaveChangesAsync();
+                _eventsHubService.SendEvent("{CONNECTION_DELETED}");
                 return Ok();
             }
             catch (Exception)
@@ -215,6 +222,7 @@ namespace Ecco.Web.Controllers
             {
                 _context.Add(connection);
                 await _context.SaveChangesAsync();
+                _eventsHubService.SendEvent("{CONNECTION_CREATED}");
                 return Ok();
             }
             else
@@ -233,7 +241,7 @@ namespace Ecco.Web.Controllers
 
             _context.Connections.Remove(connection);
             await _context.SaveChangesAsync();
-
+            _eventsHubService.SendEvent("{CONNECTION_DELETED}");
             return Ok();
         }
 

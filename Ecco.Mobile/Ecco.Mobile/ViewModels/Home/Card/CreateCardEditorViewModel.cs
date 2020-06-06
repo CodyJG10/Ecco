@@ -1,13 +1,9 @@
 ﻿using Ecco.Api;
 using Ecco.Entities;
 using Ecco.Entities.Attributes;
+using Ecco.Mobile.AutoUpdate;
 using Ecco.Mobile.Models;
 using Nancy.TinyIoc;
-using Newtonsoft.Json;
-using Plugin.Settings;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xamarin.Forms;
 
 namespace Ecco.Mobile.ViewModels.Home.Card
@@ -55,6 +51,7 @@ namespace Ecco.Mobile.ViewModels.Home.Card
             {
                 await Application.Current.MainPage.Navigation.PopAsync();
                 await Application.Current.MainPage.Navigation.PopAsync();
+                TinyIoCContainer.Current.Resolve<AutoUpdater>().UpdateUserCard();
             }
             else
             {

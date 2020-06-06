@@ -91,6 +91,8 @@ namespace Ecco.Mobile.ViewModels.Home
         public ICommand DeleteConnectionCommand { get; set; }
         public ICommand SelectCardCommand { get; set; }
 
+        private bool _isAutoUpdating = false;
+
         public CardListViewModel()
         {
             _db = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
@@ -101,6 +103,8 @@ namespace Ecco.Mobile.ViewModels.Home
             RefreshCommand = new Command(Refresh);
             DeleteConnectionCommand = new Command<ConnectionModel>(DeleteConnection);
             SelectCardCommand = new Command<CardModel>(x => Application.Current.MainPage.Navigation.PushAsync(new ViewCardPage(x)));
+
+            SubscribeAutoUpdates();
 
             Load();
         }
@@ -115,6 +119,8 @@ namespace Ecco.Mobile.ViewModels.Home
 
         public void SubscribeAutoUpdates()
         {
+            if (_isAutoUpdating)
+                return;
             MessagingCenter.Instance.Subscribe<AutoUpdater, string>(this, AutoUpdater.CONNECTIONS, (sender, json) =>
             {
                 if (Loading) return;
@@ -135,12 +141,15 @@ namespace Ecco.Mobile.ViewModels.Home
                     Refresh();
                 }
             });
+
+            _isAutoUpdating = true;
         }
 
         public void UnsubscribeAutoUpdates() 
         {
             MessagingCenter.Instance.Unsubscribe<AutoUpdater>(this, AutoUpdater.CONNECTIONS);
             MessagingCenter.Instance.Unsubscribe<AutoUpdater>(this, AutoUpdater.CONNECTION_INVITATION);
+            _isAutoUpdating = false;
         }
 
         #region Loading

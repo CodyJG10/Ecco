@@ -16,11 +16,15 @@ namespace Ecco.Web.Controllers
     {
         private readonly NotificationService _notifications;
         private readonly UserManager<EccoUser> _userManager;
+        private readonly EventsHubService _eventsHubService;
 
-        public NotificationsController(NotificationService notifications, UserManager<EccoUser> userManager)
+        public NotificationsController(NotificationService notifications, 
+            UserManager<EccoUser> userManager,
+            EventsHubService eventsHubService)
         {
             _notifications = notifications;
             _userManager = userManager;
+            _eventsHubService = eventsHubService;
         }
 
         [HttpGet("Register")]
@@ -62,6 +66,13 @@ namespace Ecco.Web.Controllers
             var user = await _userManager.FindByNameAsync(model.Username);
             _notifications.SendNotification(model.Message, user); 
             return RedirectToAction("Send");
+        }
+
+        [HttpGet("TestEvents")]
+        public IActionResult TestEvents(string content)
+        {
+            _eventsHubService.SendEvent(content);
+            return Ok("Succesfully sent");
         }
     }
 }

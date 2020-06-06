@@ -87,6 +87,9 @@ namespace Ecco.Web
 
             services.AddSingleton(typeof(IdentityService), new IdentityService(SigningKey));
 
+            string eventsHubConnectionString = Configuration.GetConnectionString("EventsHub");
+            services.AddSingleton(typeof(EventsHubService), new EventsHubService(eventsHubConnectionString));
+
             services.AddSession();
 
             services.AddLiveReload(config => 

@@ -62,6 +62,8 @@ namespace Ecco.Mobile.ViewModels.Home
             SelectCardCommand = new Command<CardModel>(x => Application.Current.MainPage.Navigation.PushAsync(new MyCard(x)));
             ShareCardCommand = new Command<CardModel>(ShareCard);
 
+            SubscribeAutoUpdates();
+
             LoadCards();
         }
 
@@ -77,11 +79,6 @@ namespace Ecco.Mobile.ViewModels.Home
                 }
             });
         }
-
-        public void UnsubscribeAutoUpdates() 
-        {
-            MessagingCenter.Instance.Unsubscribe<AutoUpdater>(this, AutoUpdater.CARDS);
-        }        
 
         private async void LoadCards()
         {

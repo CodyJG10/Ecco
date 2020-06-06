@@ -1,4 +1,5 @@
 ﻿using Ecco.Api;
+using Ecco.Api.Events;
 using Ecco.Entities;
 using Ecco.Mobile.ViewModels.Home;
 using Nancy.TinyIoc;
@@ -15,11 +16,8 @@ namespace Ecco.Mobile.AutoUpdate
     public class AutoUpdater
     {
         private readonly IDatabaseManager _db;
-        private Thread thread;
-        private UserData _userData;
-
-        private bool running = true;
-        public const int delay = 3000;
+        private readonly UserData _userData;
+        private readonly CloudEventListener listener;
 
         public const string CARDS = "Cards";
         public const string CONNECTIONS = "Connections";
@@ -29,49 +27,47 @@ namespace Ecco.Mobile.AutoUpdate
         {
             _db = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
             _userData = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
+            listener = new CloudEventListener()
+            {
+                EventHubConnectionString = "Endpoint=sb://ecco-space-events.servicebus.windows.net/;SharedAccessKeyName=main;SharedAccessKey=9b1iT0P8sq2MFjbPiFiNf9WTpbIia4/MmLh5jwvTOaM=;EntityPath=ecco-events",
+                EventHubName = "ecco-events",
+                StorageConnectionString = "DefaultEndpointsProtocol=https;AccountName=eccocloudstorage;AccountKey=sQD+1r+ZLTGWgFG70k2E7mZOLuX6pM1bAI94pjm2+tSUcnySJKP6rwwxs5rAQIksUivQkVpPv0lW7UyOorjx/g==;EndpointSuffix=core.windows.net",
+                StorageContainerName = "events"
+            };
+            listener.InitClient();
         }
 
         public void Start()
         {
-            ThreadStart threadStart = new ThreadStart(() =>
-            {
-                CheckForUpdates();
-            });
-            thread = new Thread(threadStart);
-            thread.Start();
+            CloudEventListener.OnCloudEventReceived += CloudEventListener_CloudEventReceivedEvent;
+        }
+
+        private void CloudEventListener_CloudEventReceivedEvent(string msg)
+        {
+            ReceiveUserConnections();
+            ReceiveUserPendingConnections();
         }
 
         public void Stop()
         {
-            running = false;
+            CloudEventListener.OnCloudEventReceived -= CloudEventListener_CloudEventReceivedEvent;
         }
 
-        private void CheckForUpdates()
-        {
-            while (running)
-            {
-                Thread.Sleep(delay);
-                RecieveUserCards();
-                RecieveUserConnections();
-                RecieveUserPendingConnections();
-            }
-        }
-
-        private async void RecieveUserCards()
-        {
-            var cards = await _db.GetMyCards(_userData.Id.ToString());
-            string json = JsonConvert.SerializeObject(cards);
-            MessagingCenter.Send(this, CARDS, json);
-        }
-
-        private async void RecieveUserConnections()
+        private async void ReceiveUserConnections()
         {
             var connections = await _db.GetMyConnections(_userData.Id);
             string json = JsonConvert.SerializeObject(connections);
             MessagingCenter.Send(this, CONNECTIONS, json);
         }
 
-        private async void RecieveUserPendingConnections()
+        public async void UpdateUserCard() 
+        {
+            var cards = await _db.GetMyCards(_userData.Id.ToString());
+            string json = JsonConvert.SerializeObject(cards);
+            MessagingCenter.Send(this, CARDS, json);
+        }
+
+        private async void ReceiveUserPendingConnections()
         {
             var connections = await _db.GetMyPendingConnections(_userData.Id);
             string json = JsonConvert.SerializeObject(connections);
