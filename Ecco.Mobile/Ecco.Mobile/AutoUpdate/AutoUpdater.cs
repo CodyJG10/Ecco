@@ -1,4 +1,5 @@
 ﻿using Ecco.Api;
+using Ecco.Api.Events;
 using Ecco.Entities;
 using Ecco.Entities.Events;
 using Ecco.Mobile.ViewModels.Home;

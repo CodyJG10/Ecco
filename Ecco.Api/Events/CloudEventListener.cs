@@ -8,75 +8,76 @@ using Azure.Messaging.EventHubs;
 using Azure.Messaging.EventHubs.Consumer;
 using Azure.Messaging.EventHubs.Processor;
 using System.Diagnostics.Contracts;
+using System.Net;
 
 namespace Ecco.Api.Events
 {
-    //public class CloudEventListener
-    //{
-    //    public delegate void CloudEventReceived(string message);
-    //    public static event CloudEventReceived OnCloudEventReceived;
+    public class CloudEventListener 
+    { 
+        public delegate void CloudEventReceived(string message);
+        public static event CloudEventReceived OnCloudEventReceived;
 
-    //    private readonly string eventHubConnectionString;
-    //    private readonly string eventHubName;
-    //    private readonly string storageContainerName;
-    //    private readonly string storageConnectionString;
+        private readonly EventProcessorClient eventProcessor;
 
-    //    private EventProcessorClient eventProcessor;
+        public CloudEventListener(string eventHubConnectionString,
+                                    string eventHubName,
+                                    string storageContainerName,
+                                    string storageConnectionString)
+        {
+            string consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
+            BlobContainerClient storageClient = new BlobContainerClient(storageConnectionString, storageContainerName);
 
-    //    public CloudEventListener(string eventHubConnectionString,
-    //                              string eventHubName,
-    //                              string storageContainerName,
-    //                              string storageConnectionString)
-    //    {
-    //        this.eventHubConnectionString = eventHubConnectionString;
-    //        this.eventHubName = eventHubName;
-    //        this.storageConnectionString = storageConnectionString;
-    //        this.storageContainerName = storageContainerName;
-    //        InitClient();
-    //    }
+            var processorOptions = new EventProcessorClientOptions
+            {
+                ConnectionOptions = new EventHubConnectionOptions
+                {
+                    TransportType = EventHubsTransportType.AmqpWebSockets,
+                    Proxy = (IWebProxy)null
+                },
 
-    //    public async void InitClient()
-    //    {
-    //        string consumerGroup = EventHubConsumerClient.DefaultConsumerGroupName;
-    //        BlobContainerClient storageClient = new BlobContainerClient(storageConnectionString, storageContainerName);
-    //        eventProcessor = new EventProcessorClient(storageClient, consumerGroup, eventHubConnectionString, eventHubName);
+                RetryOptions = new EventHubsRetryOptions
+                {
+                    MaximumRetries = 5,
+                    TryTimeout = TimeSpan.FromMinutes(1)
+                }
+            };
 
-    //        eventProcessor.ProcessEventAsync += EventProcessor_ProcessEventAsync; ;
-    //        eventProcessor.ProcessErrorAsync += EventProcessor_ProcessErrorAsync;
+            eventProcessor = new EventProcessorClient(storageClient, consumerGroup, eventHubConnectionString, eventHubName, processorOptions);
 
-    //        try
-    //        {
-    //            await eventProcessor.StartProcessingAsync();
-    //        }
-    //        catch (Exception e)
-    //        {
-    //            Console.WriteLine(e.Message);
-    //        }
-    //    }
+            eventProcessor.ProcessEventAsync += EventProcessor_ProcessEventAsync; ;
+            eventProcessor.ProcessErrorAsync += EventProcessor_ProcessErrorAsync;
+        }
 
-    //    private Task EventProcessor_ProcessErrorAsync(ProcessErrorEventArgs arg)
-    //    {
-    //        return Task.CompletedTask;
-    //    }
+        private Task EventProcessor_ProcessErrorAsync(ProcessErrorEventArgs arg)
+        {
+            return Task.CompletedTask;
+        }
 
-    //    private async Task<Task> EventProcessor_ProcessEventAsync(ProcessEventArgs arg)
-    //    {
-    //        var data = arg.Data;
-    //        string msg = Encoding.UTF8.GetString(data.Body.ToArray());
-    //        OnCloudEventReceived?.Invoke(msg);
-    //        await arg.UpdateCheckpointAsync(arg.CancellationToken);
-    //        Console.WriteLine(msg);
-    //        return Task.CompletedTask;
-    //    }
+        private async Task<Task> EventProcessor_ProcessEventAsync(ProcessEventArgs arg)
+        {
+            try
+            {
+                var data = arg.Data;
+                string msg = Encoding.UTF8.GetString(data.Body.ToArray());
+                OnCloudEventReceived?.Invoke(msg);
+                await arg.UpdateCheckpointAsync(arg.CancellationToken);
+                Console.WriteLine(msg);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            return Task.CompletedTask;
+        }
 
-    //    public async void Stop()
-    //    {
-    //        await eventProcessor.StopProcessingAsync();
-    //    }
+        public async void Stop()
+        {
+            await eventProcessor.StopProcessingAsync();
+        }
 
-    //    public async void Start()
-    //    {
-    //        await eventProcessor.StartProcessingAsync();
-    //    }
-    //}
+        public async void Start()
+        {
+            await eventProcessor.StartProcessingAsync();
+        }
+    }
 }
