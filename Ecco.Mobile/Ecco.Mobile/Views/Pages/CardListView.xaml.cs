@@ -193,19 +193,5 @@ namespace Ecco.Mobile.Views.Pages
         }
 
         #endregion
-
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-            if(ViewModel != null)
-                ViewModel.SubscribeAutoUpdates();
-        }
-
-        protected override void OnDisappearing()
-        {
-            base.OnDisappearing();
-            if (ViewModel != null)
-                ViewModel.UnsubscribeAutoUpdates();
-        }
     }
 }

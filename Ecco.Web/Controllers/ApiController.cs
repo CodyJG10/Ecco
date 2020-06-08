@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Ecco.Entities;
 using Ecco.Entities.Company;
 using Ecco.Entities.Constants;
+using Ecco.Entities.Events;
 using Ecco.Web.Areas.Identity;
 using Ecco.Web.Data;
 using Ecco.Web.Models;
@@ -173,7 +174,12 @@ namespace Ecco.Web.Controllers
             var to = await _userManager.FindByIdAsync(toId);
 
             _notifications.SendNotification(from.ProfileName + " has sent you their business card!", to);
-            _eventsHubService.SendEvent("{CONNECTION_CREATED}");
+            UpdateEvent e = new UpdateEvent()
+            {
+                User = to.UserName,
+                Message = "Connection Created"
+            };
+            _eventsHubService.SendEvent(e);
             return Ok();
         }
 
@@ -193,8 +199,6 @@ namespace Ecco.Web.Controllers
             var to = await _userManager.FindByIdAsync(connection.ToId.ToString());
 
             _notifications.SendNotification(to.ProfileName + " has accepted you business card connection!", from);
-            _eventsHubService.SendEvent("{CONNECTION_CREATED}");
-
             return Ok();
         }
 
@@ -206,7 +210,6 @@ namespace Ecco.Web.Controllers
                 var connection = _context.Connections.Single(x => x.Id == connectionId);
                 _context.Remove(connection);
                 await _context.SaveChangesAsync();
-                _eventsHubService.SendEvent("{CONNECTION_DELETED}");
                 return Ok();
             }
             catch (Exception)
@@ -222,7 +225,13 @@ namespace Ecco.Web.Controllers
             {
                 _context.Add(connection);
                 await _context.SaveChangesAsync();
-                _eventsHubService.SendEvent("{CONNECTION_CREATED}");
+                var to = await _userManager.FindByIdAsync(connection.Id.ToString());
+                UpdateEvent e = new UpdateEvent()
+                {
+                    User = to.UserName,
+                    Message = "Connection Created"
+                };
+                _eventsHubService.SendEvent(e);
                 return Ok();
             }
             else
@@ -241,7 +250,6 @@ namespace Ecco.Web.Controllers
 
             _context.Connections.Remove(connection);
             await _context.SaveChangesAsync();
-            _eventsHubService.SendEvent("{CONNECTION_DELETED}");
             return Ok();
         }
 

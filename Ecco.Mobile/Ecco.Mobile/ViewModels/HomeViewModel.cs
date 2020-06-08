@@ -20,7 +20,6 @@ namespace Ecco.Mobile.ViewModels
         {
             RegisterForPushNotifications();
             AutoUpdater autoUpdater = new AutoUpdater();
-            TinyIoCContainer.Current.Register(autoUpdater);
             autoUpdater.Start();   
         }
 

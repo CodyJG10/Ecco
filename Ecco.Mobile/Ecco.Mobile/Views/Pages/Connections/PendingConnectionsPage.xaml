@@ -12,10 +12,6 @@
              ios:Page.UseSafeArea="true"
              BackgroundColor="White">
 
-    <ContentPage.BindingContext>
-        <viewModels:PendingConnectionsViewModel/>
-    </ContentPage.BindingContext>
-    
     <ContentPage.Content>
         <StackLayout>
 

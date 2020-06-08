@@ -71,7 +71,7 @@ namespace Ecco.Web.Controllers
         [HttpGet("TestEvents")]
         public IActionResult TestEvents(string content)
         {
-            _eventsHubService.SendEvent(content);
+            _eventsHubService.SendEvent(null);
             return Ok("Succesfully sent");
         }
     }

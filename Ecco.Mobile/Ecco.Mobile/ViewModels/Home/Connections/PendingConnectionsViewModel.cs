@@ -5,6 +5,7 @@ using Ecco.Mobile.Util;
 using Nancy.TinyIoc;
 using Newtonsoft.Json;
 using Plugin.Settings;
+using Syncfusion.DataSource.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,8 +25,11 @@ namespace Ecco.Mobile.ViewModels.Home.Connections
         public ICommand DeletePendingConnectionCommand { get; set; }
         public ICommand RefreshCommand { get; set; }
 
-        public PendingConnectionsViewModel() : base()
+        private Action _reloadConnections;
+
+        public PendingConnectionsViewModel(Action reloadConnections) : base()
         {
+            _reloadConnections = reloadConnections;
             AcceptPendingConnectionCommand = new Command<Connection>(AcceptPendingConnection);
             DeletePendingConnectionCommand = new Command<Connection>(DeletePendingConnection);
             RefreshCommand = new Command(LoadPendingConnections);
@@ -69,6 +73,7 @@ namespace Ecco.Mobile.ViewModels.Home.Connections
             {
                 Console.WriteLine("Succesfully accepted connection request");
                 LoadPendingConnections();
+                _reloadConnections();
             }
             else
             {
@@ -82,6 +87,7 @@ namespace Ecco.Mobile.ViewModels.Home.Connections
             if (succesful)
             {
                 LoadPendingConnections();
+                _reloadConnections();
             }
             else
             { 
