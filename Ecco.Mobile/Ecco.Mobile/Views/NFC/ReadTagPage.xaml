@@ -14,16 +14,24 @@
     </ContentPage.BindingContext>
     
     <ContentPage.Content>
-        <StackLayout>
-
+        <StackLayout Margin="15">
+            
             <Label Text="Tap an Ecco Card to your phone to read the card!"
-                   VerticalOptions="Start"
+                   LineBreakMode="WordWrap"
+                   HorizontalOptions="Center"
                    FontSize="Large"
-                   Margin="5"
-                   Style="{StaticResource HeaderLabelStyle}"
+                   FontFamily="{StaticResource Montserrat-SemiBold}"
+                   TextColor="{StaticResource PrimaryColor}"
                    HorizontalTextAlignment="Center"/>
-
-            <buttons:SfButton Text="Begin Reading"
+            
+            <buttons:SfButton Text="Begin Reading" 
+                              HorizontalOptions="Center"
+                              Margin="0,15"
+                              WidthRequest="250"
+                              FontSize="Large"
+                              CornerRadius="5"
+                              BackgroundColor="{StaticResource PrimaryDarkColor}"
+                              FontFamily="{StaticResource Montserrat-SemiBold}"
                               Command="{Binding BeginReadingCommand}"/>
 
         </StackLayout>

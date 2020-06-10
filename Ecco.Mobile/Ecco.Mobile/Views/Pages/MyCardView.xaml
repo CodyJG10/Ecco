@@ -29,7 +29,7 @@ xmlns:popuplayout="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusi
 
     <ContentPage.Content>
         <StackLayout>
-            
+
             <buttons:SfButton Text="Create Card" 
                               HorizontalOptions="Center"
                               Margin="0,15"
@@ -39,13 +39,6 @@ xmlns:popuplayout="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusi
                               BackgroundColor="{StaticResource PrimaryDarkColor}"
                               FontFamily="{StaticResource Montserrat-SemiBold}"
                               Command="{Binding CreateCardCommand}"/>
-
-            <!-- My Cards Header -->
-            <!--<Label Text="My Cards" 
-                   HorizontalOptions="Center"
-                   FontSize="Large"
-                   FontFamily="{StaticResource Montserrat-SemiBold}"
-                   TextColor="{StaticResource PrimaryColor}"/>-->
 
             <pulltorefresh:SfPullToRefresh IsRefreshing="{Binding Loading}"
                                            RefreshCommand="{Binding RefreshCommand}"
@@ -57,16 +50,16 @@ xmlns:popuplayout="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusi
                 <!-- My Cards List -->
                 <pulltorefresh:SfPullToRefresh.PullableContent>
 
-                    <StackLayout>
+                    <StackLayout Spacing="25">
 
                         <border:SfBorder HorizontalOptions="FillAndExpand" 
                                          VerticalOptions="FillAndExpand"
-                                         BorderWidth="0.5"
-                                         CornerRadius="2"
+                                         CornerRadius="5"
+                                         BackgroundColor="Transparent"
                                          BorderColor="Transparent"
                                          HasShadow="True">
 
-                            <StackLayout BackgroundColor="GhostWhite">
+                            <StackLayout BackgroundColor="White">
 
                                 <!-- has active card view -->
                                 <StackLayout IsVisible="{Binding HasActiveCard}"
@@ -99,6 +92,7 @@ xmlns:popuplayout="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusi
 
                                     <Label Text="You have not yet set an active card."
                                            HorizontalOptions="CenterAndExpand"
+                                           HorizontalTextAlignment="Center"
                                            VerticalOptions="CenterAndExpand"
                                            FontSize="Large"
                                            FontFamily="{StaticResource Montserrat-SemiBold}"
@@ -110,12 +104,13 @@ xmlns:popuplayout="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusi
 
                         </border:SfBorder>
 
-                        <border:SfBorder HorizontalOptions="Center" 
-                                         VerticalOptions="Center"
+                        <!-- All Cards List -->
+                        <border:SfBorder HorizontalOptions="FillAndExpand" 
+                                         VerticalOptions="FillAndExpand"
                                          BorderColor="Transparent"
                                          CornerRadius="2"
-                                         BackgroundColor="White"
-                                         HasShadow="True">
+                                         HasShadow="True"
+                                         ShadowColor="Black">
 
                             <StackLayout BackgroundColor="White">
 
@@ -130,6 +125,7 @@ xmlns:popuplayout="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusi
                                                      ItemSpacing="0,0,0,5"
                                                      ItemSize="200"
                                                      SelectionMode="None"
+                                                     BackgroundColor="GhostWhite"
                                                      x:Name="CardList" 
                                                      SwipeStarted="CardList_SwipeStarted">
 

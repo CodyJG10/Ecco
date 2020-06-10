@@ -62,9 +62,14 @@ namespace Ecco.Api
         {
             var response = await client.GetAsync("api/ActiveCard?userId=" + userId);
             var content = await response.Content.ReadAsStringAsync();
-            if (content == null)
+            try
+            {
+                return await GetCard(int.Parse(content));
+            }
+            catch (Exception)
+            {
                 return null;
-            return await GetCard(int.Parse(content));
+            }
         }
 
         public async Task<HttpResponseMessage> UpdateActiveCard(string userId, string cardId)

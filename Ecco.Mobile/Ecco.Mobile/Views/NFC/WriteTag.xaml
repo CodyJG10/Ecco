@@ -6,7 +6,7 @@
              xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.NFC"
              xmlns:listviews="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
              xmlns:card="clr-namespace:Ecco.Mobile.Views.Card" 
-             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms" xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
              mc:Ignorable="d"
              x:Class="Ecco.Mobile.Views.NFC.WriteTag">
 
@@ -17,12 +17,22 @@
     <ContentPage.Content>
         <StackLayout>
 
-            <Label Text="Program your profile onto your Ecco Card. Your active card will be transferred when you tap your Ecco Card to another device. You can set your active card on the My Cards page."
-                   LineBreakMode="WordWrap"
-                   HorizontalOptions="Center"
-                   FontSize="Large"
-                   FontFamily="{StaticResource Montserrat-SemiBold}"
-                   TextColor="{StaticResource PrimaryColor}"/>
+            <border:SfBorder CornerRadius="5"
+                             BackgroundColor="White"
+                             BorderColor="Transparent"
+                             HasShadow="True"
+                             Margin="15"
+                             Padding="15">
+
+                <Label Text="Program your profile onto your Ecco Card. Your active card will be transferred when you tap your Ecco Card to another device. You can set your active card on the My Cards page."
+                       LineBreakMode="WordWrap"
+                       HorizontalOptions="Center"
+                       FontSize="Large"
+                       FontFamily="{StaticResource Montserrat-SemiBold}"
+                       TextColor="{StaticResource PrimaryColor}"
+                       HorizontalTextAlignment="Center"/>
+            
+            </border:SfBorder>
 
             <buttons:SfButton Text="Write" 
                               HorizontalOptions="Center"

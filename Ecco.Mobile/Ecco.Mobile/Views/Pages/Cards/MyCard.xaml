@@ -20,13 +20,12 @@
             <card:Card BindingContext="{Binding CardModel}"
                        Margin="15"/>
 
-            <border:SfBorder HorizontalOptions="FillAndExpand" 
-                             VerticalOptions="FillAndExpand"
-                             BorderWidth="0.5"
+            <border:SfBorder BorderWidth="0.5"
                              CornerRadius="2"
                              BorderColor="Transparent"
                              HasShadow="True"
-                             BackgroundColor="White">
+                             BackgroundColor="White"
+                             Margin="25">
 
                 <StackLayout VerticalOptions="FillAndExpand"
                              HorizontalOptions="FillAndExpand">
@@ -45,14 +44,14 @@
                     <StackLayout IsVisible="{Binding IsActiveCard, Converter={StaticResource BoolConverter}}">
 
                         <sfbutton:SfButton Text="Set As Active Card" 
-                              HorizontalOptions="Center"
-                              Margin="0,15"
-                              WidthRequest="250"
-                              FontSize="Large"
-                              CornerRadius="5"
-                              FontFamily="{StaticResource Montserrat-SemiBold}"
-                              Command="{Binding SetAsActiveCardCommand}"/>
-                        
+                                           HorizontalOptions="Center"
+                                           Margin="0,15"
+                                           WidthRequest="250"
+                                           FontSize="Large"
+                                           CornerRadius="5"
+                                           FontFamily="{StaticResource Montserrat-SemiBold}"
+                                           Command="{Binding SetAsActiveCardCommand}"/>  
+
                     </StackLayout>
                     
                 </StackLayout>
