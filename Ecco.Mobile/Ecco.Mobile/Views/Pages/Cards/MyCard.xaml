@@ -2,25 +2,80 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:card="clr-namespace:Ecco.Mobile.Views.Card" xmlns:sfbarcode="clr-namespace:Syncfusion.SfBarcode.XForms;assembly=Syncfusion.SfBarcode.XForms" xmlns:sfbutton="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:card="clr-namespace:Ecco.Mobile.Views.Card" 
+             xmlns:sfbarcode="clr-namespace:Syncfusion.SfBarcode.XForms;assembly=Syncfusion.SfBarcode.XForms" 
+             xmlns:sfbutton="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms" xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms" xmlns:converters="clr-namespace:Ecco.Mobile.Converters"
              mc:Ignorable="d"
              x:Class="Ecco.Mobile.Views.Pages.Cards.MyCard"
              Title="My Card">
+
+    <ContentPage.Resources>
+        <converters:NegateBooleanValue x:Key="BoolConverter"/>
+    </ContentPage.Resources>
+    
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Margin="5">
 
             <card:Card BindingContext="{Binding CardModel}"
                        Margin="15"/>
 
+            <border:SfBorder HorizontalOptions="FillAndExpand" 
+                             VerticalOptions="FillAndExpand"
+                             BorderWidth="0.5"
+                             CornerRadius="2"
+                             BorderColor="Transparent"
+                             HasShadow="True"
+                             BackgroundColor="White">
+
+                <StackLayout VerticalOptions="FillAndExpand"
+                             HorizontalOptions="FillAndExpand">
+
+                    <StackLayout IsVisible="{Binding IsActiveCard}">
+
+                        <Label Text="This is your active card"
+                               HorizontalOptions="CenterAndExpand"
+                               VerticalOptions="CenterAndExpand"
+                               FontSize="Large"
+                               FontFamily="{StaticResource Montserrat-SemiBold}"
+                               TextColor="{StaticResource PrimaryColor}"/>
+                        
+                    </StackLayout>
+
+                    <StackLayout IsVisible="{Binding IsActiveCard, Converter={StaticResource BoolConverter}}">
+
+                        <sfbutton:SfButton Text="Set As Active Card" 
+                              HorizontalOptions="Center"
+                              Margin="0,15"
+                              WidthRequest="250"
+                              FontSize="Large"
+                              CornerRadius="5"
+                              FontFamily="{StaticResource Montserrat-SemiBold}"
+                              Command="{Binding SetAsActiveCardCommand}"/>
+                        
+                    </StackLayout>
+                    
+                </StackLayout>
+                
+            </border:SfBorder>
+            
             <sfbarcode:SfBarcode Text="{Binding QrCodeUrl}"
                                  BackgroundColor="Transparent"
                                  Symbology="QRCode"
-                                 HorizontalOptions="Center"/>
+                                 HorizontalOptions="Center"
+                                 x:Name="QrCode">
+                <sfbarcode:SfBarcode.SymbologySettings>
+
+                    <sfbarcode:QRBarcodeSettings XDimension="4"/>
+
+                </sfbarcode:SfBarcode.SymbologySettings>
+            </sfbarcode:SfBarcode>
 
             <sfbutton:SfButton HorizontalOptions="Center"
                                Text="Share Card"
                                Command="{Binding ShareCommand}"
-                               WidthRequest="115"/>
+                               WidthRequest="115"
+                               CornerRadius="5"/>
 
         </StackLayout>
     </ContentPage.Content>

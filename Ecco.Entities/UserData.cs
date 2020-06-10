@@ -11,5 +11,6 @@ namespace Ecco.Entities
         public Guid Id { get; set; }
         public string UserName { get; set; }
         public string ProfileName { get; set; }
+        public string ActiveCard { get; set; }
     }
 }

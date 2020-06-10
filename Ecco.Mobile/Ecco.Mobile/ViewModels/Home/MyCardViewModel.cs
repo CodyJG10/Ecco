@@ -39,6 +39,32 @@ namespace Ecco.Mobile.ViewModels.Home
                 OnPropertyChanged(nameof(Cards));
             }
         }
+        private CardModel _activeCard;
+        public CardModel ActiveCard 
+        {
+            get
+            {
+                return _activeCard;
+            }
+            set
+            {
+                _activeCard = value;
+                OnPropertyChanged(nameof(ActiveCard));
+            }
+        }
+        private bool _hasActiveCard;
+        public bool HasActiveCard
+        {
+            get
+            {
+                return _hasActiveCard;
+            }
+            set
+            {
+                _hasActiveCard = value;
+                OnPropertyChanged(nameof(HasActiveCard));
+            }
+        }
 
         #endregion
 
@@ -73,10 +99,7 @@ namespace Ecco.Mobile.ViewModels.Home
             {
                 if (Loading) return;
                 var cards = JsonConvert.DeserializeObject<List<Entities.Card>>(json);
-                if (Cards.Count != cards.Count)
-                {
-                    LoadCards();
-                }
+                LoadCards();
             });
         }
 
@@ -84,6 +107,7 @@ namespace Ecco.Mobile.ViewModels.Home
         {
             Loading = true;
 
+            //Load all cards
             if (Cards != null) Cards.Clear();
 
             var user = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
@@ -99,6 +123,18 @@ namespace Ecco.Mobile.ViewModels.Home
             }
 
             Cards = cardModels;
+
+            //Load active card data
+            var activeCard = await _db.GetActiveCard(_userData.Id.ToString());
+            if (activeCard != null)
+            {
+                ActiveCard = CardModel.FromCard(activeCard, _userData);
+                HasActiveCard = true;
+            }
+            else
+            {
+                HasActiveCard = false;
+            }
 
             Loading = false;
         }

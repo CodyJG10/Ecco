@@ -1,6 +1,7 @@
 ﻿using Ecco.Mobile.Models;
 using Ecco.Mobile.ViewModels.Home;
 using Ecco.Mobile.ViewModels.Home.Card;
+using Syncfusion.SfBarcode.XForms;
 using System;
 using System.Collections.Generic;
 using System.Linq;

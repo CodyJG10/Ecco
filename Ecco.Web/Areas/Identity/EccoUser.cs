@@ -11,5 +11,6 @@ namespace Ecco.Web.Areas.Identity
         public string ProfileName { get; set; }
         public int PushNotificationProvider { get; set; }
         public string RefreshToken { get; set; }
+        public string ActiveCard { get; set; }
     }
 }

@@ -36,6 +36,8 @@ namespace Ecco.Api
         Task<IEnumerable<Card>> GetMyCards(string id);
         Task<bool> EditCard(Card card);
         Task<bool> DeleteCard(Card card);
+        Task<Card> GetActiveCard(string userId);
+        Task<HttpResponseMessage> UpdateActiveCard(string userId, string cardId);
 
         #endregion
 

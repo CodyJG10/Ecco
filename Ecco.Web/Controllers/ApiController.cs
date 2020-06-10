@@ -122,6 +122,23 @@ namespace Ecco.Web.Controllers
             return Ok();
         }
 
+        [HttpGet("ActiveCard")]
+        public async Task<string> GetActiveCard(string userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            return user.ActiveCard;
+        }
+
+        [HttpPost("UpdateActiveCard")]
+        public async Task<IActionResult> UpdateActiveCard([FromForm]string userId, [FromForm]string cardId)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+            user.ActiveCard = cardId;
+            _context.Update(user);
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+
         #endregion
 
         #region Connections
