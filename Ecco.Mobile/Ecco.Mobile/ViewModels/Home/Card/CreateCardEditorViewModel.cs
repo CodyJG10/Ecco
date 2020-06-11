@@ -4,6 +4,7 @@ using Ecco.Entities.Attributes;
 using Ecco.Mobile.AutoUpdate;
 using Ecco.Mobile.Models;
 using Nancy.TinyIoc;
+using System.Linq;
 using Xamarin.Forms;
 
 namespace Ecco.Mobile.ViewModels.Home.Card
@@ -12,9 +13,18 @@ namespace Ecco.Mobile.ViewModels.Home.Card
     {
         public CreateCardModel Model { get; set; }
 
+        private bool _userHasCards;
+
         public CreateCardEditorViewModel(CreateCardModel model) : base()
         {
             Model = model;
+            LoadUserHasCards();
+        }
+
+        private async void LoadUserHasCards()
+        { 
+            var allCards = (await _db.GetMyCards(_userData.Id.ToString())).ToList();
+            _userHasCards = allCards.Count == 0;
         }
 
         public async void CreateCard()
@@ -49,6 +59,11 @@ namespace Ecco.Mobile.ViewModels.Home.Card
             var succeeded = await _db.CreateCard(card);
             if (succeeded)
             {
+                if (_userHasCards)
+                {
+                    var newCard = allCards[0];
+                    await _db.UpdateActiveCard(newCard);
+                }
                 await Application.Current.MainPage.Navigation.PopAsync();
                 await Application.Current.MainPage.Navigation.PopAsync();
                 TinyIoCContainer.Current.Resolve<AutoUpdater>().UpdateUserCard();
