@@ -47,10 +47,17 @@
                             <Label Text="You have cards to accept!"
                                     HorizontalOptions="Center"
                                     Style="{StaticResource HeaderLabelStyle}"
-                                    FontSize="Small"/>
-                            <Button Text="View"
-                                HorizontalOptions="Center"
-                                Command="{Binding ViewPendingConnectionsCommand}"/>
+                                    FontSize="Medium"/>
+                            <buttons:SfButton Text="View Invitations" 
+                                              HorizontalOptions="Center"
+                                              Margin="0,15"
+                                              WidthRequest="250"
+                                              FontSize="Large"
+                                              CornerRadius="5"
+                                              BackgroundColor="{StaticResource PrimaryDarkColor}"
+                                              FontFamily="{StaticResource Montserrat-SemiBold}"
+                                              Command="{Binding ViewPendingConnectionsCommand}"/>
+                            
                         </StackLayout>
 
                         <!-- Connections Label -->
