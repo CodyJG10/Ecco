@@ -19,48 +19,15 @@ namespace Ecco.Mobile.ViewModels.NFC
 {
     public class WriteTagViewModel : ViewModelBase
     {
-		private IDatabaseManager _db;
-		private IStorageManager _storage;
-		private UserData _user;
+		private readonly UserData _user;
 
 		public ICommand WriteToTagCommand { get; set; }
-		public ObservableCollection<CardModel> MyCards { get; set; } = new ObservableCollection<CardModel>();
-		private bool _loading = true;
-		public bool Loading
-		{
-			get
-			{
-				return _loading;
-			}
-			set
-			{
-				_loading = value;
-				OnPropertyChanged(nameof(Loading));
-			}
-		}
-		private CardModel selectedCard;
 
 		public WriteTagViewModel()
 		{
-			_db = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
-			_storage = TinyIoCContainer.Current.Resolve<IStorageManager>();
 			_user = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
 
 			WriteToTagCommand = new Command<CardModel>(WriteToTag);
-			LoadCards();
-		}
-
-		private async void LoadCards()
-		{
-			var cards = (await _db.GetMyCards(_user.Id.ToString())).ToList();
-
-			foreach (var card in cards)
-			{
-				var cardModel = CardModel.FromCard(card, _user);
-				MyCards.Add(cardModel);
-			}
-
-			Loading = false;
 		}
 
 		#region NFC
@@ -68,7 +35,6 @@ namespace Ecco.Mobile.ViewModels.NFC
 		public void WriteToTag(CardModel model)
 		{
 			InitNfc();
-			selectedCard = model;
 			CrossNFC.Current.StartPublishing(true);
 		}
 
@@ -148,8 +114,7 @@ namespace Ecco.Mobile.ViewModels.NFC
 
 			try
 			{
-				var cardId = selectedCard.Card.Id;
-				var payload = NFCUtils.EncodeToByteArray("https://ecco-space.azurewebsites.net/cards/" + selectedCard.Card.Id.ToString());
+				var payload = NFCUtils.EncodeToByteArray("https://ecco-space.azurewebsites.net/usercard/" + _user.Id.ToString());
 				var record = new NFCNdefRecord
 				{
 					TypeFormat = NFCNdefTypeFormat.Uri,
@@ -164,7 +129,7 @@ namespace Ecco.Mobile.ViewModels.NFC
 
 				CrossNFC.Current.PublishMessage(tagInfo, false);
 			}
-			catch (System.Exception ex)
+			catch (Exception ex)
 			{
 				Application.Current.MainPage.DisplayAlert("Error", "Experienced an error when writing tag: " + ex.Message, "Returning");
 				Application.Current.MainPage.Navigation.PopAsync();

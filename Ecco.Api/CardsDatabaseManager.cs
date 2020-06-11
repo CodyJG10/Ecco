@@ -58,5 +58,30 @@ namespace Ecco.Api
             return response.IsSuccessStatusCode;
         }
 
+        public async Task<Card> GetActiveCard(string userId)
+        {
+            var response = await client.GetAsync("api/ActiveCard?userId=" + userId);
+            var content = await response.Content.ReadAsStringAsync();
+            try
+            {
+                return await GetCard(int.Parse(content));
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+        }
+
+        public async Task<HttpResponseMessage> UpdateActiveCard(string userId, string cardId)
+        {
+            var formContent = new FormUrlEncodedContent(new[]
+            {
+                new KeyValuePair<string, string>("userId", userId),
+                new KeyValuePair<string, string>("cardId", cardId)
+            });
+
+            var response = await client.PostAsync("api/UpdateActiveCard", formContent);
+            return response;
+        }
     }
 }

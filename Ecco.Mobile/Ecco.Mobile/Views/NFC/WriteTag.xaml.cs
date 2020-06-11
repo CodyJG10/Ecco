@@ -19,9 +19,9 @@ namespace Ecco.Mobile.Views.NFC
             InitializeComponent();
         }
 
-        private void listMyCards_SelectionChanged(object sender, Syncfusion.ListView.XForms.ItemSelectionChangedEventArgs e)
-        {
-            (BindingContext as WriteTagViewModel).WriteToTagCommand.Execute(listMyCards.SelectedItem);
-        }
+        //private void listMyCards_SelectionChanged(object sender, Syncfusion.ListView.XForms.ItemSelectionChangedEventArgs e)
+        //{
+        //    (BindingContext as WriteTagViewModel).WriteToTagCommand.Execute(listMyCards.SelectedItem);
+        //}
     }
 }

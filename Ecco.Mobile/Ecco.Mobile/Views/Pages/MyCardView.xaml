@@ -8,19 +8,30 @@ xmlns:popuplayout="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusi
              x:Class="Ecco.Mobile.Views.Pages.MyCardView"
              xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.Home"
              xmlns:cardViews="clr-namespace:Ecco.Mobile.Views.Card" xmlns:themes="clr-namespace:Ecco.Mobile.Themes"
-             xmlns:style="clr-namespace:Ecco.Mobile.Views" xmlns:pulltorefresh="clr-namespace:Syncfusion.SfPullToRefresh.XForms;assembly=Syncfusion.SfPullToRefresh.XForms" xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms" xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms" xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+             xmlns:style="clr-namespace:Ecco.Mobile.Views"
+             xmlns:pulltorefresh="clr-namespace:Syncfusion.SfPullToRefresh.XForms;assembly=Syncfusion.SfPullToRefresh.XForms"
+             xmlns:listview="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
              x:Name="myCardsView"
              BackgroundColor="{DynamicResource Gray-White}"
-             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core" 
+             xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+             xmlns:converters="clr-namespace:Ecco.Mobile.Converters"
+             xmlns:syncfusion="clr-namespace:Syncfusion.XForms.Expander;assembly=Syncfusion.Expander.XForms"
              ios:Page.UseSafeArea="true">
 
     <ContentPage.BindingContext>
         <viewmodels:MyCardViewModel/>
     </ContentPage.BindingContext>
 
+    <ContentPage.Resources>
+        <converters:NegateBooleanValue x:Key="BoolConverter"/>
+    </ContentPage.Resources>
+
     <ContentPage.Content>
         <StackLayout>
-            
+
+            <!--Create Button-->
             <buttons:SfButton Text="Create Card" 
                               HorizontalOptions="Center"
                               Margin="0,15"
@@ -31,12 +42,52 @@ xmlns:popuplayout="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusi
                               FontFamily="{StaticResource Montserrat-SemiBold}"
                               Command="{Binding CreateCardCommand}"/>
 
-            <!-- My Cards Header -->
-            <Label Text="My Cards" 
-                   HorizontalOptions="Center"
-                   FontSize="Large"
-                   FontFamily="{StaticResource Montserrat-SemiBold}"
-                   TextColor="{StaticResource PrimaryColor}"/>
+            <syncfusion:SfExpander>
+                <syncfusion:SfExpander.Header>
+                    <Label Text="Active Card"
+                           HorizontalOptions="Start"
+                           FontSize="Large"
+                           FontFamily="{StaticResource Montserrat-SemiBold}"
+                           TextColor="{StaticResource PrimaryColor}"/>
+                </syncfusion:SfExpander.Header>
+                <syncfusion:SfExpander.Content>
+                    <StackLayout>
+
+                        <!-- has active card view -->
+                        <StackLayout IsVisible="{Binding HasActiveCard}"
+                                            Margin="5">
+
+                            <StackLayout Padding="25,0,25,0"
+                                                Margin="3">
+
+                                <cardViews:Card BindingContext="{Binding ActiveCard}">
+                                    <cardViews:Card.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={x:Reference myCardsView}, Path=BindingContext.SelectCardCommand}"
+                                                                    CommandParameter="{Binding ActiveCard}"/>
+                                    </cardViews:Card.GestureRecognizers>
+                                </cardViews:Card>
+
+                            </StackLayout>
+
+                        </StackLayout>
+
+                        <!-- does NOT have active card view -->
+                        <StackLayout  IsVisible="{Binding HasActiveCard, Converter={StaticResource BoolConverter}}"
+                                            Margin="25">
+
+                            <Label Text="You have not yet set an active card."
+                                        HorizontalOptions="CenterAndExpand"
+                                        HorizontalTextAlignment="Center"
+                                        VerticalOptions="CenterAndExpand"
+                                        FontSize="Large"
+                                        FontFamily="{StaticResource Montserrat-SemiBold}"
+                                        TextColor="{StaticResource PrimaryColor}"/>
+
+                        </StackLayout>
+
+                    </StackLayout>
+                </syncfusion:SfExpander.Content>
+            </syncfusion:SfExpander>
 
             <pulltorefresh:SfPullToRefresh IsRefreshing="{Binding Loading}"
                                            RefreshCommand="{Binding RefreshCommand}"
@@ -48,84 +99,95 @@ xmlns:popuplayout="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusi
                 <!-- My Cards List -->
                 <pulltorefresh:SfPullToRefresh.PullableContent>
 
-                 
-                    
-                    <border:SfBorder HorizontalOptions="Center" 
-                                     VerticalOptions="Center"
-                                     BorderWidth="2"
-                                     BorderColor="{StaticResource Gray-300}"
-                                     CornerRadius="15"
-                                     BackgroundColor="{StaticResource Gray-200}">
-                    
-                        <listview:SfListView ItemsSource="{Binding Cards}"
-                                             AllowSwiping="True"
-                                             ItemSpacing="0,0,0,5"
-                                             ItemSize="200"
-                                             SelectionMode="None"
-                                             x:Name="CardList" 
-                                             SwipeStarted="CardList_SwipeStarted">
-                        
-                            <!-- Left Swipe Template -->
-                            <listview:SfListView.LeftSwipeTemplate>
-                                <DataTemplate>
-                                    <StackLayout Orientation="Horizontal"
-                                                 HorizontalOptions="FillAndExpand"
+
+                    <!-- All Cards List -->
+                    <border:SfBorder HorizontalOptions="FillAndExpand" 
+                                     VerticalOptions="FillAndExpand"
+                                     BorderColor="Transparent"
+                                     BackgroundColor="Transparent"
+                                     CornerRadius="2"
+                                     HasShadow="True">
+
+                        <StackLayout BackgroundColor="White">
+
+                            <Label Text="My Cards"
+                                        HorizontalOptions="Center"
+                                        FontSize="Large"
+                                        FontFamily="{StaticResource Montserrat-SemiBold}"
+                                        TextColor="{StaticResource PrimaryColor}"/>
+
+                            <listview:SfListView ItemsSource="{Binding Cards}"
+                                                 AllowSwiping="True"
+                                                 ItemSpacing="0,0,0,5"
+                                                 ItemSize="200"
+                                                 SelectionMode="None"
+                                                 BackgroundColor="GhostWhite"
+                                                 x:Name="CardList" 
                                                  VerticalOptions="FillAndExpand"
-                                                 Spacing="0">
+                                                 SwipeStarted="CardList_SwipeStarted">
 
-                                        <buttons:SfButton Text="{StaticResource Trash}"
-                                                          Style="{StaticResource IconButtonStyle}"
-                                                          x:Name="ButtonDeleteCard"
-                                                          Clicked="ButtonDeleteCard_Clicked"
-                                                          BackgroundColor="Red"
-                                                          HorizontalOptions="FillAndExpand"
-                                                          VerticalOptions="FillAndExpand"
-                                                          CornerRadius="8"
-                                                          FontSize="Large"
-                                                          TextColor="White"/>
+                                <!-- Left Swipe Template -->
+                                <listview:SfListView.LeftSwipeTemplate>
+                                    <DataTemplate>
+                                        <StackLayout Orientation="Horizontal"
+                                                        HorizontalOptions="FillAndExpand"
+                                                        VerticalOptions="FillAndExpand"
+                                                        Spacing="0">
 
-                                        <buttons:SfButton Text="{StaticResource Edit}"
-                                                          Style="{StaticResource IconButtonStyle}"
-                                                          BackgroundColor="Blue"
-                                                          x:Name="ButtonEditCard"
-                                                          Clicked="ButtonEditCard_Clicked"
-                                                          HorizontalOptions="FillAndExpand"
-                                                          VerticalOptions="FillAndExpand"
-                                                          CornerRadius="8"
-                                                          FontSize="Large"
-                                                          TextColor="White"/>
+                                            <buttons:SfButton Text="{StaticResource Trash}"
+                                                                Style="{StaticResource IconButtonStyle}"
+                                                                x:Name="ButtonDeleteCard"
+                                                                Clicked="ButtonDeleteCard_Clicked"
+                                                                BackgroundColor="Red"
+                                                                HorizontalOptions="FillAndExpand"
+                                                                VerticalOptions="FillAndExpand"
+                                                                CornerRadius="8"
+                                                                FontSize="Large"
+                                                                TextColor="White"/>
 
-                                    </StackLayout>
-                                </DataTemplate>
-                            </listview:SfListView.LeftSwipeTemplate>
-                        
-                            <listview:SfListView.ItemTemplate>
-                                <DataTemplate>
+                                            <buttons:SfButton Text="{StaticResource Edit}"
+                                                                Style="{StaticResource IconButtonStyle}"
+                                                                BackgroundColor="Blue"
+                                                                x:Name="ButtonEditCard"
+                                                                Clicked="ButtonEditCard_Clicked"
+                                                                HorizontalOptions="FillAndExpand"
+                                                                VerticalOptions="FillAndExpand"
+                                                                CornerRadius="8"
+                                                                FontSize="Large"
+                                                                TextColor="White"/>
 
-                                    <Frame BackgroundColor="White"
-                                            Margin="0,0,0,0"
-                                            HasShadow="False"
-                                            CornerRadius="8">
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </listview:SfListView.LeftSwipeTemplate>
 
-                                        <cardViews:Card BindingContext="{Binding .}"
-                                                        VerticalOptions="Center"
-                                                        HorizontalOptions="Center">
-                                            <cardViews:Card.GestureRecognizers>
-                                                <TapGestureRecognizer Command="{Binding Source={x:Reference myCardsView}, Path=BindingContext.SelectCardCommand}"
-                                                                        CommandParameter="{Binding .}"/>
-                                            </cardViews:Card.GestureRecognizers>
-                                        </cardViews:Card>
-                                    
-                                    </Frame>
+                                <listview:SfListView.ItemTemplate>
+                                    <DataTemplate>
 
-                                </DataTemplate>
-                            </listview:SfListView.ItemTemplate>
-                   
-                        </listview:SfListView>
-                        
+                                        <Frame BackgroundColor="White"
+                                                Margin="0,0,0,0"
+                                                HasShadow="False"
+                                                CornerRadius="8">
+
+                                            <cardViews:Card BindingContext="{Binding .}"
+                                                            VerticalOptions="Center"
+                                                            HorizontalOptions="Center">
+                                                <cardViews:Card.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding Source={x:Reference myCardsView}, Path=BindingContext.SelectCardCommand}"
+                                                                            CommandParameter="{Binding .}"/>
+                                                </cardViews:Card.GestureRecognizers>
+                                            </cardViews:Card>
+
+                                        </Frame>
+
+                                    </DataTemplate>
+                                </listview:SfListView.ItemTemplate>
+
+                            </listview:SfListView>
+
+                        </StackLayout>
                     </border:SfBorder>
-
                 </pulltorefresh:SfPullToRefresh.PullableContent>
+                    
             </pulltorefresh:SfPullToRefresh>
 
         </StackLayout>
