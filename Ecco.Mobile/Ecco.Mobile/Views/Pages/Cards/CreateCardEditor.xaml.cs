@@ -56,16 +56,12 @@ namespace Ecco.Mobile.Views.Pages.Cards
             string email = _cardModel.Email;
             string name = _cardModel.FullName;
 
-            int yGap = 50;
+            int yGap = 15;
             TextSettings GenerateTextSettings(int y) 
             {
                 return new TextSettings()
                 {
-                    Bounds = new Rectangle()
-                    {
-                        X = 175,
-                        Y = y
-                    }
+                    Bounds = new Rectangle(25, y, 40, 15)
                 };
             }
 
