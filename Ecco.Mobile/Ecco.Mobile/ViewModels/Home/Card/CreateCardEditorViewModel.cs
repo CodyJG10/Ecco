@@ -61,8 +61,9 @@ namespace Ecco.Mobile.ViewModels.Home.Card
             {
                 if (_userHasCards)
                 {
+                    var allCards = (await _db.GetMyCards(_userData.Id.ToString())).ToList();
                     var newCard = allCards[0];
-                    await _db.UpdateActiveCard(newCard);
+                    await _db.UpdateActiveCard(_userData.Id.ToString(), newCard.Id.ToString());
                 }
                 await Application.Current.MainPage.Navigation.PopAsync();
                 await Application.Current.MainPage.Navigation.PopAsync();
