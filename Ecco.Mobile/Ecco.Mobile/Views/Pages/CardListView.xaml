@@ -8,7 +8,8 @@
              x:Class="Ecco.Mobile.Views.Pages.CardListView"
              xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.Home"
              x:Name="cardListViewPage"
-             xmlns:cardViews="clr-namespace:Ecco.Mobile.Views.Card" xmlns:themes="clr-namespace:Ecco.Mobile.Themes" 
+             xmlns:cardViews="clr-namespace:Ecco.Mobile.Views.Card" 
+             xmlns:themes="clr-namespace:Ecco.Mobile.Themes" 
              xmlns:style="clr-namespace:Ecco.Mobile.Views"
              xmlns:local="clr-namespace:Ecco.Mobile.Converters"
              xmlns:syncfusion="clr-namespace:Syncfusion.XForms.Expander;assembly=Syncfusion.Expander.XForms"
@@ -73,48 +74,39 @@
                             <!-- Header -->
                             <syncfusion:SfExpander>
                                 <syncfusion:SfExpander.Header>
-                                    <Grid>
+                                    <StackLayout>
                                         <Label Text="Filter"
                                                FontSize="Large"
                                                HorizontalTextAlignment="Center"
                                                VerticalTextAlignment="Center" />
-                                    </Grid>
+                                    </StackLayout>
                                 </syncfusion:SfExpander.Header>
                                 <!-- Content -->
                                 <syncfusion:SfExpander.Content>
 
                                     <StackLayout>
 
-                                        <Grid>
+                                        <StackLayout Orientation="Horizontal">
                                             
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto"/>
-                                                <ColumnDefinition Width="Auto"/>
-                                            </Grid.ColumnDefinitions>
-
-
                                             <Label Text="Filter By:"
-                                                   HorizontalTextAlignment="Center"
+                                                   VerticalOptions="CenterAndExpand"
                                                    FontSize="Small"/>
 
                                             <combobox:SfComboBox HeightRequest="40" 
                                                                  x:Name="FilterComboBox"
-                                                                 WidthRequest="300"
                                                                  MaximumDropDownHeight="200" 
+                                                                 HorizontalOptions="FillAndExpand"
+                                                                 SelectedIndex="0"
                                                                  IsEditableMode="false"
-                                                                 Grid.Column="1"
                                                                  SelectionChanged="FilterComboBox_SelectionChanged"/>
-
-
-                                        </Grid>
-
-                                        <Grid Padding="10,10,10,10" BackgroundColor="#FFFFFF">
-                                        <SearchBar Placeholder="Cardholder Name" 
+                                        </StackLayout>
+                                        
+                                     
+                                            <SearchBar Placeholder="Cardholder Name" 
                                                    x:Name="FilterInput"
                                                    TextChanged="CardholderNameSearchbar_TextChanged"
                                                    BackgroundColor="Transparent"
                                                    TextColor="Black"/>
-                                        </Grid>
 
                                     </StackLayout>
 
