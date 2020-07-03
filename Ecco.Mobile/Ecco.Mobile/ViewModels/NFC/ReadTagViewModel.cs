@@ -79,7 +79,8 @@ namespace Ecco.Mobile.ViewModels.NFC
 				string msg = msgSegments[msgSegments.Length - 1];
 				try
 				{
-					var card = await _db.GetCard(int.Parse(msg));
+					var card = await _db.GetActiveCard(msg);
+					//var card = await _db.GetCard(int.Parse(msg));
 					var model = CardModel.FromCard(card, await _db.GetUserData(card.UserId));
 
 					//If the user does not have this card added we display a modal of the card

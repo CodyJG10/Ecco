@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using Plugin.Settings;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -72,7 +73,17 @@ namespace Ecco.Mobile
             // App opened through Universal App Link
             base.OnAppLinkRequestReceived(uri);
 
-            string cardId = uri.Segments[uri.Segments.Length - 1];
+            //string cardId = uri.Segments[uri.Segments.Length - 1];
+            string cardId;
+
+            if (uri.Segments.Contains("usercard"))
+            {
+                cardId = null;
+            }
+            else 
+            {
+                cardId = uri.Segments[uri.Segments.Length - 1];
+            }
 
             // Check if a user is logged in
             if (!CrossSettings.Current.GetValueOrDefault("Username", "_").Equals("_"))
@@ -87,6 +98,14 @@ namespace Ecco.Mobile
                     // First, navigate to home page
                     MainPage = new NavigationPage(new Home());
                     var userData = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
+
+                    //if user profile, get active card
+                    if (cardId == null)
+                    {
+                        string profileId = uri.Segments[uri.Segments.Length - 1];
+                        var activeCard = await db.GetActiveCard(profileId);
+                        cardId = activeCard.Id.ToString();
+                    }
 
                     // Show card
                     var card = await db.GetCard(int.Parse(cardId));

@@ -4,7 +4,7 @@
     "details": [
       {
         "appID": "WG3574SASP.com.ecco-space.mobile",
-        "paths": [ "/cards/*" ]
+        "paths": [ "/*" ]
       }
     ]
   }

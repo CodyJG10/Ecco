@@ -27,13 +27,13 @@
         <OnPlatform x:TypeArguments="Thickness" iOS="0, 20, 0, 0" WinPhone="20,20,20,20" />
     </TabbedPage.Padding>
 
-    <views:ScanCardView Title="Network">
-        <views:ScanCardView.IconImageSource>
+    <views:MyCardView Title="My Cards">
+        <views:MyCardView.IconImageSource>
             <FontImageSource FontFamily="{StaticResource EccoFont}"
-                             Glyph="{StaticResource NetworkIcon}"
+                             Glyph="{StaticResource CardIcon}"
                              Size="16"/>
-        </views:ScanCardView.IconImageSource>
-    </views:ScanCardView>
+        </views:MyCardView.IconImageSource>
+    </views:MyCardView>
 
     <views:CardListView Title="Connections">
         <views:CardListView.IconImageSource>
@@ -43,14 +43,14 @@
         </views:CardListView.IconImageSource>
     </views:CardListView>
 
-    <views:MyCardView Title="My Cards">
-        <views:MyCardView.IconImageSource>
+    <views:ScanCardView Title="Network">
+        <views:ScanCardView.IconImageSource>
             <FontImageSource FontFamily="{StaticResource EccoFont}"
-                             Glyph="{StaticResource CardIcon}"
+                             Glyph="{StaticResource NetworkIcon}"
                              Size="16"/>
-        </views:MyCardView.IconImageSource>
-    </views:MyCardView>
-
+        </views:ScanCardView.IconImageSource>
+    </views:ScanCardView>
+    
     <views:MyAccountView Title="Profile">
         <views:MyAccountView.IconImageSource>
             <FontImageSource FontFamily="{StaticResource EccoFont}"
