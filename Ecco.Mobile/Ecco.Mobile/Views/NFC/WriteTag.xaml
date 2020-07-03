@@ -6,7 +6,7 @@
              xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.NFC"
              xmlns:listviews="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
              xmlns:card="clr-namespace:Ecco.Mobile.Views.Card" 
-             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms" xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms" xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms" xmlns:loadingSpinner="clr-namespace:Ecco.Mobile.Views.Loading"
              mc:Ignorable="d"
              x:Class="Ecco.Mobile.Views.NFC.WriteTag">
 
@@ -43,7 +43,33 @@
                               BackgroundColor="{StaticResource PrimaryDarkColor}"
                               FontFamily="{StaticResource Montserrat-SemiBold}"
                               Command="{Binding WriteToTagCommand}"/>
-            
+
+            <Frame VerticalOptions="EndAndExpand"
+                   HorizontalOptions="FillAndExpand"
+                   Margin="10"
+                   CornerRadius="15"
+                   HasShadow="False"
+                   BackgroundColor="White"
+                   IsVisible="{Binding Android_IsWritingToTag}">
+
+                <StackLayout>
+
+                    <Label Text="Hold your card to the back of your device"
+                       FontFamily="{StaticResource Montserrat-SemiBold}"
+                       FontSize="Medium"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       HorizontalTextAlignment="Center"/>
+
+                    <loadingSpinner:LoadingSpinner HorizontalOptions="Center"
+                                                   VerticalOptions="StartAndExpand"
+                                                   HeightRequest="100"/>
+                    
+                </StackLayout>
+
+            </Frame>
+
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

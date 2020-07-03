@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration;
 
 namespace Ecco.Mobile.ViewModels.NFC
 {
@@ -22,6 +23,20 @@ namespace Ecco.Mobile.ViewModels.NFC
 		private readonly UserData _user;
 
 		public ICommand WriteToTagCommand { get; set; }
+
+		private bool _android_IsWritingToTag = false;
+		public bool Android_IsWritingToTag
+		{
+			get
+			{
+				return _android_IsWritingToTag;
+			}
+			set
+			{
+				_android_IsWritingToTag = value;
+				OnPropertyChanged(nameof(Android_IsWritingToTag));
+			}
+		}
 
 		public WriteTagViewModel()
 		{
@@ -54,6 +69,7 @@ namespace Ecco.Mobile.ViewModels.NFC
 				if (Device.RuntimePlatform != Device.iOS)
 				{
 					CrossNFC.Current.StartListening();
+					Android_IsWritingToTag = true;
 				}
 			}
 		}
