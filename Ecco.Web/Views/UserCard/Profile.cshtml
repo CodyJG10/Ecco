@@ -1,0 +1,20 @@
+﻿@model Ecco.Entities.Card
+@inject Ecco.Web.Services.StorageService storage
+@inject UserManager<EccoUser> userManager
+
+@{
+    ViewData["Title"] = "Card";
+}
+
+<h1 class="d-flex justify-content-center">Card</h1>
+
+@{
+    var user = await userManager.FindByIdAsync(Model.UserId.ToString());
+    string container = storage.UsernameToContainerTitle(user.UserName);
+    string baseUrl = "https://eccospacestorage.blob.core.windows.net/";
+    string url = baseUrl + container + "/" + Model.CardTitle.Replace(" ", "%2520") + ".png";
+}
+
+<div class="container text-center">
+    <img src="@url" class="rounded" width="350" height="200" />
+</div>

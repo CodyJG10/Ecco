@@ -11,7 +11,7 @@ namespace Ecco.Web.Controllers
 {
     [Route("UserCard")]
     [ApiController]
-    public class UserCardController : ControllerBase
+    public class UserCardController : Controller
     {
         private UserManager<EccoUser> _userManager;
         private ApplicationDbContext _context;
@@ -28,7 +28,8 @@ namespace Ecco.Web.Controllers
             var user = await _userManager.FindByIdAsync(userId);
             string activeCard = user.ActiveCard;
             var card = _context.Cards.Single(x => x.Id == int.Parse(activeCard));
-            return RedirectToAction("GetCard", "Cards", new { id = card.Id });
+            return View("Profile", card);
+            //return RedirectToAction("GetCard", "Cards", new { id = card.Id });
         }
     }
 }
