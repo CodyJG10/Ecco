@@ -32,7 +32,8 @@ namespace Ecco.Mobile.Views.Authentication
                 var popupContent = new Entry()
                 {
                     Placeholder = "Email",
-                    HorizontalOptions = LayoutOptions.Center
+                    HorizontalOptions = LayoutOptions.Center,
+                    VerticalOptions = LayoutOptions.Start
                 };
 
                 popupContent.TextChanged += (obj, args) =>
@@ -58,13 +59,25 @@ namespace Ecco.Mobile.Views.Authentication
                     HorizontalOptions = LayoutOptions.FillAndExpand,
                 };
 
+                var noButton = new SfButton()
+                {
+                    Text = "Cancel",
+                    HorizontalOptions = LayoutOptions.FillAndExpand
+                };
+
                 yesButton.Clicked += (s, a) =>
                 {
                     (BindingContext as LoginPageViewModel).ForgotPasswordCommand.Execute(email);
                     popupLayout.IsOpen = false;
                 };
 
+                noButton.Clicked += (s, a) =>
+                {
+                    popupLayout.IsOpen = false;
+                };
+                
                 stackLayout.Children.Add(yesButton);
+                stackLayout.Children.Add(noButton);
 
                 return stackLayout;
             });

@@ -32,7 +32,7 @@ namespace Ecco.Mobile.ViewModels.Auth
 
         private void ForgotPassword(string email)
         {
-
+            _database.ForgotPassword(email);
             Application.Current.MainPage.DisplayAlert("Reset Password Request Recieved", "Please check the email sent to you for a link to reset you password", "Ok");
         }
 
