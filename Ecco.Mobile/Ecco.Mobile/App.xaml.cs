@@ -23,8 +23,8 @@ namespace Ecco.Mobile
     public partial class App : Application
     {
         private bool openEccoCard = false;
-        private CardModel cardToOpen;
         private bool isLaunched = false;
+        private string[] eccoCardContent;
 
         public App()
         {
@@ -64,8 +64,9 @@ namespace Ecco.Mobile
 
                 if (openEccoCard)
                 {
+                    MainPage = new NavigationPage(new Home());
                     ShowFromEccoCard();
-                    isLaunched = true;
+                    return;
                 }
                 else
                 {
@@ -82,70 +83,57 @@ namespace Ecco.Mobile
 
         #region iOS Deep Linking
 
-        protected override async void OnAppLinkRequestReceived(Uri uri)
+        protected override void OnAppLinkRequestReceived(Uri uri)
         {
-            // App opened through Universal App Link
             base.OnAppLinkRequestReceived(uri);
 
-            if (CrossSettings.Current.Contains("Username"))
+            eccoCardContent = uri.Segments;
+
+            if (isLaunched)
             {
-                var db = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
-
-                string cardId = null;
-                string prefix = uri.Segments[uri.Segments.Length - 2];
-
-                if (prefix.ToLower().Contains("usercard"))
-                {
-                    string profileId = uri.Segments[uri.Segments.Length - 1];
-                    var activeCard = await db.GetActiveCard(profileId);
-                    cardId = activeCard.Id.ToString();
-                }
-                else if (prefix.ToLower().Contains("cards"))
-                {
-                    cardId = uri.Segments[uri.Segments.Length - 1];
-                }
-
-                var card = await db.GetCard(int.Parse(cardId)); 
-                cardToOpen = CardModel.FromCard(card, await db.GetUserData(card.UserId));
-
-                if (isLaunched)
-                {
-                    ShowFromEccoCard();
-                }
-                else
-                { 
-                    openEccoCard = true;
-                }
+                ShowFromEccoCard();
             }
-            else 
+            else
             {
-                MainPage = new LoginPage();
-                await MainPage.DisplayAlert("Authentication Error", "Please log in and use the ECCO CARD again", "Ok");
+                openEccoCard = true;
             }
         }
 
         private async void ShowFromEccoCard()
         {
-            try
+            var db = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
+            string cardId = null;
+            string prefix = eccoCardContent[eccoCardContent.Length - 2];
+
+            if (prefix.ToLower().Contains("usercard"))
             {
-                var userData = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
-                //If the user does not have this card added we display a modal of the card
-                if (!await UserHasCard(cardToOpen, userData.Id))
-                {
-                    // If this is a new card, we show the create conection from scan page
-                    await Current.MainPage.Navigation.PushAsync(new CreateConnectionFromScanPage(cardToOpen));
-                }
-                else
-                {
-                    // If the card is already in the users card list, we just show the card
-                    await Current.MainPage.Navigation.PushAsync(new ViewCardPage(cardToOpen));
-                }
-                isLaunched = true;
+                string profileId = eccoCardContent[eccoCardContent.Length - 1];
+                var activeCard = await db.GetActiveCard(profileId);
+                cardId = activeCard.Id.ToString();
             }
-            catch (Exception e)
+            else if (prefix.ToLower().Contains("cards"))
             {
-                Console.WriteLine(e.Message);
+                cardId = eccoCardContent[eccoCardContent.Length - 1];
             }
+
+            var card = await db.GetCard(int.Parse(cardId));
+            var cardToOpen = CardModel.FromCard(card, await db.GetUserData(card.UserId));
+
+            var userData = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
+           
+            //If the user does not have this card added we display a modal of the card
+            if (!await UserHasCard(cardToOpen, userData.Id))
+            {
+                // If this is a new card, we show the create conection from scan page
+                await Current.MainPage.Navigation.PushAsync(new CreateConnectionFromScanPage(cardToOpen));
+            }
+            else
+            {
+                // If the card is already in the users card list, we just show the card
+                await Current.MainPage.Navigation.PushAsync(new ViewCardPage(cardToOpen));
+            }
+
+            isLaunched = true;
         }
 
         private async Task<bool> UserHasCard(CardModel card, Guid userId)
