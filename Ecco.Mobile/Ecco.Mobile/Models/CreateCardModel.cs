@@ -26,7 +26,7 @@ namespace Ecco.Mobile.Models
         public string Email { get; set; }
         
         [Display(Name = "Your Phone Number")]
-        [DataType(DataType.Text)]
+        [DataType(DataType.PhoneNumber)]
         [Required(AllowEmptyStrings = false, ErrorMessage = "You must provide a phone number")]
         public string PhoneNumber { get; set; }
 

@@ -12,6 +12,6 @@ namespace Ecco.Mobile.ViewModels
         public void OnPropertyChanged(string property)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
-        }
+        } 
     }
 }

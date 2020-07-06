@@ -1,3 +1,4 @@
+using Syncfusion.SfNavigationDrawer.XForms.iOS;
 using Syncfusion.XForms.iOS.PopupLayout;
 using Syncfusion.SfPullToRefresh.XForms.iOS;
 using Syncfusion.XForms.iOS.DataForm;
@@ -46,6 +47,7 @@ namespace Ecco.Mobile.iOS
             Xamarin.Forms.Forms.SetFlags("IndicatorView_Experimental");
 
             global::Xamarin.Forms.Forms.Init();
+            SfNavigationDrawerRenderer.Init();
 
             SfButtonRenderer.Init();
             SfExpanderRenderer.Init();

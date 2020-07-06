@@ -5,6 +5,7 @@ using Ecco.Mobile.Dependencies;
 using Ecco.Mobile.Models;
 using Ecco.Mobile.Views;
 using Ecco.Mobile.Views.Authentication;
+using Ecco.Mobile.Views.HomeMaster;
 using Ecco.Mobile.Views.NFC;
 using Ecco.Mobile.Views.Pages.Cards;
 using Nancy.Diagnostics;
@@ -70,7 +71,9 @@ namespace Ecco.Mobile
                 }
                 else
                 {
-                    MainPage = new NavigationPage(new Home());
+                    //MainPage = new NavigationPage(new Home());
+                    //MainPage = new NavigationPage(new HomeWithDrawer());
+                    MainPage = new NavigationPage(new HomeMaster());
                     isLaunched = true;
                 }
             }

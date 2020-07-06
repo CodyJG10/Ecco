@@ -31,15 +31,15 @@ namespace Ecco.Mobile.Views
                 return;
             }
 
-            if (HomePage.CurrentPage.GetType() == typeof(CardListView))
-            {
-                OnboardingUtil.ShowOnboardingIfNotSeenBefore(new ConnectionsModal());
-            }
+            //if (HomePage.CurrentPage.GetType() == typeof(CardListView))
+            //{
+            //    OnboardingUtil.ShowOnboardingIfNotSeenBefore(new ConnectionsModal());
+            //}
 
-            else if (HomePage.CurrentPage.GetType() == typeof(MyCardView))
-            {
-                OnboardingUtil.ShowOnboardingIfNotSeenBefore(new MyCardsModal());
-            }
+            //else if (HomePage.CurrentPage.GetType() == typeof(MyCardView))
+            //{
+            //    OnboardingUtil.ShowOnboardingIfNotSeenBefore(new MyCardsModal());
+            //}
         }
 
         private bool _shownWelcomeModal = false;
@@ -52,5 +52,10 @@ namespace Ecco.Mobile.Views
                 _shownWelcomeModal = true;
             }
         }
+
+        //private void Button_Clicked(object sender, EventArgs e)
+        //{
+        //    navigationDrawer.ToggleDrawer();
+        //}
     }
 }

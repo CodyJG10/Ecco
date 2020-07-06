@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="Ecco.Mobile.Views.HomeMaster.HomeMaster"
+             xmlns:pages="clr-namespace:Ecco.Mobile.Views.HomeMaster" 
+            xmlns:pages1="clr-namespace:Ecco.Mobile.Views">
+    
+  <MasterDetailPage.Master>
+    <pages:HomeMasterMaster x:Name="MasterPage" />
+  </MasterDetailPage.Master>
+
+    <NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal" VerticalOptions="Center" Spacing="10">
+            <Image Source="hamburger_menu.png">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                </Image.GestureRecognizers>
+            </Image>
+
+            <Label Text="Ecco Space"
+                   FontSize="Large"
+                   Style="{StaticResource LabelStyle}"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center"/>
+        </StackLayout>
+    </NavigationPage.TitleView>
+
+    <MasterDetailPage.Detail>
+        <NavigationPage>
+            <x:Arguments>
+                <pages1:Home x:Name="DetailsPage"/>
+            </x:Arguments>
+        </NavigationPage>
+  </MasterDetailPage.Detail>
+
+</MasterDetailPage>

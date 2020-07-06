@@ -39,8 +39,8 @@ namespace Ecco.Mobile.Views.Pages
 
             if (Device.RuntimePlatform == Device.iOS)
             {
-                DataForm.RegisterEditor("Text", new CustomTextEditor(DataForm));
-                DataForm.RegisterEditor("MaskedEditText", new CustomMaskedEditor(DataForm));
+                //DataForm.RegisterEditor("Text", new CustomTextEditor(DataForm));
+                //DataForm.RegisterEditor("MaskedEditText", new CustomMaskedEditor(DataForm));
             }
 
             if (e.DataFormItem != null && e.DataFormItem.Name == "ServiceCategory")
@@ -54,14 +54,12 @@ namespace Ecco.Mobile.Views.Pages
                 (e.DataFormItem as DataFormDropDownItem).ItemsSource = list;
             }
 
-            else if (e.DataFormItem != null && e.DataFormItem.Name == "Email")
+            else if (e.DataFormItem != null && e.DataFormItem.Name == "Your Email")
                 (e.DataFormItem as DataFormTextItem).KeyBoard = Keyboard.Email;
 
-            else if (e.DataFormItem.Name == "Phone")
-            { 
-                var form = e.DataFormItem as DataFormMaskedEditTextItem;
-                //form.FocusedColor = Color.Black;
-                //form.UnfocusedColor = Color.Black;
+            else if (e.DataFormItem.Name == "Your Phone Number")
+            {
+                ((DataFormTextItem)e.DataFormItem).KeyBoard = Keyboard.Numeric;
             }
         }
 

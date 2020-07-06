@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:navigationdrawer="clr-namespace:Syncfusion.SfNavigationDrawer.XForms;assembly=Syncfusion.SfNavigationDrawer.XForms"
             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             x:Class="Ecco.Mobile.Views.Home"
             xmlns:views="clr-namespace:Ecco.Mobile.Views.Pages"
@@ -9,15 +10,23 @@
             android:TabbedPage.ToolbarPlacement="Bottom"
             android:TabbedPage.BarSelectedItemColor="{DynamicResource PrimaryColor}"
             android:TabbedPage.BarItemColor="{StaticResource Gray-100}"
-            android:TabbedPage.IsSwipePagingEnabled="False"
+            android:TabbedPage.IsSwipePagingEnabled="True"
             ios:NavigationPage.HideNavigationBarSeparator="False"
-            NavigationPage.HasNavigationBar="False"
             xmlns:style="clr-namespace:Ecco.Mobile.Views"
             xmlns:themes="clr-namespace:Ecco.Mobile.Themes"
-            BarTextColor="White"
-            BarBackgroundColor="{StaticResource Gray-900}"
+            BarBackgroundColor="{StaticResource NavbarBackground}"
             CurrentPageChanged="TabbedPage_CurrentPageChanged"
-            x:Name="HomePage">
+            x:Name="HomePage"
+            Title="Ecco Space">
+
+    <NavigationPage.HasNavigationBar>
+        <OnPlatform x:TypeArguments="x:Boolean">
+            <OnPlatform.Platforms>
+                <On Platform="iOS">False</On>
+                <On Platform="Android">True</On>
+            </OnPlatform.Platforms>
+        </OnPlatform>
+    </NavigationPage.HasNavigationBar>
 
     <TabbedPage.BindingContext>
         <viewmodels:HomeViewModel/>
@@ -30,8 +39,8 @@
     <views:MyCardView Title="My Cards">
         <views:MyCardView.IconImageSource>
             <FontImageSource FontFamily="{StaticResource EccoFont}"
-                             Glyph="{StaticResource CardIcon}"
-                             Size="16"/>
+                                Glyph="{StaticResource CardIcon}"
+                                Size="24"/>
         </views:MyCardView.IconImageSource>
     </views:MyCardView>
 
@@ -39,15 +48,15 @@
         <views:CardListView.IconImageSource>
             <FontImageSource FontFamily="{StaticResource EccoFont}"
                              Glyph="{StaticResource ConnectionsIcon}"
-                             Size="16"/>
+                             Size="24"/>
         </views:CardListView.IconImageSource>
     </views:CardListView>
 
-    <views:ScanCardView Title="Network">
+    <!--<views:ScanCardView Title="Network">
         <views:ScanCardView.IconImageSource>
             <FontImageSource FontFamily="{StaticResource EccoFont}"
                              Glyph="{StaticResource NetworkIcon}"
-                             Size="16"/>
+                             Size="24"/>
         </views:ScanCardView.IconImageSource>
     </views:ScanCardView>
     
@@ -55,8 +64,94 @@
         <views:MyAccountView.IconImageSource>
             <FontImageSource FontFamily="{StaticResource EccoFont}"
                              Glyph="{StaticResource ProfileIcon}"
-                             Size="16"/>
+                             Size="24"/>
             </views:MyAccountView.IconImageSource>
-    </views:MyAccountView>
+    </views:MyAccountView>-->
 
 </TabbedPage>
+
+
+
+
+
+
+<!--<Shell xmlns="http://xamarin.com/schemas/2014/forms"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels" xmlns:views="clr-namespace:Ecco.Mobile.Views.Pages"
+       x:Class="Ecco.Mobile.Views.Home"
+       xmlns:controls="Xamarin.Contr"
+       Shell.NavBarIsVisible="False"
+       xmlns:navigationdrawer="clr-namespace:Syncfusion.SfNavigationDrawer.XForms;assembly=Syncfusion.SfNavigationDrawer.XForms">
+
+    <Shell.BindingContext>
+        <viewmodels:HomeViewModel/>
+    </Shell.BindingContext>
+
+    <navigationdrawer:SfNavigationDrawer x:Name="navigationDrawer">
+
+        <navigationdrawer:SfNavigationDrawer.ContentView>
+
+        </navigationdrawer:SfNavigationDrawer.ContentView>
+
+        <navigationdrawer:SfNavigationDrawer.DrawerHeaderView>
+            <Grid BackgroundColor="#1aa1d6">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="120"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+                <Label Text="James Pollock" 
+                       Grid.Row="1" 
+                       HorizontalTextAlignment="Center" 
+                       HorizontalOptions="Center" 
+                       FontSize="20" 
+                       TextColor="White"/>
+            </Grid>
+        </navigationdrawer:SfNavigationDrawer.DrawerHeaderView>
+
+        <navigationdrawer:SfNavigationDrawer.DrawerContentView>
+            <ListView x:Name="listView">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout HeightRequest="40">
+                                <Label Margin="10,7,0,0" 
+                                       Text="Header" 
+                                       FontSize="16"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </navigationdrawer:SfNavigationDrawer.DrawerContentView>
+
+    </navigationdrawer:SfNavigationDrawer>
+
+    <TabBar>
+        <Tab Title="My Cards">
+            <Tab.Icon>
+                <FontImageSource FontFamily="{StaticResource EccoFont}"
+                                Glyph="{StaticResource CardIcon}"
+                                Size="24"/>
+            </Tab.Icon>
+            <ShellContent>
+                <views:MyCardView Title="My Cards"/>
+            </ShellContent>
+            <ShellContent>
+                <Button Text="Menu" 
+                        Clicked="Button_Clicked"/>
+            </ShellContent>
+        </Tab>
+
+        <Tab Title="Connections">
+            <Tab.Icon>
+                <FontImageSource FontFamily="{StaticResource EccoFont}"
+                             Glyph="{StaticResource ConnectionsIcon}"
+                             Size="24"/>
+            </Tab.Icon>
+            <ShellContent>
+                <views:CardListView Title="Connections"/>
+            </ShellContent>
+        </Tab>
+
+    </TabBar>
+
+</Shell>-->

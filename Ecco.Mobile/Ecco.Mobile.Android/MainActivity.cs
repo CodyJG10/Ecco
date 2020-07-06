@@ -34,6 +34,9 @@ namespace Ecco.Mobile.Droid
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
+            //var toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
+            //SetActionBar(toolbar);
+
             base.OnCreate(savedInstanceState);
 
             CrossNFC.Init(this);
