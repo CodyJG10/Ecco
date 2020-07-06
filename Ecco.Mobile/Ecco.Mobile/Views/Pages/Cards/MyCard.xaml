@@ -50,7 +50,8 @@
                                            FontSize="Large"
                                            CornerRadius="5"
                                            FontFamily="{StaticResource Montserrat-SemiBold}"
-                                           Command="{Binding SetAsActiveCardCommand}"/>  
+                                           Command="{Binding SetAsActiveCardCommand}"
+                                           IsVisible="{Binding IsActiveCard, Converter={StaticResource BoolConverter}}"/>  
 
                     </StackLayout>
                     

@@ -23,7 +23,8 @@ namespace Ecco.Mobile.Droid
     [Activity(Label = "Ecco Space",
               Icon = "@mipmap/icon", 
               Theme = "@style/MainTheme",
-              MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation,
+              //MainLauncher = true,
+              ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation,
               LaunchMode = LaunchMode.SingleTop)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {

@@ -81,11 +81,13 @@ namespace Ecco.Mobile.ViewModels.Home
 
         public MyCardViewModel() : base()
         {
+            Loading = true;
+
             CreateCardCommand = new Command(() => Application.Current.MainPage.Navigation.PushAsync(new CreateCardPage()));
             RefreshCommand = new Command(LoadCards);
             EditCardCommand = new Command<CardModel>(EditCard);
             DeleteCardCommand = new Command<CardModel>(DeleteCard);
-            SelectCardCommand = new Command<CardModel>(x => Application.Current.MainPage.Navigation.PushAsync(new MyCard(x)));
+            SelectCardCommand = new Command<CardModel>(SelectCard);
             ShareCardCommand = new Command<CardModel>(ShareCard);
 
             SubscribeAutoUpdates();
@@ -101,6 +103,13 @@ namespace Ecco.Mobile.ViewModels.Home
                 var cards = JsonConvert.DeserializeObject<List<Entities.Card>>(json);
                 LoadCards();
             });
+        }
+
+        private async void SelectCard(CardModel card)
+        {
+            if (Loading)
+                return;
+            await Application.Current.MainPage.Navigation.PushAsync(new MyCard(card));
         }
 
         private async void LoadCards()
@@ -162,15 +171,11 @@ namespace Ecco.Mobile.ViewModels.Home
         private async void DeleteCard(CardModel card)
         {
             var succesful = await _db.DeleteCard(card.Card);
-            if (succesful)
-            {
-                LoadCards();
-            }
-            else
+            if (!succesful)
             {
                 await Application.Current.MainPage.DisplayAlert("Error!", "An error was encountered when attempting to delete your card", "Ok");
-                LoadCards();
             }
+            LoadCards();
         }
 
         private async void ShareCard(CardModel card)
@@ -178,7 +183,7 @@ namespace Ecco.Mobile.ViewModels.Home
             await Share.RequestAsync(new ShareTextRequest()
             {
                 Uri = "https://ecco-space.azurewebsites.net/" + card.Card.Id,
-                Text = "Hey, check out my digital business card on Ecco Space!",
+                Text = "Hey, check out my business card on Ecco Space!",
                 Title = "Digital Business Card"
             });
         }
