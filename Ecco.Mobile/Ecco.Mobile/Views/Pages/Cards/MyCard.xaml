@@ -20,12 +20,12 @@
             <card:Card BindingContext="{Binding CardModel}"
                        Margin="15"/>
 
-            <border:SfBorder BorderWidth="0.5"
+            <!--<border:SfBorder BorderWidth="0.5"
                              CornerRadius="2"
                              BorderColor="Transparent"
                              HasShadow="True"
                              BackgroundColor="White"
-                             Margin="25">
+                             Margin="25">-->
 
                 <StackLayout VerticalOptions="FillAndExpand"
                              HorizontalOptions="FillAndExpand">
@@ -43,21 +43,20 @@
 
                     <StackLayout IsVisible="{Binding IsActiveCard, Converter={StaticResource BoolConverter}}">
 
-                        <sfbutton:SfButton Text="Set As Active Card" 
+                    <sfbutton:SfButton Text="Set As Active Card" 
                                            HorizontalOptions="Center"
                                            Margin="0,15"
                                            WidthRequest="250"
                                            FontSize="Large"
                                            CornerRadius="5"
                                            FontFamily="{StaticResource Montserrat-SemiBold}"
-                                           Command="{Binding SetAsActiveCardCommand}"
-                                           IsVisible="{Binding IsActiveCard, Converter={StaticResource BoolConverter}}"/>  
+                                           Command="{Binding SetAsActiveCardCommand}"/>
 
-                    </StackLayout>
+                </StackLayout>
                     
                 </StackLayout>
                 
-            </border:SfBorder>
+            <!--</border:SfBorder>-->
             
             <sfbarcode:SfBarcode Text="{Binding QrCodeUrl}"
                                  BackgroundColor="Transparent"

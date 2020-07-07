@@ -16,7 +16,7 @@ namespace Ecco.Mobile.ViewModels.Home.Card
         public CardModel CardModel { get; set; }
         public string QrCodeUrl { get; set; }
 
-        private bool _isActiveCard = false;
+        private bool _isActiveCard;
         public bool IsActiveCard
         {
             get
