@@ -2,6 +2,7 @@
 using Ecco.Mobile.Models;
 using Ecco.Mobile.Util;
 using Ecco.Mobile.Views.Authentication;
+using Ecco.Mobile.Views.HomeMaster;
 using Nancy.TinyIoc;
 using Newtonsoft.Json;
 using Plugin.Settings;
@@ -52,7 +53,7 @@ namespace Ecco.Mobile.ViewModels.Auth
                     CrossSettings.Current.AddOrUpdateValue("RefreshToken", content.RefreshToken);
                     CrossSettings.Current.AddOrUpdateValue("Token", content.Token);
                     SavePreferences(Email, Password);
-                    Application.Current.MainPage = new NavigationPage(new Views.Home());
+                    Application.Current.MainPage = new NavigationPage(new HomeMaster());
                 }
             }
             else

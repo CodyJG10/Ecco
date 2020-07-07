@@ -65,14 +65,12 @@ namespace Ecco.Mobile
 
                 if (openEccoCard)
                 {
-                    MainPage = new NavigationPage(new Home());
+                    MainPage = new NavigationPage(new HomeMaster());
                     ShowFromEccoCard();
                     return;
                 }
                 else
                 {
-                    //MainPage = new NavigationPage(new Home());
-                    //MainPage = new NavigationPage(new HomeWithDrawer());
                     MainPage = new NavigationPage(new HomeMaster());
                     isLaunched = true;
                 }
