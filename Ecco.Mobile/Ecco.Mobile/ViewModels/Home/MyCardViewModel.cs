@@ -125,16 +125,18 @@ namespace Ecco.Mobile.ViewModels.Home
 
             List<CardModel> cardModels = new List<CardModel>();
 
+            var activeCard = await _db.GetActiveCard(_userData.Id.ToString());
+
             foreach (var card in cards)
             {
                 var cardModel = CardModel.FromCard(card, _userData);
+                cardModel.IsActiveCard = activeCard.Id == card.Id;
                 cardModels.Add(cardModel);
             }
 
             Cards = cardModels;
 
             //Load active card data
-            var activeCard = await _db.GetActiveCard(_userData.Id.ToString());
             if (activeCard != null)
             {
                 ActiveCard = CardModel.FromCard(activeCard, _userData);

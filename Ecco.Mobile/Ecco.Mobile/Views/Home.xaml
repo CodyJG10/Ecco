@@ -10,7 +10,7 @@
             android:TabbedPage.ToolbarPlacement="Bottom"
             android:TabbedPage.BarSelectedItemColor="{DynamicResource PrimaryColor}"
             android:TabbedPage.BarItemColor="{StaticResource Gray-100}"
-            android:TabbedPage.IsSwipePagingEnabled="True"
+            android:TabbedPage.IsSwipePagingEnabled="False"
             ios:NavigationPage.HideNavigationBarSeparator="False"
             xmlns:style="clr-namespace:Ecco.Mobile.Views"
             xmlns:themes="clr-namespace:Ecco.Mobile.Themes"

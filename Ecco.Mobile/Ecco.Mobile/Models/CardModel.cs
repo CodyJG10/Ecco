@@ -16,6 +16,7 @@ namespace Ecco.Mobile.Models
     {
         public Card Card { get; set; }
         public ImageSource CardImage { get; set; }
+        public bool IsActiveCard { get; set;  }
 
         public static CardModel FromCard(Card card, UserData user)
         {

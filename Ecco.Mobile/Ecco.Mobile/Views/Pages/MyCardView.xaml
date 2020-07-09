@@ -26,6 +26,7 @@ xmlns:popuplayout="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusi
 
     <ContentPage.Resources>
         <converters:NegateBooleanValue x:Key="BoolConverter"/>
+        <converters:IsActiveCardColorConverter x:Key="IsActiveCardConverter"/>
     </ContentPage.Resources>
 
     <ContentPage.Content>
@@ -42,7 +43,7 @@ xmlns:popuplayout="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusi
                               FontFamily="{StaticResource Montserrat-SemiBold}"
                               Command="{Binding CreateCardCommand}"/>
 
-            <syncfusion:SfExpander>
+            <!--<syncfusion:SfExpander>
                 <syncfusion:SfExpander.Header>
                     <Label Text="Active Card"
                            HorizontalOptions="Start"
@@ -53,7 +54,7 @@ xmlns:popuplayout="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusi
                 <syncfusion:SfExpander.Content>
                     <StackLayout>
 
-                        <!-- has active card view -->
+                        --><!-- has active card view --><!--
                         <StackLayout IsVisible="{Binding HasActiveCard}"
                                             Margin="5">
 
@@ -71,7 +72,7 @@ xmlns:popuplayout="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusi
 
                         </StackLayout>
 
-                        <!-- does NOT have active card view -->
+                        --><!-- does NOT have active card view --><!--
                         <StackLayout  IsVisible="{Binding HasActiveCard, Converter={StaticResource BoolConverter}}"
                                             Margin="25">
 
@@ -87,7 +88,7 @@ xmlns:popuplayout="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusi
 
                     </StackLayout>
                 </syncfusion:SfExpander.Content>
-            </syncfusion:SfExpander>
+            </syncfusion:SfExpander>-->
 
             <pulltorefresh:SfPullToRefresh IsRefreshing="{Binding Loading}"
                                            RefreshCommand="{Binding RefreshCommand}"
@@ -103,10 +104,10 @@ xmlns:popuplayout="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusi
                     <!-- All Cards List -->
                     <border:SfBorder HorizontalOptions="FillAndExpand" 
                                      VerticalOptions="FillAndExpand"
-                                     BorderColor="Transparent"
-                                     BackgroundColor="Transparent"
-                                     CornerRadius="2"
-                                     HasShadow="True">
+                                     BorderWidth="2"
+                                     BorderColor="{StaticResource Gray-300}"
+                                     CornerRadius="15"
+                                     BackgroundColor="{StaticResource Gray-200}">
 
                         <StackLayout BackgroundColor="White">
 
@@ -163,10 +164,10 @@ xmlns:popuplayout="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusi
                                 <listview:SfListView.ItemTemplate>
                                     <DataTemplate>
 
-                                        <Frame BackgroundColor="White"
-                                                Margin="0,0,0,0"
-                                                HasShadow="False"
-                                                CornerRadius="8">
+                                        <Frame Margin="0,0,0,0"
+                                               HasShadow="False"
+                                               CornerRadius="8"
+                                               BackgroundColor="{Binding ., Converter={StaticResource IsActiveCardConverter}}">
 
                                             <cardViews:Card BindingContext="{Binding .}"
                                                             VerticalOptions="Center"

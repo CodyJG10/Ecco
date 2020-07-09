@@ -2,6 +2,7 @@
 using Ecco.Entities.Attributes;
 using Ecco.Mobile.Models;
 using Ecco.Mobile.ViewModels.Home;
+using Syncfusion.DataSource;
 using Syncfusion.XForms.Buttons;
 using Syncfusion.XForms.ComboBox;
 using Syncfusion.XForms.PopupLayout;
@@ -28,6 +29,13 @@ namespace Ecco.Mobile.Views.Pages
         {
             InitializeComponent();
             InitFilterComboBox();
+
+            ConnectionsList.DataSource.SortDescriptors.Add(new SortDescriptor()
+            {
+                PropertyName = "Name",
+                Direction = ListSortDirection.Ascending,
+            });
+            ConnectionsList.RefreshView();
         }
 
         private void InitFilterComboBox()
