@@ -1,8 +1,10 @@
 ﻿using Ecco.Entities;
 using Ecco.Entities.Attributes;
 using Ecco.Mobile.Models;
+using Ecco.Mobile.Util;
 using Ecco.Mobile.ViewModels.Home;
 using Syncfusion.DataSource;
+using Syncfusion.DataSource.Extensions;
 using Syncfusion.XForms.Buttons;
 using Syncfusion.XForms.ComboBox;
 using Syncfusion.XForms.PopupLayout;
@@ -36,6 +38,18 @@ namespace Ecco.Mobile.Views.Pages
                 Direction = ListSortDirection.Ascending,
             });
             ConnectionsList.RefreshView();
+
+            ConnectionsList.DataSource.GroupDescriptors.Add(new GroupDescriptor()
+            {
+                PropertyName = "Name",
+                KeySelector = (object card) =>
+                {
+                    var item = (card as ConnectionModel);
+                    return item.Card.Card.FullName.ToArray()[0].ToString();
+                },
+                Comparer = new GroupByFirstCharComparer()
+            });
+
         }
 
         private void InitFilterComboBox()
@@ -201,5 +215,45 @@ namespace Ecco.Mobile.Views.Pages
         }
 
         #endregion
+
+        private void ConnectionsList_Loaded(object sender, Syncfusion.ListView.XForms.ListViewLoadedEventArgs e)
+        {
+            var groupcount = ConnectionsList.DataSource.Groups.Count;
+            for (int i = 0; i < groupcount; i++)
+            {
+                Label label = new Label();
+                GroupResult group = ConnectionsList.DataSource.Groups[i];
+                label.Text = group.Key.ToString();
+                IndexPanelGrid.Children.Add(label, 0, i);
+                var labelTapped = new TapGestureRecognizer()
+                {
+                    Command = new Command<object>(OnTapped),
+                    CommandParameter = label
+                };
+                label.GestureRecognizers.Add(labelTapped);
+            }
+        }
+
+        private Label previousLabel;
+        private void OnTapped(object obj)
+        {
+            if (previousLabel != null)
+            {
+                previousLabel.TextColor = Color.DimGray;
+            }
+            var label = obj as Label;
+            var text = label.Text;
+            label.TextColor = Color.Red;
+            for (int i = 0; i < ConnectionsList.DataSource.Groups.Count; i++)
+            {
+                var group = ConnectionsList.DataSource.Groups[i];
+                
+                if ((group.Key != null && group.Key.Equals(text)))
+                {
+                    ConnectionsList.LayoutManager.ScrollToRowIndex(ConnectionsList.DataSource.DisplayItems.IndexOf(group), true);
+                }
+            }
+            previousLabel = label;
+        }
     }
 }
