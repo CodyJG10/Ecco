@@ -38,6 +38,7 @@ namespace Ecco.Api
         Task<bool> DeleteCard(Card card);
         Task<Card> GetActiveCard(string userId);
         Task<HttpResponseMessage> UpdateActiveCard(string userId, string cardId);
+        Task<int> GetConnectionsWithCard(Card card);
 
         #endregion
 

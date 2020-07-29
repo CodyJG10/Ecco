@@ -30,6 +30,12 @@
     <Color x:Key="Gray-Black">#000000</Color>
     <Color x:Key="Gray-White">#ffffff</Color>
 
+    <Color x:Key="BackgroundPrimary">#D9D9D9</Color>
+    <Color x:Key="BackgroundSecondary">#F9F9F9</Color>
+    <Color x:Key="LightGray">#E5E5E5</Color>
+    <Color x:Key="LightRed">#BD0F0F</Color>
+    <Color x:Key="DarkRed">#8E0B0B</Color>
+    
     <OnPlatform x:Key="FontIcons" x:TypeArguments="x:String">
         <OnPlatform.Platforms>
             <On Platform="Android" Value="UIFontIcons.ttf#UIFontIcons" />
@@ -42,6 +48,13 @@
         <OnPlatform.Platforms>
             <On Platform="Android" Value="Ecco.ttf#Ecco"/>
             <On Platform="iOS" Value="Ecco" />
+        </OnPlatform.Platforms>
+    </OnPlatform>
+
+    <OnPlatform x:Key="EccoFont2" x:TypeArguments="x:String">
+        <OnPlatform.Platforms>
+            <On Platform="Android" Value="EccoFont2.ttf#EccoFont2"/>
+            <On Platform="iOS" Value="EccoFont2"/>
         </OnPlatform.Platforms>
     </OnPlatform>
 

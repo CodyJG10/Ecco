@@ -17,8 +17,10 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="Plugin.NFC" Version="0.1.16" />
     <PackageReference Include="Plugin.Permissions" Version="6.0.1" />
+    <PackageReference Include="Sharpnado.Presentation.Forms" Version="1.7.1" />
     <PackageReference Include="Syncfusion.Licensing" Version="18.1.0.59" />
     <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="18.1.0.59" />
+    <PackageReference Include="Syncfusion.Xamarin.Cards" Version="18.1.0.59" />
     <PackageReference Include="Syncfusion.Xamarin.Core" Version="18.1.0.59" />
     <PackageReference Include="Syncfusion.Xamarin.DataSource" Version="18.1.0.59" />
     <PackageReference Include="Syncfusion.Xamarin.Expander" Version="18.1.0.59" />
@@ -40,6 +42,7 @@
     <PackageReference Include="Xam.Plugins.Settings" Version="3.1.1" />
     <PackageReference Include="Xamarin.Forms" Version="4.7.0.1080" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
+    <PackageReference Include="Xamarin.Forms.PancakeView" Version="2.0.1.698" />
   </ItemGroup>
 
   <ItemGroup>
@@ -107,9 +110,6 @@
     <EmbeddedResource Update="Views\Pages\CardListView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\Home.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Update="Views\Pages\Cards\CreateCardEditor.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -149,6 +149,9 @@
     <EmbeddedResource Update="Views\Pages\Cards\CreateCardPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\Pages\HomeTabPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\Pages\MyAccountView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -169,6 +172,9 @@
   <ItemGroup>
     <Compile Update="Views\Pages\Cards\CreateCardPage.xaml.cs">
       <DependentUpon>CreateCardPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\Pages\HomeTabPage.xaml.cs">
+      <DependentUpon>HomeTabPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="Views\Styles.xaml.cs">
       <DependentUpon>Styles.xaml</DependentUpon>

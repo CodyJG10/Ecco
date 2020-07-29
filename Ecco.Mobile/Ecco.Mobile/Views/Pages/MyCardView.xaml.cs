@@ -14,7 +14,7 @@ using Xamarin.Forms.Xaml;
 namespace Ecco.Mobile.Views.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MyCardView : ContentPage
+    public partial class MyCardView : ContentView
     {
         private CardModel _swipedCard;
 
@@ -94,6 +94,14 @@ namespace Ecco.Mobile.Views.Pages
         private void ButtonEditCard_Clicked(object sender, EventArgs e)
         {
             (BindingContext as MyCardViewModel).EditCardCommand.Execute(_swipedCard);
+        }
+
+        private void SfCardLayout_VisibleCardIndexChanged(object sender, Syncfusion.XForms.Cards.VisibleCardIndexChangedEventArgs e)
+        {
+            if (e.NewCard == null)
+                return;
+            CardModel newCard = e.NewCard.BindingContext as CardModel;
+            ((MyCardViewModel)BindingContext).ShowCardInfo(newCard);
         }
     }
 }

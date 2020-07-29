@@ -7,6 +7,7 @@ using Ecco.Mobile.Views;
 using Ecco.Mobile.Views.Authentication;
 using Ecco.Mobile.Views.HomeMaster;
 using Ecco.Mobile.Views.NFC;
+using Ecco.Mobile.Views.Pages;
 using Ecco.Mobile.Views.Pages.Cards;
 using Nancy.Diagnostics;
 using Nancy.TinyIoc;

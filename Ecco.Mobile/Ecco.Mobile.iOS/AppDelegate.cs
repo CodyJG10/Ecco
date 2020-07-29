@@ -1,3 +1,4 @@
+using Syncfusion.XForms.iOS.Cards;
 using Syncfusion.SfNavigationDrawer.XForms.iOS;
 using Syncfusion.XForms.iOS.PopupLayout;
 using Syncfusion.SfPullToRefresh.XForms.iOS;
@@ -30,6 +31,7 @@ using Syncfusion.XForms.iOS.BadgeView;
 using System.Threading.Tasks;
 using Syncfusion.SfImageEditor.XForms.iOS;
 using Syncfusion.XForms.iOS.MaskedEdit;
+using Sharpnado.Presentation.Forms.iOS;
 
 namespace Ecco.Mobile.iOS
 {
@@ -47,6 +49,7 @@ namespace Ecco.Mobile.iOS
             Xamarin.Forms.Forms.SetFlags("IndicatorView_Experimental");
 
             global::Xamarin.Forms.Forms.Init();
+            SfCardViewRenderer.Init();
             SfNavigationDrawerRenderer.Init();
 
             SfButtonRenderer.Init();
@@ -63,6 +66,8 @@ namespace Ecco.Mobile.iOS
             SfBadgeViewRenderer.Init();
             SfImageEditorRenderer.Init();
             SfMaskedEditRenderer.Init();
+
+            SharpnadoInitializer.Initialize();
 
             new SfBarcodeRenderer();
 

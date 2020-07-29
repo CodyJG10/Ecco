@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -18,6 +19,7 @@ namespace Ecco.Mobile.ViewModels.Home.Card
         public ICommand CallCommand { get; set; }
         public ICommand EmailCommand { get; set; }
         public ICommand AddToContactsCommand { get; set; }
+        public ICommand MessageCommand { get; set; }
 
         public SelectCardViewModel(CardModel card)
         {
@@ -26,6 +28,17 @@ namespace Ecco.Mobile.ViewModels.Home.Card
             CallCommand = new Command(Call);
             EmailCommand = new Command(Email);
             AddToContactsCommand = new Command(AddToContacts);
+            MessageCommand = new Command(async () => await MessageAsync());
+        }
+
+        private async Task MessageAsync()
+        {
+            try
+            {
+                var message = new SmsMessage("", Card.Card.Phone);
+                await Sms.ComposeAsync(message);
+            }
+            catch (Exception) { }
         }
 
         private void Call()

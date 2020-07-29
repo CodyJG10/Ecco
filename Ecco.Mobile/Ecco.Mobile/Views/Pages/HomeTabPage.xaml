@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:views="clr-namespace:Ecco.Mobile.Views.Pages"
+             xmlns:tabs="clr-namespace:Sharpnado.Presentation.Forms.CustomViews.Tabs;assembly=Sharpnado.Presentation.Forms"
+             mc:Ignorable="d"
+             x:Class="Ecco.Mobile.Views.Pages.HomeTabPage"
+             x:Name="HomePage"
+             Title="Ecco Space">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="BottomTabStyle" TargetType="tabs:BottomTabItem">
+                <Setter Property="SelectedTabColor" Value="{StaticResource DarkRed}" />
+                <Setter Property="UnselectedLabelColor" Value="{StaticResource Gray-500}" />
+                <Setter Property="UnselectedIconColor" Value="{StaticResource Gray-500}" />
+                <Setter Property="LabelSize" Value="14" />
+                <Setter Property="IconSize" Value="28" />
+                <!--<Setter Property="IsTextVisible" Value="False" />-->
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="75"/>
+            </Grid.RowDefinitions>
+
+            <ScrollView Grid.Row="0" 
+                        Margin="0,3,0,0"
+                        VerticalOptions="FillAndExpand"
+                        HorizontalOptions="FillAndExpand">
+                <tabs:ViewSwitcher x:Name="Switcher"
+                               SelectedIndex="{Binding Source={x:Reference HomePage}, Path=BindingContext.SelectedIndex, Mode=TwoWay}"
+                               Animate="True">
+                    <views:MyCardView/>
+                    <views:CardListView/>
+                </tabs:ViewSwitcher>
+            </ScrollView>
+
+            <tabs:TabHostView x:Name="TabHost"  
+                              Grid.Row="1"
+                              BackgroundColor="White"
+                              SelectedIndex="{Binding Source={x:Reference Switcher}, 
+                                              Path=SelectedIndex, 
+                                              Mode=TwoWay}"
+                              TabType="Fixed">
+
+                <tabs:TabHostView.Tabs>
+
+                    <tabs:BottomTabItem Label="My Cards"
+                                        Style="{StaticResource BottomTabStyle}">
+                        <tabs:BottomTabItem.IconImageSource>
+                            <FontImageSource FontFamily="{StaticResource EccoFont}"
+                                             Glyph="{StaticResource CardIcon}"
+                                             Size="24"
+                                             Color="{StaticResource DarkRed}"/>
+                        </tabs:BottomTabItem.IconImageSource>
+                    </tabs:BottomTabItem>
+
+                    <!--  Circle button  -->
+                    <tabs:TabButton ButtonBackgroundColor="Accent"
+                                    ButtonCircleSize="75"
+                                    ButtonPadding="10"
+                                    Scale="1"
+                                    IconImageSource="scan_icon.png"
+                                    TranslationY="-35"
+                                    x:Name="ButtonScanCard"
+                                    Clicked="ButtonScanCard_Clicked">
+                    </tabs:TabButton>
+
+                    <tabs:BottomTabItem Label="Connections"
+                                        Style="{StaticResource BottomTabStyle}">
+                        <tabs:BottomTabItem.IconImageSource>
+                            <FontImageSource FontFamily="{StaticResource EccoFont}"
+                                             Glyph="{StaticResource ConnectionsIcon}"
+                                             Size="24"
+                                             Color="{StaticResource DarkRed}"/>
+                        </tabs:BottomTabItem.IconImageSource>
+                    </tabs:BottomTabItem>
+
+                </tabs:TabHostView.Tabs>
+
+            </tabs:TabHostView>
+
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

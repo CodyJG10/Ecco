@@ -57,10 +57,13 @@
     <x:String x:Key="Trash">&#xe704;</x:String>
     <x:String x:Key="NFCIcon">&#xe709;</x:String>
     <x:String x:Key="SendIcon">&#xe70a;</x:String>
+    <x:String x:Key="InfoIcon">&#xe700;</x:String>
+    <x:String x:Key="ViewCardInfoText">&#xe700; View</x:String>
 
-    <x:String x:Key="CallButtonText">&#xe706;&#10;Call</x:String>
-    <x:String x:Key="MailButtonText">&#xe707;&#x0a;E-Mail</x:String>
-    <x:String x:Key="AddToContactsButtonText">&#xe708;&#x0a;Add To Contacts</x:String>
+    <x:String x:Key="CallButtonText">&#xe706;&#10;</x:String>
+    <x:String x:Key="MailButtonText">&#xe707;&#x0a;</x:String>
+    <x:String x:Key="AddToContactsButtonText">&#xe708;&#x0a;</x:String>
+    <x:String x:Key="MessageButtonText">&#xe701;</x:String>
 
     <!-- Common style for setting labels -->
     <Style x:Key="SettingsLabelStyle" TargetType="Label">

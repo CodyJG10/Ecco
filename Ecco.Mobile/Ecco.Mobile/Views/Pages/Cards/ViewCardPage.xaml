@@ -10,6 +10,14 @@
              Title="Business Card"
              BackgroundColor="{StaticResource Gray-100}">
 
+    <ContentPage.Resources>
+        <Style x:Key="infoLabelStyle" TargetType="Entry">
+            <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="InputTransparent" Value="True"/>
+        </Style>
+    </ContentPage.Resources>
+    
     <ContentPage.Content>
         <StackLayout VerticalOptions="FillAndExpand">
             
@@ -18,51 +26,91 @@
                         VerticalOptions="Start"
                         Margin="15"/>
 
+            <Entry Text="{Binding Card.Card.FullName}"
+                               Style="{StaticResource infoLabelStyle}"/>
+
+            <Entry Text="{Binding Card.Card.CardTitle}"
+                               Style="{StaticResource infoLabelStyle}"/>
+
+            <Entry Text="{Binding Card.Card.Email}"
+                               Style="{StaticResource infoLabelStyle}"/>
+
+            <Entry Text="{Binding Card.Card.Phone}"
+                               Style="{StaticResource infoLabelStyle}"/>
+
             <!-- Options Grid -->
-            <border:SfBorder VerticalOptions="EndAndExpand"
-                             Margin="15"
-                             BorderColor="{StaticResource Gray-300}"
-                             BackgroundColor="{StaticResource Gray-200}"
-                             CornerRadius="15">
 
-                <StackLayout>
+            <Grid VerticalOptions="EndAndExpand">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-                    <Label Text="Contact Options"
-                           Style="{StaticResource HeaderLabelStyle}"
-                           FontSize="Large"
-                           HorizontalTextAlignment="Center"/>
 
-                    <StackLayout Grid.Row="0"
-                                 Orientation="Horizontal"
-                                 HorizontalOptions="Center"
-                                 Spacing="15"
-                                 Margin="25">
-
-                        <buttons:SfButton Text="{StaticResource CallButtonText}"
+                
+                <buttons:SfButton Text="{StaticResource CallButtonText}"
                                           FontFamily="{StaticResource EccoFont}"
                                           FontSize="Large"
                                           Command="{Binding CallCommand}"
                                           WidthRequest="75"
-                                          HorizontalOptions="Center"/>
+                                          HorizontalOptions="Center"
+                                  Grid.Row="0"
+                                  Grid.Column="0"/>
 
-                        <buttons:SfButton Text="{StaticResource MailButtonText}"
+                <Label Text="Call"
+                       HorizontalOptions="Center"
+                       Grid.Column="0"
+                       Grid.Row="1"/>
+
+                <buttons:SfButton Text="{StaticResource MessageButtonText}"
                                           FontSize="Large"
+                                          FontFamily="{StaticResource EccoFont2}"
+                                          Command="{Binding MessageCommand}"
+                                          WidthRequest="75"
+                                          HorizontalOptions="Center"
+                                  Grid.Column="1"
+                                  Grid.Row="0"/>
+
+                <Label Text="Text"
+                       HorizontalOptions="Center"
+                       Grid.Column="1"
+                       Grid.Row="1"/>
+
+                <buttons:SfButton Text="{StaticResource MailButtonText}"
+                                          FontSize="Large"
+                                          WidthRequest="75"
                                           FontFamily="{StaticResource EccoFont}"
                                           Command="{Binding EmailCommand}"
-                                          WidthRequest="75"
-                                          HorizontalOptions="Center"/>
+                                          HorizontalOptions="Center"
+                                  Grid.Column="2"
+                                  Grid.Row="0"/>
 
-                        <buttons:SfButton Text="{StaticResource AddToContactsButtonText}"
+                <Label Text="Email"
+                       HorizontalOptions="Center"
+                       Grid.Column="2"
+                       Grid.Row="1"/>
+
+
+                <buttons:SfButton Text="{StaticResource AddToContactsButtonText}"
                                           FontSize="Large"
                                           WidthRequest="75"
                                           FontFamily="{StaticResource EccoFont}"
                                           Command="{Binding AddToContactsCommand}"
-                                          HorizontalOptions="Center"/>
+                                          HorizontalOptions="Center"
+                                  Grid.Column="3"
+                                  Grid.Row="0"/>
 
-                    </StackLayout>
-
-                </StackLayout>
-            </border:SfBorder>
+                <Label Text="Add To Contacts"
+                       HorizontalOptions="Center"
+                       Grid.Column="3"
+                       Grid.Row="1"/>
+            </Grid>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

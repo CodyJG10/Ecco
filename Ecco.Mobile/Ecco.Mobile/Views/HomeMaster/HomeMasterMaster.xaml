@@ -3,9 +3,17 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.Home"
              mc:Ignorable="d"
              x:Class="Ecco.Mobile.Views.HomeMaster.HomeMasterMaster"
-             Title="Ecco Space">
+             Title="Ecco Space"
+             BackgroundColor="{DynamicResource DarkRed}"
+             x:Name="MasterPage">
+
+    <ContentPage.BindingContext>
+        <viewmodels:HomeMasterViewModel/>
+    </ContentPage.BindingContext>
+    
     <StackLayout>
 
         <ListView x:Name="MenuItemsListView"
@@ -14,9 +22,15 @@
                   ItemsSource="{Binding MenuItems}">
 
             <ListView.Header>
-                <StackLayout BackgroundColor="White">
-                    <Image Source="ecco_logo.png" Aspect="AspectFit"/>
-                    <BoxView Style="{StaticResource SeparatorStyle}"/>
+                <StackLayout BackgroundColor="{DynamicResource DarkRed}" 
+                             HeightRequest="100">
+                    <Label Text="Ecco Space"
+                           TextColor="White"
+                           Margin="15"
+                           FontSize="Large"/>
+                    <!--<Image Source="ecco_logo.png" Aspect="AspectFit"/>-->
+                    <BoxView Style="{StaticResource SeparatorStyle}"
+                             VerticalOptions="EndAndExpand"/>
                 </StackLayout>
             </ListView.Header>
 
@@ -27,11 +41,12 @@
                                      HorizontalOptions="FillAndExpand">
                             
                             <Label VerticalOptions="FillAndExpand" 
-                                    VerticalTextAlignment="Center" 
-                                    Text="{Binding Title}" 
-                                    d:Text="{Binding .}"
+                                   VerticalTextAlignment="Center" 
+                                   Text="{Binding Title}" 
+                                   d:Text="{Binding .}"
                                    Style="{StaticResource HeaderLabelStyle}"
-                                    FontSize="24"/>
+                                   FontSize="24"
+                                   TextColor="White"/>
 
                             <BoxView Style="{StaticResource SeparatorStyle}"/>
 

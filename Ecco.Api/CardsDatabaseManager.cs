@@ -83,5 +83,12 @@ namespace Ecco.Api
             var response = await client.PostAsync("api/UpdateActiveCard", formContent);
             return response;
         }
+
+        public async Task<int> GetConnectionsWithCard(Card card)
+        {
+            var response = await client.GetAsync("api/ConnectionsWithCard?cardId=" + card.Id.ToString());
+            var content = await response.Content.ReadAsStringAsync();
+            return int.Parse(content);
+        }
     }
 }

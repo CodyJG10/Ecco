@@ -6,7 +6,7 @@
              mc:Ignorable="d"
              x:Class="Ecco.Mobile.Views.HomeMaster.HomeMaster"
              xmlns:pages="clr-namespace:Ecco.Mobile.Views.HomeMaster" 
-            xmlns:pages1="clr-namespace:Ecco.Mobile.Views">
+            xmlns:pages1="clr-namespace:Ecco.Mobile.Views" xmlns:views="clr-namespace:Ecco.Mobile.Views.Pages">
     
   <MasterDetailPage.Master>
     <pages:HomeMasterMaster x:Name="MasterPage" />
@@ -31,7 +31,7 @@
     <MasterDetailPage.Detail>
         <NavigationPage>
             <x:Arguments>
-                <pages1:Home x:Name="DetailsPage"/>
+                <views:HomeTabPage x:Name="DetailsPage"/>
             </x:Arguments>
         </NavigationPage>
   </MasterDetailPage.Detail>

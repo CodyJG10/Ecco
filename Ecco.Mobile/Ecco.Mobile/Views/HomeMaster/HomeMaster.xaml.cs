@@ -18,7 +18,7 @@ namespace Ecco.Mobile.Views.HomeMaster
             MasterPage.ListView.ItemSelected += ListView_ItemSelected;
 
             if (Device.RuntimePlatform == Device.Android)
-            { 
+            {
                 NavigationPage.SetHasNavigationBar(this, false);
             }
         }

@@ -21,7 +21,7 @@ using Xamarin.Forms.Xaml;
 namespace Ecco.Mobile.Views.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CardListView : ContentPage
+    public partial class CardListView : ContentView
     {
         private ConnectionModel _swipedCard;
 
@@ -30,7 +30,6 @@ namespace Ecco.Mobile.Views.Pages
         public CardListView()
         {
             InitializeComponent();
-            InitFilterComboBox();
 
             ConnectionsList.DataSource.SortDescriptors.Add(new SortDescriptor()
             {
@@ -50,14 +49,7 @@ namespace Ecco.Mobile.Views.Pages
                 Comparer = new GroupByFirstCharComparer()
             });
 
-        }
-
-        private void InitFilterComboBox()
-        {
-            List<string> filters = new List<string>();
-            filters.Add("Cardholder");
-            filters.Add("Service Category ");
-            FilterComboBox.ComboBoxSource = filters;
+            ConnectionsList.DataSource.Filter = Filter;
         }
 
         public void Refresh()
@@ -135,44 +127,24 @@ namespace Ecco.Mobile.Views.Pages
 
         #region Filtering 
 
-        private void CardholderNameSearchbar_TextChanged(object sender, TextChangedEventArgs e)
+        private void SearchBar_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (ConnectionsList.DataSource != null)
-            {
-                switch(FilterComboBox.SelectedIndex)
-                {
-                    case 0:
-                        ConnectionsList.DataSource.Filter = FilterByCardholder;
-                        break;
-                    case 1:
-                        ConnectionsList.DataSource.Filter = FilterByService;
-                        break;
-                }
-
-                ConnectionsList.DataSource.RefreshFilter();
-            }
+            ConnectionsList.DataSource.RefreshFilter();
         }
 
-        private bool FilterByCardholder(object obj)
+        private bool Filter(object obj)
         {
-            if (FilterInput.Text == null)
+            if (filterSearchBar.Text == null)
                 return true;
 
             var connection = obj as ConnectionModel;
-            if (connection.Card.Card.FullName.ToLower().Contains(FilterInput.Text.ToLower()))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+            string query = filterSearchBar.Text.ToLower();
+            string cardServiceTypeTitle = GetTitle(connection.Card.Card.ServiceType).ToLower();
 
-        private bool FilterByService(object obj)
-        {
-            if (FilterInput.Text == null)
+            if (connection.Card.Card.FullName.ToLower().Contains(filterSearchBar.Text.ToLower()))
+            {
                 return true;
+            }
 
             string GetTitle(int id)
             {
@@ -187,9 +159,6 @@ namespace Ecco.Mobile.Views.Pages
                 return null;
             }
 
-            var connection = obj as ConnectionModel;
-            string query = FilterInput.Text.ToLower();
-            string cardServiceTypeTitle = GetTitle(connection.Card.Card.ServiceType).ToLower();
             if (cardServiceTypeTitle.Contains(query))
             {
                 return true;
@@ -197,20 +166,6 @@ namespace Ecco.Mobile.Views.Pages
             else
             {
                 return false;
-            }
-        }
-
-        private void FilterComboBox_SelectionChanged(object sender, Syncfusion.XForms.ComboBox.SelectionChangedEventArgs e)
-        {
-            if (FilterComboBox.SelectedIndex == 0)
-            {
-                //Cardholder
-                FilterInput.Placeholder = "Cardholder Name";
-            }
-            if (FilterComboBox.SelectedIndex == 1)
-            {
-                //Service Category
-                FilterInput.Placeholder = "Service Category";
             }
         }
 

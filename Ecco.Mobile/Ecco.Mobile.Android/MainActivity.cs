@@ -10,6 +10,7 @@ using System.Net;
 using Plugin.NFC;
 using Android.Content;
 using Android;
+using Sharpnado.Presentation.Forms.Droid;
 
 namespace Ecco.Mobile.Droid
 {
@@ -49,6 +50,8 @@ namespace Ecco.Mobile.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 
             Syncfusion.XForms.Android.PopupLayout.SfPopupLayoutRenderer.Init();
+
+            SharpnadoInitializer.Initialize();
 
             LoadApplication(new App());
 

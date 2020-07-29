@@ -12,70 +12,84 @@
 
     <ContentPage.Resources>
         <converters:NegateBooleanValue x:Key="BoolConverter"/>
+        <Style x:Key="infoLabelStyle" TargetType="Entry">
+            <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="InputTransparent" Value="True"/>
+        </Style>
     </ContentPage.Resources>
-    
-    <ContentPage.Content>
-        <StackLayout Margin="5">
 
+    <ContentPage.Content>
+        <ScrollView Margin="5">
+
+            <StackLayout>
+            
             <card:Card BindingContext="{Binding CardModel}"
                        Margin="15"/>
 
-            <!--<border:SfBorder BorderWidth="0.5"
-                             CornerRadius="2"
-                             BorderColor="Transparent"
-                             HasShadow="True"
-                             BackgroundColor="White"
-                             Margin="25">-->
+            <Entry Text="{Binding CardModel.Card.FullName}"
+                               Style="{StaticResource infoLabelStyle}"/>
 
-                <StackLayout VerticalOptions="FillAndExpand"
-                             HorizontalOptions="FillAndExpand">
+            <Entry Text="{Binding CardModel.Card.CardTitle}"
+                               Style="{StaticResource infoLabelStyle}"/>
 
-                    <StackLayout IsVisible="{Binding IsActiveCard}">
+            <Entry Text="{Binding CardModel.Card.Email}"
+                               Style="{StaticResource infoLabelStyle}"/>
 
-                        <Label Text="This is your active card"
-                               HorizontalOptions="CenterAndExpand"
-                               VerticalOptions="CenterAndExpand"
-                               FontSize="Large"
-                               FontFamily="{StaticResource Montserrat-SemiBold}"
-                               TextColor="{StaticResource PrimaryColor}"/>
-                        
-                    </StackLayout>
+            <Entry Text="{Binding CardModel.Card.Phone}"
+                               Style="{StaticResource infoLabelStyle}"/>
+            
+            <StackLayout>
 
-                    <StackLayout IsVisible="{Binding IsActiveCard, Converter={StaticResource BoolConverter}}">
+                <StackLayout IsVisible="{Binding IsActiveCard}">
+
+                    <Label Text="This is your active card"
+                                   HorizontalOptions="CenterAndExpand"
+                                   VerticalOptions="CenterAndExpand"
+                                   FontSize="Large"
+                                   FontFamily="{StaticResource Montserrat-SemiBold}"
+                                   TextColor="{StaticResource PrimaryColor}"/>
+
+                </StackLayout>
+
+                <StackLayout IsVisible="{Binding IsActiveCard, Converter={StaticResource BoolConverter}}">
 
                     <sfbutton:SfButton Text="Set As Active Card" 
-                                           HorizontalOptions="Center"
-                                           Margin="0,15"
-                                           WidthRequest="250"
-                                           FontSize="Large"
-                                           CornerRadius="5"
-                                           FontFamily="{StaticResource Montserrat-SemiBold}"
-                                           Command="{Binding SetAsActiveCardCommand}"/>
+                                        HorizontalOptions="Center"
+                                        Margin="0,15"
+                                        WidthRequest="250"
+                                        FontSize="Large"
+                                        CornerRadius="5"
+                                        FontFamily="{StaticResource Montserrat-SemiBold}"
+                                        Command="{Binding SetAsActiveCardCommand}"/>
 
                 </StackLayout>
-                    
-                </StackLayout>
-                
-            <!--</border:SfBorder>-->
-            
-            <sfbarcode:SfBarcode Text="{Binding QrCodeUrl}"
-                                 BackgroundColor="Transparent"
-                                 Symbology="QRCode"
-                                 HorizontalOptions="Center"
-                                 x:Name="QrCode">
-                <sfbarcode:SfBarcode.SymbologySettings>
 
-                    <sfbarcode:QRBarcodeSettings XDimension="4"/>
+            </StackLayout>
 
-                </sfbarcode:SfBarcode.SymbologySettings>
-            </sfbarcode:SfBarcode>
+            <StackLayout>
 
-            <sfbutton:SfButton HorizontalOptions="Center"
-                               Text="Share Card"
-                               Command="{Binding ShareCommand}"
-                               WidthRequest="115"
-                               CornerRadius="5"/>
+                <sfbarcode:SfBarcode Text="{Binding QrCodeUrl}"
+                                     BackgroundColor="Transparent"
+                                     HeightRequest="150"
+                                     Symbology="QRCode"
+                                     HorizontalOptions="Center"
+                                     x:Name="QrCode">
+                    <sfbarcode:SfBarcode.SymbologySettings>
 
-        </StackLayout>
+                        <sfbarcode:QRBarcodeSettings XDimension="4"/>
+
+                    </sfbarcode:SfBarcode.SymbologySettings>
+                </sfbarcode:SfBarcode>
+
+                <sfbutton:SfButton HorizontalOptions="Center"
+                                   Text="Share Card"
+                                   Command="{Binding ShareCommand}"
+                                   FontSize="Large"
+                                   CornerRadius="5"/>
+
+            </StackLayout>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

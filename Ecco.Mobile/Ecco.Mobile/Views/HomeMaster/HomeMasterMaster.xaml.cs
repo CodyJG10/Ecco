@@ -46,10 +46,6 @@ namespace Ecco.Mobile.Views.HomeMaster
                     {
                         Application.Current.MainPage.Navigation.PushAsync(new ReadTagPage());
                     }},
-                    new HomeMasterMasterMenuItem { Id = 2, Title = "Company Portal", OnClicked = () => 
-                    {
-                        Application.Current.MainPage.Navigation.PushAsync(new CompanyHomeScreen());
-                    }},
                     new HomeMasterMasterMenuItem { Id = 3, Title = "Log Out", OnClicked = () => 
                     {
                         CrossSettings.Current.Remove("UserData");

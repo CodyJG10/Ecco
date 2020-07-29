@@ -1,5 +1,6 @@
 ﻿using Ecco.Mobile.AutoUpdate;
 using Ecco.Mobile.Models;
+using Ecco.Mobile.Views.NFC;
 using Nancy.TinyIoc;
 using System;
 using System.Collections.Generic;
@@ -43,6 +44,7 @@ namespace Ecco.Mobile.ViewModels.Home.Card
             SetAsActiveCardCommand = new Command(SetAsActiveCard);
             CheckIfActiveCard();
             _autoUpdater = TinyIoCContainer.Current.Resolve<AutoUpdater>();
+            Application.Current.MainPage.Navigation.PushAsync(new CreateConnectionFromScanPage(model));
         }
 
         private async void CheckIfActiveCard()

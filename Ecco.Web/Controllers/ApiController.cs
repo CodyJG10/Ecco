@@ -139,6 +139,14 @@ namespace Ecco.Web.Controllers
             return Ok();
         }
 
+        [HttpGet("ConnectionsWithCard")]
+        public int GetConnectionsWithCard(string cardId)
+        {
+            var card = _context.Cards.Single(x => x.Id == int.Parse(cardId));
+            var connectionsWithCard = _context.Connections.Where(x => x.CardId == int.Parse(cardId)).ToList();
+            return connectionsWithCard.Count;
+        }
+
         #endregion
 
         #region Connections

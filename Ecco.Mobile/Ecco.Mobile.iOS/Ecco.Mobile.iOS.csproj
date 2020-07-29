@@ -101,6 +101,7 @@
     <BundleResource Include="Resources\Ecco.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </BundleResource>
+    <BundleResource Include="Resources\EccoFont2.ttf" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\10241.png">
@@ -219,6 +220,9 @@
       <Version>6.0.1</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Buttons">
+      <Version>18.1.0.59</Version>
+    </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.Cards">
       <Version>18.1.0.59</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Core">
@@ -341,6 +345,9 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\hamburger_menu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\scan_icon.png" />
   </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>

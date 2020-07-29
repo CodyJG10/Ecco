@@ -64,7 +64,13 @@
     <PackageReference Include="Plugin.NFC">
       <Version>0.1.16</Version>
     </PackageReference>
+    <PackageReference Include="Sharpnado.Presentation.Forms">
+      <Version>1.7.1</Version>
+    </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Buttons">
+      <Version>18.1.0.59</Version>
+    </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.Cards">
       <Version>18.1.0.59</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Core">
@@ -160,6 +166,7 @@
     <AndroidAsset Include="Assets\Montserrat-Bold.ttf" />
     <AndroidAsset Include="Assets\Ecco.ttf" />
     <GoogleServicesJson Include="google-services.json" />
+    <AndroidAsset Include="Assets\EccoFont2.ttf" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
@@ -247,6 +254,9 @@
     <AndroidResource Include="Resources\drawable\SplashScreen.xml">
       <SubType>Designer</SubType>
     </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\scan_icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>
