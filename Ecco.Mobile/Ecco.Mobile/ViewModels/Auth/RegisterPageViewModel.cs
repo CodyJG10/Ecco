@@ -53,7 +53,12 @@ namespace Ecco.Mobile.ViewModels.Auth
                     CrossSettings.Current.AddOrUpdateValue("RefreshToken", content.RefreshToken);
                     CrossSettings.Current.AddOrUpdateValue("Token", content.Token);
                     SavePreferences(Email, Password);
-                    Application.Current.MainPage = new NavigationPage(new HomeMaster());
+                    Application.Current.MainPage = new NavigationPage(new HomeMaster())
+                    {
+
+                        BarBackgroundColor = Color.FromHex("BD0F0F"),
+                        BarTextColor = Color.White
+                    };
                 }
             }
             else

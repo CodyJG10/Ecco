@@ -4,7 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:views="clr-namespace:Ecco.Mobile.Views.Card" 
-             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms" xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms" xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms" xmlns:controls="clr-namespace:Ecco.Mobile.Controls"
              mc:Ignorable="d"
              x:Class="Ecco.Mobile.Views.Pages.Cards.ViewCardPage"
              Title="Business Card"
@@ -15,6 +15,7 @@
             <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
             <Setter Property="Margin" Value="5"/>
             <Setter Property="InputTransparent" Value="True"/>
+            <Setter Property="FontSize" Value="Large"/>
         </Style>
     </ContentPage.Resources>
     
@@ -26,17 +27,21 @@
                         VerticalOptions="Start"
                         Margin="15"/>
 
-            <Entry Text="{Binding Card.Card.FullName}"
-                               Style="{StaticResource infoLabelStyle}"/>
+            <StackLayout Margin="30,0,30,0" Spacing="25">
+                
+                <controls:UnderlineEntry Text="{Binding Card.Card.FullName}"
+                                   Style="{StaticResource infoLabelStyle}"/>
 
-            <Entry Text="{Binding Card.Card.CardTitle}"
-                               Style="{StaticResource infoLabelStyle}"/>
+                <controls:UnderlineEntry Text="{Binding Card.Card.CardTitle}"
+                                   Style="{StaticResource infoLabelStyle}"/>
 
-            <Entry Text="{Binding Card.Card.Email}"
-                               Style="{StaticResource infoLabelStyle}"/>
+                <controls:UnderlineEntry Text="{Binding Card.Card.Email}"
+                                   Style="{StaticResource infoLabelStyle}"/>
 
-            <Entry Text="{Binding Card.Card.Phone}"
-                               Style="{StaticResource infoLabelStyle}"/>
+                <controls:UnderlineEntry Text="{Binding Card.Card.Phone}"
+                                   Style="{StaticResource infoLabelStyle}"/>
+
+            </StackLayout>
 
             <!-- Options Grid -->
 
@@ -52,14 +57,13 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-
-                
                 <buttons:SfButton Text="{StaticResource CallButtonText}"
                                           FontFamily="{StaticResource EccoFont}"
                                           FontSize="Large"
                                           Command="{Binding CallCommand}"
                                           WidthRequest="75"
                                           HorizontalOptions="Center"
+                                  BackgroundColor="{DynamicResource LightRed}"
                                   Grid.Row="0"
                                   Grid.Column="0"/>
 
@@ -74,6 +78,7 @@
                                           Command="{Binding MessageCommand}"
                                           WidthRequest="75"
                                           HorizontalOptions="Center"
+                                  BackgroundColor="{DynamicResource LightRed}"
                                   Grid.Column="1"
                                   Grid.Row="0"/>
 
@@ -88,6 +93,7 @@
                                           FontFamily="{StaticResource EccoFont}"
                                           Command="{Binding EmailCommand}"
                                           HorizontalOptions="Center"
+                                  BackgroundColor="{DynamicResource LightRed}"
                                   Grid.Column="2"
                                   Grid.Row="0"/>
 
@@ -99,7 +105,8 @@
 
                 <buttons:SfButton Text="{StaticResource AddToContactsButtonText}"
                                           FontSize="Large"
-                                          WidthRequest="75"
+                                  WidthRequest="75"
+                                  BackgroundColor="{DynamicResource LightRed}"
                                           FontFamily="{StaticResource EccoFont}"
                                           Command="{Binding AddToContactsCommand}"
                                           HorizontalOptions="Center"

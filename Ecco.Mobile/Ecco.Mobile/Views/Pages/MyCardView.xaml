@@ -142,6 +142,7 @@
                                HorizontalTextAlignment="Center"/>
 
                         <Button Text="Tap Here"
+                                Padding="15"
                                 BackgroundColor="{DynamicResource LightRed}"
                                 TextColor="White"
                                 HorizontalOptions="Center"
