@@ -1,12 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d"
-             x:Class="Ecco.Mobile.Views.HomeMaster.HomeMaster"
-             xmlns:pages="clr-namespace:Ecco.Mobile.Views.HomeMaster" 
-            xmlns:pages1="clr-namespace:Ecco.Mobile.Views" xmlns:views="clr-namespace:Ecco.Mobile.Views.Pages">
+                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                  xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                  mc:Ignorable="d"
+                  x:Class="Ecco.Mobile.Views.HomeMaster.HomeMaster"
+                  xmlns:pages="clr-namespace:Ecco.Mobile.Views.HomeMaster" 
+                  xmlns:pages1="clr-namespace:Ecco.Mobile.Views" 
+                  xmlns:views="clr-namespace:Ecco.Mobile.Views.Pages">
     
   <MasterDetailPage.Master>
     <pages:HomeMasterMaster x:Name="MasterPage" />
@@ -22,6 +23,7 @@
 
             <Label Text="Ecco Space"
                    FontSize="Large"
+                   TextColor="White"
                    Style="{StaticResource LabelStyle}"
                    HorizontalOptions="Center"
                    VerticalOptions="Center"/>

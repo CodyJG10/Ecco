@@ -6,9 +6,9 @@
              xmlns:viewmodels="clr-namespace:Ecco.Mobile.ViewModels.Home"
              mc:Ignorable="d"
              x:Class="Ecco.Mobile.Views.HomeMaster.HomeMasterMaster"
-             Title="Ecco Space"
              BackgroundColor="{DynamicResource DarkRed}"
-             x:Name="MasterPage">
+             x:Name="MasterPage"
+             Title="Ecco">
 
     <ContentPage.BindingContext>
         <viewmodels:HomeMasterViewModel/>
@@ -19,6 +19,7 @@
         <ListView x:Name="MenuItemsListView"
                   SeparatorVisibility="None"
                   HasUnevenRows="true"
+                  BackgroundColor="{DynamicResource DarkRed}"
                   ItemsSource="{Binding MenuItems}">
 
             <ListView.Header>

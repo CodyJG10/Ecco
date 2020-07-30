@@ -80,6 +80,7 @@
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Renderers\BorderlessEntryRenderer.cs" />
+    <Compile Include="Renderers\UnderlineEntryRenderer.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -101,7 +102,9 @@
     <BundleResource Include="Resources\Ecco.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </BundleResource>
-    <BundleResource Include="Resources\EccoFont2.ttf" />
+    <BundleResource Include="Resources\EccoFont2.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </BundleResource>
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\10241.png">
@@ -351,7 +354,7 @@
   </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties XamarinHotReloadWrongLinkerErrorInfoBarEccoMobileiOSHideInfoBar="True" XamarinHotReloadDebuggerTimeoutExceptionEccoMobileiOSHideInfoBar="True" />
+      <UserProperties XamarinHotReloadDebuggerTimeoutExceptionEccoMobileiOSHideInfoBar="True" XamarinHotReloadWrongLinkerErrorInfoBarEccoMobileiOSHideInfoBar="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

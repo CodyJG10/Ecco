@@ -44,7 +44,6 @@ namespace Ecco.Mobile.ViewModels.Home.Card
             SetAsActiveCardCommand = new Command(SetAsActiveCard);
             CheckIfActiveCard();
             _autoUpdater = TinyIoCContainer.Current.Resolve<AutoUpdater>();
-            Application.Current.MainPage.Navigation.PushAsync(new CreateConnectionFromScanPage(model));
         }
 
         private async void CheckIfActiveCard()

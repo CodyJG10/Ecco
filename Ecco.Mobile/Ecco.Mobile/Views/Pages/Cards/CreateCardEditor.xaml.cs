@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -42,7 +43,7 @@ namespace Ecco.Mobile.Views.Pages.Cards
             InitializeComponent();
             BindingContext = new CreateCardEditorViewModel(model);
             //ImageEditor.SetToolbarItemVisibility("path,shape,transform,effects,save", false);
-
+            
             ImageEditor.SetToolbarItemVisibility("path,transform,save", false);
 
             ImageEditor.ToolbarSettings.ToolbarItems.Add(new HeaderToolbarItem() { Text = "Create" });

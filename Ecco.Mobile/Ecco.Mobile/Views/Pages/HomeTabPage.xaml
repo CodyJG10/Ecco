@@ -4,12 +4,26 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:views="clr-namespace:Ecco.Mobile.Views.Pages"
-             xmlns:tabs="clr-namespace:Sharpnado.Presentation.Forms.CustomViews.Tabs;assembly=Sharpnado.Presentation.Forms"
+             xmlns:tabs="clr-namespace:Sharpnado.Presentation.Forms.CustomViews.Tabs;assembly=Sharpnado.Presentation.Forms" xmlns:sfborder="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
              mc:Ignorable="d"
              x:Class="Ecco.Mobile.Views.Pages.HomeTabPage"
              x:Name="HomePage"
              Title="Ecco Space">
 
+    <NavigationPage.HasBackButton>
+        <OnPlatform x:TypeArguments="x:Boolean">
+            <On Platform="iOS" Value="false"/>
+            <On Platform="Android" Value="true"/>
+        </OnPlatform>
+    </NavigationPage.HasBackButton>
+
+    <NavigationPage.HasNavigationBar>
+        <OnPlatform x:TypeArguments="x:Boolean">
+            <On Platform="iOS" Value="false"/>
+            <On Platform="Android" Value="true"/>
+        </OnPlatform>
+    </NavigationPage.HasNavigationBar>
+    
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style x:Key="BottomTabStyle" TargetType="tabs:BottomTabItem">
@@ -32,13 +46,13 @@
                 <RowDefinition Height="75"/>
             </Grid.RowDefinitions>
 
+          
             <ScrollView Grid.Row="0" 
-                        Margin="0,3,0,0"
                         VerticalOptions="FillAndExpand"
                         HorizontalOptions="FillAndExpand">
                 <tabs:ViewSwitcher x:Name="Switcher"
-                               SelectedIndex="{Binding Source={x:Reference HomePage}, Path=BindingContext.SelectedIndex, Mode=TwoWay}"
-                               Animate="True">
+                                SelectedIndex="{Binding Source={x:Reference HomePage}, Path=BindingContext.SelectedIndex, Mode=TwoWay}"
+                                Animate="True">
                     <views:MyCardView/>
                     <views:CardListView/>
                 </tabs:ViewSwitcher>
@@ -46,7 +60,7 @@
 
             <tabs:TabHostView x:Name="TabHost"  
                               Grid.Row="1"
-                              BackgroundColor="White"
+                              BackgroundColor="WhiteSmoke"
                               SelectedIndex="{Binding Source={x:Reference Switcher}, 
                                               Path=SelectedIndex, 
                                               Mode=TwoWay}"
@@ -58,14 +72,14 @@
                                         Style="{StaticResource BottomTabStyle}">
                         <tabs:BottomTabItem.IconImageSource>
                             <FontImageSource FontFamily="{StaticResource EccoFont}"
-                                             Glyph="{StaticResource CardIcon}"
-                                             Size="24"
-                                             Color="{StaticResource DarkRed}"/>
+                                                Glyph="{StaticResource CardIcon}"
+                                                Size="24"
+                                                Color="{StaticResource DarkRed}"/>
                         </tabs:BottomTabItem.IconImageSource>
                     </tabs:BottomTabItem>
 
                     <!--  Circle button  -->
-                    <tabs:TabButton ButtonBackgroundColor="Accent"
+                    <tabs:TabButton ButtonBackgroundColor="{DynamicResource LightRed}"
                                     ButtonCircleSize="75"
                                     ButtonPadding="10"
                                     Scale="1"
@@ -79,15 +93,16 @@
                                         Style="{StaticResource BottomTabStyle}">
                         <tabs:BottomTabItem.IconImageSource>
                             <FontImageSource FontFamily="{StaticResource EccoFont}"
-                                             Glyph="{StaticResource ConnectionsIcon}"
-                                             Size="24"
-                                             Color="{StaticResource DarkRed}"/>
+                                                Glyph="{StaticResource ConnectionsIcon}"
+                                                Size="24"
+                                                Color="{StaticResource DarkRed}"/>
                         </tabs:BottomTabItem.IconImageSource>
                     </tabs:BottomTabItem>
 
                 </tabs:TabHostView.Tabs>
 
             </tabs:TabHostView>
+
 
         </Grid>
     </ContentPage.Content>

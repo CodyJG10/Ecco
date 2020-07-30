@@ -190,6 +190,8 @@ namespace Ecco.Mobile.ViewModels.Home
                 }
             }
 
+            ShowCardInfo(Cards[Cards.Count - 1] as CardModel);
+
             Loading = false;
         }
 

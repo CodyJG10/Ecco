@@ -21,6 +21,11 @@ namespace Ecco.Mobile.Views.Pages
         public MyCardView()
         {
             InitializeComponent();
+
+            if (Device.RuntimePlatform == Device.iOS)
+            {
+                InformationStack.Spacing = 25;
+            }
         }
 
         private void ButtonDeleteCard_Clicked(object sender, EventArgs e)

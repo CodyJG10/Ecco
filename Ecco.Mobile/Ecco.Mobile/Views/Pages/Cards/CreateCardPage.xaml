@@ -50,11 +50,12 @@ xmlns:dataform="clr-namespace:Syncfusion.XForms.DataForm;assembly=Syncfusion.SfD
 
                 <!-- Create Button -->
                 <buttons:SfButton Text="Begin Editing" 
-                              HorizontalOptions="Center"
-                              x:Name="ButtonBeginEditing"
-                              Clicked="ButtonBeginEditing_Clicked"
-                              Margin="0,0,0,0"
-                              HeightRequest="85"/>
+                                  BackgroundColor="{DynamicResource LightRed}"
+                                  HorizontalOptions="Center"
+                                  x:Name="ButtonBeginEditing"
+                                  Clicked="ButtonBeginEditing_Clicked"
+                                  Margin="0,0,0,0"
+                                  HeightRequest="85"/>
 
             </StackLayout>
 

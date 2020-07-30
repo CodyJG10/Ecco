@@ -13,6 +13,7 @@ using Nancy.Diagnostics;
 using Nancy.TinyIoc;
 using Newtonsoft.Json;
 using Plugin.Settings;
+using Syncfusion.XForms.Themes;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -66,13 +67,21 @@ namespace Ecco.Mobile
 
                 if (openEccoCard)
                 {
-                    MainPage = new NavigationPage(new HomeMaster());
+                    MainPage = new NavigationPage(new HomeMaster())
+                    {
+                        BarBackgroundColor = (Color)Resources["LightRed"],
+                        BarTextColor = Color.White,
+                    };
                     ShowFromEccoCard();
                     return;
                 }
                 else
                 {
-                    MainPage = new NavigationPage(new HomeMaster());
+                    MainPage = new NavigationPage(new HomeMaster())
+                    {
+                        BarBackgroundColor = (Color)Resources["LightRed"],
+                        BarTextColor = Color.White
+                    };
                     isLaunched = true;
                 }
             }

@@ -18,7 +18,7 @@
              BackgroundColor="{DynamicResource Gray-White}"
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
              xmlns:converters="clr-namespace:Ecco.Mobile.Converters"
-             xmlns:syncfusion="clr-namespace:Syncfusion.XForms.Expander;assembly=Syncfusion.Expander.XForms" xmlns:pancakeview="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             xmlns:syncfusion="clr-namespace:Syncfusion.XForms.Expander;assembly=Syncfusion.Expander.XForms" xmlns:pancakeview="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" xmlns:controls="clr-namespace:Ecco.Mobile.Controls"
              ios:Page.UseSafeArea="true">
 
     <ContentView.BindingContext>
@@ -33,6 +33,7 @@
             <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
             <Setter Property="Margin" Value="5"/>
             <Setter Property="InputTransparent" Value="True"/>
+            <Setter Property="Margin" Value="25,0,25,0"/>
         </Style>
     </ContentView.Resources>
 
@@ -83,36 +84,53 @@
 
                 <StackLayout Margin="15">
 
-                    <StackLayout IsVisible="{Binding IsCreateCard, Converter={StaticResource BoolConverter}}">
+                    <StackLayout IsVisible="{Binding IsCreateCard, Converter={StaticResource BoolConverter}}"
+                                 x:Name="InformationStack"
+                                 Spacing="30">
 
                         <Label Text="Information" 
-                           HorizontalOptions="Start"
-                           VerticalOptions="Start"/>
-
-                        <Entry Text="{Binding SelectedCard.Card.FullName}"
-                               Style="{StaticResource infoLabelStyle}"/>
-
-                        <Entry Text="{Binding SelectedCard.Card.CardTitle}"
-                               Style="{StaticResource infoLabelStyle}"/>
-
-                        <Entry Text="{Binding SelectedCard.Card.Email}"
-                               Style="{StaticResource infoLabelStyle}"/>
-
-                        <Entry Text="{Binding SelectedCard.Card.Phone}"
-                               Style="{StaticResource infoLabelStyle}"/>
-
-                        <Label Text="{Binding SharedWithText}"
+                               HorizontalOptions="Start"
                                VerticalOptions="Start"
+                               Margin="25,0,0,0"/>
+
+                        <controls:UnderlineEntry Text="{Binding SelectedCard.Card.FullName}"
+                               Style="{StaticResource infoLabelStyle}"/>
+
+                        <controls:UnderlineEntry Text="{Binding SelectedCard.Card.CardTitle}"
+                               Style="{StaticResource infoLabelStyle}"/>
+
+                        <controls:UnderlineEntry Text="{Binding SelectedCard.Card.Email}"
+                               Style="{StaticResource infoLabelStyle}"/>
+
+                        <controls:UnderlineEntry Text="{Binding SelectedCard.Card.Phone}"
+                               Style="{StaticResource infoLabelStyle}"/>
+
+                        <StackLayout HorizontalOptions="FillAndExpand" 
+                                     Orientation="Horizontal"
+                                     Margin="25,0,25,0">
+                            
+                            <Label Text="{Binding SharedWithText}"
+                               VerticalOptions="Center"
                                HorizontalOptions="Start"/>
 
-                        <Button Text="{StaticResource ViewCardInfoText}"
+                            <Button Text="{StaticResource ViewCardInfoText}"
                                 FontFamily="{StaticResource EccoFont2}"
                                 BackgroundColor="{DynamicResource LightRed}"
                                 Command="{Binding SelectCardCommand}"
                                 TextColor="White"
                                 CornerRadius="15"
-                                HorizontalOptions="Start"/>
+                                HorizontalOptions="EndAndExpand">
 
+                                <Button.Padding>
+                                    <OnPlatform x:TypeArguments="Thickness">
+                                        <On Platform="iOS">15</On>
+                                    </OnPlatform>
+                                </Button.Padding>
+                                
+                            </Button>
+
+                        </StackLayout>
+                                              
                     </StackLayout>
 
                     <StackLayout IsVisible="{Binding IsCreateCard}">

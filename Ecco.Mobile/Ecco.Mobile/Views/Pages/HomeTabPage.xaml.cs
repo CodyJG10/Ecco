@@ -1,5 +1,6 @@
 ﻿using Ecco.Mobile.Views.NFC;
 using Sharpnado.Presentation.Forms.CustomViews.Tabs;
+using Syncfusion.XForms.Themes;
 using System;
 using System.Collections.Generic;
 using System.Linq;

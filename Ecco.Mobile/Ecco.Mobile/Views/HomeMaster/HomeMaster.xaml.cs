@@ -21,6 +21,11 @@ namespace Ecco.Mobile.Views.HomeMaster
             {
                 NavigationPage.SetHasNavigationBar(this, false);
             }
+
+            if (Device.RuntimePlatform == Device.iOS)
+            {
+                IsGestureEnabled = false;
+            }
         }
 
         private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
