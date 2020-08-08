@@ -105,8 +105,6 @@ namespace Ecco.Mobile.ViewModels.Home
 
         public ICommand CreateCardCommand { get; set; }
         public ICommand RefreshCommand { get; set; }
-        public ICommand EditCardCommand { get; set; }
-        public ICommand DeleteCardCommand { get; set; }
         public ICommand SelectCardCommand { get; set; }
         public ICommand ShareCardCommand { get; set; }
 
@@ -118,8 +116,6 @@ namespace Ecco.Mobile.ViewModels.Home
 
             CreateCardCommand = new Command(() => Application.Current.MainPage.Navigation.PushAsync(new CreateCardPage()));
             RefreshCommand = new Command(LoadCards);
-            EditCardCommand = new Command<CardModel>(EditCard);
-            DeleteCardCommand = new Command<CardModel>(DeleteCard);
             SelectCardCommand = new Command<CardModel>(SelectCard);
             ShareCardCommand = new Command<CardModel>(ShareCard);
 
@@ -144,7 +140,7 @@ namespace Ecco.Mobile.ViewModels.Home
                 return;
 
             if (card == null)
-                card = SelectedCard;
+                return;
 
             await Application.Current.MainPage.Navigation.PushAsync(new MyCard(card));
         }
@@ -193,36 +189,6 @@ namespace Ecco.Mobile.ViewModels.Home
             ShowCardInfo(Cards[Cards.Count - 1] as CardModel);
 
             Loading = false;
-        }
-
-        private async void EditCard(CardModel card)
-        {
-            string serviceTitle = "";
-            typeof(ServiceTypes).GetFields().ToList().ForEach(field => { if ((int)field.GetValue(null) == card.Card.ServiceType) serviceTitle = (field.GetCustomAttributes(true)[0] as ServiceInfo).Title; });
-
-            CreateCardModel model = new CreateCardModel()
-            {
-                CardTitle = card.Card.CardTitle,
-                Email = card.Card.Email,
-                PhoneNumber = card.Card.Phone,
-                ServiceCategory = serviceTitle,
-                ExportedImageData = card.Card.ExportedImageData,
-                FullName = card.Card.FullName,
-                TemplateId = card.Card.TemplateId,
-                TemplateImage = await TemplateUtil.LoadImageSource(card.Card.TemplateId, _db, _storage)
-            };
-
-            await Application.Current.MainPage.Navigation.PushAsync(new EditCardPage(model, card.Card.TemplateId, card.Card.Id));
-        }
-
-        private async void DeleteCard(CardModel card)
-        {
-            var succesful = await _db.DeleteCard(card.Card);
-            if (!succesful)
-            {
-                await Application.Current.MainPage.DisplayAlert("Error!", "An error was encountered when attempting to delete your card", "Ok");
-            }
-            LoadCards();
         }
 
         private async void ShareCard(CardModel card)

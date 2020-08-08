@@ -114,12 +114,13 @@
                                HorizontalOptions="Start"/>
 
                             <Button Text="{StaticResource ViewCardInfoText}"
-                                FontFamily="{StaticResource EccoFont2}"
-                                BackgroundColor="{DynamicResource LightRed}"
-                                Command="{Binding SelectCardCommand}"
-                                TextColor="White"
-                                CornerRadius="15"
-                                HorizontalOptions="EndAndExpand">
+                                    FontFamily="{StaticResource EccoFont2}"
+                                    BackgroundColor="{DynamicResource LightRed}"
+                                    Command="{Binding SelectCardCommand}"
+                                    CommandParameter="{Binding SelectedCard}"
+                                    TextColor="White"
+                                    CornerRadius="15"
+                                    HorizontalOptions="EndAndExpand">
 
                                 <Button.Padding>
                                     <OnPlatform x:TypeArguments="Thickness">

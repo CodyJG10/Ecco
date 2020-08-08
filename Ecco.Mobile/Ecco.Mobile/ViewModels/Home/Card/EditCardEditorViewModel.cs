@@ -1,6 +1,7 @@
 ﻿using Ecco.Api;
 using Ecco.Entities;
 using Ecco.Entities.Attributes;
+using Ecco.Mobile.AutoUpdate;
 using Ecco.Mobile.Models;
 using Nancy.TinyIoc;
 using Newtonsoft.Json;
@@ -54,8 +55,8 @@ namespace Ecco.Mobile.ViewModels.Home.Card
             var succeeded = await _db.EditCard(card);
             if (succeeded)
             {
-                await Application.Current.MainPage.Navigation.PopAsync();
-                await Application.Current.MainPage.Navigation.PopAsync();
+                TinyIoCContainer.Current.Resolve<AutoUpdater>().UpdateUserCard();
+                await Application.Current.MainPage.Navigation.PopToRootAsync();
             }
             else
             {

@@ -83,28 +83,75 @@
 
                 <StackLayout>
 
-            <sfbarcode:SfBarcode Text="{Binding QrCodeUrl}"
+                    <sfbarcode:SfBarcode Text="{Binding QrCodeUrl}"
                                     BackgroundColor="Transparent"
                                     HeightRequest="150"
                                     Symbology="QRCode"
                                     HorizontalOptions="Center"
                                     x:Name="QrCode">
-                <sfbarcode:SfBarcode.SymbologySettings>
+                        <sfbarcode:SfBarcode.SymbologySettings>
 
-                    <sfbarcode:QRBarcodeSettings XDimension="4"/>
+                            <sfbarcode:QRBarcodeSettings XDimension="4"/>
 
-                </sfbarcode:SfBarcode.SymbologySettings>
-            </sfbarcode:SfBarcode>
+                        </sfbarcode:SfBarcode.SymbologySettings>
+                    </sfbarcode:SfBarcode>
 
-            <sfbutton:SfButton HorizontalOptions="Center"
+                    <sfbutton:SfButton HorizontalOptions="Center"
                                 Text="Share Card"
                                BackgroundColor="{DynamicResource LightRed}"
                                 Command="{Binding ShareCommand}"
                                 FontSize="Large"
                                 CornerRadius="5"/>
 
-        </StackLayout>
+                </StackLayout>
+
+                <Grid Margin="0,10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <sfbutton:SfButton Text="{StaticResource Trash}"
+                                       FontSize="Large"
+                                       x:Name="ButtonDeleteCard"
+                                       FontFamily="{StaticResource EccoFont}"
+                                       Clicked="ButtonDeleteCard_Clicked"
+                                       WidthRequest="75"
+                                       HorizontalOptions="Center"
+                                       CornerRadius="5"
+                                       BackgroundColor="{DynamicResource LightRed}"
+                                       Grid.Column="0"
+                                       Grid.Row="0"/>
+
+                    <Label Text="Delete"
+                           HorizontalOptions="Center"
+                           Grid.Column="0"
+                           Grid.Row="1"/>
+
+                    <sfbutton:SfButton Text="{StaticResource Edit}"
+                                       FontSize="Large"
+                                       FontFamily="{StaticResource EccoFont}"
+                                       Command="{Binding EditCardCommand}"
+                                       WidthRequest="75"
+                                       CornerRadius="5"
+                                       HorizontalOptions="Center"
+                                       BackgroundColor="{DynamicResource LightRed}"
+                                       Grid.Column="1"
+                                       Grid.Row="0"/>
+
+                    <Label Text="Edit"
+                           HorizontalOptions="Center"
+                           Grid.Column="1"
+                           Grid.Row="1"/>
+
+                </Grid>
+
             </StackLayout>
+
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>

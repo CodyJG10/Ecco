@@ -10,15 +10,16 @@
              xmlns:syncfusion="clr-namespace:Syncfusion.XForms.Expander;assembly=Syncfusion.Expander.XForms"
              xmlns:xforms="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms" 
              xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms" 
-             xmlns:dataform="clr-namespace:Syncfusion.XForms.DataForm;assembly=Syncfusion.SfDataForm.XForms">
+             xmlns:dataform="clr-namespace:Syncfusion.XForms.DataForm;assembly=Syncfusion.SfDataForm.XForms" xmlns:popup="clr-namespace:Syncfusion.XForms.PopupLayout;assembly=Syncfusion.SfPopupLayout.XForms" xmlns:converter="clr-namespace:Ecco.Mobile.Converters">
 
-    <ContentPage.Content>
 
-        <StackLayout>
+    <!--<StackLayout>
 
             <ScrollView VerticalOptions="FillAndExpand">
 
-                <!-- Data Form -->
+                -->
+    <!-- Data Form -->
+    <!--
                 <dataform:SfDataForm x:Name="DataForm" 
                                  AutoGeneratingDataFormItem="DataForm_AutoGeneratingDataFormItem"
                                  DataObject="{Binding CardModel}"
@@ -28,9 +29,13 @@
                                  LabelPosition="Top"/>
             </ScrollView>
 
-            <!-- Expander -->
+            -->
+    <!-- Expander -->
+    <!--
             <syncfusion:SfExpander x:Name="TemplateExpander">
-                <!-- Header -->
+                -->
+    <!-- Header -->
+    <!--
                 <syncfusion:SfExpander.Header>
 
                     <Grid>
@@ -45,7 +50,9 @@
                 <syncfusion:SfExpander.Content>
                     <StackLayout Padding="10,10,10,10" BackgroundColor="#FFFFFF">
 
-                        <!-- Card Template List -->
+                        -->
+    <!-- Card Template List -->
+    <!--
                         <xforms:SfListView ItemsSource="{Binding Templates}"
                                             ItemSize="200"
                                             x:Name="TemplateListView"
@@ -67,13 +74,100 @@
                 </syncfusion:SfExpander.Content>
             </syncfusion:SfExpander>
 
-            <!-- Update Button -->
+            -->
+    <!-- Update Button -->
+    <!--
             <buttons:SfButton Text="Update" 
                               HorizontalOptions="Center"
                               Command="{Binding SaveCommand}"
                               HeightRequest="85"/>
 
-        </StackLayout>
+        </StackLayout>-->
 
-    </ContentPage.Content>
+    <popup:SfPopupLayout x:Name="PopupLayout">
+
+        <popup:SfPopupLayout.Resources>
+            <ResourceDictionary>
+                <converter:BooleanToColorConverter x:Key="ColorConverter" />
+            </ResourceDictionary>
+        </popup:SfPopupLayout.Resources>
+
+        <popup:SfPopupLayout.Content>
+
+            <StackLayout>
+
+                <ScrollView VerticalOptions="FillAndExpand">
+                    <!-- Data Form -->
+                    <dataform:SfDataForm x:Name="DataForm" 
+                                     AutoGeneratingDataFormItem="DataForm_AutoGeneratingDataFormItem"
+                                     DataObject="{Binding CardModel}"
+                                     HorizontalOptions="FillAndExpand"
+                                     ValidationMode="PropertyChanged"
+                                     ContainerType="Outlined"
+                                     LabelPosition="Top"/>
+
+                </ScrollView>
+
+                <buttons:SfButton Text="Change Template"
+                                  BackgroundColor="{DynamicResource LightRed}"
+                                  HorizontalOptions="Center"
+                                  WidthRequest="300"
+                                  x:Name="ButtonChangeTemplate"
+                                  Clicked="ButtonChangeTemplate_Clicked"
+                                  Margin="10"
+                                  CornerRadius="5"/>
+
+                <!-- Create Button -->
+                <buttons:SfButton Text="Begin Updating" 
+                                  BackgroundColor="{DynamicResource LightRed}"
+                                  HorizontalOptions="Center"
+                                  WidthRequest="300"
+                                  Command="{Binding SaveCommand}"
+                                  Margin="10"
+                                  CornerRadius="5"/>
+
+            </StackLayout>
+
+        </popup:SfPopupLayout.Content>
+
+        <popup:SfPopupLayout.PopupView>
+            <popup:PopupView HeaderTitle="Please Select A Template"
+                             ShowFooter="False"
+                             VerticalOptions="FillAndExpand"
+                             HorizontalOptions="FillAndExpand">
+
+                <popup:PopupView.ContentTemplate>
+                    <DataTemplate>
+                        <StackLayout>
+                            <xforms:SfListView ItemsSource="{Binding Templates}"
+                                               ItemSize="250"
+                                               x:Name="TemplateListView"
+                                               VerticalOptions="Fill"
+                                               SelectionChanged="TemplateListView_SelectionChanged">
+
+                                <xforms:SfListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackLayout>
+
+                                            <Label Text="{Binding Template.Title}"
+                                                   HorizontalOptions="Center"
+                                                   Style="{StaticResource HeaderLabelStyle}"/>
+
+                                            <Image Source="{Binding TemplateImage}"
+                                                   WidthRequest="350"
+                                                   HeightRequest="200"
+                                                   Aspect="Fill"/>
+
+                                        </StackLayout>
+                                    </DataTemplate>
+                                </xforms:SfListView.ItemTemplate>
+                            </xforms:SfListView>
+                        </StackLayout>
+                    </DataTemplate>
+                </popup:PopupView.ContentTemplate>
+            </popup:PopupView>
+        </popup:SfPopupLayout.PopupView>
+
+    </popup:SfPopupLayout>
+
 </ContentPage>

@@ -54,9 +54,14 @@ namespace Ecco.Mobile.Views.Pages.Cards
 
         private void TemplateListView_SelectionChanged(object sender, Syncfusion.ListView.XForms.ItemSelectionChangedEventArgs e)
         {
-            var model = TemplateListView.SelectedItem as TemplateModel;
-            TemplateExpander.IsExpanded = false;
+            var model = e.AddedItems[0] as TemplateModel;
+            PopupLayout.Dismiss();
             (BindingContext as EditCardViewModel).TemplateSelectedCommand.Execute(model.Template);
+        }
+
+        private void ButtonChangeTemplate_Clicked(object sender, EventArgs e)
+        {
+            PopupLayout.Show();
         }
     }
 

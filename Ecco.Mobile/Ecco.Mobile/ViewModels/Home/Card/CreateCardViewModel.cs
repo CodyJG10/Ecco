@@ -12,6 +12,7 @@ using Syncfusion.ListView.XForms;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -19,7 +20,7 @@ using static Ecco.Api.DatabaseManager;
 
 namespace Ecco.Mobile.ViewModels.Home
 {
-    public class CreateCardViewModel : ViewModelBase
+    public class CreateCardViewModel : LoadingViewModel
     {
         #region Properties
 
@@ -129,6 +130,13 @@ namespace Ecco.Mobile.ViewModels.Home
 
         public async void CreateCard()
         {
+            var allCards = await _db.GetMyCards(_userData.Id.ToString());
+            if (allCards.Any(x => x.CardTitle.ToLower() == CardModel.CardTitle.ToLower()))
+            {
+                await Application.Current.MainPage.DisplayAlert("Cannot Create Card", "You already have a card with this title! Please choose a unique name", "Return");
+                return;
+            }
+
             if (SelectedTemplate == null)
                 SelectedTemplate = new TemplateModel()
                 {
