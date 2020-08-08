@@ -8,18 +8,10 @@
              Title="Card Editor">
     <ContentPage.Content>
 
-        <StackLayout>
+        <imageeditor:SfImageEditor Source="{Binding Model.TemplateImage}"
+                                x:Name="ImageEditor"
+                                ImageSaving="ImageEditor_ImageSaving"
+                                ImageLoaded="ImageEditor_ImageLoaded"/>
 
-
-            <imageeditor:SfImageEditor Source="{Binding Model.TemplateImage}"
-                                   x:Name="ImageEditor"
-                                   ImageSaving="ImageEditor_ImageSaving"
-                                   ImageLoaded="ImageEditor_ImageLoaded"/>
-
-            <Button Text="Test"
-                    Clicked="Button_Clicked"/>
-
-        </StackLayout>
-        
     </ContentPage.Content>
 </ContentPage>

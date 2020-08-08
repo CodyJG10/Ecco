@@ -105,10 +105,5 @@ namespace Ecco.Mobile.Views.Pages.Cards
         {
             AutoFillText();
         }
-
-        private void Button_Clicked(object sender, EventArgs e)
-        {
-
-        }
     }
 }
