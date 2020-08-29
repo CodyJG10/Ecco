@@ -51,5 +51,7 @@
 	<string>Light</string>
   <key>UIViewControllerBasedStatusBarAppearance</key>
   <string>false</string>
+  <key>NSPhotoLibraryUsageDescription</key>
+  <string>Ecco uses photo library to customize business cards</string>
 </dict>
 </plist>

@@ -62,94 +62,95 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Plugin.NFC">
-      <Version>0.1.16</Version>
+      <Version>0.1.17</Version>
     </PackageReference>
     <PackageReference Include="Sharpnado.Presentation.Forms">
       <Version>1.7.1</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Buttons">
-      <Version>18.1.0.59</Version>
+      <Version>18.2.0.55</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Cards">
-      <Version>18.1.0.59</Version>
+      <Version>18.2.0.55</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Core">
-      <Version>18.1.0.59</Version>
+      <Version>18.2.0.55</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.DataSource">
-      <Version>18.1.0.59</Version>
+      <Version>18.2.0.55</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Expander">
-      <Version>18.1.0.59</Version>
+      <Version>18.2.0.55</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.GridCommon">
-      <Version>18.1.0.59</Version>
+      <Version>18.2.0.55</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfAutoComplete">
-      <Version>18.1.0.59</Version>
+      <Version>18.2.0.55</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfBackdrop">
-      <Version>18.1.0.59</Version>
+      <Version>18.2.0.55</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfBadgeView">
-      <Version>18.1.0.59</Version>
+      <Version>18.2.0.55</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator">
-      <Version>18.1.0.59</Version>
+      <Version>18.2.0.55</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfComboBox">
-      <Version>18.1.0.59</Version>
+      <Version>18.2.0.55</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfDataForm">
-      <Version>18.1.0.59</Version>
+      <Version>18.2.0.55</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfImageEditor">
-      <Version>18.1.0.59</Version>
+      <Version>18.2.0.55</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfListView">
-      <Version>18.1.0.59</Version>
+      <Version>18.2.0.55</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfMaskedEdit">
-      <Version>18.1.0.59</Version>
+      <Version>18.2.0.55</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfNavigationDrawer">
-      <Version>18.1.0.59</Version>
+      <Version>18.2.0.55</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfPicker">
-      <Version>18.1.0.59</Version>
+      <Version>18.2.0.55</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfPopupLayout">
-      <Version>18.1.0.59</Version>
+      <Version>18.2.0.55</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfPullToRefresh">
-      <Version>18.1.0.59</Version>
+      <Version>18.2.0.55</Version>
     </PackageReference>
     <PackageReference Include="Xam.Plugins.Settings">
       <Version>3.1.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Azure.NotificationHubs.Android">
-      <Version>0.6.0</Version>
+      <Version>1.1.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Firebase.Common">
-      <Version>71.1610.1</Version>
+      <Version>71.1610.4</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Firebase.Messaging">
-      <Version>71.1740.1</Version>
+      <Version>71.1740.4</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="4.7.0.1080" />
+    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1269" />
     <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
     <PackageReference Include="Xamarin.GooglePlayServices.Base">
-      <Version>71.1610.1</Version>
+      <Version>71.1610.4</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.GooglePlayServices.Basement">
-      <Version>71.1620.2</Version>
+      <Version>71.1620.4</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.GooglePlayServices.Tasks">
-      <Version>71.1601.1</Version>
+      <Version>71.1601.4</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dependencies\NotificationService.cs" />
+    <Compile Include="Dependencies\PhotoPickerService.cs" />
     <Compile Include="Dependencies\SaveContactToDevice.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Notifications\BackgroundNotificationService.cs" />
@@ -257,6 +258,9 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\scan_icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\photo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <ProjectExtensions>

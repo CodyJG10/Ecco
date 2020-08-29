@@ -295,6 +295,7 @@ namespace Ecco.Mobile.Droid
 			global::Syncfusion.XForms.Android.Core.Resource.Drawable.input_layout_drop_down_icon = global::Ecco.Mobile.Droid.Resource.Drawable.input_layout_drop_down_icon;
 			global::Syncfusion.XForms.Android.Core.Resource.Drawable.inputlayout_togglecollapseicon = global::Ecco.Mobile.Droid.Resource.Drawable.inputlayout_togglecollapseicon;
 			global::Syncfusion.XForms.Android.Core.Resource.Drawable.inputlayout_togglevisibleicon = global::Ecco.Mobile.Droid.Resource.Drawable.inputlayout_togglevisibleicon;
+			global::Syncfusion.XForms.Android.Core.Resource.Drawable.clear_button_icon = global::Ecco.Mobile.Droid.Resource.Drawable.clear_button_icon;
 			global::Com.Syncfusion.Autocomplete.Resource.Attribute.autocompleteBorderColor = global::Ecco.Mobile.Droid.Resource.Attribute.autocompleteBorderColor;
 			global::Com.Syncfusion.Autocomplete.Resource.Attribute.autocompleteClearButtonColor = global::Ecco.Mobile.Droid.Resource.Attribute.autocompleteClearButtonColor;
 			global::Com.Syncfusion.Autocomplete.Resource.Attribute.autocompleteDisplayMemberPath = global::Ecco.Mobile.Droid.Resource.Attribute.autocompleteDisplayMemberPath;
@@ -1436,6 +1437,7 @@ namespace Ecco.Mobile.Droid
 			global::Syncfusion.XForms.Android.ComboBox.Resource.Drawable.Avatar9 = global::Ecco.Mobile.Droid.Resource.Drawable.Avatar9;
 			global::Syncfusion.XForms.Android.ComboBox.Resource.Drawable.avd_hide_password = global::Ecco.Mobile.Droid.Resource.Drawable.avd_hide_password;
 			global::Syncfusion.XForms.Android.ComboBox.Resource.Drawable.avd_show_password = global::Ecco.Mobile.Droid.Resource.Drawable.avd_show_password;
+			global::Syncfusion.XForms.Android.ComboBox.Resource.Drawable.clear_button_icon = global::Ecco.Mobile.Droid.Resource.Drawable.clear_button_icon;
 			global::Syncfusion.XForms.Android.ComboBox.Resource.Drawable.design_bottom_navigation_item_background = global::Ecco.Mobile.Droid.Resource.Drawable.design_bottom_navigation_item_background;
 			global::Syncfusion.XForms.Android.ComboBox.Resource.Drawable.design_fab_background = global::Ecco.Mobile.Droid.Resource.Drawable.design_fab_background;
 			global::Syncfusion.XForms.Android.ComboBox.Resource.Drawable.design_ic_visibility = global::Ecco.Mobile.Droid.Resource.Drawable.design_ic_visibility;
@@ -4813,6 +4815,7 @@ namespace Ecco.Mobile.Droid
 			global::Xamarin.Forms.Platform.Android.Resource.String.fab_transformation_sheet_behavior = global::Ecco.Mobile.Droid.Resource.String.fab_transformation_sheet_behavior;
 			global::Xamarin.Forms.Platform.Android.Resource.String.hide_bottom_view_on_scroll_behavior = global::Ecco.Mobile.Droid.Resource.String.hide_bottom_view_on_scroll_behavior;
 			global::Xamarin.Forms.Platform.Android.Resource.String.mtrl_chip_close_icon_content_description = global::Ecco.Mobile.Droid.Resource.String.mtrl_chip_close_icon_content_description;
+			global::Xamarin.Forms.Platform.Android.Resource.String.overflow_tab_title = global::Ecco.Mobile.Droid.Resource.String.overflow_tab_title;
 			global::Xamarin.Forms.Platform.Android.Resource.String.password_toggle_content_description = global::Ecco.Mobile.Droid.Resource.String.password_toggle_content_description;
 			global::Xamarin.Forms.Platform.Android.Resource.String.path_password_eye = global::Ecco.Mobile.Droid.Resource.String.path_password_eye;
 			global::Xamarin.Forms.Platform.Android.Resource.String.path_password_eye_mask_strike_through = global::Ecco.Mobile.Droid.Resource.String.path_password_eye_mask_strike_through;
@@ -7382,6 +7385,7 @@ namespace Ecco.Mobile.Droid
 			global::Xamarin.Forms.Platform.Resource.String.fab_transformation_sheet_behavior = global::Ecco.Mobile.Droid.Resource.String.fab_transformation_sheet_behavior;
 			global::Xamarin.Forms.Platform.Resource.String.hide_bottom_view_on_scroll_behavior = global::Ecco.Mobile.Droid.Resource.String.hide_bottom_view_on_scroll_behavior;
 			global::Xamarin.Forms.Platform.Resource.String.mtrl_chip_close_icon_content_description = global::Ecco.Mobile.Droid.Resource.String.mtrl_chip_close_icon_content_description;
+			global::Xamarin.Forms.Platform.Resource.String.overflow_tab_title = global::Ecco.Mobile.Droid.Resource.String.overflow_tab_title;
 			global::Xamarin.Forms.Platform.Resource.String.password_toggle_content_description = global::Ecco.Mobile.Droid.Resource.String.password_toggle_content_description;
 			global::Xamarin.Forms.Platform.Resource.String.path_password_eye = global::Ecco.Mobile.Droid.Resource.String.path_password_eye;
 			global::Xamarin.Forms.Platform.Resource.String.path_password_eye_mask_strike_through = global::Ecco.Mobile.Droid.Resource.String.path_password_eye_mask_strike_through;
@@ -12253,274 +12257,280 @@ namespace Ecco.Mobile.Droid
 			public const int city = 2131165321;
 			
 			// aapt resource value: 0x7F07008A
-			public const int common_full_open_on_phone = 2131165322;
+			public const int clear_button_icon = 2131165322;
 			
 			// aapt resource value: 0x7F07008B
-			public const int common_google_signin_btn_icon_dark = 2131165323;
+			public const int common_full_open_on_phone = 2131165323;
 			
 			// aapt resource value: 0x7F07008C
-			public const int common_google_signin_btn_icon_dark_focused = 2131165324;
+			public const int common_google_signin_btn_icon_dark = 2131165324;
 			
 			// aapt resource value: 0x7F07008D
-			public const int common_google_signin_btn_icon_dark_normal = 2131165325;
+			public const int common_google_signin_btn_icon_dark_focused = 2131165325;
 			
 			// aapt resource value: 0x7F07008E
-			public const int common_google_signin_btn_icon_dark_normal_background = 2131165326;
+			public const int common_google_signin_btn_icon_dark_normal = 2131165326;
 			
 			// aapt resource value: 0x7F07008F
-			public const int common_google_signin_btn_icon_disabled = 2131165327;
+			public const int common_google_signin_btn_icon_dark_normal_background = 2131165327;
 			
 			// aapt resource value: 0x7F070090
-			public const int common_google_signin_btn_icon_light = 2131165328;
+			public const int common_google_signin_btn_icon_disabled = 2131165328;
 			
 			// aapt resource value: 0x7F070091
-			public const int common_google_signin_btn_icon_light_focused = 2131165329;
+			public const int common_google_signin_btn_icon_light = 2131165329;
 			
 			// aapt resource value: 0x7F070092
-			public const int common_google_signin_btn_icon_light_normal = 2131165330;
+			public const int common_google_signin_btn_icon_light_focused = 2131165330;
 			
 			// aapt resource value: 0x7F070093
-			public const int common_google_signin_btn_icon_light_normal_background = 2131165331;
+			public const int common_google_signin_btn_icon_light_normal = 2131165331;
 			
 			// aapt resource value: 0x7F070094
-			public const int common_google_signin_btn_text_dark = 2131165332;
+			public const int common_google_signin_btn_icon_light_normal_background = 2131165332;
 			
 			// aapt resource value: 0x7F070095
-			public const int common_google_signin_btn_text_dark_focused = 2131165333;
+			public const int common_google_signin_btn_text_dark = 2131165333;
 			
 			// aapt resource value: 0x7F070096
-			public const int common_google_signin_btn_text_dark_normal = 2131165334;
+			public const int common_google_signin_btn_text_dark_focused = 2131165334;
 			
 			// aapt resource value: 0x7F070097
-			public const int common_google_signin_btn_text_dark_normal_background = 2131165335;
+			public const int common_google_signin_btn_text_dark_normal = 2131165335;
 			
 			// aapt resource value: 0x7F070098
-			public const int common_google_signin_btn_text_disabled = 2131165336;
+			public const int common_google_signin_btn_text_dark_normal_background = 2131165336;
 			
 			// aapt resource value: 0x7F070099
-			public const int common_google_signin_btn_text_light = 2131165337;
+			public const int common_google_signin_btn_text_disabled = 2131165337;
 			
 			// aapt resource value: 0x7F07009A
-			public const int common_google_signin_btn_text_light_focused = 2131165338;
+			public const int common_google_signin_btn_text_light = 2131165338;
 			
 			// aapt resource value: 0x7F07009B
-			public const int common_google_signin_btn_text_light_normal = 2131165339;
+			public const int common_google_signin_btn_text_light_focused = 2131165339;
 			
 			// aapt resource value: 0x7F07009C
-			public const int common_google_signin_btn_text_light_normal_background = 2131165340;
+			public const int common_google_signin_btn_text_light_normal = 2131165340;
 			
 			// aapt resource value: 0x7F07009D
-			public const int custom_thumb = 2131165341;
+			public const int common_google_signin_btn_text_light_normal_background = 2131165341;
 			
 			// aapt resource value: 0x7F07009E
-			public const int dashed_border = 2131165342;
+			public const int custom_thumb = 2131165342;
 			
 			// aapt resource value: 0x7F07009F
-			public const int DataFormGroupCollapse = 2131165343;
+			public const int dashed_border = 2131165343;
 			
 			// aapt resource value: 0x7F0700A0
-			public const int DataFormGroupExpander = 2131165344;
+			public const int DataFormGroupCollapse = 2131165344;
 			
 			// aapt resource value: 0x7F0700A1
-			public const int design_bottom_navigation_item_background = 2131165345;
+			public const int DataFormGroupExpander = 2131165345;
 			
 			// aapt resource value: 0x7F0700A2
-			public const int design_fab_background = 2131165346;
+			public const int design_bottom_navigation_item_background = 2131165346;
 			
 			// aapt resource value: 0x7F0700A3
-			public const int design_ic_visibility = 2131165347;
+			public const int design_fab_background = 2131165347;
 			
 			// aapt resource value: 0x7F0700A4
-			public const int design_ic_visibility_off = 2131165348;
+			public const int design_ic_visibility = 2131165348;
 			
 			// aapt resource value: 0x7F0700A5
-			public const int design_password_eye = 2131165349;
+			public const int design_ic_visibility_off = 2131165349;
 			
 			// aapt resource value: 0x7F0700A6
-			public const int design_snackbar_background = 2131165350;
+			public const int design_password_eye = 2131165350;
 			
 			// aapt resource value: 0x7F0700A7
-			public const int DownButton = 2131165351;
+			public const int design_snackbar_background = 2131165351;
 			
 			// aapt resource value: 0x7F0700A8
-			public const int dropdownbuttonimage = 2131165352;
+			public const int DownButton = 2131165352;
 			
 			// aapt resource value: 0x7F0700A9
-			public const int ecco_logo = 2131165353;
+			public const int dropdownbuttonimage = 2131165353;
 			
 			// aapt resource value: 0x7F0700AA
-			public const int editTextBackground = 2131165354;
+			public const int ecco_logo = 2131165354;
 			
 			// aapt resource value: 0x7F0700AB
-			public const int googleg_disabled_color_18 = 2131165355;
+			public const int editTextBackground = 2131165355;
 			
 			// aapt resource value: 0x7F0700AC
-			public const int googleg_standard_color_18 = 2131165356;
+			public const int googleg_disabled_color_18 = 2131165356;
 			
 			// aapt resource value: 0x7F0700AD
-			public const int hamburger_menu = 2131165357;
-			
-			// aapt resource value: 0x7F0700B2
-			public const int Icon = 2131165362;
+			public const int googleg_standard_color_18 = 2131165357;
 			
 			// aapt resource value: 0x7F0700AE
-			public const int ic_launcher = 2131165358;
-			
-			// aapt resource value: 0x7F0700AF
-			public const int ic_mtrl_chip_checked_black = 2131165359;
-			
-			// aapt resource value: 0x7F0700B0
-			public const int ic_mtrl_chip_checked_circle = 2131165360;
-			
-			// aapt resource value: 0x7F0700B1
-			public const int ic_mtrl_chip_close_circle = 2131165361;
-			
-			// aapt resource value: 0x7F0700B4
-			public const int inputlayout_togglecollapseicon = 2131165364;
-			
-			// aapt resource value: 0x7F0700B5
-			public const int inputlayout_togglevisibleicon = 2131165365;
+			public const int hamburger_menu = 2131165358;
 			
 			// aapt resource value: 0x7F0700B3
-			public const int input_layout_drop_down_icon = 2131165363;
+			public const int Icon = 2131165363;
+			
+			// aapt resource value: 0x7F0700AF
+			public const int ic_launcher = 2131165359;
+			
+			// aapt resource value: 0x7F0700B0
+			public const int ic_mtrl_chip_checked_black = 2131165360;
+			
+			// aapt resource value: 0x7F0700B1
+			public const int ic_mtrl_chip_checked_circle = 2131165361;
+			
+			// aapt resource value: 0x7F0700B2
+			public const int ic_mtrl_chip_close_circle = 2131165362;
+			
+			// aapt resource value: 0x7F0700B5
+			public const int inputlayout_togglecollapseicon = 2131165365;
 			
 			// aapt resource value: 0x7F0700B6
-			public const int layoutBorder = 2131165366;
+			public const int inputlayout_togglevisibleicon = 2131165366;
+			
+			// aapt resource value: 0x7F0700B4
+			public const int input_layout_drop_down_icon = 2131165364;
 			
 			// aapt resource value: 0x7F0700B7
-			public const int LoginBackground = 2131165367;
+			public const int layoutBorder = 2131165367;
 			
 			// aapt resource value: 0x7F0700B8
-			public const int mtrl_snackbar_background = 2131165368;
+			public const int LoginBackground = 2131165368;
 			
 			// aapt resource value: 0x7F0700B9
-			public const int mtrl_tabs_default_indicator = 2131165369;
+			public const int mtrl_snackbar_background = 2131165369;
 			
 			// aapt resource value: 0x7F0700BA
-			public const int navigation_empty_icon = 2131165370;
+			public const int mtrl_tabs_default_indicator = 2131165370;
 			
 			// aapt resource value: 0x7F0700BB
-			public const int notification_action_background = 2131165371;
+			public const int navigation_empty_icon = 2131165371;
 			
 			// aapt resource value: 0x7F0700BC
-			public const int notification_bg = 2131165372;
+			public const int notification_action_background = 2131165372;
 			
 			// aapt resource value: 0x7F0700BD
-			public const int notification_bg_low = 2131165373;
+			public const int notification_bg = 2131165373;
 			
 			// aapt resource value: 0x7F0700BE
-			public const int notification_bg_low_normal = 2131165374;
+			public const int notification_bg_low = 2131165374;
 			
 			// aapt resource value: 0x7F0700BF
-			public const int notification_bg_low_pressed = 2131165375;
+			public const int notification_bg_low_normal = 2131165375;
 			
 			// aapt resource value: 0x7F0700C0
-			public const int notification_bg_normal = 2131165376;
+			public const int notification_bg_low_pressed = 2131165376;
 			
 			// aapt resource value: 0x7F0700C1
-			public const int notification_bg_normal_pressed = 2131165377;
+			public const int notification_bg_normal = 2131165377;
 			
 			// aapt resource value: 0x7F0700C2
-			public const int notification_icon_background = 2131165378;
+			public const int notification_bg_normal_pressed = 2131165378;
 			
 			// aapt resource value: 0x7F0700C3
-			public const int notification_template_icon_bg = 2131165379;
+			public const int notification_icon_background = 2131165379;
 			
 			// aapt resource value: 0x7F0700C4
-			public const int notification_template_icon_low_bg = 2131165380;
+			public const int notification_template_icon_bg = 2131165380;
 			
 			// aapt resource value: 0x7F0700C5
-			public const int notification_tile_bg = 2131165381;
+			public const int notification_template_icon_low_bg = 2131165381;
 			
 			// aapt resource value: 0x7F0700C6
-			public const int notify_panel_notification_icon_bg = 2131165382;
+			public const int notification_tile_bg = 2131165382;
 			
 			// aapt resource value: 0x7F0700C7
-			public const int onboarding_card = 2131165383;
+			public const int notify_panel_notification_icon_bg = 2131165383;
 			
 			// aapt resource value: 0x7F0700C8
-			public const int onboarding_create_card = 2131165384;
+			public const int onboarding_card = 2131165384;
 			
 			// aapt resource value: 0x7F0700C9
-			public const int onboarding_editor = 2131165385;
+			public const int onboarding_create_card = 2131165385;
 			
 			// aapt resource value: 0x7F0700CA
-			public const int onboarding_filter = 2131165386;
+			public const int onboarding_editor = 2131165386;
 			
 			// aapt resource value: 0x7F0700CB
-			public const int onboarding_info = 2131165387;
+			public const int onboarding_filter = 2131165387;
 			
 			// aapt resource value: 0x7F0700CC
-			public const int onboarding_management = 2131165388;
+			public const int onboarding_info = 2131165388;
 			
 			// aapt resource value: 0x7F0700CD
-			public const int onboarding_network = 2131165389;
+			public const int onboarding_management = 2131165389;
 			
 			// aapt resource value: 0x7F0700CE
-			public const int onboarding_share = 2131165390;
+			public const int onboarding_network = 2131165390;
 			
 			// aapt resource value: 0x7F0700CF
-			public const int onboarding_templates = 2131165391;
+			public const int onboarding_share = 2131165391;
 			
 			// aapt resource value: 0x7F0700D0
-			public const int popup_forms_android_close_icon = 2131165392;
+			public const int onboarding_templates = 2131165392;
 			
 			// aapt resource value: 0x7F0700D1
-			public const int popup_forms_android_shadow = 2131165393;
+			public const int photo = 2131165393;
 			
 			// aapt resource value: 0x7F0700D2
-			public const int popup_forms_dark_theme_close_icon = 2131165394;
+			public const int popup_forms_android_close_icon = 2131165394;
 			
 			// aapt resource value: 0x7F0700D3
-			public const int popup_forms_light_theme_close_icon = 2131165395;
+			public const int popup_forms_android_shadow = 2131165395;
 			
 			// aapt resource value: 0x7F0700D4
-			public const int roundCornerButton = 2131165396;
+			public const int popup_forms_dark_theme_close_icon = 2131165396;
 			
 			// aapt resource value: 0x7F0700D5
-			public const int savebutton = 2131165397;
+			public const int popup_forms_light_theme_close_icon = 2131165397;
 			
 			// aapt resource value: 0x7F0700D6
-			public const int scan_icon = 2131165398;
+			public const int roundCornerButton = 2131165398;
 			
 			// aapt resource value: 0x7F0700D7
-			public const int Separator = 2131165399;
+			public const int savebutton = 2131165399;
 			
 			// aapt resource value: 0x7F0700D8
-			public const int sfclosebutton = 2131165400;
+			public const int scan_icon = 2131165400;
 			
 			// aapt resource value: 0x7F0700D9
-			public const int shadow_effect = 2131165401;
+			public const int Separator = 2131165401;
 			
 			// aapt resource value: 0x7F0700DA
-			public const int SplashScreen = 2131165402;
+			public const int sfclosebutton = 2131165402;
 			
 			// aapt resource value: 0x7F0700DB
-			public const int styleinfo = 2131165403;
+			public const int shadow_effect = 2131165403;
 			
 			// aapt resource value: 0x7F0700DC
-			public const int text_color_button = 2131165404;
+			public const int SplashScreen = 2131165404;
 			
 			// aapt resource value: 0x7F0700DD
-			public const int toolbaritem_background = 2131165405;
+			public const int styleinfo = 2131165405;
 			
 			// aapt resource value: 0x7F0700DE
-			public const int toolbaritem_pressed = 2131165406;
+			public const int text_color_button = 2131165406;
 			
 			// aapt resource value: 0x7F0700DF
-			public const int tooltip_frame_dark = 2131165407;
+			public const int toolbaritem_background = 2131165407;
 			
 			// aapt resource value: 0x7F0700E0
-			public const int tooltip_frame_light = 2131165408;
-			
-			// aapt resource value: 0x7F0700E2
-			public const int undoButton = 2131165410;
+			public const int toolbaritem_pressed = 2131165408;
 			
 			// aapt resource value: 0x7F0700E1
-			public const int undo_redo_background = 2131165409;
+			public const int tooltip_frame_dark = 2131165409;
+			
+			// aapt resource value: 0x7F0700E2
+			public const int tooltip_frame_light = 2131165410;
+			
+			// aapt resource value: 0x7F0700E4
+			public const int undoButton = 2131165412;
 			
 			// aapt resource value: 0x7F0700E3
-			public const int UpButton = 2131165411;
+			public const int undo_redo_background = 2131165411;
+			
+			// aapt resource value: 0x7F0700E5
+			public const int UpButton = 2131165413;
 			
 			static Drawable()
 			{
@@ -14173,103 +14183,112 @@ namespace Ecco.Mobile.Droid
 			public const int firebase_database_url = 2131558480;
 			
 			// aapt resource value: 0x7F0D0051
-			public const int free = 2131558481;
+			public const int firebase_preference_file_key = 2131558481;
 			
 			// aapt resource value: 0x7F0D0052
-			public const int gcm_defaultSenderId = 2131558482;
+			public const int free = 2131558482;
 			
 			// aapt resource value: 0x7F0D0053
-			public const int google_api_key = 2131558483;
+			public const int gcm_defaultSenderId = 2131558483;
 			
 			// aapt resource value: 0x7F0D0054
-			public const int google_app_id = 2131558484;
+			public const int google_api_key = 2131558484;
 			
 			// aapt resource value: 0x7F0D0055
-			public const int google_crash_reporting_api_key = 2131558485;
+			public const int google_app_id = 2131558485;
 			
 			// aapt resource value: 0x7F0D0056
-			public const int google_storage_bucket = 2131558486;
+			public const int google_crash_reporting_api_key = 2131558486;
+			
+			// aapt resource value: 0x7F0D0057
+			public const int google_storage_bucket = 2131558487;
 			
 			// aapt resource value: 0x7F0D0003
 			public const int Hello = 2131558403;
 			
-			// aapt resource value: 0x7F0D0057
-			public const int hide_bottom_view_on_scroll_behavior = 2131558487;
-			
 			// aapt resource value: 0x7F0D0058
-			public const int hue = 2131558488;
+			public const int hide_bottom_view_on_scroll_behavior = 2131558488;
 			
 			// aapt resource value: 0x7F0D0059
-			public const int library_name = 2131558489;
+			public const int hue = 2131558489;
+			
+			// aapt resource value: 0x7F0D005A
+			public const int installation_enrichment_file_key = 2131558490;
+			
+			// aapt resource value: 0x7F0D005B
+			public const int library_name = 2131558491;
 			
 			// aapt resource value: 0x7F0D0004
 			public const int Load_More = 2131558404;
 			
-			// aapt resource value: 0x7F0D005A
-			public const int mtrl_chip_close_icon_content_description = 2131558490;
-			
-			// aapt resource value: 0x7F0D005B
-			public const int ok = 2131558491;
-			
 			// aapt resource value: 0x7F0D005C
-			public const int original = 2131558492;
+			public const int mtrl_chip_close_icon_content_description = 2131558492;
 			
 			// aapt resource value: 0x7F0D005D
-			public const int outline = 2131558493;
+			public const int ok = 2131558493;
 			
 			// aapt resource value: 0x7F0D005E
-			public const int password_toggle_content_description = 2131558494;
+			public const int original = 2131558494;
 			
 			// aapt resource value: 0x7F0D005F
-			public const int path_password_eye = 2131558495;
+			public const int outline = 2131558495;
 			
 			// aapt resource value: 0x7F0D0060
-			public const int path_password_eye_mask_strike_through = 2131558496;
+			public const int overflow_tab_title = 2131558496;
 			
 			// aapt resource value: 0x7F0D0061
-			public const int path_password_eye_mask_visible = 2131558497;
+			public const int password_toggle_content_description = 2131558497;
 			
 			// aapt resource value: 0x7F0D0062
-			public const int path_password_strike_through = 2131558498;
+			public const int path_password_eye = 2131558498;
 			
 			// aapt resource value: 0x7F0D0063
-			public const int popup_message = 2131558499;
+			public const int path_password_eye_mask_strike_through = 2131558499;
 			
 			// aapt resource value: 0x7F0D0064
-			public const int project_id = 2131558500;
+			public const int path_password_eye_mask_visible = 2131558500;
 			
 			// aapt resource value: 0x7F0D0065
-			public const int reset = 2131558501;
+			public const int path_password_strike_through = 2131558501;
 			
 			// aapt resource value: 0x7F0D0066
-			public const int saturation = 2131558502;
+			public const int popup_message = 2131558502;
 			
 			// aapt resource value: 0x7F0D0067
-			public const int save = 2131558503;
+			public const int project_id = 2131558503;
 			
 			// aapt resource value: 0x7F0D0068
-			public const int saving = 2131558504;
+			public const int reset = 2131558504;
 			
 			// aapt resource value: 0x7F0D0069
-			public const int search_menu_title = 2131558505;
+			public const int saturation = 2131558505;
 			
 			// aapt resource value: 0x7F0D006A
-			public const int sfnumericupdown_decrement_button_accessibility_label = 2131558506;
+			public const int save = 2131558506;
 			
 			// aapt resource value: 0x7F0D006B
-			public const int sfnumericupdown_increment_button_accessibility_label = 2131558507;
+			public const int saving = 2131558507;
 			
 			// aapt resource value: 0x7F0D006C
-			public const int sharpen = 2131558508;
+			public const int search_menu_title = 2131558508;
 			
 			// aapt resource value: 0x7F0D006D
-			public const int square = 2131558509;
+			public const int sfnumericupdown_decrement_button_accessibility_label = 2131558509;
 			
 			// aapt resource value: 0x7F0D006E
-			public const int status_bar_notification_info_overflow = 2131558510;
+			public const int sfnumericupdown_increment_button_accessibility_label = 2131558510;
 			
 			// aapt resource value: 0x7F0D006F
-			public const int title = 2131558511;
+			public const int sharpen = 2131558511;
+			
+			// aapt resource value: 0x7F0D0070
+			public const int square = 2131558512;
+			
+			// aapt resource value: 0x7F0D0071
+			public const int status_bar_notification_info_overflow = 2131558513;
+			
+			// aapt resource value: 0x7F0D0072
+			public const int title = 2131558514;
 			
 			static String()
 			{
