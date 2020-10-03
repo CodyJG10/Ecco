@@ -22,6 +22,7 @@ namespace Ecco.Mobile.Models
         public string FullName { get; set; }
 
         [Display(Name = "Your Email")]
+        [DataType(DataType.EmailAddress)]
         [Required(AllowEmptyStrings = false, ErrorMessage = "You must provide an email")]
         public string Email { get; set; }
         
@@ -29,6 +30,12 @@ namespace Ecco.Mobile.Models
         [DataType(DataType.PhoneNumber)]
         [Required(AllowEmptyStrings = false, ErrorMessage = "You must provide a phone number")]
         public string PhoneNumber { get; set; }
+
+        [Display(Name = "Address (optional)")]
+        public string Address { get; set; }
+
+        [Display(Name = "Website (optional)")]
+        public string Website { get; set; }
 
         [Display(Name = "Category")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "You must select a service category")]

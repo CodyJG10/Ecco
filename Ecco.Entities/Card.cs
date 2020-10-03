@@ -12,6 +12,8 @@ namespace Ecco.Entities
         public string CardTitle { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
+        public string Website { get; set; }
+        public string Address { get; set; }
         public int TemplateId { get; set; }
         public int ServiceType { get; set; }
         public bool IsUsingCompanyTemplate { get; set; }

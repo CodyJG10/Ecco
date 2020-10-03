@@ -37,7 +37,9 @@ namespace Ecco.Mobile.ViewModels.Home.Card
                 ExportedImageData = Model.ExportedImageData,
                 UserId = _userData.Id,
                 TemplateId = Model.TemplateId,
-                FullName = Model.FullName
+                FullName = Model.FullName,
+                Address = Model.Address,
+                Website = Model.Website
             };
 
             var fields = typeof(ServiceTypes).GetFields();
