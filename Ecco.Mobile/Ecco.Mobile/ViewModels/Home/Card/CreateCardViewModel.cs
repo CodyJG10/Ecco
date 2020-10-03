@@ -9,6 +9,7 @@ using Nancy.TinyIoc;
 using Newtonsoft.Json;
 using Plugin.Settings;
 using Syncfusion.ListView.XForms;
+using Syncfusion.XForms.DataForm;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -129,7 +130,7 @@ namespace Ecco.Mobile.ViewModels.Home
         }
 
         public async void CreateCard()
-        {
+        { 
             var allCards = await _db.GetMyCards(_userData.Id.ToString());
             if (allCards.Any(x => x.CardTitle.ToLower() == CardModel.CardTitle.ToLower()))
             {

@@ -33,7 +33,7 @@ namespace Ecco.Mobile
         {
             InitializeComponent();
             
-            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MjM1NDA2QDMxMzgyZTMxMmUzMGZGWjB2Z0prb1hpcCtLTDZPVUo3bXhnUGFnV0VRcTZCUEk3UXZZdFB5M1U9");
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzEwMjkwQDMxMzgyZTMyMmUzMG5jY3BhSElxNHBLTmZUUU5qKzhyc1FnVTFndzZkYWJBQVE5MVZ6VWw0UTg9");
 
             InitDatabase();
             

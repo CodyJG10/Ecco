@@ -2,6 +2,7 @@
 using Ecco.Entities.Attributes;
 using Ecco.Mobile.Models;
 using Ecco.Mobile.ViewModels.Home;
+using Microsoft.Azure.Amqp.Framing;
 using Nancy.ViewEngines.SuperSimpleViewEngine;
 using Syncfusion.ListView.XForms;
 using Syncfusion.XForms.DataForm;
@@ -72,7 +73,14 @@ namespace Ecco.Mobile.Views.Pages
 
         private void ButtonBeginEditing_Clicked(object sender, EventArgs e)
         {
-            PopupLayout.Show();
+            if (DataForm.Validate())
+            {
+                PopupLayout.Show();
+            }
+            else
+            {
+                Application.Current.MainPage.DisplayAlert("Cannot Proceed", "Please fill in the required fields", "Return");
+            }
         }
     }
 

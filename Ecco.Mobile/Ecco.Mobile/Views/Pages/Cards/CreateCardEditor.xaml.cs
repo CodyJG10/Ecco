@@ -1,5 +1,6 @@
 ﻿using Ecco.Api;
 using Ecco.Entities;
+using Ecco.Mobile.Dependencies;
 using Ecco.Mobile.Models;
 using Ecco.Mobile.ViewModels.Home.Card;
 using Nancy.TinyIoc;
@@ -48,6 +49,12 @@ namespace Ecco.Mobile.Views.Pages.Cards
 
             ImageEditor.ToolbarSettings.ToolbarItems.Add(new HeaderToolbarItem() { Text = "Create" });
             ImageEditor.ToolbarSettings.ToolbarItemSelected += ToolbarSettings_ToolbarItemSelected;
+
+            ImageEditor.ToolbarSettings.ToolbarItems.Add(new FooterToolbarItem()
+            {
+                Text = "Add Image",
+                Icon = ImageSource.FromFile("photo.png")
+            });
         }
 
         private void AutoFillText()
@@ -94,6 +101,11 @@ namespace Ecco.Mobile.Views.Pages.Cards
 
                 ViewModel.CreateCard();
             }
+            else if (e.ToolbarItem.Text == "Add Image")
+            {
+                var image = await DependencyService.Get<IPhotoPickerService>().GetImageStreamAsync();
+                AddCustomImage(image);
+            }
         }
 
         private void ImageEditor_ImageSaving(object sender, ImageSavingEventArgs args)
@@ -104,6 +116,23 @@ namespace Ecco.Mobile.Views.Pages.Cards
         private void ImageEditor_ImageLoaded(object sender, ImageLoadedEventArgs args)
         {
             AutoFillText();
+        }
+
+        private void AddCustomImage(Stream imageStream)
+        {
+            try {
+                Image img = new Image
+                {
+                    HeightRequest = 200,
+                    WidthRequest = 200,
+                    Source = ImageSource.FromStream(() => imageStream)
+                };
+                ImageEditor.AddCustomView(img);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
         }
     }
 }
