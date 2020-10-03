@@ -49,46 +49,65 @@ namespace Ecco.Mobile
             }
         }
 
+        int tries = 1;
         private async void RefreshToken()
         {
             string refreshToken = CrossSettings.Current.GetValueOrDefault("RefreshToken", "_");
             string token = CrossSettings.Current.GetValueOrDefault("Token", "_");
             var db = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
-            var response = await db.RefreshToken(token, refreshToken);
-            if (response.IsSuccessStatusCode)
-            {
-                var contentString = await response.Content.ReadAsStringAsync();
-                var content = JsonConvert.DeserializeObject<IdentityResponse>(contentString);
-                var newToken = content.Token;
-                var newRefreshToken = content.RefreshToken;
-                db.SetToken(token);
-                CrossSettings.Current.AddOrUpdateValue("RefreshToken", newRefreshToken);
-                CrossSettings.Current.AddOrUpdateValue("Token", newToken);
 
-                if (openEccoCard)
+            try
+            {
+                var response = await db.RefreshToken(token, refreshToken);
+
+                if (response.IsSuccessStatusCode)
                 {
-                    MainPage = new NavigationPage(new HomeMaster())
+                    var contentString = await response.Content.ReadAsStringAsync();
+                    var content = JsonConvert.DeserializeObject<IdentityResponse>(contentString);
+                    var newToken = content.Token;
+                    var newRefreshToken = content.RefreshToken;
+                    db.SetToken(token);
+                    CrossSettings.Current.AddOrUpdateValue("RefreshToken", newRefreshToken);
+                    CrossSettings.Current.AddOrUpdateValue("Token", newToken);
+
+                    if (openEccoCard)
                     {
-                        BarBackgroundColor = (Color)Resources["LightRed"],
-                        BarTextColor = Color.White,
-                    };
-                    ShowFromEccoCard();
-                    return;
+                        MainPage = new NavigationPage(new HomeMaster())
+                        {
+                            BarBackgroundColor = (Color)Resources["LightRed"],
+                            BarTextColor = Color.White,
+                        };
+                        ShowFromEccoCard();
+                        return;
+                    }
+                    else
+                    {
+                        MainPage = new NavigationPage(new HomeMaster())
+                        {
+                            BarBackgroundColor = (Color)Resources["LightRed"],
+                            BarTextColor = Color.White
+                        };
+                        isLaunched = true;
+                    }
                 }
                 else
                 {
-                    MainPage = new NavigationPage(new HomeMaster())
-                    {
-                        BarBackgroundColor = (Color)Resources["LightRed"],
-                        BarTextColor = Color.White
-                    };
-                    isLaunched = true;
+                    MainPage = new LoginPage();
+                    await MainPage.DisplayAlert("Authentication Error", "You have been logged out", "Ok");
                 }
             }
-            else 
+            catch (Exception e)
             {
-                MainPage = new LoginPage();
-                await MainPage.DisplayAlert("Authentication Error", "You have been logged out", "Ok");
+                if (tries <= 3)
+                {
+                    RefreshToken();
+                    tries++;
+                }
+                else
+                {
+                    MainPage = new LoginPage();
+                    await MainPage.DisplayAlert("Authentication Error", "You have been logged out", "Ok");
+                }
             }
         }
 
@@ -177,10 +196,12 @@ namespace Ecco.Mobile
         
         protected override void OnSleep()
         {
+            (TinyIoCContainer.Current.Resolve<AutoUpdater>()).Stop();
         }
 
         protected override void OnResume()
         {
+            (TinyIoCContainer.Current.Resolve<AutoUpdater>()).Start();
         }
     }
 }

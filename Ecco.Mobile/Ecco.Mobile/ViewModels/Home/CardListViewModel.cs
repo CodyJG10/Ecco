@@ -139,6 +139,12 @@ namespace Ecco.Mobile.ViewModels.Home
             });
         }
 
+        public void UnsubscribeAutoUpdates()
+        {
+            MessagingCenter.Instance.Unsubscribe<AutoUpdater>(this, AutoUpdater.CONNECTIONS);
+            MessagingCenter.Instance.Unsubscribe<AutoUpdater>(this, AutoUpdater.CONNECTION_INVITATION);
+        }
+
         #region Loading
 
         private async Task<Task> LoadConnections()

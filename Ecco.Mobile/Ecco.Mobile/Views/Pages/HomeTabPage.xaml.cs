@@ -7,6 +7,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using Ecco.Mobile.ViewModels;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -28,5 +29,17 @@ namespace Ecco.Mobile.Views.Pages
         {
             Application.Current.MainPage.Navigation.PushAsync(new ReadTagPage());
         }
+
+        //protected override void OnDisappearing()
+        //{
+        //    base.OnDisappearing();
+        //    foreach (var view in Switcher.Children)
+        //    {
+        //        if (view.BindingContext is ViewModelBase)
+        //        {
+        //            ((ViewModelBase)view.BindingContext).UnsubscribeAutoUpdates();
+        //        }
+        //    }
+        //}  
     }
 }
