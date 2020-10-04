@@ -115,7 +115,7 @@ namespace Ecco.Mobile.ViewModels.Home
             Loading = false;
         }
 
-        public void SubscribeAutoUpdates()
+        public override void SubscribeAutoUpdates()
         {
             MessagingCenter.Instance.Subscribe<AutoUpdater, string>(this, AutoUpdater.CONNECTIONS, (sender, json) =>
             {
@@ -139,7 +139,7 @@ namespace Ecco.Mobile.ViewModels.Home
             });
         }
 
-        public void UnsubscribeAutoUpdates()
+        public override void UnsubscribeAutoUpdates()
         {
             MessagingCenter.Instance.Unsubscribe<AutoUpdater>(this, AutoUpdater.CONNECTIONS);
             MessagingCenter.Instance.Unsubscribe<AutoUpdater>(this, AutoUpdater.CONNECTION_INVITATION);
