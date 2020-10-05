@@ -28,10 +28,16 @@ namespace Ecco.Mobile.Views.Pages
             }
         }
 
-        private void CardLayout_ItemAppeared(PanCardView.CardsView view, PanCardView.EventArgs.ItemAppearedEventArgs args)
+        private void SfCardLayout_VisibleCardIndexChanged(object sender, Syncfusion.XForms.Cards.VisibleCardIndexChangedEventArgs e)
         {
-            CardModel newCard = args.Item as CardModel;
+            CardModel newCard = e.NewCard.BindingContext as CardModel;
             ((MyCardViewModel)BindingContext).ShowCardInfo(newCard);
         }
+
+        //private void CardLayout_ItemAppeared(PanCardView.CardsView view, PanCardView.EventArgs.ItemAppearedEventArgs args)
+        //{
+        //    CardModel newCard = args.Item as CardModel;
+        //    ((MyCardViewModel)BindingContext).ShowCardInfo(newCard);
+        //}
     }
 }

@@ -47,13 +47,14 @@
             </Grid.RowDefinitions>
 
             <!-- All Cards List -->
-            <!--<cardView:SfCardLayout BindableLayout.ItemsSource="{Binding Cards}"
+            <cardView:SfCardLayout BindableLayout.ItemsSource="{Binding Cards}"
                                    VerticalOptions="FillAndExpand"
                                    HorizontalOptions="FillAndExpand"
                                    BackgroundColor="LightGray"
                                    ShowSwipedCard="True"
                                    SwipeDirection="Left"
                                    x:Name="cardLayout"
+                                   VisibleCardIndex="{Binding VisibleCardIndex, Mode=TwoWay}"
                                    VisibleCardIndexChanged="SfCardLayout_VisibleCardIndexChanged">
 
                 <BindableLayout.ItemTemplate>
@@ -75,9 +76,9 @@
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
 
-            </cardView:SfCardLayout>-->
+            </cardView:SfCardLayout>
 
-            <cards:CoverFlowView ItemsSource="{Binding Cards}"
+            <!--<cards:CoverFlowView ItemsSource="{Binding Cards}"
                                  PositionShiftValue="45"
                                  VerticalOptions="FillAndExpand"
                                  HorizontalOptions="FillAndExpand"
@@ -109,7 +110,7 @@
                         </StackLayout>
                     </DataTemplate>
                 </cards:CoverFlowView.ItemTemplate>
-            </cards:CoverFlowView>
+            </cards:CoverFlowView>-->
 
             
             

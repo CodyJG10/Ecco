@@ -98,6 +98,20 @@ namespace Ecco.Mobile.ViewModels.Home
                 OnPropertyChanged(nameof(IsCreateCard));
             }
         }
+
+        private int _visibleCardIndex = 0;
+        public int VisibleCardIndex
+        {
+            get
+            {
+                return _visibleCardIndex;
+            }
+            set
+            {
+                _visibleCardIndex = value;
+                OnPropertyChanged(nameof(VisibleCardIndex));
+            }
+        }
        
         #endregion
 
@@ -157,6 +171,12 @@ namespace Ecco.Mobile.ViewModels.Home
 
             var activeCard = await _db.GetActiveCard(_userData.Id.ToString());
 
+            CardModel createNewCard = new CardModel()
+            {
+                CardImage = ImageSource.FromFile("ecco_logo.png")
+            };
+            Cards.Add(createNewCard);
+
             foreach (var card in cards)
             {
                 var cardModel = CardModel.FromCard(card, _userData);
@@ -183,13 +203,9 @@ namespace Ecco.Mobile.ViewModels.Home
                 }
             }
 
-            CardModel createNewCard = new CardModel()
-            {
-                CardImage = ImageSource.FromFile("ecco_logo.png")
-            };
-            Cards.Add(createNewCard);
+            ShowCardInfo(Cards[Cards.Count - 1]);
 
-            ShowCardInfo(Cards[0]);
+            VisibleCardIndex = Cards.Count - 1;
 
             Loading = false;
         }
