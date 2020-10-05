@@ -32,8 +32,9 @@ namespace Ecco.Mobile
         public App()
         {
             InitializeComponent();
-            
-            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzEwMjkwQDMxMzgyZTMyMmUzMG5jY3BhSElxNHBLTmZUUU5qKzhyc1FnVTFndzZkYWJBQVE5MVZ6VWw0UTg9");
+
+            string syncfusionLicense = Mobile.Properties.Resources.SyncfusionLicense;
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(syncfusionLicense);
 
             InitDatabase();
             
