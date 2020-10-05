@@ -78,8 +78,7 @@
             </cardView:SfCardLayout>-->
 
             <cards:CoverFlowView ItemsSource="{Binding Cards}"
-                              
-                                 PositionShiftValue="145"
+                                 PositionShiftValue="45"
                                  VerticalOptions="FillAndExpand"
                                  HorizontalOptions="FillAndExpand"
                                  Background="LightGray"
@@ -99,7 +98,7 @@
                                 <cardViews:Card BindingContext="{Binding}"
                                                 VerticalOptions="FillAndExpand"
                                                 HorizontalOptions="FillAndExpand"
-                                                Margin="20">
+                                                Margin="20" Opacity="1">
                                     <cardViews:Card.GestureRecognizers>
                                         <TapGestureRecognizer Command="{Binding Source={x:Reference myCardsView}, Path=BindingContext.SelectCardCommand}"
                                                                         CommandParameter="{Binding}"/>

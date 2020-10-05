@@ -48,6 +48,12 @@ namespace Ecco.Mobile.Views.Pages.Cards
 
             ImageEditor.ToolbarSettings.ToolbarItems.Add(new HeaderToolbarItem() { Text = "Update" });
             ImageEditor.ToolbarSettings.ToolbarItemSelected += ToolbarSettings_ToolbarItemSelected;
+
+            ImageEditor.ToolbarSettings.ToolbarItems.Add(new FooterToolbarItem()
+            {
+                Name = "Add Image",
+                Icon = ImageSource.FromFile("photo.png")
+            });
         }
 
         private void LoadText()
@@ -80,11 +86,27 @@ namespace Ecco.Mobile.Views.Pages.Cards
 
                 ViewModel.SaveCard();
             }
+            else if (e.ToolbarItem.Name == "Add Image")
+            {
+                var image = await DependencyService.Get<IPhotoPickerService>().GetImageStreamAsync();
+                AddCustomImage(image);
+            }
         }
 
         private void ImageEditor_ImageLoaded(object sender, ImageLoadedEventArgs args)
         {
             LoadText();
+        }
+
+        private void AddCustomImage(Stream imageStream)
+        {
+            Image img = new Image
+            {
+                HeightRequest = 200,
+                WidthRequest = 200,
+                Source = ImageSource.FromStream(() => imageStream)
+            };
+            ImageEditor.AddCustomView(img);
         }
     }
 }

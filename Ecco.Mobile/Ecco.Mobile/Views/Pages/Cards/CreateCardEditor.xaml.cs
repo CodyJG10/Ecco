@@ -52,7 +52,7 @@ namespace Ecco.Mobile.Views.Pages.Cards
 
             ImageEditor.ToolbarSettings.ToolbarItems.Add(new FooterToolbarItem()
             {
-                Text = "Add Image",
+                Name = "Add Image",
                 Icon = ImageSource.FromFile("photo.png")
             });
         }
@@ -101,7 +101,7 @@ namespace Ecco.Mobile.Views.Pages.Cards
 
                 ViewModel.CreateCard();
             }
-            else if (e.ToolbarItem.Text == "Add Image")
+            else if (e.ToolbarItem.Name == "Add Image")
             {
                 var image = await DependencyService.Get<IPhotoPickerService>().GetImageStreamAsync();
                 AddCustomImage(image);
@@ -120,19 +120,13 @@ namespace Ecco.Mobile.Views.Pages.Cards
 
         private void AddCustomImage(Stream imageStream)
         {
-            try {
-                Image img = new Image
-                {
-                    HeightRequest = 200,
-                    WidthRequest = 200,
-                    Source = ImageSource.FromStream(() => imageStream)
-                };
-                ImageEditor.AddCustomView(img);
-            }
-            catch(Exception e)
+            Image img = new Image
             {
-                Console.WriteLine(e.Message);
-            }
+                HeightRequest = 200,
+                WidthRequest = 200,
+                Source = ImageSource.FromStream(() => imageStream)
+            };
+            ImageEditor.AddCustomView(img);
         }
     }
 }
