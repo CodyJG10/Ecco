@@ -1,5 +1,6 @@
 ﻿using Ecco.Api;
 using Ecco.Entities;
+using Ecco.Mobile.Dependencies;
 using Ecco.Mobile.Models;
 using Ecco.Mobile.ViewModels.Home.Card;
 using Nancy.TinyIoc;
