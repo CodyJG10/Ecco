@@ -19,6 +19,7 @@
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
              xmlns:converters="clr-namespace:Ecco.Mobile.Converters"
              xmlns:syncfusion="clr-namespace:Syncfusion.XForms.Expander;assembly=Syncfusion.Expander.XForms" xmlns:pancakeview="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" xmlns:controls="clr-namespace:Ecco.Mobile.Controls"
+             xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView" xmlns:proc="clr-namespace:PanCardView.Processors;assembly=PanCardView" xmlns:controls1="clr-namespace:PanCardView.Controls;assembly=PanCardView"
              ios:Page.UseSafeArea="true">
 
     <ContentView.BindingContext>
@@ -46,7 +47,7 @@
             </Grid.RowDefinitions>
 
             <!-- All Cards List -->
-            <cardView:SfCardLayout BindableLayout.ItemsSource="{Binding Cards}"
+            <!--<cardView:SfCardLayout BindableLayout.ItemsSource="{Binding Cards}"
                                    VerticalOptions="FillAndExpand"
                                    HorizontalOptions="FillAndExpand"
                                    BackgroundColor="LightGray"
@@ -61,12 +62,12 @@
                                              FadeOutOnSwiping="True"
                                              SwipeToDismiss="False">
 
-                            <cardViews:Card BindingContext="{Binding .}"
+                            <cardViews:Card BindingContext="{Binding}"
                                                     VerticalOptions="FillAndExpand"
                                                     HorizontalOptions="FillAndExpand">
                                 <cardViews:Card.GestureRecognizers>
                                     <TapGestureRecognizer Command="{Binding Source={x:Reference myCardsView}, Path=BindingContext.SelectCardCommand}"
-                                                                    CommandParameter="{Binding .}"/>
+                                                                    CommandParameter="{Binding}"/>
                                 </cardViews:Card.GestureRecognizers>
                             </cardViews:Card>
 
@@ -74,8 +75,46 @@
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
 
-            </cardView:SfCardLayout>
+            </cardView:SfCardLayout>-->
 
+            <cards:CoverFlowView ItemsSource="{Binding Cards}"
+                              
+                                 PositionShiftValue="145"
+                                 VerticalOptions="FillAndExpand"
+                                 HorizontalOptions="FillAndExpand"
+                                 Background="LightGray"
+                                 x:Name="CardLayout"
+                                 ItemAppeared="CardLayout_ItemAppeared">
+
+                <x:Arguments>
+                    <proc:CoverFlowProcessor ScaleFactor="0.75" OpacityFactor="0.25" />
+                </x:Arguments>
+
+                <cards:CoverFlowView.ItemTemplate>
+                    <DataTemplate>
+
+                        <StackLayout>
+                            
+                            <StackLayout>
+                                <cardViews:Card BindingContext="{Binding}"
+                                                VerticalOptions="FillAndExpand"
+                                                HorizontalOptions="FillAndExpand"
+                                                Margin="20">
+                                    <cardViews:Card.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={x:Reference myCardsView}, Path=BindingContext.SelectCardCommand}"
+                                                                        CommandParameter="{Binding}"/>
+                                    </cardViews:Card.GestureRecognizers>
+                                </cardViews:Card>
+                            </StackLayout>
+
+                        </StackLayout>
+                    </DataTemplate>
+                </cards:CoverFlowView.ItemTemplate>
+            </cards:CoverFlowView>
+
+            
+            
+            
             <pancakeview:PancakeView CornerRadius="25,25,0,0"
                                      Grid.Row="1"
                                      VerticalOptions="FillAndExpand"
@@ -108,7 +147,7 @@
                         <StackLayout HorizontalOptions="FillAndExpand" 
                                      Orientation="Horizontal"
                                      Margin="25,0,25,0">
-                            
+
                             <Label Text="{Binding SharedWithText}"
                                VerticalOptions="Center"
                                HorizontalOptions="Start"/>
@@ -127,11 +166,11 @@
                                         <On Platform="iOS">15</On>
                                     </OnPlatform>
                                 </Button.Padding>
-                                
+
                             </Button>
 
                         </StackLayout>
-                                              
+
                     </StackLayout>
 
                     <StackLayout IsVisible="{Binding IsCreateCard}">

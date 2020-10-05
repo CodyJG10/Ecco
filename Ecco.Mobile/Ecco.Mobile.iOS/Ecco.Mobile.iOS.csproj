@@ -208,6 +208,9 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="CardsView">
+      <Version>2.6.4</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.Azure.Mobile.Client">
       <Version>4.1.2</Version>
     </PackageReference>
@@ -358,7 +361,7 @@
   </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties XamarinHotReloadDebuggerTimeoutExceptionEccoMobileiOSHideInfoBar="True" XamarinHotReloadWrongLinkerErrorInfoBarEccoMobileiOSHideInfoBar="True" />
+      <UserProperties XamarinHotReloadWrongLinkerErrorInfoBarEccoMobileiOSHideInfoBar="True" XamarinHotReloadDebuggerTimeoutExceptionEccoMobileiOSHideInfoBar="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

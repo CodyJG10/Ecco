@@ -67,8 +67,7 @@ namespace Ecco.Mobile.ViewModels.Home.Card
                     var newCard = allCards[0];
                     await _db.UpdateActiveCard(_userData.Id.ToString(), newCard.Id.ToString());
                 }
-                await Application.Current.MainPage.Navigation.PopAsync();
-                await Application.Current.MainPage.Navigation.PopAsync();
+                await Application.Current.MainPage.Navigation.PopToRootAsync();
                 TinyIoCContainer.Current.Resolve<AutoUpdater>().UpdateUserCard();
             }
             else

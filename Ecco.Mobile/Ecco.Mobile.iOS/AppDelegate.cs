@@ -32,6 +32,7 @@ using System.Threading.Tasks;
 using Syncfusion.SfImageEditor.XForms.iOS;
 using Syncfusion.XForms.iOS.MaskedEdit;
 using Sharpnado.Presentation.Forms.iOS;
+using PanCardView.iOS;
 
 namespace Ecco.Mobile.iOS
 {
@@ -68,6 +69,8 @@ namespace Ecco.Mobile.iOS
             SfMaskedEditRenderer.Init();
 
             SharpnadoInitializer.Initialize();
+
+            CardsViewRenderer.Preserve();
 
             new SfBarcodeRenderer();
 

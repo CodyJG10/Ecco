@@ -13,6 +13,7 @@ using Android;
 using Sharpnado.Presentation.Forms.Droid;
 using System.Threading.Tasks;
 using System.IO;
+using PanCardView.Droid;
 
 namespace Ecco.Mobile.Droid
 {
@@ -58,6 +59,9 @@ namespace Ecco.Mobile.Droid
             Syncfusion.XForms.Android.PopupLayout.SfPopupLayoutRenderer.Init();
 
             SharpnadoInitializer.Initialize();
+
+
+            CardsViewRenderer.Preserve();
 
             LoadApplication(new App());
 

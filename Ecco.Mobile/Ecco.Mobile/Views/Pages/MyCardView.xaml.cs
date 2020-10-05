@@ -16,7 +16,7 @@ namespace Ecco.Mobile.Views.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MyCardView : ContentView
     {
-        private CardModel _swipedCard;
+        //private CardModel _swipedCard;
 
         public MyCardView()
         {
@@ -28,16 +28,9 @@ namespace Ecco.Mobile.Views.Pages
             }
         }
 
-        private void CardList_SwipeStarted(object sender, Syncfusion.ListView.XForms.SwipeStartedEventArgs e)
+        private void CardLayout_ItemAppeared(PanCardView.CardsView view, PanCardView.EventArgs.ItemAppearedEventArgs args)
         {
-            _swipedCard = e.ItemData as CardModel;
-        }
-
-        private void SfCardLayout_VisibleCardIndexChanged(object sender, Syncfusion.XForms.Cards.VisibleCardIndexChangedEventArgs e)
-        {
-            if (e.NewCard == null)
-                return;
-            CardModel newCard = e.NewCard.BindingContext as CardModel;
+            CardModel newCard = args.Item as CardModel;
             ((MyCardViewModel)BindingContext).ShowCardInfo(newCard);
         }
     }

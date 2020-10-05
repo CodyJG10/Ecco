@@ -27,8 +27,8 @@ namespace Ecco.Mobile.ViewModels.Home
     {
         #region Content
 
-        public ObservableCollection<object> Cards { get; set; } =  new ObservableCollection<object>();
-        
+        public ObservableCollection<CardModel> Cards { get; set; } =  new ObservableCollection<CardModel>();
+
         private CardModel _activeCard;
         public CardModel ActiveCard 
         {
@@ -124,12 +124,11 @@ namespace Ecco.Mobile.ViewModels.Home
             LoadCards();
         }
 
-        public void SubscribeAutoUpdates()
+        public override void SubscribeAutoUpdates()
         {
             MessagingCenter.Instance.Subscribe<AutoUpdater, string>(this, AutoUpdater.CARDS, (sender, json) =>
             {
                 if (Loading) return;
-                var cards = JsonConvert.DeserializeObject<List<Entities.Card>>(json);
                 LoadCards();
             });
         }
@@ -150,15 +149,13 @@ namespace Ecco.Mobile.ViewModels.Home
             Loading = true;
 
             //Load all cards
-            if (Cards != null) Cards.Clear();
+            if (Cards.Count > 0) Cards.Clear();
 
             var user = JsonConvert.DeserializeObject<UserData>(CrossSettings.Current.GetValueOrDefault("UserData", ""));
 
             var cards = (await _db.GetMyCards(user.Id.ToString())).ToList();
 
             var activeCard = await _db.GetActiveCard(_userData.Id.ToString());
-
-            Cards.Add(null);
 
             foreach (var card in cards)
             {
@@ -186,7 +183,13 @@ namespace Ecco.Mobile.ViewModels.Home
                 }
             }
 
-            ShowCardInfo(Cards[Cards.Count - 1] as CardModel);
+            CardModel createNewCard = new CardModel()
+            {
+                CardImage = ImageSource.FromFile("ecco_logo.png")
+            };
+            Cards.Add(createNewCard);
+
+            ShowCardInfo(Cards[0]);
 
             Loading = false;
         }
@@ -205,7 +208,7 @@ namespace Ecco.Mobile.ViewModels.Home
         {
             SelectedCard = card;
 
-            if (card == null)
+            if (card.Card == null)
             {
                 IsCreateCard = true;
                 return;
