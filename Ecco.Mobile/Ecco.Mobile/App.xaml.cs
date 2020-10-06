@@ -39,15 +39,6 @@ namespace Ecco.Mobile
             InitDatabase();
             
             MainPage = new LoadingPage();
-
-            if (!CrossSettings.Current.GetValueOrDefault("RefreshToken", "_").Equals("_"))
-            {
-                RefreshToken();
-            }
-            else 
-            {
-                MainPage = new LoginPage();
-            }
         }
 
         int tries = 1;
@@ -97,7 +88,7 @@ namespace Ecco.Mobile
                     await MainPage.DisplayAlert("Authentication Error", "You have been logged out", "Ok");
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 if (tries <= 3)
                 {
@@ -193,6 +184,14 @@ namespace Ecco.Mobile
 
         protected override void OnStart()
         {
+            if (!CrossSettings.Current.GetValueOrDefault("RefreshToken", "_").Equals("_"))
+            {
+                RefreshToken();
+            }
+            else
+            {
+                MainPage = new LoginPage();
+            }
         }
         
         protected override void OnSleep()
