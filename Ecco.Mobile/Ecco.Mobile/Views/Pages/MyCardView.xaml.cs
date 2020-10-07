@@ -30,6 +30,11 @@ namespace Ecco.Mobile.Views.Pages
 
         private void SfCardLayout_VisibleCardIndexChanged(object sender, Syncfusion.XForms.Cards.VisibleCardIndexChangedEventArgs e)
         {
+            if (e.NewCard == null)
+            {
+                cardLayout.VisibleCardIndex = 0;
+                return;
+            }
             CardModel newCard = e.NewCard.BindingContext as CardModel;
             ((MyCardViewModel)BindingContext).ShowCardInfo(newCard);
         }
