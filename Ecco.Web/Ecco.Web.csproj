@@ -40,6 +40,7 @@
 
 
   <ItemGroup>
+    <ProjectReference Include="..\Ecco.Api\Ecco.Api.csproj" />
     <ProjectReference Include="..\Ecco.Entities\Ecco.Entities.csproj" />
   </ItemGroup>
 

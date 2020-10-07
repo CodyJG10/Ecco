@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Ecco.Entities;
 using Ecco.Web.Data;
 using Microsoft.AspNetCore.Authorization;
+using Ecco.Web.Pages;
 
 namespace Ecco.Web.Controllers
 {
@@ -25,9 +26,28 @@ namespace Ecco.Web.Controllers
         // GET: Cards
         [HttpGet("")]
         [HttpGet("Index")]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString, string currentFilter, int? pageNumber)
         {
-            return View(await _context.Cards.ToListAsync());
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+            var cards = from card in _context.Cards
+                        select card;
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                cards = cards.Where(card => card.CardTitle.ToLower().Contains(searchString.ToLower())
+                                    || card.FullName.ToLower().Contains(searchString.ToLower()));
+            }
+
+            int pageSize = 10;
+            return View(await PaginatedList<Card>.CreateAsync(cards.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Cards/Details/5

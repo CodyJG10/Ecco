@@ -1,4 +1,11 @@
-﻿@model IEnumerable<Ecco.Entities.Card>
+﻿@using Ecco.Web.Pages
+@using Ecco.Entities  
+@using Ecco.Web.Services
+
+@model PaginatedList<Card>
+
+@inject StorageService _storage
+@inject ApplicationDbContext _context
 
 @{
     ViewData["Title"] = "Index";
@@ -9,63 +16,100 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+
+<form asp-action="Index" method="get">
+    <div class="form-actions no-color">
+        <p>
+            Find by name: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+            <input type="submit" value="Search" class="btn btn-default" /> |
+            <a asp-action="Index">Back to Full List</a>
+        </p>
+    </div>
+</form>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.UserId)
+                Full Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.FullName)
+                Card Title
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CardTitle)
+                Email
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Email)
+                Card
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Phone)
+                Template
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TemplateId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ServiceType)
+                Service Type
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.UserId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.FullName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CardTitle)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Phone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TemplateId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ServiceType)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FullName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CardTitle)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @{ 
+                        var userId = item.UserId;
+                        var user = _context.Users.Single(x => x.Id == userId.ToString());
+                        string imgSource = _storage.GetCardImageData(user.UserName, item);
+                      }
+                    <img src="@imgSource" width="200" height="100"/>
+                </td>
+                <td>
+                    @{ 
+                        var template = _context.Templates.Single(x => x.Id == item.TemplateId);
+                        var templateImg = _storage.GetTemplateImageData(template);
+                    } 
+                    <img src="@templateImg" width="200" height="100"/>
+                </td>
+                <td>
+                    @{ 
+                        var serviceInfo = ServiceTypes.GetService(item.ServiceType);
+                    }
+
+                    @serviceInfo.Title
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-action="Index"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-action="Index"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>

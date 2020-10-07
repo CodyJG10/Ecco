@@ -58,6 +58,21 @@ namespace Ecco.Entities
         [ServiceInfo("Vehicle Sales")]
         public const int VehicleSales = 25;
         [ServiceInfo("Vehicle Service & Accessories")]
-        public const int VehicleServiceAndAccessories = 26;            
+        public const int VehicleServiceAndAccessories = 26;
+
+        public static ServiceInfo GetService(int category)
+        {
+            var fields = typeof(ServiceTypes).GetFields();
+            foreach (var field in fields)
+            {
+                int fieldValue = (int)field.GetValue(typeof(ServiceTypes));
+                if (fieldValue == category)
+                {
+                    ServiceInfo info = (ServiceInfo)Attribute.GetCustomAttribute(field, typeof(ServiceInfo));
+                    return info;
+                }
+            }
+            return new ServiceInfo("No Service");
+        }
     }
 }

@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Ecco.Web.Areas.Identity;
+using Ecco.Web.Data;
+using Ecco.Web.Pages;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ecco.Web.Controllers
 {
@@ -16,19 +19,42 @@ namespace Ecco.Web.Controllers
     {
         private UserManager<EccoUser> _userManager;
         private RoleManager<IdentityRole> _roleManager;
+        private ApplicationDbContext _context;
 
-        public UsersController(UserManager<EccoUser> userManager, RoleManager<IdentityRole> roleManager)
+        public UsersController(UserManager<EccoUser> userManager,
+            RoleManager<IdentityRole> roleManager,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _roleManager = roleManager;
+            _context = context;
         }
 
         // GET: Users
         [HttpGet("")]
         [HttpGet("Index")]
-        public ActionResult Index()
+        public async Task<ActionResult> Index(string searchString, string currentFilter, int? pageNumber)
         {
-            return View();
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
+            ViewBag.CurrentFilter = searchString;
+            var users = from user in _context.Users
+                           select user;
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                users = users.Where(user => user.UserName.ToLower().Contains(searchString.ToLower())
+                                       || user.ProfileName.ToLower().Contains(searchString.ToLower()));
+            }
+
+            int pageSize = 10;
+            return View(await PaginatedList<EccoUser>.CreateAsync(users.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
         // GET: Users/Details/5

@@ -1,4 +1,5 @@
-﻿using Ecco.Entities;
+﻿using Ecco.Api.Util;
+using Ecco.Entities;
 using Microsoft.Azure.Storage;
 using Microsoft.Azure.Storage.Blob;
 using System;
@@ -33,7 +34,7 @@ namespace Ecco.Api
 
         public MemoryStream GetCard(string username, string file)
         {
-            string containerName = "username-" + username.Replace("@", "-").Replace(".", "-");
+            string containerName = UserToContainer.EmailToContainer(username);
             var container = CloudBlobClient.GetContainerReference(containerName);
             var blob = container.GetBlockBlobReference(file.Replace(" ", "%20") + ".png");
             MemoryStream memoryStream;
@@ -46,7 +47,9 @@ namespace Ecco.Api
 
         public async Task<Task> SaveCard(string cardTitle, Stream file, string username)
         {
-            var container = CloudBlobClient.GetContainerReference("username-" + username.Replace("@", "-").Replace(".", "-"));
+            string containerName = UserToContainer.EmailToContainer(username);
+
+            var container = CloudBlobClient.GetContainerReference(containerName);
             await container.CreateIfNotExistsAsync();
 
             var blob = container.GetBlockBlobReference(cardTitle.Replace(" ", "%20") + ".png");
