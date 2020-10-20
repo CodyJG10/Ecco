@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 using Ecco.Mobile.Dependencies;
 using Foundation;
 using UIKit;
+using Xamarin.Forms;
 
+[assembly: Dependency(typeof(Ecco.Mobile.iOS.Dependencies.PhotoPickerService))]
 namespace Ecco.Mobile.iOS.Dependencies
 {
     public class PhotoPickerService : IPhotoPickerService
