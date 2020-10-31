@@ -41,7 +41,68 @@ namespace Ecco.Mobile
             MainPage = new LoadingPage();
         }
 
-        int tries = 1;
+        //int tries = 1;
+        //private async void RefreshToken()
+        //{
+        //    string refreshToken = CrossSettings.Current.GetValueOrDefault("RefreshToken", "_");
+        //    string token = CrossSettings.Current.GetValueOrDefault("Token", "_");
+        //    var db = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
+
+        //    try
+        //    {
+        //        var response = await db.RefreshToken(token, refreshToken);
+
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            var contentString = await response.Content.ReadAsStringAsync();
+        //            var content = JsonConvert.DeserializeObject<IdentityResponse>(contentString);
+        //            var newToken = content.Token;
+        //            var newRefreshToken = content.RefreshToken;
+        //            db.SetToken(token);
+        //            CrossSettings.Current.AddOrUpdateValue("RefreshToken", newRefreshToken);
+        //            CrossSettings.Current.AddOrUpdateValue("Token", newToken);
+
+        //            if (openEccoCard)
+        //            {
+        //                MainPage = new NavigationPage(new HomeMaster())
+        //                {
+        //                    BarBackgroundColor = (Color)Resources["LightRed"],
+        //                    BarTextColor = Color.White,
+        //                };
+        //                ShowFromEccoCard();
+        //                return;
+        //            }
+        //            else
+        //            {
+        //                MainPage = new NavigationPage(new HomeMaster())
+        //                {
+        //                    BarBackgroundColor = (Color)Resources["LightRed"],
+        //                    BarTextColor = Color.White
+        //                };
+        //                isLaunched = true;
+        //            }
+        //        }
+        //        else
+        //        {
+        //            MainPage = new LoginPage();
+        //            await MainPage.DisplayAlert("Authentication Error", "You have been logged out", "Ok");
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        if (tries <= 3)
+        //        {
+        //            RefreshToken();
+        //            tries++;
+        //        }
+        //        else
+        //        {
+        //            MainPage = new LoginPage();
+        //            await MainPage.DisplayAlert("Authentication Error", "You have been logged out", "Ok");
+        //        }
+        //    }
+        //}
+
         private async void RefreshToken()
         {
             string refreshToken = CrossSettings.Current.GetValueOrDefault("RefreshToken", "_");
@@ -90,16 +151,8 @@ namespace Ecco.Mobile
             }
             catch (Exception)
             {
-                if (tries <= 3)
-                {
-                    RefreshToken();
-                    tries++;
-                }
-                else
-                {
-                    MainPage = new LoginPage();
-                    await MainPage.DisplayAlert("Authentication Error", "You have been logged out", "Ok");
-                }
+                MainPage = new LoginPage();
+                await MainPage.DisplayAlert("Authentication Error", "You have been logged out", "Ok");
             }
         }
 

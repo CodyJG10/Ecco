@@ -31,9 +31,7 @@ namespace Ecco.Web.Services
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Startup.SigningKey));
 
             var token = new JwtSecurityToken(
-                issuer: "https://localhost:44355",
-                audience: "https://localhost:44355",
-                expires: DateTime.Now.AddDays(1),
+                expires: DateTime.Now.AddDays(14),
                 claims: authClaims,
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
                 );
