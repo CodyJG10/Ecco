@@ -1,6 +1,7 @@
 ﻿using Ecco.Mobile.AutoUpdate;
 using Ecco.Mobile.Views.Authentication;
 using Ecco.Mobile.Views.NFC;
+using Ecco.Mobile.Views.Pages;
 using Ecco.Mobile.Views.Pages.CompanyPages;
 using Nancy.TinyIoc;
 using Plugin.Settings;
@@ -46,6 +47,11 @@ namespace Ecco.Mobile.Views.HomeMaster
                     {
                         Application.Current.MainPage.Navigation.PushAsync(new ReadTagPage());
                     }},
+                    new HomeMasterMasterMenuItem {Id = 2, Title = "FAQ", OnClicked = () => 
+                    {
+                        Application.Current.MainPage.Navigation.PushAsync(new Faq());
+                    }},
+
                     new HomeMasterMasterMenuItem { Id = 3, Title = "Log Out", OnClicked = () => 
                     {
                         CrossSettings.Current.Remove("UserData");

@@ -34,7 +34,7 @@
             
             </border:SfBorder>
 
-            <buttons:SfButton Text="Write" 
+            <buttons:SfButton Text="Link" 
                               HorizontalOptions="Center"
                               Margin="0,15"
                               WidthRequest="250"

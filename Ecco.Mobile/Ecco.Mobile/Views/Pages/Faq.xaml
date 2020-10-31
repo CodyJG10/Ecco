@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:syncfusion="clr-namespace:Syncfusion.XForms.Expander;assembly=Syncfusion.Expander.XForms"
+             x:Class="Ecco.Mobile.Views.Pages.Faq"
+             Title="Frequently Asked Questions">
+
+    <ContentPage.Resources>
+        <Style TargetType="Label" x:Key="HeaderLabel">
+            <Setter Property="FontSize" Value="Large"/>
+            <Setter Property="TextColor" Value="Red"/>
+        </Style>
+
+        <Style TargetType="Label" x:Key="ContentLabel">
+            <Setter Property="FontSize" Value="Medium"/>
+            <Setter Property="TextColor" Value="Black"/>
+        </Style>
+    </ContentPage.Resources>
+    
+    <ContentPage.Content>
+
+        <ScrollView>
+
+            <StackLayout Spacing="50">
+
+                <Image Source="ecco_logo.png"
+                       HorizontalOptions="Center"/>
+
+                <Label Text="Welcome To Ecco Space!"
+                       HorizontalTextAlignment="Center"
+                       HorizontalOptions="Center"
+                       Style="{StaticResource HeaderLabelStyle}"/>
+
+                <syncfusion:SfExpander>
+                    <syncfusion:SfExpander.Header>
+                        <Grid>
+                            <Label Text="What Is Ecco"
+                                   Style="{StaticResource HeaderLabel}"/>
+                        </Grid>
+                    </syncfusion:SfExpander.Header>
+                    <syncfusion:SfExpander.Content>
+                        <Grid Padding="10,10,10,10" BackgroundColor="#FFFFFF">
+                            <Label Style="{StaticResource ContentLabel}" Text="Ecco is a platform which provides a modern alternative to paper business cards. Ecco provides the tools to create and distribute digital business cards. Your digital business cards are much more effective than paper business cards for an array of reasons, including cost efficiency, ability to connect to third party resources, web linking, and more. Most importantly, we offer an Ecco Card, a physical NFC enabled card personalized to you! With this card, you can link your Ecco account and transfer your digital business cards simply by tapping your Ecco Card to somebody's device."/>
+                        </Grid>
+                    </syncfusion:SfExpander.Content>
+                </syncfusion:SfExpander>
+
+                <syncfusion:SfExpander>
+                    <syncfusion:SfExpander.Header>
+                        <Grid>
+                            <Label Text="What Is An Ecco Card"
+                                   Style="{StaticResource HeaderLabel}"/>
+                        </Grid>
+                    </syncfusion:SfExpander.Header>
+                    <syncfusion:SfExpander.Content>
+                        <Grid Padding="10,10,10,10" BackgroundColor="#FFFFFF">
+                            <Label Style="{StaticResource ContentLabel}" Text="An Ecco Card is a physical card you can purchase which links to your Ecco account and allows for transferring digital business cards in person by simply tapping it to your recipient's device."/>
+                        </Grid>
+                    </syncfusion:SfExpander.Content>
+                </syncfusion:SfExpander>
+
+                <syncfusion:SfExpander>
+                    <syncfusion:SfExpander.Header>
+                        <Grid>
+                            <Label Text="Ecco Card Limitations"
+                                   Style="{StaticResource HeaderLabel}"/>
+                        </Grid>
+                    </syncfusion:SfExpander.Header>
+                    <syncfusion:SfExpander.Content>
+                        <Grid Padding="10,10,10,10" BackgroundColor="#FFFFFF">
+                            <Label Style="{StaticResource ContentLabel}" Text="To utilize an Ecco Card, your device, and your recipient's device must be NFC enabled. For a recipient's device to detect the card without the Ecco app launched, NFC background reading must be available. These features are included in most Android devices as well as the IPhone X and up. "/>
+                        </Grid>
+                    </syncfusion:SfExpander.Content>
+                </syncfusion:SfExpander>
+
+                <syncfusion:SfExpander>
+                    <syncfusion:SfExpander.Header>
+                        <Grid>
+                            <Label Text="Setting Up Ecco Card"
+                                   Style="{StaticResource HeaderLabel}"/>
+                        </Grid>
+                    </syncfusion:SfExpander.Header>
+                    <syncfusion:SfExpander.Content>
+                        <Grid Padding="10,10,10,10" BackgroundColor="#FFFFFF">
+                            <Label Style="{StaticResource ContentLabel}" Text="Your Ecco Card must be linked to your Ecco account to operate. To link your card to your device, click the menu button on the top left, and select the 'Configure ECCO Card' button displayed in the side drawer. Tap the 'Link' button and follow the on-screen instructions. After this, when a recipient device detects your Ecco Card, they will be sent your active business card. To change your active business card, select the card you wish to set as your active card on the home page."/>
+                        </Grid>
+                    </syncfusion:SfExpander.Content>
+                </syncfusion:SfExpander>
+
+                <syncfusion:SfExpander>
+                    <syncfusion:SfExpander.Header>
+                        <Grid>
+                            <Label Text="Reading An Ecco Card"
+                                   Style="{StaticResource HeaderLabel}"/>
+                        </Grid>
+                    </syncfusion:SfExpander.Header>
+                    <syncfusion:SfExpander.Content>
+                        <StackLayout Padding="10,10,10,10" BackgroundColor="#FFFFFF">
+                            <Label Style="{StaticResource ContentLabel}" Text="To use your Ecco Card to transfer your business card to a recipient's device, you can utilize a few futures included in Ecco."/>
+                            <Label Style="{StaticResource ContentLabel}" Text="1) Simply tapping the card against the device. Some devices may require it to be unlocked."/>
+                            <Label Style="{StaticResource ContentLabel}" Text="2) Having the recipient open the Ecco app, and selecting the 'scan card' button which is displayed as a scan image in the middle of the bottom navigation bar. "/>
+                            <Label Style="{StaticResource ContentLabel}" Text="If the recipient does not yet have the Ecco app, they will be prompted to view your business card on their devices browser."/>
+                        </StackLayout>
+                    </syncfusion:SfExpander.Content>
+                </syncfusion:SfExpander>
+
+            </StackLayout>
+        </ScrollView>
+        
+    </ContentPage.Content>
+</ContentPage>
