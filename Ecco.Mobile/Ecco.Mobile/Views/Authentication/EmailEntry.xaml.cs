@@ -16,5 +16,10 @@ namespace Ecco.Mobile.Views.Authentication
         {
             InitializeComponent();
         }
+
+        public string GetEmail()
+        {
+            return Email.Text;
+        }
     }
 }

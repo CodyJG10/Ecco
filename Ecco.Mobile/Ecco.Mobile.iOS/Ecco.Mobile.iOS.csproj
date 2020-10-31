@@ -210,7 +210,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CardsView">
-      <Version>2.6.4</Version>
+      <Version>2.6.6</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Azure.Mobile.Client">
       <Version>4.1.2</Version>
@@ -228,64 +228,64 @@
       <Version>6.0.1</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Buttons">
-      <Version>18.3.0.42</Version>
+      <Version>18.3.0.44</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Cards">
-      <Version>18.3.0.42</Version>
+      <Version>18.3.0.44</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Core">
-      <Version>18.3.0.42</Version>
+      <Version>18.3.0.44</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.DataSource">
-      <Version>18.3.0.42</Version>
+      <Version>18.3.0.44</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Expander">
-      <Version>18.3.0.42</Version>
+      <Version>18.3.0.44</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.GridCommon">
-      <Version>18.3.0.42</Version>
+      <Version>18.3.0.44</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfAutoComplete">
-      <Version>18.3.0.42</Version>
+      <Version>18.3.0.44</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfBackdrop">
-      <Version>18.3.0.42</Version>
+      <Version>18.3.0.44</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfBadgeView">
-      <Version>18.3.0.42</Version>
+      <Version>18.3.0.44</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfBarcode">
-      <Version>18.3.0.42</Version>
+      <Version>18.3.0.44</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator">
-      <Version>18.3.0.42</Version>
+      <Version>18.3.0.44</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfComboBox">
-      <Version>18.3.0.42</Version>
+      <Version>18.3.0.44</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfDataForm">
-      <Version>18.3.0.42</Version>
+      <Version>18.3.0.44</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfImageEditor">
-      <Version>18.3.0.42</Version>
+      <Version>18.3.0.44</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfListView">
-      <Version>18.3.0.42</Version>
+      <Version>18.3.0.44</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfMaskedEdit">
-      <Version>18.3.0.42</Version>
+      <Version>18.3.0.44</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfNavigationDrawer">
-      <Version>18.3.0.42</Version>
+      <Version>18.3.0.44</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfPicker">
-      <Version>18.3.0.42</Version>
+      <Version>18.3.0.44</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfPopupLayout">
-      <Version>18.3.0.42</Version>
+      <Version>18.3.0.44</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfPullToRefresh">
-      <Version>18.3.0.42</Version>
+      <Version>18.3.0.44</Version>
     </PackageReference>
     <PackageReference Include="Xam.Plugins.Settings">
       <Version>3.1.1</Version>
@@ -362,7 +362,7 @@
   </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties XamarinHotReloadWrongLinkerErrorInfoBarEccoMobileiOSHideInfoBar="True" XamarinHotReloadDebuggerTimeoutExceptionEccoMobileiOSHideInfoBar="True" />
+      <UserProperties XamarinHotReloadDebuggerTimeoutExceptionEccoMobileiOSHideInfoBar="True" XamarinHotReloadWrongLinkerErrorInfoBarEccoMobileiOSHideInfoBar="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
