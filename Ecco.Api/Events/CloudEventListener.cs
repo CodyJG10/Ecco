@@ -44,7 +44,7 @@ namespace Ecco.Api.Events
 
             eventProcessor = new EventProcessorClient(storageClient, consumerGroup, eventHubConnectionString, eventHubName, processorOptions);
 
-            eventProcessor.ProcessEventAsync += EventProcessor_ProcessEventAsync; ;
+            eventProcessor.ProcessEventAsync += EventProcessor_ProcessEventAsync; 
             eventProcessor.ProcessErrorAsync += EventProcessor_ProcessErrorAsync;
         }
 

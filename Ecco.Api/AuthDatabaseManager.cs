@@ -36,6 +36,7 @@ namespace Ecco.Api
                 string token = content.token;
                 SetToken(token);
             }
+            
 
             return response;
         }

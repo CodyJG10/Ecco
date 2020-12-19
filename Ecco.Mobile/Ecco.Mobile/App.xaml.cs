@@ -251,9 +251,12 @@ namespace Ecco.Mobile
         {
             (TinyIoCContainer.Current.Resolve<AutoUpdater>()).Stop();
         }
+         
+        
 
         protected override void OnResume()
         {
+            base.OnResume();
             (TinyIoCContainer.Current.Resolve<AutoUpdater>()).Start();
         }
     }
