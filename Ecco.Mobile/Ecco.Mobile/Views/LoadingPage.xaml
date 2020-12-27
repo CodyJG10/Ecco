@@ -4,16 +4,21 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:loading="clr-namespace:Ecco.Mobile.Views.Loading"
              mc:Ignorable="d"
-             x:Class="Ecco.Mobile.Views.LoadingPage">
+             x:Class="Ecco.Mobile.Views.LoadingPage"
+             Background="#000257">
     <ContentPage.Content>
-        <StackLayout VerticalOptions="Center"
-                     HorizontalOptions="Center">
+        <StackLayout VerticalOptions="FillAndExpand"
+                     HorizontalOptions="FillAndExpand"
+                     Background="{StaticResource LoadingBackground}">
 
-            <Image Source="ecco_logo.png"/>
+            <Image Source="ecco_logo.png"
+                   VerticalOptions="Start"/>
 
             <Label Text="Launching Ecco Space..."
                    FontFamily="{StaticResource Montserrat-SemiBold}"
-                   FontSize="Large"/>
+                   FontSize="Large"
+                   TextColor="White"
+                   HorizontalOptions="Center"/>
 
         </StackLayout>
     </ContentPage.Content>

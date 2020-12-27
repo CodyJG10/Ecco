@@ -19,6 +19,7 @@
     <Color x:Key="LightGreen">#35c659</Color>
     <Color x:Key="OrangeyYellow">#fcbc0f</Color>
     <Color x:Key="NavbarBackground">#50becc</Color>
+    <Color x:Key="LoadingBackground">#000257</Color>
 
     <Color x:Key="PrimaryBusyIndicatorColor">Black</Color>
 
