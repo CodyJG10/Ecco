@@ -112,6 +112,9 @@
     <ImageAsset Include="Assets.xcassets\Logo.imageset\Logo 2.jpg">
       <Visible>false</Visible>
     </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\New Icons.appiconset\1024.png">
+      <Visible>false</Visible>
+    </ImageAsset>
     <ImageAsset Include="Assets.xcassets\New Icons.appiconset\120.png">
       <Visible>false</Visible>
     </ImageAsset>
