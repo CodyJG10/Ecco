@@ -14,7 +14,7 @@
     <AssemblyName>Ecco.Mobile.iOS</AssemblyName>
     <MtouchEnableSGenConc>true</MtouchEnableSGenConc>
     <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
-    <ProvisioningType>automatic</ProvisioningType>
+    <ProvisioningType>manual</ProvisioningType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>
@@ -27,7 +27,7 @@
     <MtouchArch>x86_64</MtouchArch>
     <MtouchLink>SdkOnly</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
-    <CodesignKey>Apple Distribution: Cody Gordon (WG3574SASP)</CodesignKey>
+    <CodesignKey>iPhone Developer</CodesignKey>
     <CodesignProvision>Ecco Space Distribution</CodesignProvision>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
@@ -109,6 +109,9 @@
     </BundleResource>
   </ItemGroup>
   <ItemGroup>
+    <ImageAsset Include="Assets.xcassets\Logo.imageset\Logo 2.jpg">
+      <Visible>false</Visible>
+    </ImageAsset>
     <ImageAsset Include="Assets.xcassets\New Icons.appiconset\120.png">
       <Visible>false</Visible>
     </ImageAsset>
@@ -205,9 +208,6 @@
     <ImageAsset Include="Assets.xcassets\Logo.imageset\Contents.json">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\Logo.imageset\ecco_logo.png">
-      <Visible>false</Visible>
-    </ImageAsset>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon1024.png">
       <Visible>false</Visible>
@@ -261,10 +261,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CardsView">
-      <Version>2.6.6</Version>
+      <Version>2.6.9</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Azure.Mobile.Client">
-      <Version>4.1.2</Version>
+      <Version>4.2.0</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Azure.NotificationHubs">
       <Version>4.1.0</Version>
@@ -273,79 +273,79 @@
       <Version>12.0.3</Version>
     </PackageReference>
     <PackageReference Include="Plugin.NFC">
-      <Version>0.1.18</Version>
+      <Version>0.1.19</Version>
     </PackageReference>
     <PackageReference Include="Plugin.Permissions">
       <Version>6.0.1</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Buttons">
-      <Version>18.3.0.44</Version>
+      <Version>18.4.0.32</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Cards">
-      <Version>18.3.0.44</Version>
+      <Version>18.4.0.32</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Core">
-      <Version>18.3.0.44</Version>
+      <Version>18.4.0.32</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.DataSource">
-      <Version>18.3.0.44</Version>
+      <Version>18.4.0.32</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Expander">
-      <Version>18.3.0.44</Version>
+      <Version>18.4.0.32</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.GridCommon">
-      <Version>18.3.0.44</Version>
+      <Version>18.4.0.32</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfAutoComplete">
-      <Version>18.3.0.44</Version>
+      <Version>18.4.0.32</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfBackdrop">
-      <Version>18.3.0.44</Version>
+      <Version>18.4.0.32</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfBadgeView">
-      <Version>18.3.0.44</Version>
+      <Version>18.4.0.32</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfBarcode">
-      <Version>18.3.0.44</Version>
+      <Version>18.4.0.32</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator">
-      <Version>18.3.0.44</Version>
+      <Version>18.4.0.32</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfComboBox">
-      <Version>18.3.0.44</Version>
+      <Version>18.4.0.32</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfDataForm">
-      <Version>18.3.0.44</Version>
+      <Version>18.4.0.32</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfImageEditor">
-      <Version>18.3.0.44</Version>
+      <Version>18.4.0.32</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfListView">
-      <Version>18.3.0.44</Version>
+      <Version>18.4.0.32</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfMaskedEdit">
-      <Version>18.3.0.44</Version>
+      <Version>18.4.0.32</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfNavigationDrawer">
-      <Version>18.3.0.44</Version>
+      <Version>18.4.0.32</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfPicker">
-      <Version>18.3.0.44</Version>
+      <Version>18.4.0.32</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfPopupLayout">
-      <Version>18.3.0.44</Version>
+      <Version>18.4.0.32</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfPullToRefresh">
-      <Version>18.3.0.44</Version>
+      <Version>18.4.0.32</Version>
     </PackageReference>
     <PackageReference Include="Xam.Plugins.Settings">
       <Version>3.1.1</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Azure.NotificationHubs.iOS">
-      <Version>3.1.0</Version>
+      <Version>3.1.1</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1560" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
+    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1821" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.6.0" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
@@ -409,11 +409,11 @@
     <BundleResource Include="Resources\photo.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\ecco-logo.png" />
+    <BundleResource Include="Resources\ecco_logo.png" />
   </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties XamarinHotReloadWrongLinkerErrorInfoBarEccoMobileiOSHideInfoBar="True" XamarinHotReloadDebuggerTimeoutExceptionEccoMobileiOSHideInfoBar="True" />
+      <UserProperties XamarinHotReloadDebuggerTimeoutExceptionEccoMobileiOSHideInfoBar="True" XamarinHotReloadWrongLinkerErrorInfoBarEccoMobileiOSHideInfoBar="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
