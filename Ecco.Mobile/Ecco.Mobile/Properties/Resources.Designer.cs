@@ -61,7 +61,7 @@ namespace Ecco.Mobile.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to MzI4MDQwQDMxMzgyZTMzMmUzMGQvaTV6Z0RmK01TdDFJL3NJSjhwc1JPdVhWMnpxU3V4eWltOXdPRXdORjQ9.
+        ///   Looks up a localized string similar to Mzc1NTk3QDMxMzgyZTM0MmUzMGMvbGtEQ3VjaTRYbFVZQlRQbGp6Vi9GZmJVaFNYV3k5dFFrVTl5ZFdsZjA9.
         /// </summary>
         internal static string SyncfusionLicense {
             get {
