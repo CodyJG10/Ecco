@@ -11,7 +11,6 @@ using Android.Runtime;
 using Android.Support.V4.App;
 using Android.Views;
 using Android.Widget;
-using AndroidX.Core.App;
 using Firebase.Messaging;
 using WindowsAzure.Messaging;
 
