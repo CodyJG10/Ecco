@@ -150,13 +150,20 @@ namespace Ecco.Web.Controllers
         }
 
         [HttpGet("UserData")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public async Task<string> GetUserData(string id = null, string profileName = null, string email = null)
         {
             if (id != null)
             {
-                var user = await _userManager.FindByIdAsync(id);
-                return JsonConvert.SerializeObject(user);
+                try
+                {
+                    var user = await _userManager.FindByIdAsync(id);
+                    return JsonConvert.SerializeObject(user);
+                }
+                catch (Exception e) {
+                    Console.WriteLine(e.Message);
+                    return null;
+                }
             }
             else if (profileName != null)
             {
@@ -171,14 +178,14 @@ namespace Ecco.Web.Controllers
         }
 
         [HttpGet("UserExists")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public bool UserExists(string profileName)
         {
             return _userManager.Users.Any(x => x.ProfileName.Equals(profileName));
         }
 
         [HttpGet("testtoken")]
-        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         public IActionResult TestToken()
         {
             var allClaims = User.Claims.ToList();
@@ -205,38 +212,37 @@ namespace Ecco.Web.Controllers
                 $"Please reset your password by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
         }
 
-        [HttpPost("RefreshToken")]
-        public IActionResult RefreshToken([FromForm]string token, [FromForm]string refreshToken)
-        {
-            var principal = _identityService.GetPrincipalFromExpiredToken(token);
-            var username = principal.Identity.Name;
+        //[HttpPost("RefreshToken")]
+        //public IActionResult RefreshToken([FromForm]string token, [FromForm]string refreshToken)
+        //{
+        //    var principal = _identityService.GetPrincipalFromExpiredToken(token);
+        //    var username = principal.Identity.Name;
 
-            var allClaims = principal.Claims.ToList();
-            var name = allClaims.First(c => c.Type.Contains("nameidentifier")).Value;
-            var user = _context.Users.Single(x => x.UserName == name);
+        //    var allClaims = principal.Claims.ToList();
+        //    var name = allClaims.First(c => c.Type.Contains("nameidentifier")).Value;
+        //    var user = _context.Users.Single(x => x.UserName == name);
 
-            var savedRefreshToken = user.RefreshToken; 
-            if (savedRefreshToken != refreshToken)
-                throw new SecurityTokenException("Invalid refresh token");
+        //    var savedRefreshToken = user.RefreshToken; 
+        //    if (savedRefreshToken != refreshToken)
+        //        throw new SecurityTokenException("Invalid refresh token");
             
-            var newJwtToken = _identityService.GenerateToken(user);
-            var newRefreshToken = _identityService.GenerateRefreshToken();
+        //    var newJwtToken = _identityService.GenerateToken(user);
+        //    var newRefreshToken = _identityService.GenerateRefreshToken();
 
-            user.RefreshToken = newRefreshToken;
-            _context.Update(user);
-            _context.SaveChanges();
+        //    user.RefreshToken = newRefreshToken;
+        //    _context.Update(user);
+        //    _context.SaveChanges();
 
-            string tokenText = new JwtSecurityTokenHandler().WriteToken(newJwtToken);
+        //    string tokenText = new JwtSecurityTokenHandler().WriteToken(newJwtToken);
 
-            string expirationString = newJwtToken.Claims.Single(x => x.Type == "exp").Value;
-            DateTimeOffset dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(long.Parse(expirationString));
+        //    string expirationString = newJwtToken.Claims.Single(x => x.Type == "exp").Value;
+        //    DateTimeOffset dateTimeOffset = DateTimeOffset.FromUnixTimeSeconds(long.Parse(expirationString));
 
-            return new ObjectResult(new
-            {
-                token = tokenText,
-                refreshToken = newRefreshToken,
-                expiration = dateTimeOffset
-            });
-        }
+        //    return new ObjectResult(new
+        //    {
+        //        token = tokenText,
+        //        refreshToken = newRefreshToken,
+        //        expiration = dateTimeOffset
+        //    });
     }
 }

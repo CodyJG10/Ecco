@@ -39,8 +39,6 @@
 	<string>LaunchScreen</string>
 	<key>CFBundleName</key>
 	<string>Ecco Space</string>
-	<key>XSAppIconAssets</key>
-	<string>Assets.xcassets/AppIcon-1.appiconset</string>
 	<key>NFCReaderUsageDescription</key>
 	<string>NFC tag to read NDEF messages into the application</string>
 	<key>NSContactsUsageDescription</key>
@@ -53,5 +51,7 @@
 	<string>false</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Ecco uses photo library to customize business cards</string>
+	<key>XSAppIconAssets</key>
+	<string>Assets.xcassets/New Icons.appiconset</string>
 </dict>
 </plist>

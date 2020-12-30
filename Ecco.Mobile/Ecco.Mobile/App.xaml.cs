@@ -103,58 +103,58 @@ namespace Ecco.Mobile
         //    }
         //}
 
-        private async void RefreshToken()
-        {
-            string refreshToken = CrossSettings.Current.GetValueOrDefault("RefreshToken", "_");
-            string token = CrossSettings.Current.GetValueOrDefault("Token", "_");
-            var db = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
+        //private async void RefreshToken()
+        //{
+        //    string refreshToken = CrossSettings.Current.GetValueOrDefault("RefreshToken", "_");
+        //    string token = CrossSettings.Current.GetValueOrDefault("Token", "_");
+        //    var db = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
 
-            try
-            {
-                var response = await db.RefreshToken(token, refreshToken);
+        //    try
+        //    {
+        //        var response = await db.RefreshToken(token, refreshToken);
 
-                if (response.IsSuccessStatusCode)
-                {
-                    var contentString = await response.Content.ReadAsStringAsync();
-                    var content = JsonConvert.DeserializeObject<IdentityResponse>(contentString);
-                    var newToken = content.Token;
-                    var newRefreshToken = content.RefreshToken;
-                    db.SetToken(token);
-                    CrossSettings.Current.AddOrUpdateValue("RefreshToken", newRefreshToken);
-                    CrossSettings.Current.AddOrUpdateValue("Token", newToken);
+        //        if (response.IsSuccessStatusCode)
+        //        {
+        //            var contentString = await response.Content.ReadAsStringAsync();
+        //            var content = JsonConvert.DeserializeObject<IdentityResponse>(contentString);
+        //            var newToken = content.Token;
+        //            var newRefreshToken = content.RefreshToken;
+        //            db.SetToken(token);
+        //            CrossSettings.Current.AddOrUpdateValue("RefreshToken", newRefreshToken);
+        //            CrossSettings.Current.AddOrUpdateValue("Token", newToken);
 
-                    if (openEccoCard)
-                    {
-                        MainPage = new NavigationPage(new HomeMaster())
-                        {
-                            BarBackgroundColor = (Color)Resources["LightRed"],
-                            BarTextColor = Color.White,
-                        };
-                        ShowFromEccoCard();
-                        return;
-                    }
-                    else
-                    {
-                        MainPage = new NavigationPage(new HomeMaster())
-                        {
-                            BarBackgroundColor = (Color)Resources["LightRed"],
-                            BarTextColor = Color.White
-                        };
-                        isLaunched = true;
-                    }
-                }
-                else
-                {
-                    MainPage = new LoginPage();
-                    await MainPage.DisplayAlert("Authentication Error", "You have been logged out", "Ok");
-                }
-            }
-            catch (Exception)
-            {
-                MainPage = new LoginPage();
-                await MainPage.DisplayAlert("Authentication Error", "You have been logged out", "Ok");
-            }
-        }
+        //            if (openEccoCard)
+        //            {
+        //                MainPage = new NavigationPage(new HomeMaster())
+        //                {
+        //                    BarBackgroundColor = (Color)Resources["LightRed"],
+        //                    BarTextColor = Color.White,
+        //                };
+        //                ShowFromEccoCard();
+        //                return;
+        //            }
+        //            else
+        //            {
+        //                MainPage = new NavigationPage(new HomeMaster())
+        //                {
+        //                    BarBackgroundColor = (Color)Resources["LightRed"],
+        //                    BarTextColor = Color.White
+        //                };
+        //                isLaunched = true;
+        //            }
+        //        }
+        //        else
+        //        {
+        //            MainPage = new LoginPage();
+        //            await MainPage.DisplayAlert("Authentication Error", "You have been logged out", "Ok");
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        MainPage = new LoginPage();
+        //        await MainPage.DisplayAlert("Authentication Error", "You have been logged out", "Ok");
+        //    }
+        //}
 
         #region iOS Deep Linking
 
@@ -237,18 +237,33 @@ namespace Ecco.Mobile
 
         protected override void OnStart()
         {
-            if (!CrossSettings.Current.GetValueOrDefault("RefreshToken", "_").Equals("_"))
+            //if (!CrossSettings.Current.GetValueOrDefault("RefreshToken", "_").Equals("_"))
+            //{
+            //    RefreshToken();
+            //}
+            //else
+            //{
+            // Temporarily retrieve username / password
+            if (CrossSettings.Current.Contains("Username"))
             {
-                RefreshToken();
+                //string username = CrossSettings.Current.GetValueOrDefault("Username", "");
+                //string password = CrossSettings.Current.GetValueOrDefault("Password", "");
+                MainPage = new NavigationPage(new HomeMaster())
+                {
+                    BarBackgroundColor = (Color)Resources["LightRed"],
+                    BarTextColor = Color.White,
+                };
             }
             else
             {
                 MainPage = new LoginPage();
             }
+            //}
         }
         
         protected override void OnSleep()
         {
+            base.OnSleep();
             (TinyIoCContainer.Current.Resolve<AutoUpdater>()).Stop();
         }
          

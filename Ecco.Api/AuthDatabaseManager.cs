@@ -31,10 +31,10 @@ namespace Ecco.Api
             var response = await client.PostAsync("auth/token", formContent);
             if (response.IsSuccessStatusCode)
             {
-                var result = await response.Content.ReadAsStringAsync();
-                LoginResult content = JsonConvert.DeserializeObject<LoginResult>(result);
-                string token = content.token;
-                SetToken(token);
+                //var result = await response.Content.ReadAsStringAsync();
+                //LoginResult content = JsonConvert.DeserializeObject<LoginResult>(result);
+                //string token = content.token;
+                //SetToken(token);
             }
             
 
@@ -72,9 +72,9 @@ namespace Ecco.Api
             return JsonConvert.DeserializeObject<UserData>(result);
         }
 
-        public async Task<UserData> GetUserData(string profileName)
+        public async Task<UserData> GetUserData(string email)
         {
-            var response = await client.GetAsync("auth/UserData?profileName=" + profileName);
+            var response = await client.GetAsync("auth/UserData?email=" + email);
             var result = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<UserData>(result);
         }

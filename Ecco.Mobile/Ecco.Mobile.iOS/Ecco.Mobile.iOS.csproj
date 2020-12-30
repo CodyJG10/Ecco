@@ -109,40 +109,91 @@
     </BundleResource>
   </ItemGroup>
   <ItemGroup>
-    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\10241.png">
+    <ImageAsset Include="Assets.xcassets\New Icons.appiconset\120.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\1201.png">
+    <ImageAsset Include="Assets.xcassets\New Icons.appiconset\1201.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\1202.png">
+    <ImageAsset Include="Assets.xcassets\New Icons.appiconset\152.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\1521.png">
+    <ImageAsset Include="Assets.xcassets\New Icons.appiconset\167.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\1671.png">
+    <ImageAsset Include="Assets.xcassets\New Icons.appiconset\180.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\180.png">
+    <ImageAsset Include="Assets.xcassets\New Icons.appiconset\29.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\40.png">
+    <ImageAsset Include="Assets.xcassets\New Icons.appiconset\40.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\58.png">
+    <ImageAsset Include="Assets.xcassets\New Icons.appiconset\401.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\60.png">
+    <ImageAsset Include="Assets.xcassets\New Icons.appiconset\402.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\761.png">
+    <ImageAsset Include="Assets.xcassets\New Icons.appiconset\58.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\80.png">
+    <ImageAsset Include="Assets.xcassets\New Icons.appiconset\581.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\87.png">
+    <ImageAsset Include="Assets.xcassets\New Icons.appiconset\60.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\New Icons.appiconset\76.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\New Icons.appiconset\80.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\New Icons.appiconset\801.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\New Icons.appiconset\87.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Old Icons.appiconset\10241.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Old Icons.appiconset\1201.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Old Icons.appiconset\1202.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Old Icons.appiconset\1521.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Old Icons.appiconset\1671.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Old Icons.appiconset\180.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Old Icons.appiconset\40.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Old Icons.appiconset\58.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Old Icons.appiconset\60.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Old Icons.appiconset\761.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Old Icons.appiconset\80.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\Old Icons.appiconset\87.png">
+      <Visible>false</Visible>
+    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\New Icons.appiconset\Contents.json">
       <Visible>false</Visible>
     </ImageAsset>
     <ImageAsset Include="Assets.xcassets\Images.imageset\Contents.json">
@@ -197,7 +248,7 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon20.png">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon-1.appiconset\Contents.json">
+    <ImageAsset Include="Assets.xcassets\Old Icons.appiconset\Contents.json">
       <Visible>false</Visible>
     </ImageAsset>
   </ItemGroup>
@@ -328,9 +379,6 @@
     <BundleResource Include="Resources\onboarding_create_card.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\ecco_logo.png" />
-  </ItemGroup>
-  <ItemGroup>
     <BundleResource Include="Resources\onboarding_filter.png" />
   </ItemGroup>
   <ItemGroup>
@@ -360,9 +408,12 @@
   <ItemGroup>
     <BundleResource Include="Resources\photo.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\ecco-logo.png" />
+  </ItemGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties XamarinHotReloadDebuggerTimeoutExceptionEccoMobileiOSHideInfoBar="True" XamarinHotReloadWrongLinkerErrorInfoBarEccoMobileiOSHideInfoBar="True" />
+      <UserProperties XamarinHotReloadWrongLinkerErrorInfoBarEccoMobileiOSHideInfoBar="True" XamarinHotReloadDebuggerTimeoutExceptionEccoMobileiOSHideInfoBar="True" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>
