@@ -72,9 +72,9 @@ namespace Ecco.Api
             return JsonConvert.DeserializeObject<UserData>(result);
         }
 
-        public async Task<UserData> GetUserData(string email)
+        public async Task<UserData> GetUserData(string profileId)
         {
-            var response = await client.GetAsync("auth/UserData?email=" + email);
+            var response = await client.GetAsync("auth/UserData?id=" + profileId);
             var result = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<UserData>(result);
         }

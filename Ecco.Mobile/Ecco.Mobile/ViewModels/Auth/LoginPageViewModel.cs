@@ -45,7 +45,7 @@ namespace Ecco.Mobile.ViewModels.Auth
                 //var contentString = await loginResponse.Content.ReadAsStringAsync();
                 //var content = JsonConvert.DeserializeObject<IdentityResponse>(contentString);
                 Console.WriteLine("Succesfully logged in!");
-                var userInfo = await _database.GetUserData(Email);
+                var userInfo = await _database.GetUserDataByEmail(Email);
                 string userDataJson = JsonConvert.SerializeObject(userInfo);
                 CrossSettings.Current.AddOrUpdateValue("UserData", userDataJson);
                 //CrossSettings.Current.AddOrUpdateValue("RefreshToken", content.RefreshToken);

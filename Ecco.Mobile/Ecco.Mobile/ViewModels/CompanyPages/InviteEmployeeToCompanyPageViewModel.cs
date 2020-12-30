@@ -32,7 +32,7 @@ namespace Ecco.Mobile.ViewModels.CompanyPages
 
             try
             {
-                var toUser = await _db.GetUserDataByEmail(ToUsername);
+                var toUser = await _db.GetUserData(ToUsername);
 
                 EmployeeInvitation invitation = new EmployeeInvitation()
                 {

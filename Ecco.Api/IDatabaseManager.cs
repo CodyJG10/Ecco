@@ -16,7 +16,7 @@ namespace Ecco.Api
         void SetUrl(string url);
         Task<HttpResponseMessage> Login(string username, string password);
         Task<HttpResponseMessage> Register(string username, string email, string password, string confirmPassword);
-        Task<UserData> GetUserData();
+        //Task<UserData> GetUserData();
         Task<UserData> GetUserData(Guid id);
         Task<UserData> GetUserData(string profileName);
         Task<bool> UserExists(string userName);
