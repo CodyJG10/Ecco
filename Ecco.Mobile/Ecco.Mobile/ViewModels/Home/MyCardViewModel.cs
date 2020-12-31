@@ -152,7 +152,7 @@ namespace Ecco.Mobile.ViewModels.Home
             if (Loading)
                 return;
 
-            if (card == null)
+            if (card.Card == null)
                 return;
 
             await Application.Current.MainPage.Navigation.PushAsync(new MyCard(card));

@@ -61,22 +61,21 @@ namespace Ecco.Web
 
             SigningKey = Configuration["SigningKey"];
 
-            services.AddAuthentication()
-                .AddJwtBearer(options =>
-                {
-                    options.SaveToken = true;
-                    options.RequireHttpsMetadata = false;
-                    options.TokenValidationParameters = new TokenValidationParameters()
-                    {
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidAudience = "https://ecco-space.azurewebsites.net",
-                        ValidIssuer = "https://ecco-space.azurewebsites.net",
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SigningKey))
-                    };
-                });
+            //services.AddAuthentication()
+            //    .AddJwtBearer(options =>
+            //    {
+            //        options.SaveToken = true;
+            //        options.RequireHttpsMetadata = false;
+            //        options.TokenValidationParameters = new TokenValidationParameters()
+            //        {
+            //            ValidateIssuer = true,
+            //            ValidateAudience = true,
+            //            ValidAudience = "https://ecco-space.azurewebsites.net",
+            //            ValidIssuer = "https://ecco-space.azurewebsites.net",
+            //            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SigningKey))
+            //        };
+            //    });
             //services.AddAuthentication();
-
 
             string storageConnectionString = Configuration.GetConnectionString("StorageConnection");
             services.AddSingleton(typeof(StorageService), new StorageService(storageConnectionString));

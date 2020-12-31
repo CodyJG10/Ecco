@@ -256,7 +256,9 @@
     <ImageAsset Include="Assets.xcassets\Old Icons.appiconset\Contents.json">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\Logo.imageset\ecco_logo-1.png" />
+    <ImageAsset Include="Assets.xcassets\Logo.imageset\ecco_logo-1.png">
+      <Visible>false</Visible>
+    </ImageAsset>
     <InterfaceDefinition Include="Resources\LaunchScreen2.storyboard">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </InterfaceDefinition>
