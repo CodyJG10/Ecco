@@ -63,6 +63,7 @@ namespace Ecco.Mobile.ViewModels.Home.Card
                 }
             }
             DependencyService.Get<ISaveContact>().SaveContact(Card.Card.FullName, Card.Card.Phone, Card.Card.Email);
+            await Application.Current.MainPage.DisplayAlert("Contact Saved", "The contact has succesfully been saved to your device", "Return");
         }
     }
 }
