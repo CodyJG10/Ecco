@@ -32,67 +32,10 @@ namespace Ecco.Mobile
         public App()
         {
             InitializeComponent();
-
             string syncfusionLicense = Mobile.Properties.Resources.SyncfusionLicense;
             Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense(syncfusionLicense);
-
-            InitDatabase();
-
             MainPage = new LoadingPage();
         }
-
-        //private async void RefreshToken()
-        //{
-        //    string refreshToken = CrossSettings.Current.GetValueOrDefault("RefreshToken", "_");
-        //    string token = CrossSettings.Current.GetValueOrDefault("Token", "_");
-        //    var db = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
-
-        //    try
-        //    {
-        //        var response = await db.RefreshToken(token, refreshToken);
-
-        //        if (response.IsSuccessStatusCode)
-        //        {
-        //            var contentString = await response.Content.ReadAsStringAsync();
-        //            var content = JsonConvert.DeserializeObject<IdentityResponse>(contentString);
-        //            var newToken = content.Token;
-        //            var newRefreshToken = content.RefreshToken;
-        //            db.SetToken(token);
-        //            CrossSettings.Current.AddOrUpdateValue("RefreshToken", newRefreshToken);
-        //            CrossSettings.Current.AddOrUpdateValue("Token", newToken);
-
-        //            if (openEccoCard)
-        //            {
-        //                MainPage = new NavigationPage(new HomeMaster())
-        //                {
-        //                    BarBackgroundColor = (Color)Resources["LightRed"],
-        //                    BarTextColor = Color.White,
-        //                };
-        //                ShowFromEccoCard();
-        //                return;
-        //            }
-        //            else
-        //            {
-        //                MainPage = new NavigationPage(new HomeMaster())
-        //                {
-        //                    BarBackgroundColor = (Color)Resources["LightRed"],
-        //                    BarTextColor = Color.White
-        //                };
-        //                isLaunched = true;
-        //            }
-        //        }
-        //        else
-        //        {
-        //            MainPage = new LoginPage();
-        //            await MainPage.DisplayAlert("Authentication Error", "You have been logged out", "Ok");
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-        //        MainPage = new LoginPage();
-        //        await MainPage.DisplayAlert("Authentication Error", "You have been logged out", "Ok");
-        //    }
-        //}
 
         #region iOS Deep Linking
 
@@ -165,34 +108,40 @@ namespace Ecco.Mobile
 
         #endregion
 
-        private void InitDatabase()
+        private void InitServices()
         {
             var container = TinyIoCContainer.Current;
             container.Register<IDatabaseManager, DatabaseManager>();
-            container.Resolve<IDatabaseManager>().SetUrl("https://ecco-space.azurewebsites.net/");
-            container.Register<IStorageManager>(new StorageManager("DefaultEndpointsProtocol=https;AccountName=eccospacestorage;AccountKey=Nr6eERil/QqRitQ/XThQ9yElPlH844fwAqE0LDOX6ktyYae0S5xtvv5W/d0lrM3Y7uI8KP7qRgoQ/unHCmYnIw==;EndpointSuffix=core.windows.net"));
+            container.Resolve<IDatabaseManager>().SetUrl(Mobile.Properties.Resources.WebUrl);
+            container.Register<IStorageManager>(new StorageManager(Mobile.Properties.Resources.StorageConnectionString));
         }
 
         protected override void OnStart()
         {
-            //if (!CrossSettings.Current.GetValueOrDefault("RefreshToken", "_").Equals("_"))
-            //{
-            //    RefreshToken();
-            //}
-            //else
-            //{
-            // Temporarily retrieve username / password
-            if (CrossSettings.Current.Contains("Username"))
+            InitServices();
+            Authenticate();
+        }
+
+        private async void Authenticate()
+        {
+            var db = TinyIoCContainer.Current.Resolve<IDatabaseManager>();
+            string secret = Mobile.Properties.Resources.WebSecret;
+            var result = await db.Authenticate(secret);
+            if (!result.IsSuccessStatusCode)
             {
-                //string username = CrossSettings.Current.GetValueOrDefault("Username", "");
-                //string password = CrossSettings.Current.GetValueOrDefault("Password", "");
-                AutoLogin();
+                await Current.MainPage.DisplayAlert("Authentication Error", "Could not authenticate with Ecco Space servers. Please try again later.", "Return");
             }
             else
             {
-                MainPage = new LoginPage();
+                if (CrossSettings.Current.Contains("Username"))
+                {
+                    AutoLogin();
+                }
+                else
+                {
+                    MainPage = new LoginPage();
+                }
             }
-            //}
         }
 
         private void AutoLogin() 

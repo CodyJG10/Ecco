@@ -13,7 +13,7 @@
             <busyindicator:SfBusyIndicator AnimationType="Box" 
                                            ViewBoxWidth = "75" 
                                            ViewBoxHeight="75" 
-                                           TextColor="{StaticResource PrimaryBusyIndicatorColor}" />
+                                           TextColor="{StaticResource SecondaryBusyIndicatorColor}" />
           
         </StackLayout>
   </ContentView.Content>

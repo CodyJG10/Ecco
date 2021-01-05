@@ -117,7 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="StorageConnectionString" xml:space="preserve">
+    <value>DefaultEndpointsProtocol=https;AccountName=eccospacestorage;AccountKey=Nr6eERil/QqRitQ/XThQ9yElPlH844fwAqE0LDOX6ktyYae0S5xtvv5W/d0lrM3Y7uI8KP7qRgoQ/unHCmYnIw==;EndpointSuffix=core.windows.net</value>
+  </data>
   <data name="SyncfusionLicense" xml:space="preserve">
     <value>Mzc1NTk3QDMxMzgyZTM0MmUzMGMvbGtEQ3VjaTRYbFVZQlRQbGp6Vi9GZmJVaFNYV3k5dFFrVTl5ZFdsZjA9</value>
+  </data>
+  <data name="WebSecret" xml:space="preserve">
+    <value>ABCDEFGHIJKLMNOPQRSTUVWXYZ</value>
+  </data>
+  <data name="WebUrl" xml:space="preserve">
+    <value>https://ecco-space.azurewebsites.net/</value>
   </data>
 </root>

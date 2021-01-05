@@ -1,4 +1,5 @@
 ﻿using Ecco.Entities;
+using IdentityModel.Client;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -28,22 +29,8 @@ namespace Ecco.Api
                 new KeyValuePair<string, string>("Password", password)
             });
 
-            var response = await client.PostAsync("auth/token", formContent);
-            if (response.IsSuccessStatusCode)
-            {
-                //var result = await response.Content.ReadAsStringAsync();
-                //LoginResult content = JsonConvert.DeserializeObject<LoginResult>(result);
-                //string token = content.token;
-                //SetToken(token);
-            }
-            
-
-            return response;
-        }
-
-        public void SetToken(string token)
-        {
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            var result = await client.PostAsync("api/login", formContent);
+            return result;
         }
 
         public async Task<HttpResponseMessage> Register(string username, string email, string password, string confirmPassword)
@@ -55,65 +42,69 @@ namespace Ecco.Api
                 new KeyValuePair<string, string>("Password", password),
                 new KeyValuePair<string, string>("ConfirmPassword", confirmPassword)
             });
-            return await client.PostAsync("auth/register", formContent);
-        }
-
-        public async Task<UserData> GetUserData()
-        {
-            var response = await client.GetAsync("api/UserInfo");
-            var result = await response.Content.ReadAsStringAsync();
-            return JsonConvert.DeserializeObject<UserData>(result);
+            return await client.PostAsync("api/register", formContent);
         }
 
         public async Task<UserData> GetUserData(Guid id)
         {
-            var response = await client.GetAsync("auth/UserData?id=" + id.ToString());
+            var response = await client.GetAsync("api/UserData?id=" + id.ToString());
             var result = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<UserData>(result);
         }
 
         public async Task<UserData> GetUserData(string profileId)
         {
-            var response = await client.GetAsync("auth/UserData?id=" + profileId);
+            var response = await client.GetAsync("api/UserData?id=" + profileId);
             var result = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<UserData>(result);
         }
 
         public async Task<UserData> GetUserDataByEmail(string email)
         {
-            var response = await client.GetAsync("auth/UserData?email=" + email);
+            var response = await client.GetAsync("api/UserData?email=" + email);
             var result = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<UserData>(result);
         }
 
         public async Task<bool> UserExists(string profileName)
         {
-            var response = await client.GetAsync("auth/UserExists?profileName=" + profileName);
+            var response = await client.GetAsync("api/UserExists?profileName=" + profileName);
             var result = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<bool>(result);
         }
 
         public void ForgotPassword(string email)
         {
-            client.GetAsync("auth/ForgotPassword?email=" + email);
+            client.GetAsync("api/ForgotPassword?email=" + email);
         }
 
-        public async Task<bool> TokenIsValid()
+        public async Task<HttpResponseMessage> Authenticate(string secret)
         {
-            var response = await client.GetAsync("auth/testtoken");
-            return response.IsSuccessStatusCode;
-        }
-        
-        public async Task<HttpResponseMessage> RefreshToken(string token, string refreshToken)
-        {
-            var formContent = new FormUrlEncodedContent(new[]
+            //var disco = await client.GetDiscoveryDocumentAsync(client.BaseAddress.AbsoluteUri);
+            var disco = await client.GetDiscoveryDocumentAsync("https://ecco-space.azurewebsites.net");
+            if (disco.IsError)
             {
-                new KeyValuePair<string, string>("token", token),
-                new KeyValuePair<string, string>("refreshtoken", refreshToken)
+                Console.WriteLine(disco.Error);
+                return new HttpResponseMessage(System.Net.HttpStatusCode.NotFound);
+            }
+
+            var tokenResponse = await client.RequestClientCredentialsTokenAsync(new ClientCredentialsTokenRequest
+            {
+                Address = disco.TokenEndpoint,
+
+                ClientId = "ecco-mobile",
+                ClientSecret = secret,
+                Scope = "api1"
             });
 
-            var result = await client.PostAsync("auth/RefreshToken", formContent);
-            return result;
+            if (tokenResponse.IsError)
+            {
+                Console.WriteLine(tokenResponse.Error);
+                return new HttpResponseMessage(System.Net.HttpStatusCode.Forbidden);
+            }
+
+            client.SetBearerToken(tokenResponse.AccessToken);
+            return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
         }
     }
 }

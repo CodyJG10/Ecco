@@ -14,22 +14,18 @@ namespace Ecco.Api
         #region Identity
 
         void SetUrl(string url);
+        Task<HttpResponseMessage> Authenticate(string secret);
         Task<HttpResponseMessage> Login(string username, string password);
         Task<HttpResponseMessage> Register(string username, string email, string password, string confirmPassword);
-        //Task<UserData> GetUserData();
         Task<UserData> GetUserData(Guid id);
         Task<UserData> GetUserData(string profileName);
         Task<bool> UserExists(string userName);
         void ForgotPassword(string email);
         Task<UserData> GetUserDataByEmail(string email);
-        //Task<bool> TokenIsValid();
-        //Task<HttpResponseMessage> RefreshToken(string token, string refreshToken);
-        //void SetToken(string token);
 
         #endregion
 
         #region Cards
-
         Task<bool> CreateCard(Card card);
         Task<IEnumerable<Card>> GetCards();
         Task<Card> GetCard(int id);

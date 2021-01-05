@@ -8,7 +8,6 @@ namespace Ecco.Web.Models
 {
     public class AuthModel
     {
-
         public class LoginModel
         {
             [Required(ErrorMessage = "User Name is required")]

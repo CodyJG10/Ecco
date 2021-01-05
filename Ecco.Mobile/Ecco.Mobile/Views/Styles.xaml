@@ -22,6 +22,7 @@
     <Color x:Key="LoadingBackground">#000257</Color>
 
     <Color x:Key="PrimaryBusyIndicatorColor">Black</Color>
+    <Color x:Key="SecondaryBusyIndicatorColor">White</Color>
 
     <x:String x:Key="Rating">&#xe70c;</x:String>
     <x:String x:Key="Back">&#xe709;</x:String>

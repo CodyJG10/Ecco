@@ -33,8 +33,6 @@ namespace Ecco.Web
 
         public IConfiguration Configuration { get; }
 
-        public static string SigningKey;
-
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
@@ -48,7 +46,6 @@ namespace Ecco.Web
                 .AddUserManager<UserManager<EccoUser>>()
                 .AddRoleManager<RoleManager<IdentityRole>>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
-                //.AddDefaultTokenProviders();
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -59,23 +56,24 @@ namespace Ecco.Web
                 options.SignIn.RequireConfirmedEmail = false;
             });
 
-            SigningKey = Configuration["SigningKey"];
+            var secret = Configuration["Secret"];
 
-            //services.AddAuthentication()
-            //    .AddJwtBearer(options =>
-            //    {
-            //        options.SaveToken = true;
-            //        options.RequireHttpsMetadata = false;
-            //        options.TokenValidationParameters = new TokenValidationParameters()
-            //        {
-            //            ValidateIssuer = true,
-            //            ValidateAudience = true,
-            //            ValidAudience = "https://ecco-space.azurewebsites.net",
-            //            ValidIssuer = "https://ecco-space.azurewebsites.net",
-            //            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SigningKey))
-            //        };
-            //    });
-            //services.AddAuthentication();
+            var builder = services.AddIdentityServer()
+              .AddDeveloperSigningCredential()
+              .AddInMemoryApiScopes(AuthConfig.ApiScopes)
+              .AddInMemoryClients(AuthConfig.GetClients(secret));
+
+            services.AddAuthentication("Bearer")
+                .AddJwtBearer("Bearer", options =>
+                {
+                    options.Authority = "https://ecco-space.azurewebsites.net";
+
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateAudience = false
+                    };
+                });
+
 
             string storageConnectionString = Configuration.GetConnectionString("StorageConnection");
             services.AddSingleton(typeof(StorageService), new StorageService(storageConnectionString));
@@ -85,8 +83,6 @@ namespace Ecco.Web
 
             string notificationHubConnectionString = Configuration.GetConnectionString("NotificationHub");
             services.AddSingleton(typeof(NotificationService), new NotificationService("Ecco-Space", notificationHubConnectionString));
-
-            services.AddSingleton(typeof(IdentityService), new IdentityService(SigningKey));
 
             string eventsHubConnectionString = Configuration.GetConnectionString("EventsHub");
             services.AddSingleton(typeof(EventsHubService), new EventsHubService(eventsHubConnectionString));
@@ -132,6 +128,8 @@ namespace Ecco.Web
             app.UseRouting();
 
             app.UseSession();
+
+            app.UseIdentityServer();
 
             app.UseAuthentication();
             app.UseAuthorization();
