@@ -19,7 +19,7 @@
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
              xmlns:converters="clr-namespace:Ecco.Mobile.Converters"
              xmlns:syncfusion="clr-namespace:Syncfusion.XForms.Expander;assembly=Syncfusion.Expander.XForms" xmlns:pancakeview="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView" xmlns:controls="clr-namespace:Ecco.Mobile.Controls"
-             xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView" xmlns:proc="clr-namespace:PanCardView.Processors;assembly=PanCardView" xmlns:controls1="clr-namespace:PanCardView.Controls;assembly=PanCardView"
+             xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView" xmlns:proc="clr-namespace:PanCardView.Processors;assembly=PanCardView" xmlns:controls1="clr-namespace:PanCardView.Controls;assembly=PanCardView" xmlns:shimmer="clr-namespace:Syncfusion.XForms.Shimmer;assembly=Syncfusion.Core.XForms"
              ios:Page.UseSafeArea="true">
 
     <ContentView.BindingContext>
@@ -47,7 +47,14 @@
             </Grid.RowDefinitions>
 
             <!-- All Cards List -->
-            <cardView:SfCardLayout BindableLayout.ItemsSource="{Binding Cards}"
+
+            <shimmer:SfShimmer x:Name="CardsShimmer" 
+                               VerticalOptions="FillAndExpand" 
+                               IsActive="{Binding Loading}"
+                               Type="Shopping">
+                <shimmer:SfShimmer.Content>
+
+                    <cardView:SfCardLayout BindableLayout.ItemsSource="{Binding Cards}"
                                    VerticalOptions="FillAndExpand"
                                    HorizontalOptions="FillAndExpand"
                                    BackgroundColor="LightGray"
@@ -57,26 +64,29 @@
                                    VisibleCardIndex="{Binding VisibleCardIndex, Mode=TwoWay}"
                                    VisibleCardIndexChanged="SfCardLayout_VisibleCardIndexChanged">
 
-                <BindableLayout.ItemTemplate>
-                    <DataTemplate>
-                        <cardView:SfCardView BackgroundColor="White"
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <cardView:SfCardView BackgroundColor="White"
                                              FadeOutOnSwiping="True"
                                              SwipeToDismiss="False">
 
-                            <cardViews:Card BindingContext="{Binding}"
+                                    <cardViews:Card BindingContext="{Binding}"
                                                     VerticalOptions="FillAndExpand"
                                                     HorizontalOptions="FillAndExpand">
-                                <cardViews:Card.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding Source={x:Reference myCardsView}, Path=BindingContext.SelectCardCommand}"
+                                        <cardViews:Card.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Source={x:Reference myCardsView}, Path=BindingContext.SelectCardCommand}"
                                                                     CommandParameter="{Binding}"/>
-                                </cardViews:Card.GestureRecognizers>
-                            </cardViews:Card>
+                                        </cardViews:Card.GestureRecognizers>
+                                    </cardViews:Card>
 
-                        </cardView:SfCardView>
-                    </DataTemplate>
-                </BindableLayout.ItemTemplate>
+                                </cardView:SfCardView>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
 
-            </cardView:SfCardLayout>
+                    </cardView:SfCardLayout>
+
+                </shimmer:SfShimmer.Content>
+            </shimmer:SfShimmer>
 
             <!--<cards:CoverFlowView ItemsSource="{Binding Cards}"
                                  PositionShiftValue="45"

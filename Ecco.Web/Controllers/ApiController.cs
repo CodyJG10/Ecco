@@ -28,7 +28,6 @@ namespace Ecco.Web.Controllers
 {
     [Route("api")]
     [ApiController]
-    //[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Authorize]
     public class ApiController : ControllerBase
     {
