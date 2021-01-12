@@ -28,7 +28,9 @@ namespace Ecco.Web.Areas.Identity
                         new Secret(secret.Sha256())
                     },
 
-                    AllowedScopes = { "api1" }
+                    AllowedScopes = { "api1" },
+
+                    AccessTokenLifetime = (new TimeSpan(7, 0, 0, 0,0)).Seconds,
                 }
             };
     }
