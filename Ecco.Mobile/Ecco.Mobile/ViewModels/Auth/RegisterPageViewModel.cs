@@ -44,14 +44,10 @@ namespace Ecco.Mobile.ViewModels.Auth
                 var loginResponse = await _database.Login(Email, Password);
                 if (loginResponse.IsSuccessStatusCode)
                 {
-                    var contentString = await loginResponse.Content.ReadAsStringAsync();
-                    var content = JsonConvert.DeserializeObject<IdentityResponse>(contentString);
                     Console.WriteLine("Succesfully logged in!");
                     var userInfo = await _database.GetUserDataByEmail(Email);
                     string userDataJson = JsonConvert.SerializeObject(userInfo);
                     CrossSettings.Current.AddOrUpdateValue("UserData", userDataJson);
-                    CrossSettings.Current.AddOrUpdateValue("RefreshToken", content.RefreshToken);
-                    CrossSettings.Current.AddOrUpdateValue("Token", content.Token);
                     SavePreferences(Email, Password);
                     Application.Current.MainPage = new NavigationPage(new HomeMaster())
                     {
