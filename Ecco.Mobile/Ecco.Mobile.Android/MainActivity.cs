@@ -23,6 +23,12 @@ namespace Ecco.Mobile.Droid
               DataHost = "ecco-space.azurewebsites.net",
               DataPathPrefix = "/cards",
               AutoVerify = true)]
+    [IntentFilter(new[] { Intent.ActionView },
+              Categories = new[] { Intent.CategoryBrowsable, Intent.CategoryDefault },
+              DataScheme = "https",
+              DataHost = "ecco-space.azurewebsites.net",
+              DataPathPrefix = "/usercard",
+              AutoVerify = true)]
     //DataPathPrefixes = new string[] { "/cards", "/usercard" }, 
     [Activity(Label = "Ecco Space",
               Icon = "@mipmap/icon", 
@@ -59,7 +65,6 @@ namespace Ecco.Mobile.Droid
             Syncfusion.XForms.Android.PopupLayout.SfPopupLayoutRenderer.Init();
 
             SharpnadoInitializer.Initialize();
-
 
             CardsViewRenderer.Preserve();
 
