@@ -1,6 +1,7 @@
 ﻿using Ecco.Api;
 using Ecco.Entities;
 using Ecco.Entities.Constants;
+using Ecco.Mobile.AutoUpdate;
 using Ecco.Mobile.Models;
 using Ecco.Mobile.Views.Pages.Cards;
 using Nancy.TinyIoc;
@@ -47,6 +48,7 @@ namespace Ecco.Mobile.ViewModels.NFC
             if (success)
             {
                 await Application.Current.MainPage.DisplayAlert("Success!", "Connection succesfully saved", "Great");
+                TinyIoCContainer.Current.Resolve<AutoUpdater>().UpdateUserConnections();
                 await Application.Current.MainPage.Navigation.PopAsync();
             }
             else

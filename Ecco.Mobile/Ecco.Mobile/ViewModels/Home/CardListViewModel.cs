@@ -128,21 +128,21 @@ namespace Ecco.Mobile.ViewModels.Home
 
             });
 
-            MessagingCenter.Instance.Subscribe<AutoUpdater, string>(this, AutoUpdater.CONNECTION_INVITATION, (sender, json) =>
-            {
-                if (Loading) return;
-                var connections = JsonConvert.DeserializeObject<List<Connection>>(json);
-                if (HasPendingConnections == false && connections.Count > 0)
-                {
-                    Refresh();
-                }
-            });
+            //MessagingCenter.Instance.Subscribe<AutoUpdater, string>(this, AutoUpdater.CONNECTION_INVITATION, (sender, json) =>
+            //{
+            //    if (Loading) return;
+            //    var connections = JsonConvert.DeserializeObject<List<Connection>>(json);
+            //    if (HasPendingConnections == false && connections.Count > 0)
+            //    {
+            //        Refresh();
+            //    }
+            //});
         }
 
         public override void UnsubscribeAutoUpdates()
         {
             MessagingCenter.Instance.Unsubscribe<AutoUpdater>(this, AutoUpdater.CONNECTIONS);
-            MessagingCenter.Instance.Unsubscribe<AutoUpdater>(this, AutoUpdater.CONNECTION_INVITATION);
+            //MessagingCenter.Instance.Unsubscribe<AutoUpdater>(this, AutoUpdater.CONNECTION_INVITATION);
         }
 
         #region Loading

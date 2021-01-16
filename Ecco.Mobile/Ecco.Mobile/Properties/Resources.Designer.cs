@@ -61,6 +61,42 @@ namespace Ecco.Mobile.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Endpoint=sb://ecco-space-events.servicebus.windows.net/;SharedAccessKeyName=main;SharedAccessKey=9b1iT0P8sq2MFjbPiFiNf9WTpbIia4/MmLh5jwvTOaM=;EntityPath=ecco-events.
+        /// </summary>
+        internal static string EventsHubConnectionString {
+            get {
+                return ResourceManager.GetString("EventsHubConnectionString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ecco-events.
+        /// </summary>
+        internal static string EventsHubName {
+            get {
+                return ResourceManager.GetString("EventsHubName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DefaultEndpointsProtocol=https;AccountName=eccoeventstorage;AccountKey=eXZzxBqVgwqip23o+tEwp2efwPVQDaIizwoRES0aEUfccV9L+Y35YGdSsZj9J8YF+76FRJPuckeAuHB7f5RB1w==;EndpointSuffix=core.windows.net.
+        /// </summary>
+        internal static string EventsHubStorageConnectionString {
+            get {
+                return ResourceManager.GetString("EventsHubStorageConnectionString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to events.
+        /// </summary>
+        internal static string EventsHubStorageContainerName {
+            get {
+                return ResourceManager.GetString("EventsHubStorageContainerName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DefaultEndpointsProtocol=https;AccountName=eccospacestorage;AccountKey=Nr6eERil/QqRitQ/XThQ9yElPlH844fwAqE0LDOX6ktyYae0S5xtvv5W/d0lrM3Y7uI8KP7qRgoQ/unHCmYnIw==;EndpointSuffix=core.windows.net.
         /// </summary>
         internal static string StorageConnectionString {

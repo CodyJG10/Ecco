@@ -117,6 +117,18 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="EventsHubConnectionString" xml:space="preserve">
+    <value>Endpoint=sb://ecco-space-events.servicebus.windows.net/;SharedAccessKeyName=main;SharedAccessKey=9b1iT0P8sq2MFjbPiFiNf9WTpbIia4/MmLh5jwvTOaM=;EntityPath=ecco-events</value>
+  </data>
+  <data name="EventsHubName" xml:space="preserve">
+    <value>ecco-events</value>
+  </data>
+  <data name="EventsHubStorageConnectionString" xml:space="preserve">
+    <value>DefaultEndpointsProtocol=https;AccountName=eccoeventstorage;AccountKey=eXZzxBqVgwqip23o+tEwp2efwPVQDaIizwoRES0aEUfccV9L+Y35YGdSsZj9J8YF+76FRJPuckeAuHB7f5RB1w==;EndpointSuffix=core.windows.net</value>
+  </data>
+  <data name="EventsHubStorageContainerName" xml:space="preserve">
+    <value>events</value>
+  </data>
   <data name="StorageConnectionString" xml:space="preserve">
     <value>DefaultEndpointsProtocol=https;AccountName=eccospacestorage;AccountKey=Nr6eERil/QqRitQ/XThQ9yElPlH844fwAqE0LDOX6ktyYae0S5xtvv5W/d0lrM3Y7uI8KP7qRgoQ/unHCmYnIw==;EndpointSuffix=core.windows.net</value>
   </data>

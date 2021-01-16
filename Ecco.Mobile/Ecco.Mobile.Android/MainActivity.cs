@@ -21,7 +21,7 @@ namespace Ecco.Mobile.Droid
               Categories = new[] { Intent.CategoryBrowsable, Intent.CategoryDefault },
               DataScheme = "https",
               DataHost = "ecco-space.azurewebsites.net",
-              DataPathPrefix = "/usercard",
+              DataPathPrefix = "/cards",
               AutoVerify = true)]
     //DataPathPrefixes = new string[] { "/cards", "/usercard" }, 
     [Activity(Label = "Ecco Space",
