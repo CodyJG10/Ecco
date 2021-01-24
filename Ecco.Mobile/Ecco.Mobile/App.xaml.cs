@@ -175,9 +175,9 @@ namespace Ecco.Mobile
 
         protected override void OnResume()
         {
-            MainPage = new LoadingPage();
             if (!(TinyIoCContainer.Current.Resolve<IDatabaseManager>()).TokenIsValid())
             {
+                MainPage = new LoadingPage();
                 AutoLogin();
             }
             base.OnResume();
