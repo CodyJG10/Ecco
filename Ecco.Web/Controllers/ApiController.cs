@@ -28,7 +28,7 @@ namespace Ecco.Web.Controllers
 {
     [Route("api")]
     [ApiController]
-    [Authorize]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public class ApiController : ControllerBase
     {
         private readonly ApplicationDbContext _context;

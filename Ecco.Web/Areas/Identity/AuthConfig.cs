@@ -30,7 +30,21 @@ namespace Ecco.Web.Areas.Identity
 
                     AllowedScopes = { "api1" },
 
-                    AccessTokenLifetime = (new TimeSpan(7, 0, 0, 0,0)).Seconds,
+                    //AccessTokenLifetime = (new TimeSpan(7, 0, 0, 0,0)).Seconds,
+                },
+                new Client
+                {
+                    ClientId = "test",
+
+                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    ClientSecrets =
+                    {
+                        new Secret("secret".Sha256())
+                    },
+
+                    AllowedScopes = { "api1" },
+
+                    //AccessTokenLifetime = (new TimeSpan(0, 2, 0, 0,0)).Seconds,
                 }
             };
     }

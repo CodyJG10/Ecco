@@ -40,7 +40,8 @@ namespace Ecco.Web
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<EccoUser>()
+            //services.AddIdentity<EccoUser, IdentityRole>()
+            services.AddDefaultIdentity<EccoUser>()    
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddUserManager<UserManager<EccoUser>>()
@@ -63,17 +64,17 @@ namespace Ecco.Web
               .AddInMemoryApiScopes(AuthConfig.ApiScopes)
               .AddInMemoryClients(AuthConfig.GetClients(secret));
 
-            services.AddAuthentication("Bearer")
+            services.AddAuthentication(IdentityConstants.ApplicationScheme)
                 .AddJwtBearer("Bearer", options =>
                 {
                     options.Authority = "https://ecco-space.azurewebsites.net";
+                    //options.Authority = "https://localhost:44376";
 
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
-                        ValidateAudience = false
+                        ValidateAudience = false,
                     };
                 });
-
 
             string storageConnectionString = Configuration.GetConnectionString("StorageConnection");
             services.AddSingleton(typeof(StorageService), new StorageService(storageConnectionString));
