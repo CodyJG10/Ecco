@@ -3,6 +3,7 @@ using IdentityModel.Client;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -20,6 +21,15 @@ namespace Ecco.Api
         }
 
         #endregion
+
+        private string _accessToken;
+
+        public bool TokenIsValid()
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var jwtSecurityToken = tokenHandler.ReadJwtToken(_accessToken);
+            return jwtSecurityToken.ValidTo > DateTime.UtcNow;
+        }
 
         public async Task<HttpResponseMessage> Login(string username, string password)
         {
@@ -104,6 +114,7 @@ namespace Ecco.Api
             }
 
             client.SetBearerToken(tokenResponse.AccessToken);
+            _accessToken = tokenResponse.AccessToken;
             return new HttpResponseMessage(System.Net.HttpStatusCode.OK);
         }
     }

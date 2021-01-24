@@ -22,6 +22,7 @@ namespace Ecco.Api
         Task<bool> UserExists(string userName);
         void ForgotPassword(string email);
         Task<UserData> GetUserDataByEmail(string email);
+        bool TokenIsValid();
 
         #endregion
 
