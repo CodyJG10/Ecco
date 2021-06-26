@@ -20,7 +20,7 @@ using Microsoft.Azure.Storage;
 using Microsoft.Azure.Storage.Blob;
 using Ecco.Web.Services;
 using Microsoft.AspNetCore.Identity.UI.Services;
-using Westwind.AspNetCore.LiveReload;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace Ecco.Web
 {
@@ -40,13 +40,20 @@ namespace Ecco.Web
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
 
-            //services.AddIdentity<EccoUser, IdentityRole>()
-            services.AddDefaultIdentity<EccoUser>()    
+            services.AddDatabaseDeveloperPageExceptionFilter();
+
+            //services.AddDefaultIdentity<EccoUser>()
+            //    .AddDefaultTokenProviders()
+            //    .AddRoles<IdentityRole>()
+            //    .AddEntityFrameworkStores<ApplicationDbContext>()
+            //    .AddUserManager<UserManager<EccoUser>>()
+            //    .AddRoleManager<RoleManager<IdentityRole>>();
+
+            services.AddDefaultIdentity<EccoUser>()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddUserManager<UserManager<EccoUser>>()
-                .AddRoleManager<RoleManager<IdentityRole>>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddRoleManager<RoleManager<IdentityRole>>();
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -59,8 +66,14 @@ namespace Ecco.Web
 
             var secret = Configuration["Secret"];
 
-            var builder = services.AddIdentityServer()
+            //services.AddIdentityServer()
+            //  .AddDeveloperSigningCredential()
+            //  .AddInMemoryApiScopes(AuthConfig.ApiScopes)
+            //  .AddInMemoryClients(AuthConfig.GetClients(secret));
+
+            services.AddIdentityServer()
               .AddDeveloperSigningCredential()
+              .AddAspNetIdentity<EccoUser>()
               .AddInMemoryApiScopes(AuthConfig.ApiScopes)
               .AddInMemoryClients(AuthConfig.GetClients(secret));
 
@@ -68,7 +81,6 @@ namespace Ecco.Web
                 .AddJwtBearer("Bearer", options =>
                 {
                     options.Authority = "https://ecco-space.azurewebsites.net";
-                    //options.Authority = "https://localhost:44376";
 
                     options.TokenValidationParameters = new TokenValidationParameters
                     {
@@ -90,14 +102,13 @@ namespace Ecco.Web
 
             services.AddSession();
 
-            services.AddLiveReload(config => 
-            {
-                config.LiveReloadEnabled = true;
-                config.ClientFileExtensions = ".cshtml,.css,.js,.htm,.html,.ts,.razor,.custom";
-            });
+            //services.AddLiveReload(config => 
+            //{
+            //    config.LiveReloadEnabled = true;
+            //    config.ClientFileExtensions = ".cshtml,.css,.js,.htm,.html,.ts,.razor,.custom";
+            //});
 
             services.AddControllersWithViews();
-            //services.AddRazorPages();
             services.AddRazorPages().AddRazorRuntimeCompilation();
             services.AddMvc().AddRazorRuntimeCompilation();
         }
@@ -108,7 +119,8 @@ namespace Ecco.Web
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
+                app.UseMigrationsEndPoint();
+                //app.UseLiveReload();
             }
             else
             {
@@ -116,8 +128,6 @@ namespace Ecco.Web
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
-            app.UseLiveReload();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles(new StaticFileOptions
@@ -130,8 +140,6 @@ namespace Ecco.Web
 
             app.UseSession();
 
-            app.UseIdentityServer();
-
             app.UseAuthentication();
             app.UseAuthorization();
 
@@ -142,6 +150,8 @@ namespace Ecco.Web
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
+            app.UseIdentityServer();
         }
     }
 }
