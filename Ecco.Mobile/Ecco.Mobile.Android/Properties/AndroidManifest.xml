@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="20" android:versionName="1.7.0" package="com.ecco.mobile" android:installLocation="preferExternal">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="21" android:versionName="1.7.0" package="com.ecco.mobile" android:installLocation="preferExternal">
 	<uses-sdk android:minSdkVersion="29" android:targetSdkVersion="30" />
 	<application android:label="Ecco Space">
 		<receiver android:name="com.google.firebase.iid.FirebaseInstanceIdInternalReceiver" android:exported="false" />
